@@ -1,0 +1,638 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Python Skill Assessment\n",
+    "\n",
+    "Welome to the MIDS Python skill assessment! The aim of this exam is to evaluate your skills in Python to help ensure that in subsequent courses we target materials appropriately.\n",
+    "\n",
+    "When asked for code, please try and think of the **simpliest** code to generate the requested result. For example, if asked for \"code to add up 2, 5, and 7\", just enter `2 + 5 + 7`, not `(2 + 42 - 42 + 5 + 7) * 100 / 20 / 5`"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Basic Python"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Question 1:** Add up all the numbers from 1 to 100 (e.g. 1, 2, 3, ... , 99, 100). "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "5050"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# This can be done in several ways\n",
+    "sum(range(101))\n",
+    "\n",
+    "# Or\n",
+    "total = 0\n",
+    "for i in range(101):\n",
+    "    total = total + i\n",
+    "total\n",
+    "\n",
+    "# Note that if you get 4950, that's probably because you forgot that `range()` DOES NOT include the last number!"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Question 2:** Add up all the **even** numbers from 1 to 100 (e.g. 2, 4, 6, ... 98, 100). "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "2550"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Again, there are several strategies to do this, including:\n",
+    "\n",
+    "sum(range(0, 101, 2))\n",
+    "\n",
+    "# or \n",
+    "\n",
+    "total = 0\n",
+    "for i in range(101):\n",
+    "    if i % 2 == 0:\n",
+    "        total = total + i\n",
+    "total\n",
+    "\n",
+    "# or\n",
+    "\n",
+    "sum([i for i in range(101) if i % 2 == 0])\n",
+    "        "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Question 3:** What is the type of the variable x defined as `x = 42.0`?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "float"
+      ]
+     },
+     "execution_count": 15,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "x = 42.0\n",
+    "type(x)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Question 4:** Consider the list `my_list = [42, 47, 1.168, 3.14, 8, -5]`. What code would return the first three entries of `my_list`?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 100,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[42, 47, 1.168]"
+      ]
+     },
+     "execution_count": 100,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_list = [42, 47, 1.168, 3.14, 8, -5]\n",
+    "my_list[0:3]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Question 5:** What code would return the last entry of `my_list`?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "-5"
+      ]
+     },
+     "execution_count": 20,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Two options:\n",
+    "\n",
+    "my_list[5]\n",
+    "\n",
+    "# or \n",
+    "\n",
+    "my_list[-1]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Question 6:** What is the value of $2^{8} / 23$ (rounded to two decimal places)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 34,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "11.13"
+      ]
+     },
+     "execution_count": 34,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "round((2**8) / 23, ndigits = 2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Numpy\n",
+    "\n",
+    "For the next set of questions, we will work with an array you can generate using the following code. The line `np.random.seed(14)` will ensure that your code always generates the same random variables (I know, how can they be random if they're always the same? The truth is that random numbers aren't actually random, they just *look* random...)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 45,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[117356,  79193, 402701, 117143, 285000],\n",
+       "       [306938, 482663, 340715, 187037, 489099],\n",
+       "       [361681, 301630, 237033, 384878, 202395],\n",
+       "       [455706,  66008, 310263, 272876, 121377],\n",
+       "       [364536, 164101, 393166, 244875, 302731],\n",
+       "       [ 79361,  61911, 236629, 243846, 376358],\n",
+       "       [271993, 313446, 268330, 493289, 426216],\n",
+       "       [  8772, 427728,  95557, 332750, 273582],\n",
+       "       [ 68988,  16146, 130812, 185335, 153473],\n",
+       "       [224416, 213770, 365756,  49180, 103414],\n",
+       "       [172251, 436012, 294647,  75763, 274690],\n",
+       "       [  3965, 348488, 178281, 490176, 370571],\n",
+       "       [100398, 417520, 305183, 447380, 386626],\n",
+       "       [404538, 385612, 153806, 211282, 342374],\n",
+       "       [ 60174, 338873, 423248, 214698, 168576],\n",
+       "       [476438,  43534, 254276, 165950, 274763],\n",
+       "       [ 65263, 386490, 268751,  57949, 343279],\n",
+       "       [450493, 298506,   4431, 211333, 108723],\n",
+       "       [270822, 481845,  16642, 329868, 165861],\n",
+       "       [405362, 323972, 471053, 211869,  81750],\n",
+       "       [313833, 134546,  79188, 270712, 137777],\n",
+       "       [354212, 274024, 298962, 291211,  74549],\n",
+       "       [  3903, 306390, 288309, 201028, 494905],\n",
+       "       [447463, 403450, 144433, 423241, 433646],\n",
+       "       [112309, 152164, 285783, 194007, 463801],\n",
+       "       [474381, 306739,   9276, 452346, 230477],\n",
+       "       [481080,  83746, 366033,  68800, 426501],\n",
+       "       [280396,  45408, 420537, 135292, 251291],\n",
+       "       [118194,  13085, 249639,  38281, 156515],\n",
+       "       [132476, 417382, 194205,  74306, 343248],\n",
+       "       [263715, 191233, 354267,   8348, 495020],\n",
+       "       [365868, 471620, 222228, 152316, 322068],\n",
+       "       [217820,  49359, 285387,  21583, 350203],\n",
+       "       [145641, 101231, 430336,  59550, 463147],\n",
+       "       [183715, 305827, 302543, 188453, 237000],\n",
+       "       [ 95144, 372070,  18455,  69706, 301087],\n",
+       "       [493934,  13652, 275401, 122461, 315542],\n",
+       "       [388819,  60478, 415747, 406506, 473085],\n",
+       "       [150724,  57940,  94885, 101176, 198385],\n",
+       "       [101413,  71350, 276904, 280074, 290324],\n",
+       "       [178205, 247621, 284356, 210916, 487022],\n",
+       "       [ 41202, 230490, 448883, 277469, 422523],\n",
+       "       [144934, 236785, 312883, 185775, 335966],\n",
+       "       [ 89719, 234304,  39807, 168712, 348289],\n",
+       "       [ 63803,  10550,   6449, 170069,  35589],\n",
+       "       [477263,  14060, 384474, 357074,  30968],\n",
+       "       [187681, 318956,  23927, 435999, 166127],\n",
+       "       [ 54628, 101576, 461472, 340576, 185647],\n",
+       "       [260394,  32365, 336439, 384599,  48015],\n",
+       "       [152403,  16347, 117748, 403583, 364162],\n",
+       "       [211166, 203736,  49466, 306523, 428396],\n",
+       "       [114866, 261539, 440881, 362763, 159729],\n",
+       "       [425294, 482596, 299292, 355930, 111776],\n",
+       "       [ 98824,   3921, 273758, 118399, 430826],\n",
+       "       [438208, 381271, 339900,  80657,  50203],\n",
+       "       [474743, 471600, 353567, 450765, 296258],\n",
+       "       [ 33415, 104288, 367591, 323201, 354633],\n",
+       "       [424392, 131955,  28204, 313363, 290467],\n",
+       "       [376520, 170149, 214179, 205539, 163528],\n",
+       "       [ 61034, 322362, 376660, 184010, 309345],\n",
+       "       [286925, 323248, 474445, 473328, 477337],\n",
+       "       [390292, 214228, 229392, 324264,  91835],\n",
+       "       [390826, 402078, 335505, 472759, 155112],\n",
+       "       [202409, 283000, 102724, 196553, 310444],\n",
+       "       [262396, 157409, 199013, 267656, 484045],\n",
+       "       [208658, 201896, 113097, 347062, 364805],\n",
+       "       [250666, 222504, 376317, 479592, 493836],\n",
+       "       [229781, 359432, 272322, 341494,  16717],\n",
+       "       [280897,  39074, 334878, 101829,  67820],\n",
+       "       [488769, 247540, 143353, 285099, 140820],\n",
+       "       [300867, 495427, 373674,  49985,  69313],\n",
+       "       [198232, 223241, 497281, 421842,  79169],\n",
+       "       [496639, 299713, 255833, 432043,  12777],\n",
+       "       [437581, 291642, 148043, 477607, 112096],\n",
+       "       [ 67864,  44283,  69392, 382337, 284343],\n",
+       "       [293189, 180281, 291319, 363481, 435428],\n",
+       "       [459072, 443134,  11440, 186101, 275322],\n",
+       "       [227867, 324407, 422703, 482207, 188337],\n",
+       "       [ 32275,  17736, 451824, 335077, 479673],\n",
+       "       [  4951, 421401, 459572, 355113, 412146],\n",
+       "       [249808, 138691, 314608, 260414, 376289],\n",
+       "       [383590, 162707, 258334, 434896,  53880],\n",
+       "       [374156, 230751, 374337, 290961,  66454],\n",
+       "       [326880, 488671, 405650, 313874, 400569],\n",
+       "       [ 32656, 461726, 304489,  15001,  33060],\n",
+       "       [481390, 181060,  37369, 412141, 366134],\n",
+       "       [ 85716, 113532, 246890, 258636, 391593],\n",
+       "       [363026, 282380, 227961, 367884, 383101],\n",
+       "       [267678,  98615, 153772, 448604,  44697],\n",
+       "       [109702,  55407,  97120, 170272,  85218],\n",
+       "       [362417,  12991, 315547,  13608, 191483],\n",
+       "       [361957, 473101,  27746, 369041, 379912],\n",
+       "       [360818, 323716, 109783,  79343,  86940],\n",
+       "       [ 44999, 263884, 233513, 130902, 317999],\n",
+       "       [353540, 254496, 241344, 327760, 175980],\n",
+       "       [197694, 457353, 442152, 181599, 497937],\n",
+       "       [346809, 425322, 325502, 311691, 289366],\n",
+       "       [427003,   5406, 313027,  79199, 397995],\n",
+       "       [ 98327, 323324,  68021, 211022, 331601],\n",
+       "       [187769, 479679, 227348,   5848, 382203]])"
+      ]
+     },
+     "execution_count": 45,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import numpy as np\n",
+    "np.random.seed(14) # This guarantees the code will generate the same set of random numbers whenever executed\n",
+    "random_integers = np.random.randint(1,high=500000, size=(100, 5))\n",
+    "random_integers"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Question 7:** What is the average value of the second column (to two decimal places)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 50,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "238200.99"
+      ]
+     },
+     "execution_count": 50,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# The right answer:\n",
+    "avg = np.mean(random_integers[:, 1])\n",
+    "round(avg, ndigits=2)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 51,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "256103.74"
+      ]
+     },
+     "execution_count": 51,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# But many people will forget about zero indexing and get:\n",
+    "avg = np.mean(random_integers[:, 2])\n",
+    "round(avg, ndigits=2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Question 8:** What is the average value of the first 20 rows of the third and fourth columns?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 55,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "251968.92"
+      ]
+     },
+     "execution_count": 55,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "avg = np.mean(random_integers[0:20, 2:4])\n",
+    "round(avg, ndigits=2)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 56,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "253175.47"
+      ]
+     },
+     "execution_count": 56,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# But again, an unsurpriging answer would be:\n",
+    "avg = np.mean(random_integers[1:20, 3:4])\n",
+    "round(avg, ndigits=2)\n",
+    "\n",
+    "# Which you get if you forget about zero indexing\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Pandas"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "For the `pandas` portion of this exam, we'll be working with data in a CSV [file you can download here.](https://sejdemyr.github.io/r-tutorials/basics/data/world-small.csv)\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Question 9**: How many rows are in this dataset?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 73,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "145"
+      ]
+     },
+     "execution_count": 73,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import pandas as pd\n",
+    "df = pd.read_csv('example_data/world-small.csv')\n",
+    "len(df)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Question 10:** In alphabetical order, what countries had GDP per Capita values in 2008 (the variable `gdppcap08`) above 17,000 and below 20,000. \n",
+    "\n",
+    "Please just type the country names with the same capitalization as is found in the original data using only spaces to separate values. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 83,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "31       Croatia\n",
+       "57       Hungary\n",
+       "74        Latvia\n",
+       "78     Lithuania\n",
+       "105       Poland\n",
+       "Name: country, dtype: object"
+      ]
+     },
+     "execution_count": 83,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.loc[(df.gdppcap08 < 20000) & (df.gdppcap08 > 17000), 'country']"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Question 11**: What country in this data has the lowest GDP Per Capita?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 85,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "144    Zimbabwe\n",
+       "Name: country, dtype: object"
+      ]
+     },
+     "execution_count": 85,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.loc[df.gdppcap08 == np.min(df.gdppcap08), \"country\"]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Question 12**: The `polityIV` variable in this data is an [expert score for a country's authoritarianism](http://www.systemicpeace.org/polityproject.html). Values of -10 are extreme autocracies, while values of 10 are consolidated liberal democracies. What is the average polity score for the 10 poorest countries in this data?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 91,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "10.85\n"
+     ]
+    }
+   ],
+   "source": [
+    "df = df.sort_values('gdppcap08', ascending=True)\n",
+    "poorest_polities = df.iloc[0:10,]\n",
+    "avg = np.mean(poorest_polities['polityIV'])\n",
+    "print(round(avg, ndigits=2))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Question 13:** What is the average polity score for the 10 richest countries?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 96,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "13.3\n"
+     ]
+    }
+   ],
+   "source": [
+    "df = df.sort_values('gdppcap08', ascending=False)\n",
+    "richest_polities = df.iloc[0:10,]\n",
+    "avg = np.mean(richest_polities['polityIV'])\n",
+    "print(round(avg, ndigits=2))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

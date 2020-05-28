@@ -1,0 +1,391 @@
+\documentclass[12pt]{article}
+
+
+
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts, amsmath, amssymb}
+\usepackage{multirow}
+\usepackage{epsfig}
+\usepackage{subfigure}
+\usepackage{subfloat}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+% \usepackage[document]{ragged2e}
+\usepackage{verbatim, rotating, paralist}
+\usepackage{enumerate}
+
+\usepackage{natbib}
+
+
+\usepackage{pdfsync}
+\usepackage{latexsym}
+\usepackage{amsthm}
+\usepackage{mathabx}
+
+\usepackage{stmaryrd}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{fancyhdr}
+\usepackage{color}
+
+\usepackage{parskip}
+\usepackage{anysize, indentfirst, setspace}
+\usepackage[right=1.75cm, left=1.75cm, top=3cm, bottom=3cm]{geometry}
+\usepackage{epigraph}
+\usepackage{appendix}
+
+\usepackage{enumitem}
+
+\renewcommand{\topfraction}{.85}
+\renewcommand{\bottomfraction}{.7}
+\renewcommand{\textfraction}{.15}
+\renewcommand{\floatpagefraction}{.66}
+\renewcommand{\dbltopfraction}{.66}
+\renewcommand{\dblfloatpagefraction}{.66}
+
+
+
+
+\pagestyle{fancyplain}
+\rhead{\hfill \small \emph{MIDS NUMBER -- Fall 2019}}
+\cfoot{}
+
+\renewcommand{\headrulewidth}{0pt}
+
+
+
+%-------------------------- BEGIN DOCUMENT ----------------------------------%
+\begin{document}
+
+
+\singlespacing
+
+
+
+
+
+
+%------------------------- HEADER ---------------------------------%
+\thispagestyle{empty}
+\begin{minipage}[t]{.5\textwidth}
+	Nicholas Eubank \\
+	 Assistant Research Professor\\
+     \vspace*{0.1cm}
+\end{minipage}
+\begin{minipage}[t]{.5\textwidth}
+	\begin{flushright}  MIDS NUMBER\\
+	Fall \& 2019\\
+    \vspace*{0.1cm}
+\end{flushright}
+\end{minipage}
+
+
+% line
+\line(1,0){499}
+
+\vspace{.35in}
+
+\begin{center}
+	\textbf{\LARGE{Programming for} }\\
+	\vspace*{.05in}
+	\textbf{\LARGE{Data Science} }
+\end{center}
+
+
+
+
+
+
+
+%--------------------------------------------COURSE DESCRIPTION--------------------------------------------------%
+
+\section{Course Description}
+
+The aim of this course is to provide an introduction to the principles and concepts of programming. While there will be many similarities between this course and an introductory computer science course, this course is designed specifically for data science, and as such will emphasize methods for analyzing real world data rather than the ``software development'' skills (learning to write applications and programs) often taught in computer science introductory courses.
+
+The course will be focused in large part on teaching students R, an extremely popular statistical programming language. However, this is not a course \emph{about} R; rather, while we will use R in this course, we will be doing so as a means of teaching generalizable principles that will apply in any programming language.
+
+In addition to working with R, this course will also provide training in a number of ancillary tools that are often overlooked in the training of data scientists, but which are absolutely critical to the day-to-day life of a data scientist, including:
+
+\begin{itemize}
+	\item Git and Github (for collaboration and project management)
+	\item The Command Line / Terminal
+	\item Getting Help Online (no seriously -- there's more to it than you may think!)
+	\item Troubleshooting problems and debugging
+\end{itemize}
+
+
+\section{Learning Goals}
+
+By the end of Programming for Data Science, our goal is for you to be able to do all of the following: \\
+
+\textbf{R Learning Goals}
+
+The following are our R-specific learning goals. Learning these skills in R will make learning to do these things in other language much easier, but our focus in this class will just be to empower you to do these things in R.
+
+\begin{itemize}
+    \item Load data of various formats into R
+    \item Manipulate the data in basic ways (like tabulating results)
+	\item Clean and merge \emph{real world dirty data} for analysis
+\end{itemize}
+
+\textbf{General Programming Goals}
+
+These are goals we will explore in R, but which are inherently more general, and the skills you learn here apply as-learned in other languages and contexts.
+
+\begin{itemize}
+	\item Organize your workflow for a project
+	\item Program in a manner that minimizes the likelihood of mistakes, and maximizes the likelihood that when mistakes occur, you will catch them
+	\item Find and fix problems (debug) your code
+\end{itemize}
+
+\textbf{Ancillary Programming Skills}
+
+These are skills that are rarely taught in classes, but which are absolutely critical to being a successful data scientists in the real world.
+
+\begin{itemize}
+	\item Collaborate with others using git and github
+	\item Comfortably do basic operations in the command line / terminal.
+	\item Find help online when you get stuck
+\end{itemize}
+
+\section{Required Programming Background}
+
+{\color{red}\textbf{None.}}
+
+We have \emph{absolutely no expectations that students will have any experience with programming!} This is an introductory course, and save MIDS bootcamp programs, we fully recognize that many students have never worked with statistical software. That's FINE! If you know how to use google and email, you have plenty of experience -- everything else we'll take care of.
+
+If do have experience with a programming language, however, worry not: in my experience, most people who learned to use tools like R, Stata, or Matlab did so in a somewhat haphazard manner. They were given some code, they learned to emulate it, and they can now stitch together code that does what they want. But most students were never taught any of the organizing principles of programming. So if you are one of those students, you may find parts of this course easier than other students, but you will still come away with a new, deeper understanding of these tools that should make you more comfortable and productive in your life as a data scientist.
+
+Note that at times during this course, I may make statements about how the tools we're learning (like R) compare to different tools (like Stata or Python) if there are students with experience in these other tools in the class. However, if we make those comparisons, it is only to help those students the traps one can fall in if one's background is in another language. It is in no way because we \emph{expect} all students to have experience with other tools.
+
+
+\section{R}
+
+In this class we will be focused on teaching you to use a program for statistical analysis called \emph{R} (yup, just the letter).
+
+Why R? Because it's currently one of the two most-used programs in data science (the other being Python, which we'll work with in Advanced Programming for Data Science), which means there is a good chance you'll be called upon to use it when working in teams. Moreover, it's a much easier tool to get started with than a language like Python.
+
+It is worth emphasizing that we're not learning R because it is necessarily the ``the best'' language. The reality is that there are \emph{lots} of tools for statistical programming, and each has its own strengths and weaknesses (e.g. R, Stata, SPSS, Python, Julia, Matlab, etc., etc.). People often develop strong opinions about which language is \emph{best}, and sometimes pass judgement on people who use other languages. Every programming language has its strengths and weaknesses, and what is ``best'' depends on your use-case (the types of things you are using the language to do). This is true not only because languages themselves have strengths and weaknesses, but also because the tools and packages that have been created for use in different languages differ (e.g. people just haven't made a good package for doing geo-spatial work in Julia yet, for example). And if you're working on teams, you'll also have to make decisions based on the backgrounds of your tool sets. All of which is to say: there is no single \emph{best} language for all purposes. But R is a very popular, strong, general purpose language, so will serve as a great starting point.
+
+As a result, over the course of your career you may find yourself gravitating to one tool or another as required by your research. But in providing you with a firm foundation in a very popular language like R, you will not only be learning a tool that will allow you to do most everything you'll want to do in graduate school, but you will also be providing yourself with a solid foundation in \emph{generalizable} skills that you will find useful if you later change platforms.
+
+\section{Class Organization}
+
+In this class we will be ``flipping the classroom'' -- that means that most weeks, you will be \textbf{required} to review tutorials between classes so we can spend our class time doing hands-on programming exercises in an environment where help will be available. These tutorials will not generally be very long, and I \textbf{strongly} recommend that while you read through them you do so with an open programming session so you can just play around a little, trying out the things you learn. The research on learning to program is exceedingly clear on this point: \textbf{the only way to learn to program is to actually program}, so the more time you spend playing with the tools we are using, making mistakes, and troubleshooting, the more you will learn.
+
+
+% \section{Schedule}
+
+
+
+
+%--------------------------------------------COURSE ASSIGNMENTS------------------------------------------------%
+% \section{Assignments \& Grading}
+%
+% \subsection{Hands-On Stata Exercises and Problems Sets (25\% of Grade)}
+%
+% Though problem sets can test many important concepts we will cover in this class, our learning goal is for you, the student, to be able to work with real data by the end of this course, and developing that skill requires practice. Throughout the course you will be asked to do several take-home assignments that involve doing basic analyses on real data using Stata.
+%
+% Part of learning to work with real data is learning to work through problems, so these assignments are \emph{individual efforts} -- please do not work with other students. Once you've seen someone else's code, it's very hard to duplicate it and short-circuit the learning process. In light of this, I will hold regular office hours where you are welcome to come and work on the coding exercises and seek help from me as needed.
+%
+% \subsection{Mid-Term Exam.  25\%}
+%
+% \subsection{Final Empirical Research Paper. 25\%}
+%
+% The final project for the class will be an empirical research paper, in which each student (or pair of students if you wish to work in a group of two) provides a basic analysis of real world data. Given the introductory nature of the course, we do not expect these analyses to be too complex, but students are expected to (a) develop a hypothesis about a political science question, (b) use Stata to analyze real data in the service of testing their hypothesis, and (c) discuss some of the limitations of their analysis (especially with respect to the validity of any \emph{causal} inferences they may wish to draw) and how in a perfect world with unlimited time and resources they might address those concerns.
+%
+% \subsection{Participation (25\% of Grade)}
+%
+% While the first portion of the class will consist primarily of learning statistics and Stata, in the second portion of the class there will be lots of in class discussions. So we can make the most of our time together, students should arrive in class having completed their readings and be prepared to discuss the material at hand. With that in mind, participation will be  25\% of your grade in the class.
+%
+% Participation will be graded as follows:\footnote{I borrow this excellent rubric more or less verbatim from the Stanford University Political Science Teaching Liaison Adriane Fresh.}
+%
+% \textbf{A range.}  You are fully \emph{and consistently} engaged in class discussion and activities.  You both listen and contribute actively.  You are well prepared for class.  Having done more than merely read the material, you have spent time thinking \emph{carefully and deeply} about the material's relationship to other materials and ideas presented in previous classes.  Your ideas about the material are \emph{substantive} (either constructive or critical); and they stimulate class discussions.  You question in addition to stating, and you do more than simply offering your opinion, but rather ground opinions that you may offer in the course materials and ideas.  You provide space for other students to share their ideas.  You \emph{build} on the contributions of your fellow students, and you listen and respond respectfully.  \\
+%
+% \textbf{B range.}  You are engaged in class discussion and activities.  You listen and contribute regularly.  You come well-prepared to class having read the material and your contributions show your familiarity, but your level of engagement lacks the depth accumulated through extra time spent thinking about the material.  You show interest and are respectful of the contributions of your fellow students.  \\
+%
+% \textbf{C range.}  You have met the minimum requirements of participation.  You are usually, but not always prepared.  You participate sometimes, but not regularly.  The comments that you offer show a basic familiarity with the materials, but do not help to build a coherent or productive discussion.  Your engagement with the contributions of your fellow students is minimal.  \\
+%
+% \textbf{D range.}  You have not met the minimum requirements of participation.  You are unprepared for class.  You have not read with the material with sufficient engagement to know even the most basic elements.  The contributions that you offer derail discussion, or you do not make contributions.  You are not engaged in actively listening or responding to the contributions of your fellow students.   \\
+%
+% \textbf{As should be clear from this rubric, above all it is important to emphasize that participation is evaluated on the basis of \emph{quality} and \emph{consistently}, \emph{not} quantity. }
+%
+%
+%
+%
+% \subsection{Late Assignments, Make Up Exams and Extra Credit}
+%
+%
+% \textbf{Grading}
+% All assignments will be given a numerical score on a 0-100 scale.  These scores will be multiplied by the value of the assignment (see above) and the following scale will be used to assign a final letter grade.  \\
+%
+% \hspace*{.2in} 98-100 A+ 	\hspace*{.6in}  88-80.9 B+  	\hspace*{.57in} 78-79.9 C+  		\hspace*{.44in} 60-70 D  	\\
+% \hspace*{.2in} 93-97.9 A	\hspace*{.68in} 83-87.9 B  	\hspace*{.695in} 73-77.9 C		\hspace*{.57in} below 60 D\\
+% \hspace*{.2in} 90-92.9 A- 	\hspace*{.63in} 	80-82.9 B- 	\hspace*{.64in} 70-72.9 C-	\\
+%
+
+\section{Course Schedule}
+
+\setlist[enumerate,2]{leftmargin=0.5cm}
+\setlist[itemize,1]{leftmargin=0cm}
+
+
+\vspace{.4in}
+\begin{center}
+	\textbf{PART I. R}
+\end{center}
+\vspace{.2in}
+
+\begin{enumerate}[label=\textbf{Week \arabic*:}]
+	\item \textbf{Intro to R}
+	\begin{enumerate}[label=Class \arabic*:]
+		\item Getting to Know R
+		\begin{itemize}
+			\item Read Before Class: \href{https://nickeubank.github.io/rfordatascience/html/introduction.html}{Welcome to R!}
+		\end{itemize}
+		\item Vectors
+		\begin{itemize}
+			\item Read Before Class: \href{https://nickeubank.github.io/rfordatascience/html/vectors.html}{Vectors}
+		\end{itemize}
+	\end{enumerate}
+
+	\item \textbf{Intro to R (Continued); Cleaning and Manipulation}
+	\begin{enumerate}[label=Class \arabic*:]
+		\item Datasets
+		\begin{itemize}
+			\item Read Before Class: \href{https://nickeubank.github.io/rfordatascience/html/dataframes.html}{dataframes}
+		\end{itemize}
+		\item Manipulating Data
+		\begin{itemize}
+			\item Read Before Class: \href{https://nickeubank.github.io/rfordatascience/html/modifying-data.html}{Manipulating Data}
+		\end{itemize}
+	\end{enumerate}
+
+	\item \textbf{Merging Data; Plotting}
+	\begin{enumerate}[label=Class \arabic*:]
+		\item Merging Data
+		\begin{itemize}
+			\item Read Before Class: \href{https://nickeubank.github.io/rfordatascience/html/merging-appending.html}{Merging Data}
+		\end{itemize}
+		\item Plotting
+		\begin{itemize}
+			\item Read Before Class: \href{https://nickeubank.github.io/rfordatascience/html/plotting.html}{Plotting Data}
+		\end{itemize}
+	\end{enumerate}
+
+	\item \textbf{Loops and Functions}
+	\begin{enumerate}[label=Class \arabic*:]
+		\item For-Loops
+		\begin{itemize}
+			\item Read Before Class: \href{https://nickeubank.github.io/rfordatascience/html/loops.html}{Loops}
+		\end{itemize}
+		\item Functions
+		\begin{itemize}
+			\item Read Before Class: \href{https://nickeubank.github.io/rfordatascience/html/functions.html}{Functions}
+		\end{itemize}
+	\end{enumerate}
+
+	\item \textbf{Collapsing and Reshaping; Functions}
+	\begin{enumerate}[label=Class \arabic*:]
+		\item Collapsing and Reshaping
+		\begin{itemize}
+			\item Read Before Class: \href{https://nickeubank.github.io/rfordatascience/html/collapsing.html}{Collapsing}
+			\item Read Before Class: \href{https://nickeubank.github.io/rfordatascience/html/reshaping.html}{Reshaping}
+		\end{itemize}
+		\item Functions
+		\begin{itemize}
+			\item Read Before Class: \href{https://nickeubank.github.io/rfordatascience/html/functions.html}{Functions}
+		\end{itemize}
+	\end{enumerate}
+
+	\item \textbf{R Wrap-Up}
+	\begin{enumerate}[label=Class \arabic*:]
+		\item Lists
+		\begin{itemize}
+			\item Read Before Class: \href{https://nickeubank.github.io/rfordatascience/html/lists.html}{Lists}
+		\end{itemize}
+		\item To Be Decided...
+	\end{enumerate}
+\end{enumerate}
+
+\vspace{.4in}
+\begin{center}
+	\textbf{PART II. The Tools of Data Science No One Taught You}
+\end{center}
+\vspace{.2in}
+
+\begin{enumerate}[label=\textbf{Week \arabic*:}]
+	\setcounter{enumi}{7}
+	\item \textbf{The Terminal / Command Line}
+	\begin{enumerate}[label=Class \arabic*:]
+		\item Command Line Basics
+		\begin{itemize}
+			\item Read: \href{https://www.programming4ds.com/html/terminal.html}{What is the terminal?}
+			\item Do: \href{https://campus.datacamp.com/courses/introduction-to-shell-for-data-science/}{DataCamp Intro to Shell for Data Science, Parts 1 (Modifying Files and Directories) and 2 (Manipulating Data)}
+		\end{itemize}
+		\item R \& Anaconda
+		\begin{itemize}
+			\item Find intro to anaconda or something??
+		\end{itemize}
+	\end{enumerate}
+
+	\item \textbf{Git and Github}
+	\begin{enumerate}[label=Class \arabic*:]
+		\item Git Basics
+		\begin{itemize}
+			\item Read: \href{https://www.programming4ds.com/html/git_and_github.html}{Git and Github}
+			\item Do: \href{http://jlord.us/git-it/}{Git-It Tutorial}
+			\item Maybe: \href{http://swcarpentry.github.io/git-novice/03-create/index.html}{Software carpentry?}
+		\end{itemize}
+		\item Collaborating on Github
+		\begin{itemize}
+			\item Find materials!
+		\end{itemize}
+	\end{enumerate}
+	\item \textbf{Getting help online; Jupyter Labs}
+	\item \textbf{Debugging and Troubleshooting}
+	\item \textbf{Workflow management}
+\end{enumerate}
+
+\vspace{.4in}
+\begin{center}
+	\textbf{PART III. Programming, a CS Perspective}
+\end{center}
+\vspace{.2in}
+
+\begin{itemize}
+	\item Week 13: Defensive Programming, Decomposition
+		\begin{itemize}
+			\item Read: \href{http://www.programming4ds.com/html/defensive_programming.html}{Defensive Programming}
+			\item Do: Exercises??
+		\end{itemize}
+
+
+	\item Week 14: More on Data Types (Floats, Ints, Strings, etc.)
+	\begin{itemize}
+		\item Read: \href{http://www.programming4ds.com/html/data_types.html}{Data Types}
+		\item Do: Exercises??
+	\end{itemize}
+
+\end{itemize}
+
+\vspace{.4in}
+\begin{center}
+	\textbf{PART IV. Other Languages}
+\end{center}
+\vspace{.2in}
+
+\begin{itemize}
+	\item Week 15: Trade-offs of Different languages; Python
+	\item Week 16: Python Libraries for Data Science (numpy, pandas)
+\end{itemize}
+
+
+
+\end{document}

@@ -1,0 +1,883 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Index alignment\n",
+    "\n",
+    "To illustrate how index alignment can sometimes lead to problems, let's consider the following example: suppose we're throwing a party, and we plan to give people prizes based on the order in which they arrive. The first person to arrive at the party will get 20 dollars, the second will get 10 dollars, and the third person doesn't get anything. \n",
+    "\n",
+    "To keep track of how many prizes everyone gets, we build a DataFrame with all the party attendees, their arrival order, and a column for keeping track of how much they've received in prizes. \n",
+    "\n",
+    "The we can also build a Series with the prize amounts we plan to give people. \n",
+    "\n",
+    "### Exercise 1\n",
+    "\n",
+    "Use the code below to get started: \n",
+    "\n",
+    "```python\n",
+    "import pandas as pd\n",
+    "attendees = pd.DataFrame({'names': [\"Jill\", \"Kumar\", \"Zaira\"], \n",
+    "                          'prizes': [0, 0, 0],\n",
+    "                          'arrival_order': [2, 1, 3]})\n",
+    "arrival_prizes = pd.Series([20, 10, 0])\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "attendees = pd.DataFrame({'names': [\"Jill\", \"Kumar\", \"Zaira\"], \n",
+    "                          'prizes': [0, 0, 0],\n",
+    "                          'arrival_order': [2, 1, 3]})\n",
+    "arrival_prizes = pd.Series([20, 10, 0])\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Exercise 2\n",
+    "\n",
+    "Now let's sort our `attendees` list by `arrival_order` so that the first row is the person who arrived first, the second is the person who arrived second, etc. to match how we've organized `arrival_prizes`. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>names</th>\n",
+       "      <th>prizes</th>\n",
+       "      <th>arrival_order</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Kumar</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Jill</td>\n",
+       "      <td>0</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Zaira</td>\n",
+       "      <td>0</td>\n",
+       "      <td>3</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   names  prizes  arrival_order\n",
+       "1  Kumar       0              1\n",
+       "0   Jill       0              2\n",
+       "2  Zaira       0              3"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "attendees = attendees.sort_values('arrival_order')\n",
+    "attendees.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Exercise 3\n",
+    "\n",
+    "Now let's \"give\" everyone their arrival prizes by adding arrival prizes to people's prize column: \n",
+    "\n",
+    "```\n",
+    "attendees['prizes'] = attendees['prizes'] + arrival_prizes\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>names</th>\n",
+       "      <th>prizes</th>\n",
+       "      <th>arrival_order</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Kumar</td>\n",
+       "      <td>10</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Jill</td>\n",
+       "      <td>20</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Zaira</td>\n",
+       "      <td>0</td>\n",
+       "      <td>3</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   names  prizes  arrival_order\n",
+       "1  Kumar      10              1\n",
+       "0   Jill      20              2\n",
+       "2  Zaira       0              3"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "attendees['prizes'] = attendees['prizes'] + arrival_prizes\n",
+    "attendees"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Exercise 4\n",
+    "\n",
+    "Now let's look at the result. Does it look like what you expected? Do you know what went wrong?\n",
+    "\n",
+    "After you've formulated your thoughts, continue to [Discussion](Exercise_indices_discussion.ipynb). "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Exercise 5\n",
+    "\n",
+    "If you ever *want* to get alignment on row numbers, the easiest way to achieve that is to reset the indices on both objects you want to merge. When one re-sets indices without specifying a column to become the new index, the new index will just be row-numbers. \n",
+    "\n",
+    "So reset prizes to 0, do what you need to do to get the order right, reset the index, and try again."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>index</th>\n",
+       "      <th>names</th>\n",
+       "      <th>prizes</th>\n",
+       "      <th>arrival_order</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1</td>\n",
+       "      <td>Kumar</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>0</td>\n",
+       "      <td>Jill</td>\n",
+       "      <td>0</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>2</td>\n",
+       "      <td>Zaira</td>\n",
+       "      <td>0</td>\n",
+       "      <td>3</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   index  names  prizes  arrival_order\n",
+       "0      1  Kumar       0              1\n",
+       "1      0   Jill       0              2\n",
+       "2      2  Zaira       0              3"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "attendees['prizes'] = 0\n",
+    "attendees = attendees.reset_index()\n",
+    "arrival_prizes = arrival_prizes.reset_index()\n",
+    "attendees"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>index</th>\n",
+       "      <th>0</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>0</td>\n",
+       "      <td>20</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1</td>\n",
+       "      <td>10</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>2</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   index   0\n",
+       "0      0  20\n",
+       "1      1  10\n",
+       "2      2   0"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "arrival_prizes"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Note:** When you reset the index on a Series, the Series is converted to a DataFrame, and the old index is added as a column. To avoid this behavior and just drop the old index when re-setting indices (in either a Series or a DataFrame), use the `drop=True` argument when resetting the index. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>names</th>\n",
+       "      <th>prizes</th>\n",
+       "      <th>arrival_order</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Kumar</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Jill</td>\n",
+       "      <td>0</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Zaira</td>\n",
+       "      <td>0</td>\n",
+       "      <td>3</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   names  prizes  arrival_order\n",
+       "0  Kumar       0              1\n",
+       "1   Jill       0              2\n",
+       "2  Zaira       0              3"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "attendees = pd.DataFrame({'names': [\"Jill\", \"Kumar\", \"Zaira\"], \n",
+    "                          'prizes': [0, 0, 0],\n",
+    "                          'arrival_order': [2, 1, 3]})\n",
+    "arrival_prizes = pd.Series([20, 10, 0])\n",
+    "attendees = attendees.sort_values('arrival_order')\n",
+    "attendees = attendees.reset_index(drop=True)\n",
+    "attendees\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0    20\n",
+       "1    10\n",
+       "2     0\n",
+       "dtype: int64"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "arrival_prizes = arrival_prizes.reset_index(drop=True)\n",
+    "arrival_prizes\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>names</th>\n",
+       "      <th>prizes</th>\n",
+       "      <th>arrival_order</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Kumar</td>\n",
+       "      <td>20</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Jill</td>\n",
+       "      <td>10</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Zaira</td>\n",
+       "      <td>0</td>\n",
+       "      <td>3</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   names  prizes  arrival_order\n",
+       "0  Kumar      20              1\n",
+       "1   Jill      10              2\n",
+       "2  Zaira       0              3"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "attendees['prizes'] = attendees['prizes'] + arrival_prizes\n",
+    "attendees"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Exercise 6\n",
+    "\n",
+    "OK, so besides doing automatic alignment, is there a reason to use indices?\n",
+    "\n",
+    "Let's find out. Create the following fake dataset of social security numbers and some \"names\" (random strings). Warning: this will take a little time to run.  \n",
+    "\n",
+    "```python\n",
+    "import numpy.random as npr\n",
+    "import string\n",
+    "import random\n",
+    "npr.seed(42)\n",
+    "random.seed(42)\n",
+    "\n",
+    "size=1000000 # 1,000,000\n",
+    "people = pd.DataFrame({'social_security_numbers': npr.randint(low=10000000, high=99999999, size=size),\n",
+    "                       'names': [''.join(random.choices(string.ascii_uppercase, k=10))\n",
+    "                                 for i in range(size)]})\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy.random as npr\n",
+    "import string\n",
+    "import random\n",
+    "npr.seed(42)\n",
+    "random.seed(42)\n",
+    "\n",
+    "size=1000000 # 1,000,000\n",
+    "people = pd.DataFrame({'social_security_numbers': npr.randint(low=10000000, high=99999999, size=size),\n",
+    "                       'names': [''.join(random.choices(string.ascii_uppercase, k=10))\n",
+    "                                 for i in range(size)]})"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>social_security_numbers</th>\n",
+       "      <th>names</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>171778</th>\n",
+       "      <td>62846897</td>\n",
+       "      <td>ZODELKBZSB</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>711325</th>\n",
+       "      <td>52177739</td>\n",
+       "      <td>BBRHWYSJLX</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>94088</th>\n",
+       "      <td>78000581</td>\n",
+       "      <td>GRLRZQTQYI</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>695598</th>\n",
+       "      <td>78713737</td>\n",
+       "      <td>ITLYADOCOW</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>613416</th>\n",
+       "      <td>87373250</td>\n",
+       "      <td>DLALWBLLGA</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "        social_security_numbers       names\n",
+       "171778                 62846897  ZODELKBZSB\n",
+       "711325                 52177739  BBRHWYSJLX\n",
+       "94088                  78000581  GRLRZQTQYI\n",
+       "695598                 78713737  ITLYADOCOW\n",
+       "613416                 87373250  DLALWBLLGA"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "people.sample(5)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Exercise 7\n",
+    "\n",
+    "Now subset your data to get the income associated with the name of \"TPKSMSLREI\". (Yes, there are ways to get real random names, but they take a while to run because they query websites that generate fake names, so we're just doing this!)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>social_security_numbers</th>\n",
+       "      <th>names</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>299029</th>\n",
+       "      <td>84423764</td>\n",
+       "      <td>TPKSMSLREI</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "        social_security_numbers       names\n",
+       "299029                 84423764  TPKSMSLREI"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "people[people['names'] == 'TPKSMSLREI']"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Exercise 8\n",
+    "\n",
+    "Now time your operation using the `%timeit` ipython magic function. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "37.2 ms ± 971 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)\n"
+     ]
+    }
+   ],
+   "source": [
+    "%timeit people[people['names'] == 'TPKSMSLREI']"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Exercise 9\n",
+    "\n",
+    "Now make `names` your index for this data. Then try subsetting using `loc[]` to get all the observations with the name of \"TPKSMSLREI\" and time the operation. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>social_security_numbers</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>names</th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>QAHFTRXCKA</th>\n",
+       "      <td>75682867</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>FNAFQOFPVA</th>\n",
+       "      <td>66755036</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>USIEYICCWP</th>\n",
+       "      <td>66882282</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>USNZJOVQWP</th>\n",
+       "      <td>31081788</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>SBFHCGCHQJ</th>\n",
+       "      <td>23315092</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "            social_security_numbers\n",
+       "names                              \n",
+       "QAHFTRXCKA                 75682867\n",
+       "FNAFQOFPVA                 66755036\n",
+       "USIEYICCWP                 66882282\n",
+       "USNZJOVQWP                 31081788\n",
+       "SBFHCGCHQJ                 23315092"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "people = people.set_index('names')\n",
+    "people.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "159 µs ± 15.2 µs per loop (mean ± std. dev. of 7 runs, 1 loop each)\n"
+     ]
+    }
+   ],
+   "source": [
+    "%timeit people.loc['TPKSMSLREI']"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

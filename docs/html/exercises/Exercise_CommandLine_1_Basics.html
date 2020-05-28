@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Welcome to the Command Line Basics Exercises! &#8212; Practical Data Science</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="Welcome-to-the-Command-Line-Basics-Exercises!">
+<h1>Welcome to the Command Line Basics Exercises!<a class="headerlink" href="#Welcome-to-the-Command-Line-Basics-Exercises!" title="Permalink to this headline">¶</a></h1>
+<p>In this exercise we’re going to get some practice navigating and exploring files and folders from the command line by looking at some data from New York City’s 311 system. 311 is a citizen hotline set up by the city of New York for reporting non-emergency issues to the city. 311 takes calls about all sorts of issues, from noise complaints to issues with street lights to complaints about restaurant hygeine violations and rodent sightings.</p>
+<p>You can find the 311 data we’ll be working with in a zipped file called <code class="docutils literal notranslate"><span class="pre">NYC_311calls_2018.zip</span></code> <a class="reference external" href="https://github.com/nickeubank/MIDS_Data/blob/master/NYC_311_ServiceRequests/NYC_311calls_2018.zip">here</a>. Please download the file and place it somewhere easy to remember (desktop, downloads, etc.).</p>
+<div class="section" id="Navigating-Folders">
+<h2>Navigating Folders<a class="headerlink" href="#Navigating-Folders" title="Permalink to this headline">¶</a></h2>
+<p>As previously discussed in <a class="reference external" href="../command_line.ipynb">Command Line Basics</a>, the command line is just a tool for interacting with your computer using text commands rather than by clicking around with a mouse on pictures of folders (i.e. using your Graphical User Interface, or GUI). That means that most of the principles you’re familiar with (like the way files are organized into folders) apply on the command line just like in your more familiar graphical user interface. In this section, we’ll
+briefly review how to nagivate your folder structure using the command line.</p>
+<p>There are two main ways to navigate your file system:</p>
+<p>The first <strong>step-by-step</strong>: analogous to how you would find a file using the operating system GUI:</p>
+<ol class="arabic simple">
+<li><p>Check where you are currently located with the <code class="docutils literal notranslate"><span class="pre">pwd</span></code> command (short for print working directory).</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">ls</span></code> to see what folders and files are in your current directory.</p></li>
+<li><p>If the file you want to find is in one of the folders in your current directory, move into that folder with the <code class="docutils literal notranslate"><span class="pre">cd</span></code> command (e.g. <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">FOLDERNAME</span></code>). Then return to Step 2.</p></li>
+<li><p>If the file you want is <em>not</em> somewhere inside your current folder, you can move your working directory up one folder by typing <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">..</span></code>. Then return to Step 2.</p></li>
+</ol>
+<p>The second is using an <strong>absolute path</strong>. This requires knowing the exact path of the folder where you want to work, but if you know it, you can just type <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">/THE/PATH/TO/WHERE/YOU/WANT/TO/GO</span></code>.</p>
+<p><strong>Important Things to Remember</strong>:</p>
+<ul class="simple">
+<li><p>Recall that if you start a path with a <code class="docutils literal notranslate"><span class="pre">/</span></code>, your are specifying an <em>absolute path</em>. When you use an absolute path, your current working directory doesn’t matter. An absolute path is like a street address: it fully specifies where you want to go. For example, the absolute path to my desktop is <code class="docutils literal notranslate"><span class="pre">/users/nick/desktop</span></code>.</p></li>
+<li><p>If you don’t start with a <code class="docutils literal notranslate"><span class="pre">/</span></code>, you’re specifying a <em>relative path</em>. Wen you use a relative path, that path is interpreted with respect to your current directory. In this sense, a relative path is like the directions you give a lost driver (“from where we’re standing, go one block north, then take a left”). <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">FOLDERNAME</span></code>, for example, says to your computer “I want you to make your new working directory the folder <em>in the current directory</em> named FOLDERNAME.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">~</span></code> is a shortcut for your user directory. If you get lost, <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">~</span></code> will always take you back to your home directory. Also, any path that starts with <code class="docutils literal notranslate"><span class="pre">~</span></code> is actually an absolute path, even though it doesn’t start with a <code class="docutils literal notranslate"><span class="pre">/</span></code> since <code class="docutils literal notranslate"><span class="pre">~</span></code> always refers to a single (absolute) location on your computer.</p></li>
+<li><p>Remember that if file or folder name has a space in it, you have to put a <code class="docutils literal notranslate"><span class="pre">\</span></code> before the space. So to move into a folder called “My Folder”, you would type <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">My\</span> <span class="pre">Folder</span></code>.</p></li>
+</ul>
+<div class="section" id="Exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#Exercise-1" title="Permalink to this headline">¶</a></h3>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">pwd</span></code> (short for “print working directory”) command to ask your command line session where it currently thinks of itself being located. What is your current working directory?</p>
+</div>
+<div class="section" id="Exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#Exercise-2" title="Permalink to this headline">¶</a></h3>
+<p>Using whatever strategy you would like to move around, change your working directory to the folder where you saved <code class="docutils literal notranslate"><span class="pre">NYC_311calls_2018.zip</span></code>. Then run the command <code class="docutils literal notranslate"><span class="pre">unzip</span> <span class="pre">NYC_311calls_2018.zip</span></code> to decompress the file.</p>
+</div>
+</div>
+<div class="section" id="Exploring-Files">
+<h2>Exploring Files<a class="headerlink" href="#Exploring-Files" title="Permalink to this headline">¶</a></h2>
+<p>Once you’ve unzipped <code class="docutils literal notranslate"><span class="pre">NYC_311calls_2018</span></code>, use <code class="docutils literal notranslate"><span class="pre">cd</span></code> to navigate into the folder so it is now your working directory. Then use <code class="docutils literal notranslate"><span class="pre">ls</span></code> to look at what’s in the folder. What you see should look something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ls
+311_SR_Data_Dictionary_2018.xlsx README.md                        raw data
+CE-20170824.pdf                  just_the_letter_a.docx
+NYC311_column_names.txt          just_the_letter_a.txt
+</pre></div>
+</div>
+<p>Up until now, we’ve just been moving around at the level of the filesystem, seeing file names but not their contents. But if a file is a plain text file, we can also look at it’s contents. There are actually a few ways to do this, but the two most used options are <code class="docutils literal notranslate"><span class="pre">cat</span></code> (which will print the contents of the files to your screen), or <code class="docutils literal notranslate"><span class="pre">less</span></code> (which will open a small program to allow you to read through the document in a controlled manner). <code class="docutils literal notranslate"><span class="pre">cat</span></code> is quicker, but if you use <code class="docutils literal notranslate"><span class="pre">cat</span></code> with a big
+file, the whole file will just print out to your screen and you’ll end up overwhelmed (though you’ll be fine for a small file here).</p>
+<div class="section" id="Exercise-3">
+<h3>Exercise 3<a class="headerlink" href="#Exercise-3" title="Permalink to this headline">¶</a></h3>
+<p>Do as the <code class="docutils literal notranslate"><span class="pre">README.md</span></code> suggests and read it first with the command <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">README.md</span></code>, then with the command <code class="docutils literal notranslate"><span class="pre">less</span> <span class="pre">README.md</span></code> (press <code class="docutils literal notranslate"><span class="pre">q</span></code> for quit to get out when you’re done).</p>
+</div>
+<div class="section" id="Exercise-4">
+<h3>Exercise 4<a class="headerlink" href="#Exercise-4" title="Permalink to this headline">¶</a></h3>
+<p>Now let’s do the same with <code class="docutils literal notranslate"><span class="pre">CE-20170824.pdf</span></code>: run <code class="docutils literal notranslate"><span class="pre">less</span> <span class="pre">CE-20170824.pdf</span></code>. If <code class="docutils literal notranslate"><span class="pre">less</span></code> asks you a question, just type <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
+<p>What happened?! Unfortunately, <code class="docutils literal notranslate"><span class="pre">CE-20170824.pdf</span></code> was <em>not</em> a plain text file, but instead is what is referred to as a binary file. This distinction between plain text files and binary files will come up a lot, so let’s discuss it briefly.</p>
+<p>The terms “plain text” and “binary” are a little misleading since <em>everything</em> on your computer is stored as 1s and 0s (i.e. binary). What differentiates plain text and binary files is what those 1s and 0s are meant to represent.</p>
+<p><strong>In a plain text file,</strong> the 1s and 0s of the file encode numbers and letters based on simple, commonly used codes (like <a class="reference external" href="https://en.wikipedia.org/wiki/ASCII">ASCII</a> or <a class="reference external" href="https://en.wikipedia.org/wiki/Unicode">Unicode</a>. These files also do not contain anything complicated (pictures, media, etc.), and in fact don’t even include information like fonts, or formatting. This simplicity makes plaintext files universally compatible, and easy to work with, so are a favorite of programmers. Any
+code you’ve ever written has probably been saved as a plaintext file.</p>
+<p><strong>In a binary file,</strong> by contrast, the 1s and 0s encode much more complicated information. In this case, <code class="docutils literal notranslate"><span class="pre">CE-20170824.pdf</span></code> is a PDF file that includes images, different fonts, careful formatting, etc. As a result, it can only be openned by a PDF reader (like Preview or Adobe Reader) that knows how to interprete the file’s complicated content. If you open it with <code class="docutils literal notranslate"><span class="pre">less</span></code>, <code class="docutils literal notranslate"><span class="pre">less</span></code> <em>tries</em> to treat the 0s and 1s like they were just encoding simple letters and numbers, but since they don’t, the
+result is just gobblygook.</p>
+</div>
+<div class="section" id="Exercise-5">
+<h3>Exercise 5<a class="headerlink" href="#Exercise-5" title="Permalink to this headline">¶</a></h3>
+<p>Lets actually <em>see</em> the difference between plaintext and binary files. In your folder are two files called <code class="docutils literal notranslate"><span class="pre">just_the_letter_a</span></code>, one with a .txt suffix, and one with a .docx suffix. Using your normal operating system interface, open both files (assuming you have Microsoft Word installed). You should see that both files include nothing except a lower-case letter “a”.</p>
+</div>
+<div class="section" id="Exercise-6">
+<h3>Exercise 6<a class="headerlink" href="#Exercise-6" title="Permalink to this headline">¶</a></h3>
+<p>You can see the actual 1’s and 0’s that underlay a file from the command line using the command <code class="docutils literal notranslate"><span class="pre">xxd</span> <span class="pre">-b</span> <span class="pre">[filename]</span></code>. First, use this to see what’s in <code class="docutils literal notranslate"><span class="pre">just_the_letter_a.txt</span></code> file.</p>
+<p>What you will see is a counter on the left, a colon, then the actual contents of the file grouped into sets of 8 bits (what’s called a byte). The first is the code for a lower case “a” (<code class="docutils literal notranslate"><span class="pre">01100001</span></code>). The second is the code that says “this is the end of the current line”. And that’s it! Congratulations, you can now read binary!</p>
+<p>(Don’t believe me? You can find the code for the end of a line <a class="reference external" href="https://en.wikipedia.org/wiki/ASCII#Control_characters">here</a>, and for “a” <a class="reference external" href="https://en.wikipedia.org/wiki/ASCII#Printable_characters">here</a>. Go check for yourself – there’s no magic here.</p>
+</div>
+<div class="section" id="Exercise-7">
+<h3>Exercise 7<a class="headerlink" href="#Exercise-7" title="Permalink to this headline">¶</a></h3>
+<p>Now let use <code class="docutils literal notranslate"><span class="pre">xxd</span> <span class="pre">-b</span> <span class="pre">[filename]</span></code> do the same for the Microsoft Word doc that also encodes just a single letter “a”. Does it look similar?</p>
+</div>
+<div class="section" id="Exercise-8">
+<h3>Exercise 8<a class="headerlink" href="#Exercise-8" title="Permalink to this headline">¶</a></h3>
+<p>And <em>that</em> is why plaintext so useful – it’s simplicity makes it nearly universal across both platforms and time.</p>
+<p>Be aware that lots of file endings can be used for plaintext files. For example, <code class="docutils literal notranslate"><span class="pre">.csv</span></code> files are also plaintext. Indeed, it is because they have such a simple format that <code class="docutils literal notranslate"><span class="pre">.csv</span></code>s are the most used format for sharing tabular data. <code class="docutils literal notranslate"><span class="pre">.md</span></code>, <code class="docutils literal notranslate"><span class="pre">.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">.tsv</span></code>, and other file suffixes are also usually plaintext.</p>
+<p>But just because a file is not plaintext doesn’t mean we don’t want to know what it is! So let’s use the <code class="docutils literal notranslate"><span class="pre">open</span></code> command. <code class="docutils literal notranslate"><span class="pre">open</span> <span class="pre">FILENAME</span></code> just asks your computer to do whatever it would do if you double-clicked on FILENAME. So if you type <code class="docutils literal notranslate"><span class="pre">open</span> <span class="pre">CE-20170824.pdf</span></code>, your computer will open the PDF in your default PDF reader.</p>
+</div>
+<div class="section" id="Exercise-9">
+<h3>Exercise 9<a class="headerlink" href="#Exercise-9" title="Permalink to this headline">¶</a></h3>
+<p>OK, so <code class="docutils literal notranslate"><span class="pre">CE-20170824.pdf</span></code> is just a paper someone wrote using this data. Since the name <code class="docutils literal notranslate"><span class="pre">CE-20170824.pdf</span></code> doesn’t tell us anything about this paper, let’s rename it using the <code class="docutils literal notranslate"><span class="pre">mv</span></code> command. Recall from DataCamp that <code class="docutils literal notranslate"><span class="pre">mv</span></code> stands for move, but that while it is moving files it can also rename them. If you “move” something from its current location back to its current location but with a different name, you’ve effectively re-named it!. So try re-naming <code class="docutils literal notranslate"><span class="pre">CE-20170824.pdf</span></code> to something more
+descriptive.</p>
+</div>
+</div>
+<div class="section" id="Organizing-Files">
+<h2>Organizing Files<a class="headerlink" href="#Organizing-Files" title="Permalink to this headline">¶</a></h2>
+<p>Up till now, we haven’t done anything that wouldn’t have been easier to do using a mouse and a regular graphical user interface. But now let’s suppose we want to analyze the data from 311 calls placed on Thursdays and Fridays to see if city workers are less likely to address problems that are reported on Fridays.</p>
+<p>In your normal operating system GUI, open up the <code class="docutils literal notranslate"><span class="pre">raw</span> <span class="pre">data</span></code> folder inside <code class="docutils literal notranslate"><span class="pre">NYC_311calls_2018</span></code>. As you will see, the folder is full of CSVs (comma-separated-values, a plain-text format for storing spreadsheets), with one file for each day.</p>
+<div class="section" id="Exercise-10">
+<h3>Exercise 10<a class="headerlink" href="#Exercise-10" title="Permalink to this headline">¶</a></h3>
+<p>Without using the command line (or another progamming language), how you would pull out all the files for Thursdays and Fridays and move them to a new folder without using the command line? Would you strategy work if you had 10 years of data instead of 1 year of data?</p>
+</div>
+<div class="section" id="Exercise-11">
+<h3>Exercise 11<a class="headerlink" href="#Exercise-11" title="Permalink to this headline">¶</a></h3>
+<p>One of the advantages of the command line is that you can use wildcards (the <code class="docutils literal notranslate"><span class="pre">*</span></code> symbol) to identify any files with a given pattern. For example, if I wanted to list all the CSV files in <code class="docutils literal notranslate"><span class="pre">raw</span> <span class="pre">data</span></code> from February, I would type <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">311calls_2018_2_*.csv</span></code>, since all the files from February (month 2) would have the same prefix (<code class="docutils literal notranslate"><span class="pre">311calls_2018_2_</span></code>) and suffix (<code class="docutils literal notranslate"><span class="pre">.csv</span></code>). Now, using the <code class="docutils literal notranslate"><span class="pre">mv</span></code> command and the <code class="docutils literal notranslate"><span class="pre">*</span></code> symbol, move all the Thursday and Friday files to a new folder. (Hint: you’ll
+probably need to <em>make</em> a new folder to put the files into first.)</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Practical DS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../class_schedule.html">CLASS SCHEDULE</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../setup_environment.html">Setting Up Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../managing_python_packages.html">Managing Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pandas_dataframes.html">Pandas 2: DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plotting_part2.html">Plotting, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../jupyter.html">Jupyter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git_and_github.html">Git and Github</a></li>
+</ul>
+<p class="caption"><span class="caption-text">SKILLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow.html">Workflow Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../what_is_big_data.html">What is Big Data?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../big_data_strategies.html">Working with Big Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance_solutions.html">Solving Performance Probs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributed_computing.html">Distributed Computing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick Eubank.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/exercises/Exercise_CommandLine_1_Basics.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

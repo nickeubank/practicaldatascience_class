@@ -1,0 +1,255 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Git and Github\n",
+    "\n",
+    "Since you've now worked through the \"hand-holding\" git tutorials, in these exercises we'll be a little more hands-off!\n",
+    "\n",
+    "In these exercises, we'll be practicing creating and contributing to projects using the \"Github Flow\" workflow you can [find summarized here](https://guides.github.com/introduction/flow/). Note this is not the only workflow out there -- different companies or groups will often develop their own modification of this basic strategy -- but most are pretty similar to this approach. \n",
+    "\n",
+    "Throughout these excercises, we will be working in teams, where each team consists of two pairs of students. Before you start, make sure you identify which pair is Pair A, and which pair is Pair B. Each *pair* should share a single computer and github account. \n",
+    "\n",
+    "So neither team sits around while the other works, we'll be setting up *two* repositories per team, so each pair can be working different repos simultaneously. \n",
+    "\n",
+    "Throughout these exercises, we'll be working with *shared repositories*, so you don't have to fork a repository before starting work."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(1)** The two pairs in each team should exchange the two github user names they will be using for the class. Once completed, they should move to positions on opposite sides of the room. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Part 1\n",
+    "\n",
+    "\n",
+    "### Pair A Instructions\n",
+    "\n",
+    "You will create a repository where we will use data from the World Development Indicators to examine the relationship between GDP per capita and CO2 emmissions per capita so we can better understand what countries are doing a better job of managing carbon emissions *conditional on equal economic output*. \n",
+    "\n",
+    "**(1)** **Pair A:** create a new repository on github called \"GDP_and_CO2\", add **Pair B** as collaborators under `Settings`, and create a local copy of the repository. \n",
+    "\n",
+    "**(2)** **Pair A:** add a README.txt that states the purpose of the repository. \n",
+    "\n",
+    "**(3)** **Pair A:** Write a script to read the WDI data at this url: \"https://github.com/nickeubank/MIDS_Data/raw/master/World_Development_Indicators/raw_WDI_Data_csv.zip\". (Write your code to read the data directly from this URL so someone who clones your repository can run your code and get you results without downloading more data). Then extract the variables for CO2 emissions per capita and GDP per capita for 2016, and reshape the data for analysis. \n",
+    "\n",
+    "**(4)** **Pair A:** Once complete, create a Pull Request to merge the data back into the main repository. Invite **Pair B** to review the PR (via github). \n",
+    "\n",
+    "**(5)** **Pair A:** Create an issue asking **Pair B** to complete the analysis of the relationship. \n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Pair B Instructions\n",
+    "\n",
+    "You will create a repository where we will use data from the World Development Indicators to examine the relationship between GDP per capita and infant mortality. A common debate in the economic development literature is whether it is enough to focus on economic development (in the hopes that improvements in economic welfare will also impact other aspects of development) or whether we need to instead pick very specific dimensions of development (like health outcomes) on which to focus. So let's see how closely economic development and health outomes are correlated. \n",
+    "\n",
+    "**(1)** **Pair B:** create a new repository on github \"GDP_and_InfantMortality\", and add **Pair A** as collaborators under `Settings`. \n",
+    "\n",
+    "**(2)** **Pair B:** add a README.txt that states the purpose of the repository. \n",
+    "\n",
+    "**(3)** **Pair B:** Write a script to read the WDI data at this url: \"https://github.com/nickeubank/MIDS_Data/raw/master/World_Development_Indicators/raw_WDI_Data_csv.zip\". (Write your code to read the data directly from this URL so someone who clones your repository can run your code and get you results without downloading more data). Then the columns for infant mortality rate and GDP per capita for 2016, and reshape the data for analysis. \n",
+    "\n",
+    "**(4)** **Pair B:** Once complete, create a Pull Request (PR) to merge the data back into the main repository. Invite **Pair A** to review the PR (via github). \n",
+    "\n",
+    "**(5)** **Pair B:** Create an issue asking **Pair A** to complete the analysis of the relationship by plotting mortality against GDP per capita. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Part 2: Reviewing your PR\n",
+    "\n",
+    "Each pair should *review* the PR from the other pair. To do so, `pull` the other team's code and run it on your own computer to make sure it works, then add comments in the PR. This will require (a) cloning the other pair's repository, and (b) switching to the right branch. \n",
+    "\n",
+    "This review should suggest at least one change to the other pair's PR. If the code in the other person's PR looks correct to you, you can ask for more comments to make the code easier to understand. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Part 3: Update and Merge your PRs\n",
+    "\n",
+    "Both pairs should have now gotten comments on their PR. Now each pair should modify their code to address the comments they got from the other group, and push their changes. Then ask the other pair to review your changes, and when everyone is happy with one another's edits, then merge your PRs!"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Part 4: Dealing with Conflicts\n",
+    "\n",
+    "Congratulations! You've completed your first full github workflow cycle! \n",
+    "\n",
+    "But truthfully, this was a *very* easy cycle. In reality, there are a few problems that often crop up, so let's explore what those look like now. \n",
+    "\n",
+    "The most common problem we face occurs when the repository you're working on changes *while you're working on your separate branch* in a way that causes conflicts. \n",
+    "\n",
+    "To illustrate, consider the following situation:\n",
+    "\n",
+    "- You clone a repository, create a branch, and start making some edits to the code that reshapes the WDI data. For example, maybe you decide you want to use GDP per capita in constant 2010 dollars instead of current US dollars.  \n",
+    "- While you are making these edits, someone else comes along and modifies the code that reshapes the WDI data too. For example, suppose they decide they want data from 2015 instead of 2016. \n",
+    "- The *other* person's code gets merged into the master branch while you're still working on your code. \n",
+    "\n",
+    "Now, *if* the specific lines of code that define what variables to use and what year to use are different lines of code, then when you go to merge your edits into the master branch (after your PR has been reviewed), then you won't have any problems. Github considers *each line of code* to be a separate entity, and so it will only compare lines of code you've modified to those in the master branch, and will just apply *only* those changes when you merge your PR. So no conflict!  \n",
+    "\n",
+    "Indeed, this is what happened above -- while you were working on your PR, the master branch you were working off changed with the other pair in your team directly edited the README file. But that didn't cause a problem for git, because it just combined (a) the changes made to README since you created your branch, and (b) the changes you've made to your data analysis file since you created your branch to create a new commit on the master branch. \n",
+    "\n",
+    "**But if the lines of code that select the year to use is the same line of code that selects the variables to keep** then github is stuck. It knows that *since the creation of your new branch* that same line of code was edited in both your file *and* in the master branch, and it doesn't know which one is correct. If it uses your version of that line of code, then it would delete those changes to use 2015 instead of 2016; but if it uses the code on the master branch, your changes to what variables you use will be ignored. \n",
+    "\n",
+    "So when it happens, github throws up its hands and says \"sorry, this is above my paygrade. There's a problem here I can't solve, so I need you to do it manually\". And that's what's called a merge conflict. \n",
+    "\n",
+    "So to get used to merge conflicts, let's cause one! Note that both teams will have to do a bunch of steps in sequence to get this to work. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(1)** First, make sure both groups have pulled the most recent versions of both repositories so we're all on the same page. \n",
+    "\n",
+    "**(2)** Both pairs should create a new branch on the *other* pair's repository. Call it \"modify_repo_title\". \n",
+    "\n",
+    "**(3)** In that branch, open the README.md and add to the title (the *very first line* of the readme) the year of data you're using (2016). \n",
+    "\n",
+    "**(4)** Commit and push your edits, and create a new pull request. If you look at your pull request, you should see:\n",
+    "\n",
+    "![ok_to_merge image](../images/ok_to_merge.png)\n",
+    "\n",
+    "That's because at the moment, since you created your branch, no other changes have been made to the master branch that might conflict with your edits, so if you wanted to merge right now, git would know that it should use your edits. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(5)** Both pairs should move back to *their own* repositories. Now, on the master branch, edit the README.md title (the *very* first line) by adding the details of the GDP per capita variable (e.g. \"Constant 2010 US$\"). \n",
+    "\n",
+    "Now commit your changes directly to the master branch and push those changes."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(6)** Now go back to your PR. You should see that because the master branch has now added edits *to the line you also edited since you created your branch,*, you can no longer just merge your edits! You'll see:\n",
+    "\n",
+    "![not ok to merge](../images/not_ok_to_merge.png)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Dealing with this situation requires several steps: \n",
+    "\n",
+    "1. Pull from the repository (so that all the new edits to the master branch are stored in your master branch)\n",
+    "2. Run \"git rebase master\". \n",
+    "\n",
+    "`git rebase` is a command to try and \"move\" the point from which your branch diverts from master by integrating all the changes that have happened since you first created your branch. Visually, you can imagine it like: \n",
+    "\n",
+    "![rebase](../images/rebase.png)\n",
+    "\n",
+    "Rebase can be useful for several things, not just conflicts. If you've been working on a branch for a while and you just want to bring all the features and updates from master into that branch, `rebase` pulls all those in. \n",
+    "\n",
+    "But in this case, `rebase` will *try* and integrate your branch with the master branch, and in doing so will give you a chance to address all the conflicts that have appeared (in this case, both you and your teammates editing the first line of the README.md at the same time). \n",
+    "\n",
+    "When you try and rebase, you should get a message that looks something like this:\n",
+    "\n",
+    "```\n",
+    "First, rewinding head to replay your work on top of it...\n",
+    "Applying: modify readme\n",
+    "Using index info to reconstruct a base tree...\n",
+    "M\tREADME.md\n",
+    "Falling back to patching base and 3-way merge...\n",
+    "Auto-merging README.md\n",
+    "CONFLICT (content): Merge conflict in README.md\n",
+    "error: Failed to merge in the changes.\n",
+    "Patch failed at 0001 modify readme\n",
+    "hint: Use 'git am --show-current-patch' to see the failed patch\n",
+    "\n",
+    "Resolve all conflicts manually, mark them as resolved with\n",
+    "\"git add/rm <conflicted_files>\", then run \"git rebase --continue\".\n",
+    "You can instead skip this commit: run \"git rebase --skip\".\n",
+    "To abort and get back to the state before \"git rebase\", run \"git rebase --abort\".\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Resolving your Conflict\n",
+    "\n",
+    "As this error message helpfully points out (`CONFLICT (content): Merge conflict in README.md`) you have a merge conflict in README.md. So let's open the README.md file and see what's going on. \n",
+    "\n",
+    "What you will see is that `git` has very kindly flagged the conflict it found, and provided you with both the version you wrote, and the version that it found in the master branch. It should look something like:\n",
+    "\n",
+    "```\n",
+    "    <<<<<<< HEAD\n",
+    "    [whatever text is in the master branch]\n",
+    "    =======\n",
+    "    [whatever text you created]\n",
+    "    >>>>>>> the_name_of_your_commit\n",
+    "\n",
+    "```\n",
+    "Think of these new lines as \"conflict dividers\". The ======= line is the \"center\" of the conflict. All the content between the center and the <<<<<<< HEAD line is content that exists in the current branch master which the HEAD ref is pointing to. Alternatively all content between the center and >>>>>>> new_branch_to_merge_later is content that is present in our merging branch.\n",
+    "\n",
+    "Your job is now to resolve this conflict by editing this text. You can keep the stuff on master, keep your edits, or write something new entirely. So just edit this block to your liking. \n",
+    "\n",
+    "(In this case, we want both things in the title, so you should probably write a new title with both additions). \n",
+    "\n",
+    "Once you've made those edits, then (as suggested in your error message) you should:\n",
+    "\n",
+    "```\n",
+    "Resolve all conflicts manually, mark them as resolved with\n",
+    "\"git add/rm <conflicted_files>\", then run \"git rebase --continue\".\n",
+    "You can instead skip this commit: run \"git rebase --skip\".\n",
+    "To abort and get back to the state before \"git rebase\", run \"git rebase --abort\".\n",
+    "```\n",
+    "\n",
+    "Once done, you'll then have to push your changes. **Note that just running `push` won't work!**. That's because rebasing fundamentally changes the content of the PR, and so to push you have to use `git push --force`. This is a protection to ensure you recognize you're making a permanent edit. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(7)** Now that you've pushed your README with conflicts resolved, go back to your PR. If you did everything right, you should now be able to merge your edits!"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

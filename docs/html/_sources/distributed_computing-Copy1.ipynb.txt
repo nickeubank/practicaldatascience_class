@@ -1,0 +1,481 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Distributed Computing with dask\n",
+    "\n",
+    "In this portion of the course, we'll explore distributed computing with a Python library called `dask`. \n",
+    "\n",
+    "`dask` is a library designed to help facilitate (a) manipulation of very large datasets, and (b) distribution of computation across lots of cores or physical computers. It is very similar to Apache Spark in the functionality it provides, but it is tightly integrated into `numpy` and `pandas`, making it *much* easier to learn than spark for users of those libraries. \n",
+    "\n",
+    "## What can dask do for me?\n",
+    "\n",
+    "To get a sense of why `dask` is so nice, let's begin with a demonstration. Suppose I have a pretty big dataset (say, [an 80GB CSV of all drug shipments in the United States from 2006 to 2012](https://www.washingtonpost.com/graphics/2019/investigations/dea-pain-pill-database/)). This data is too large for me to load into ram on my laptop directly, so if I were to work with it on my own, I'd do so by [chunking the data by hand](big_data_strategies.ipynb). But using `dask`, I can do the following: "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Standard setups\n",
+    "\n",
+    "import pandas as pd\n",
+    "import os\n",
+    "os.chdir('/users/nick/github/practicaldatascience/example_data/dask_data')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<table style=\"border: 2px solid white;\">\n",
+       "<tr>\n",
+       "<td style=\"vertical-align: top; border: 0px solid white\">\n",
+       "<h3 style=\"text-align: left;\">Client</h3>\n",
+       "<ul style=\"text-align: left; list-style: none; margin: 0; padding: 0;\">\n",
+       "  <li><b>Scheduler: </b>tcp://127.0.0.1:51648</li>\n",
+       "  <li><b>Dashboard: </b><a href='http://127.0.0.1:8787/status' target='_blank'>http://127.0.0.1:8787/status</a>\n",
+       "</ul>\n",
+       "</td>\n",
+       "<td style=\"vertical-align: top; border: 0px solid white\">\n",
+       "<h3 style=\"text-align: left;\">Cluster</h3>\n",
+       "<ul style=\"text-align: left; list-style:none; margin: 0; padding: 0;\">\n",
+       "  <li><b>Workers: </b>7</li>\n",
+       "  <li><b>Cores: </b>21</li>\n",
+       "  <li><b>Memory: </b>34.36 GB</li>\n",
+       "</ul>\n",
+       "</td>\n",
+       "</tr>\n",
+       "</table>"
+      ],
+      "text/plain": [
+       "<Client: 'tcp://127.0.0.1:51648' processes=7 threads=21, memory=34.36 GB>"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Here we start up a dask cluster. \n",
+    "# This creates a set of \"workers\". \n",
+    "# In this case, these workers are all on \n",
+    "# my computer, but if we wanted to connect\n",
+    "# to a cluster, we'd just past an IP address\n",
+    "# to `Client()` (the `n_workers` specifies\n",
+    "# the number of workers, so here I use 7)\n",
+    "\n",
+    "from dask.distributed import Client\n",
+    "client = Client(n_workers=7)\n",
+    "client"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# ARCOS Data on all drug shipments in US from 2006 to 2012\n",
+    "# I was unable to get this data \n",
+    "# into my repo, but you can download it here:\n",
+    "# https://d2ty8gaf6rmowa.cloudfront.net/dea-pain-pill-database/bulk/arcos_all_washpost.tsv.gz\n",
+    "\n",
+    "# Note that while pandas can read compressed files like this .tsv.gz,\n",
+    "# file, `dask` cannot. So if you want to do this at home, \n",
+    "# you have to decompress the data. \n",
+    "\n",
+    "import dask.dataframe as dd\n",
+    "\n",
+    "df = dd.read_csv('arcos_all_washpost.tsv', delimiter='\\t', \n",
+    "                dtype={'ACTION_INDICATOR': 'object',\n",
+    "                       'ORDER_FORM_NO': 'object',\n",
+    "                       'REPORTER_ADDRESS2': 'object',\n",
+    "                       'REPORTER_ADDL_CO_INFO': 'object',\n",
+    "                       'NDC_NO': 'object',\n",
+    "                       'UNIT': 'object'})"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Dask Series Structure:\n",
+       "npartitions=1\n",
+       "    float64\n",
+       "        ...\n",
+       "Name: morphine_equivalent_g, dtype: float64\n",
+       "Dask Name: series-groupby-sum-agg, 18931 tasks"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Extract year\n",
+    "df['date'] = dd.to_datetime(df.TRANSACTION_DATE, format=\"%m%d%Y\")\n",
+    "df['year'] = df.date.dt.year\n",
+    "\n",
+    "# Make an estimate of total morphine equivalent shipments\n",
+    "df['morphine_equivalent_g'] = (df['CALC_BASE_WT_IN_GM']) * df['MME_Conversion_Factor']\n",
+    "\n",
+    "# Drop extra vars\n",
+    "df = df[['year', 'morphine_equivalent_g', 'BUYER_STATE', 'BUYER_COUNTY']]\n",
+    "\n",
+    "# Collapse to total shipments to each county in each year.\n",
+    "collapsed = df.groupby(['year', 'BUYER_STATE', 'BUYER_COUNTY']).morphine_equivalent_g.sum()\n",
+    "collapsed"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "CPU times: user 36.6 s, sys: 4.48 s, total: 41.1 s\n",
+      "Wall time: 5min 21s\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "year  BUYER_STATE  BUYER_COUNTY\n",
+       "2010  KY           MONROE            6647.042730\n",
+       "2008  WI           LAFAYETTE          805.367603\n",
+       "2010  TX           ERATH             9607.819440\n",
+       "2008  AL           CLEBURNE          2148.062175\n",
+       "2009  NH           ROCKINGHAM      126879.972002\n",
+       "2010  TX           WARD              2277.728025\n",
+       "2006  IL           WARREN            1508.187783\n",
+       "2012  ME           OXFORD           21837.219420\n",
+       "2008  MT           MEAGHER            220.736779\n",
+       "      OH           HAMILTON        360608.079718\n",
+       "Name: morphine_equivalent_g, dtype: float64"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "%%time\n",
+    "final = collapsed.compute()\n",
+    "final.sample(10)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Voila! I get back my thinned out dataset with the new variable I wanted, all while never using more than about 2gb of RAM at any point. \n",
+    "\n",
+    "So let's discuss what just happened. \n",
+    "\n",
+    "1. First, when I ran `Client()`, `dask` started up a set of 7 new python processes on my computer (called \"workers\") it could call on for help. These are fully independent agents that *could* be running on different machines in a true cluster (though in this case, they're all on my laptop).\n",
+    "2. It then collected all the instructions I gave it for reading in the file, generating a new column, deleting extra columns, and grouping. **But it didn't actually execute any code**. That's why when I typed `collapsed`, what I got back was a dataframe with structure but no data -- `dask` had figured out roughly what the result of my commands would look like, but hadn't actually computed the result. \n",
+    "3. Then, when I ran `collapsed.compute()`, `dask` came up with a set of assignments it could give to its workers to get me what I wanted and it started to actually compute the table I requested. In particular:\n",
+    "    - each worker loaded a chunk of the data, did the observation-level manipulations I wanted, and dropped extra columns. \n",
+    "    - then to execute the groupby, it then collapsed the data in each chunk, passed those collapsed chunks to a common worker who then re-collapsed them further, then gathered them again under (potentially) another worker and collapsed further until all the data had been collapsed. \n",
+    "    - Finally, after all the data had been collapsed, the data was passed back to me (the client session) as the variable `final`. \n",
+    "    \n",
+    "And it did it all in 6 minutes!"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## \"Um... why didn't you tell us about this before?\" I hear you say...\n",
+    "\n",
+    "\"This sure seems like this is easier than [chunking by hand](big_data_strategies)!!!!\"\n",
+    "\n",
+    "The answer is that these distributed computing tools are often very fragile and opaque, and it's easy to get in trouble using them, and hard to figure out why if you don't understand the underlying principles that govern their operation.  \n",
+    "\n",
+    "This example was carefully chosen. I used only manipulations that `dask` is really good at, and I have the experience to implement them in a way that works. But do what I did above in slightly different ways, and chaos would ensure. Ok, not chaos. But you're computer would probably crash. \n",
+    "\n",
+    "The biggest challenge in using a tool like `dask` or `spark` (they operate on the same principles -- more on that below) is that to prevent crashes, you have to understand how and why dask is chunking your data. And the best way to do that is to get experience chunking by hand. \n",
+    "\n",
+    "For example, one of the key features of distributing computing is that they don't run code as soon as you type it. Instead, they just keep track of what you want and wait until you run `.compute()` to actually execute your code. Why? Because if `dask` had run each command as I entered it and passed the result back to me, it would have crashed my computer. \n",
+    "\n",
+    "Recall that the whole reason we're using dask is precisely because we knew that loading the whole dataset at once would take up more memory than I have available. It's only because we only loaded a few chunks of the data at a time, thinned out those chunks by dropping variables, and then collapsed by county-state-year that we ended up with a dataset that was small enough that it would fit in memory.\n",
+    "\n",
+    "In other words, this only worked because I knew that the steps after the intial load would reduce the size of the dataset enough that when I ran `.compute()`, the result I got back would be small enough to fit in memory. Had I just run:\n",
+    "\n",
+    "```python\n",
+    "df = dd.read_csv('arcos_all_washpost.tsv', delimiter='\\t', \n",
+    "                dtype={'ACTION_INDICATOR': 'object',\n",
+    "                       'ORDER_FORM_NO': 'object',\n",
+    "                       'REPORTER_ADDRESS2': 'object',\n",
+    "                       'REPORTER_ADDL_CO_INFO': 'object',\n",
+    "                       'NDC_NO': 'object',\n",
+    "                       'UNIT': 'object'})\n",
+    "df.compute()\n",
+    "```\n",
+    "\n",
+    "`dask` would have tried to hand the full dataset back to me, and my computer would have crashed, just as it would had I tried to read the full dataset with `pandas`. \n",
+    "\n",
+    "So understanding the *intuition* of chunking is basically a pre-requisite to using these tools effectively. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Vocabulary\n",
+    "\n",
+    "Now that we've seen this example, let's formally introduce some distributed computing vocabulary:\n",
+    "\n",
+    "- **Delayed Execution** (also sometimes called \"lazy evaluation\"): The practice of not executing code as soon as you type it, but rather accumulating a set of requests, then executing them when instructed. This allows distributing computing systems to optimize how they move around data and get things done, and ensures that you don't end up with the system trying to shove a massive dataset into ram that's too small. \n",
+    "- **Client**: The central process (here, Python process) where code is being entered.\n",
+    "- **Workers**: Other processes that are assigned work, and which eventually pass results back to the client. \n",
+    "- **Scheduler**: The part of the system that manages the assignment of tasks to different workers.\n",
+    "- **map-reduce**: The name for the process of distributing sub-problems to workers (`map`), then processing them in a way that allows the results to be recombined (`reduce`). `map`s and `reduce`s are kind of the building blocks of distributed systems, though when working with `dask` you won't usually have to manage the assignment or recombination of tasks yourself (they're happening behind the scenes). "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Let's Learn More dask!\n",
+    "\n",
+    "OK, now that we have the basic idea of `dask` in hand, please watch the following (*very* well organized) talk on `dask`. Then come back here and we can talk some more!\n",
+    "\n",
+    "[Matthew Rocklin on Dask](https://www.youtube.com/watch?v=RA_2qdipVng)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## There is no magic here\n",
+    "\n",
+    "\n",
+    "As noted in that video, one of the very nice things about `dask` (and one of the reasons it's been able to offer so much functionality so quickly) is that it really is just an extension of `numpy` and `pandas`. There is no magic here. \n",
+    "\n",
+    "For example, suppose we wanted to find the largest number of pills in a single shipment in our ARCOS dataset, but we don't have the memory to load the whole dataset into memory at once. How would we get that number? Probably by doing something like:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "3115000.0"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "import os\n",
+    "\n",
+    "os.chdir('/users/nick/github/practicaldatascience/example_data/dask_data')\n",
+    "\n",
+    "# Create an interator of the data so \n",
+    "# it doesn't all load at once\n",
+    "df = pd.read_csv('arcos_all_washpost.tsv', \n",
+    "                 delimiter='\\t', \n",
+    "                 iterator=True, \n",
+    "                 chunksize=100000,\n",
+    "                 usecols=['DOSAGE_UNIT', 'Measure']\n",
+    "                )\n",
+    "\n",
+    "\n",
+    "# Find the max from each chunk\n",
+    "max_candidates = list()\n",
+    "for chunk in df:\n",
+    "    # Subset for pill shipments\n",
+    "    chunk = chunk[chunk['Measure'] == \"TAB\"] \n",
+    "\n",
+    "    # Find largest in this chunk\n",
+    "    max_candidates.append(chunk['DOSAGE_UNIT'].max())\n",
+    "\n",
+    "# Now gather those candidates together and \n",
+    "# find the maximum of all the chunk maximums. \n",
+    "np.max(max_candidates)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Wow... that is a LOT of pills!"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now suppose we asked dask to do the same thing: "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "3115000.0"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df = dd.read_csv('arcos_all_washpost.tsv', delimiter='\\t', \n",
+    "                dtype={'ACTION_INDICATOR': 'object',\n",
+    "                       'ORDER_FORM_NO': 'object',\n",
+    "                       'REPORTER_ADDRESS2': 'object',\n",
+    "                       'REPORTER_ADDL_CO_INFO': 'object',\n",
+    "                       'NDC_NO': 'object',\n",
+    "                       'UNIT': 'object'})\n",
+    "\n",
+    "df = df[df['Measure'] == \"TAB\"] \n",
+    "max_shipment = df['DOSAGE_UNIT'].max()\n",
+    "max_shipment.compute()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "What dask is actually doing is exactly what you just did! It reads in chunks of the dataset, calculates `morphine_equivalent_g` for each chunk, then calculates the maximum value for that chunk. Then it gathers all those maximium values, and finds the maximum of all those chunk maximums. The only difference is that it loads and evaluations chunks in parallel, and it's parallel workers then have to pass their maximum value candidates to a central node for the final evaluation. \n",
+    "\n",
+    "Moreover, when I said that's exactly what `dask` did, I don't just mean that you and dask are doing the same thing *in principle* -- `dask` is built on pandas, so it really is calling `pd.read_csv`, and the `pandas` `.max()` method, just like you. \n",
+    "\n",
+    "Dask's developers were smart, and didn't want to reinvent the wheel -- they just created a package full or recipes for using numpy/pandas to (a) divide tasks into smaller pieces it can distribute to different workers  (map), and to (b) recombine the results of sub-problems to give you a single answer (reduce). \n",
+    "\n",
+    "But those recipes are just made of the pandas and numpy code you know and love. Or at least tolerate begrudingly. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## dask versus Spark"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "In terms of funcationality, `dask` and `spark` basically do the same things. Both are tools for distributed computing across many computers, and conceptually they work in basically the same ways:  \n",
+    "\n",
+    "- Both offer both low-level tools (things like `map`/`filter` in pyspark, and `delayed` in dask) as well as higher-level abstractions (`spark` has `spark dataframes`, `dask` has `dask arrays`; `spark` has RDDs, `dask` has `dask arrays`). \n",
+    "- Both are fault tolerate (if one machine in your cluster dies, the system knows what the machine that died was doing and can assign it to another cluster). \n",
+    "- Both make use of delayed execution / lazy evaluation to allow the system to develop efficient plans for completing a computation efficiently. \n",
+    "- Both can be run both on your own computer, or on a cluster of lots of computers. \n",
+    "\n",
+    "The differences instead come down to implementation details. `dask`, for example, is for Python users. It's written in Python, and it's a relatively simple library that just creates recipes for parallelizing `numpy` and `pandas` functions (and uses `numpy` and `pandas` to execute those recipes). **And because it was designed for Python users, the syntax almost always matches that of numpy and pandas.**\n",
+    "\n",
+    "`spark` is a stand-alone system. It's built to run on Java virtual machines, and `spark` itself is written in a language called `Scala`. It is not a tool for pandas users per se, and so it has its own syntax for manipulating datasets that is distinct from that of `numpy` and `pandas`. \n",
+    "\n",
+    "As for which is more popular, as is so often the case with software, it depends on where you're working. In this class, I've decided to teach `dask` because you don't have to learn a new syntax, so you can instead just focus on learning how distributed computing works. But if you get a job someday that requires you to work with `spark`, don't panic -- you'll find that all the concepts you've learned for using `dask` also apply to `spark` -- you'll just have to learn some new syntax. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## What else can dask do?\n",
+    "\n",
+    "At this point, we've mostly emphasized what dask can do in terms of the data wrangling of dataframes. However, dask has a number of additional functionalities to be aware of:\n",
+    "\n",
+    "- Working with dask arrays: dask has a parallelized version of numpy arrays\n",
+    "- Parallelizing arbitrary functions: you can write your own parallelized functions with `delayed`\n",
+    "- Distributed machine learning: dask has parallelized SOME machine learning methods in [dask-ml](https://dask-ml.readthedocs.io/en/latest/)\n",
+    "- dask can be used with different tools for parallelization other than `distributed` (for example, it can do some parallelism through multi-threading). However... it seems like everyone seems to agree at this point you should just use `distributed` all the time. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## What can't dask do?\n",
+    "\n",
+    "Because dask is basically a library full of little recipes for parallelizing common python, numpy, and pandas functions, you will occassionally find that there are some things that the authors of dask just haven't implemented (usually because some operations are *really* hard to parallelize). Here are guides to what you can expect to work and what is unlikely to work with dask:\n",
+    "\n",
+    "- [When using dask dataframes](https://docs.dask.org/en/latest/dataframe.html#scope)\n",
+    "- [When using dask arrays](https://docs.dask.org/en/latest/array.html#scope)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## If you really want to get into dask...\n",
+    "\n",
+    "Then *after* doing the exercise below (which I think is actually the most accessible to those taking this class), I would suggest following along with [this three hour tutorial](https://www.youtube.com/watch?v=mqdglv9GnM8) that goes through dask from its most basic tools up through dask arrays and dask dataframes (with exercises!). \n",
+    "\n",
+    "Then also be sure to check out [dask best practices here](https://docs.dask.org/en/latest/best-practices.html)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Exercises\n",
+    "\n",
+    "Exercises can be found [here](exercises/Exercise_dask.ipynb)\n",
+    "\n",
+    "If you want more, you can find tutorials written by the dask team [here](https://github.com/dask/dask-tutorial). \n",
+    "\n",
+    "(Note: all these tutorials are great, but as the focus of this class is on real world tabular data, we're gonna focus on those exercises). \n",
+    "\n",
+    "[When you're done, you can find a dask cheatsheet here for future reference!](cheatsheets.ipynb)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

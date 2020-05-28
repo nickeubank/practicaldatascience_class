@@ -1,0 +1,70 @@
+﻿"Date, Rm",Topic,Do Before Class,In-Class Exercise
+"Tues, Aug 27, Rm 270",- Class Introduction,N/A,
+"Thurs, Aug 29, Rm CC","- Command Line
+- Jupyter Lab / Notebooks","- `Command Line Basics <command_line_part1.ipynb>`_
+- Read and sign syllabus
+- `Register with IPUMS <https://uma.pop.umn.edu/usa/user/new>`_
+- `Register for DataCamp <https://www.datacamp.com/home>`_
+- `Advanced Command Line <command_line_part2.ipynb>`_
+- `Setup Python <setup_environment.ipynb>`_
+- `Jupyter Tutorial <jupyter.ipynb>`_","- `Link 1 <exercises/Exercise_CommandLine_1_Basics.ipynb>`_
+- `Link 2 <exercises/Exercise_CommandLine_2_Advanced.ipynb>`_
+- `Link 3 <exercises/Exercise_jupyterlab.ipynb>`_"
+Friday Aug 30,**SOFTWARE INSTALL DAY**,A day of trouble shooting install issues,
+"Tues, Sep 03, Rm 270","- Ipython
+- Packages
+- Python v. R / variables as pointers","- `Follow this link <https://gke.mybinder.org/v2/gh/ipython/ipython-in-depth/master?filepath=binder/Index.ipynb>`_ , then click ""Ipython - Beyond plain python"" and read that notebook. 
+- `Python packages <managing_python_packages.ipynb>`_
+- `variables v objects <vars_v_objects.ipynb>`_",`Link <exercises/Exercise_variables_v_objects.ipynb>`_
+"Thurs, Sep 05, Rm 270",Numpy Basics,"- JVP pp 33-77
+- IF did not complete DataCamp: Do Numpy Section
+- `Numbers in Computer <ints_and_floats.ipynb>`_",`Link <exercises/Exercise_numpy.ipynb>`_
+"Tues, Sep 10, Rm 330",Pandas: Series,- `Pandas 1: Series <pandas_series.ipynb>`_,`Link <exercises/Exercise_series.ipynb>`_
+"Thurs, Sep 12, Rm 270",Pandas: DataFrames,- `Pandas 2: DataFrames <pandas_dataframes.ipynb>`_,`Link <exercises/Exercise_dataframe.ipynb>`_
+"Tues, Sep 17, Rm CC",Intro to Plotting with PlotNine,"- `Plotting in Python, Part 1 <plotting_part1.ipynb>`_",`Link <exercises/Exercise_plotting_part1.ipynb>`_
+"Thurs, Sep 19, Rm CC",Advanced Plotting,"- `Plotting in Python, Part 2 <plotting_part2.ipynb>`_",`Link <exercises/Exercise_plotting_part2.ipynb>`_
+"Tues, Sep 24, Rm 330",Pandas: Indices & Missing,"- WM pp 136-142
+- JVP pp 115-139
+- `Views and Copies in Pandas <views_and_copies_in_pandas.ipynb>`_","`Link 1 <exercises/Exercise_indices.ipynb>`_
+`Link 2 <exercises/Exercise_missing.ipynb>`_"
+"Thurs, Sep 26, Rm 270","- Pandas: Loading and saving data
+- Pandas: Cleaning","- WM Chapter 6
+- WM Chapter 7
+- `Python Strings <https://realpython.com/python-data-types/#strings>`_",`Link <exercises/Exercise_cleaning.ipynb>`_
+"Tues, Oct 01, Rm 270",- Pandas: Merging,- JVP pp 149 - 157,`Link <exercises/Exercise_merging.ipynb>`_
+"Thurs, Oct 03, Rm 330","Big Data: What is it, how do I work with it?","- `What is Big Data? <what_is_big_data.ipynb>`_
+- `Strategies for Big Data <big_data_strategies.ipynb>`_
+- Download the dataset linked at the top of the linked exercise before class.",`Link <exercises/Exercise_bigdata.ipynb>`_
+"Tues, Oct 08, Rm ",FALL BREAK,,
+"Thurs, Oct 10, Rm 330",Collaborating using Github,- `Git and Github <git_and_github.ipynb>`_,`Link <exercises/Exercise_git.ipynb>`_
+"Tues, Oct 15, Rm 270",Git and Github 2,,`Link <exercises/Exercise_git_2.ipynb>`_
+"Thurs, Oct 17, Rm 330","- Defensive Programming
+- Workflow
+- Getting Help Online","- `Defensive Programming <defensive_programming.ipynb>`_
+- `Workflow Management <workflow.ipynb>`_
+- `Getting Help <getting_help.ipynb>`_",**Discuss mid-semester project in class**
+"Tues, Oct 22, Rm 330",Groupby / Split-Apply-Combine,"- WM pp Chpt 10, 10.1, 10.2, 10.3",`Link <exercises/Exercise_groupby.ipynb>`_
+"Thurs, Oct 24, Rm 330","- Pandas: Reshaping
+- Pandas: Categoricals","- WM 8.3
+- `Pandas reshaping (with pics!) <https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html>`_
+- `What is goal of reshaping? <https://www.jstatsoft.org/index.php/jss/article/view/v059i10/v59i10.pdf>`_
+- Categoricals: WM 12.1",`Link <exercises/Exercise_reshaping.ipynb>`_
+"Tues, Oct 29, Rm 270",Speed and Performance in Python,"- `Understanding Performance <performance_understanding.ipynb>`_
+- `Improving Performance <performance_solutions.ipynb>`_",[finish groupby and reshaping exercises]
+"Thurs, Oct 31, Rm 330",Statistics with statsmodels,"- WM Chapter 13, 13.1, 13.2, 13.3
+- `Skim ""Linear Models"" <https://www.statsmodels.org/stable/regression.html>`_
+- `Skim ""Discrete Dep Var Models"" <https://www.statsmodels.org/stable/discretemod.html>`_
+- `Patsy: Differences from R <https://patsy.readthedocs.io/en/latest/R-comparison.html>`_",`Link <exercises/Exercise_statsmodels.ipynb>`_
+"Tues, Nov 05, Rm 270",Machine Learning with sckikit-learn,"- JVP pp 331 - 359
+- **Opioid Project Rough Draft Due**",`Link <exercises/Exercise_scikit_learn.ipynb>`_
+"Thurs, Nov 07, Rm 330",- Defining Your Own Estimators,"- Review linear regression as matrix manipulations. `Here's a nice review. <https://www.stat.purdue.edu/~boli/stat512/lectures/topic3.pdf>`_
+- `Review how to define classes <https://realpython.com/python3-object-oriented-programming/>`_",`Link <exercises/Exercise_codeyourownlinearregression.ipynb>`_
+"Tues, Nov 12, Rm 330","- Data Science: Backwards Design
+- Regular Expressions",- `Regular Expressions Tutorial <https://scotch.io/tutorials/an-introduction-to-regex-in-python>`_,
+"Thurs, Nov 14, Rm 330","- Parallelism 
+- Distributed Computing, Part 1","- `Parallel Computing <parallelism.ipynb>`_
+- `Distributed Computing with dask <distributed_computing.ipynb>`_",`Link <exercises/Exercise_dask.ipynb>`_
+"Tues, Nov 19, Rm 270","Distributed Computing, Part 2",,`Link <exercises/Exercise_dask_realdata.ipynb>`_
+"Thurs, Nov 21, Rm 330","Distributed Computing, Part 3",**Opioid Project Final Draft Due**,
+"Tues, Nov 26, Rm 270",Julia,- `Julia for Academic Research <https://www.youtube.com/watch?v=C4dMYHzW-SY>`_,- Discuss Final Project
+"Thurs, Nov 28, Rm ",THANKSGIVING BREAK,,

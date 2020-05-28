@@ -1,0 +1,138 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Dask Arrays"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/Users/Nick/miniconda3/lib/python3.7/site-packages/distributed/dashboard/core.py:72: UserWarning: \n",
+      "Port 8787 is already in use. \n",
+      "Perhaps you already have a cluster running?\n",
+      "Hosting the diagnostics dashboard on a random port instead.\n",
+      "  warnings.warn(\"\\n\" + msg)\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<table style=\"border: 2px solid white;\">\n",
+       "<tr>\n",
+       "<td style=\"vertical-align: top; border: 0px solid white\">\n",
+       "<h3 style=\"text-align: left;\">Client</h3>\n",
+       "<ul style=\"text-align: left; list-style: none; margin: 0; padding: 0;\">\n",
+       "  <li><b>Scheduler: </b>tcp://127.0.0.1:53900</li>\n",
+       "  <li><b>Dashboard: </b><a href='http://127.0.0.1:53901/status' target='_blank'>http://127.0.0.1:53901/status</a>\n",
+       "</ul>\n",
+       "</td>\n",
+       "<td style=\"vertical-align: top; border: 0px solid white\">\n",
+       "<h3 style=\"text-align: left;\">Cluster</h3>\n",
+       "<ul style=\"text-align: left; list-style:none; margin: 0; padding: 0;\">\n",
+       "  <li><b>Workers: </b>4</li>\n",
+       "  <li><b>Cores: </b>16</li>\n",
+       "  <li><b>Memory: </b>34.36 GB</li>\n",
+       "</ul>\n",
+       "</td>\n",
+       "</tr>\n",
+       "</table>"
+      ],
+      "text/plain": [
+       "<Client: 'tcp://127.0.0.1:53900' processes=4 threads=16, memory=34.36 GB>"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "from dask.distributed import Client\n",
+    "client = Client()  # set up local cluster on your laptop\n",
+    "client"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([ 9.99996192,  9.99983961, 10.0000642 , 10.00011829,  9.99981247,\n",
+       "       10.0000629 ,  9.9999176 ,  9.99990122, 10.00007378, 10.00021071,\n",
+       "       10.00015048, 10.00004534, 10.00000995,  9.9998258 , 10.00003053,\n",
+       "        9.99985739,  9.99997498, 10.0000756 , 10.00001611, 10.00008872,\n",
+       "        9.99991575, 10.0000443 ,  9.99997492, 10.00021735, 10.00005711,\n",
+       "       10.00013284, 10.00003785, 10.00004924,  9.99980847, 10.00007201,\n",
+       "        9.99976336,  9.99996675, 10.0000016 ,  9.99994215, 10.00012192,\n",
+       "        9.9998951 , 10.00017538, 10.00005743, 10.00009942, 10.00018932,\n",
+       "       10.00003011, 10.00009538, 10.00006093, 10.00004813, 10.00014559,\n",
+       "       10.00018477,  9.99988298,  9.9999946 ,  9.99995312, 10.00021956,\n",
+       "        9.99993125, 10.00005437,  9.99987484, 10.000146  , 10.00002372,\n",
+       "        9.9999108 ,  9.9997738 ,  9.99998935, 10.00003106, 10.00016322,\n",
+       "       10.0001492 ,  9.99985128, 10.00017469,  9.99999674, 10.00006277,\n",
+       "        9.9998971 ,  9.99998568,  9.99994525,  9.99984012,  9.99986232,\n",
+       "        9.99985127, 10.00013538, 10.000038  ,  9.99999042, 10.00006757,\n",
+       "       10.00004436, 10.00013163,  9.99980114, 10.00003631, 10.00003499,\n",
+       "        9.99990483, 10.00012976, 10.00013775, 10.00030241,  9.99993771,\n",
+       "        9.99979958, 10.0000159 ,  9.99984941, 10.00011485, 10.00019469,\n",
+       "        9.99979537, 10.00009527, 10.00000316, 10.00003495,  9.99997628,\n",
+       "        9.99981594,  9.99983993, 10.00001418,  9.99986968, 10.00016302])"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import numpy as np\n",
+    "import dask.array as da\n",
+    "\n",
+    "x = da.random.normal(10, 0.1, size=(600000, 20000),\n",
+    "                     chunks=(1000, 1000))\n",
+    "y = x.mean(axis=0)[:100] \n",
+    "y.compute()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

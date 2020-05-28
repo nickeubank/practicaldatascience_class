@@ -1,0 +1,506 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Big Data Strategies &#8212; Practical Data Science</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Speed in Python" href="performance_understanding.html" />
+    <link rel="prev" title="What is Big Data?" href="what_is_big_data.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Big-Data-Strategies">
+<h1>Big Data Strategies<a class="headerlink" href="#Big-Data-Strategies" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Step-1:-Do-I-Have-“Big-Data”?">
+<h2>Step 1: Do I Have “Big Data”?<a class="headerlink" href="#Step-1:-Do-I-Have-“Big-Data”?" title="Permalink to this headline">¶</a></h2>
+<p>Oddly, this is not actually a straight-forward question for two reasons:</p>
+<ol class="arabic simple">
+<li><p><strong>Programs often copy data in order to manipulate it.</strong> When you, say, sort an array, what your computer actually does is create a new empty array, then move over entries from your original array into the new array one entry at a time (in sorted order). While it does then erase the original array, while it’s working it effectively has two copies of your array. As a result, the fact that you have 16gb of RAM doesn’t mean you can easily work with a 14gb file. As a general rule, you need <em>at
+least</em> two times as much memory as your file takes up when first loaded.</p></li>
+<li><p><strong>The size of data changes as you change its format.</strong> For example, if you’re reading data from an inefficient file format (like a .csv text file), it may be the case that a file that is 10gb on disk may actually be only a few gb once you load it into a program like Python that knows how to store data more efficiently.</p></li>
+</ol>
+<div class="section" id="So-how-do-I-check-to-see-if-my-data-is-fitting-in-memory?">
+<h3>So how do I check to see if my data is fitting in memory?<a class="headerlink" href="#So-how-do-I-check-to-see-if-my-data-is-fitting-in-memory?" title="Permalink to this headline">¶</a></h3>
+<p>If your program starts using more space than you have main memory, your operating system will usually just start using your harddrive for extra space without telling you (this is called “virtual memory”, and is nice in that it prevents your computer from crashing, though it will slow stuff down a lot). As a result, you won’t always get an error message if you try and load a file to is much bigger than main memory.</p>
+<p>To avoid this, use one of the tools provided by your operating system to monitor whether it’s using the harddrive:</p>
+<ul class="simple">
+<li><p><strong>OSX:</strong> OSX comes with a program called <a class="reference external" href="https://support.apple.com/en-us/HT201464#memory">Activity Monitor</a> in the Applications &gt; Utilities folder. The memory tab of Activity Monitor has a graph at the bottom called “Memory Pressure”. If this is green, you’re good. If it’s yellow or red, you’re actively going back and forth to your harddrive. (Note your computer may be using “virtual memory” without affecting performance if it’s just storing away things you aren’t actively using).</p></li>
+<li><p><strong>Windows:</strong> Windows has a program called <a class="reference external" href="http://en.wikipedia.org/wiki/Resource_Monitor">“Resource Monitor”</a> that shows data on memory use. If you get near 100% Used Physical Memory, your computer is probably using the harddrive.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="Step-2:-Pick-a-Strategy">
+<h2>Step 2: Pick a Strategy<a class="headerlink" href="#Step-2:-Pick-a-Strategy" title="Permalink to this headline">¶</a></h2>
+<p>If you have big data, you basically have four options:</p>
+<ol class="arabic simple">
+<li><p>Use chunking to trim and thin out your data so it <em>does</em> fit in memory (this works if the data you were given is huge, but the final analysis dataset you want to work with is small).</p></li>
+<li><p>Buy more memory. Seriously, consider it.</p></li>
+<li><p>Minimize the penalties of working off your harddrive (not usually practical for data science)</p></li>
+<li><p>Break your job into pieces and distribute over multiple machines.</p></li>
+</ol>
+<div class="section" id="Strategy-1:-Trim-till-it-fits">
+<h3>Strategy 1: Trim till it fits<a class="headerlink" href="#Strategy-1:-Trim-till-it-fits" title="Permalink to this headline">¶</a></h3>
+<p>At least in my experience, <em>most</em> of the time people have a dataset that’s too big to load into main memory, they’re in a situation where the <em>raw</em> data they want to work with is too big for main memory, but the dataset they are trying to create for analysis will not be. This can happen when the raw data you’re working with:</p>
+<ul class="simple">
+<li><p>has lots of variables you don’t need for your analysis,</p></li>
+<li><p>has lots of observations you don’t need for your analysis,</p></li>
+<li><p>the data is at a more granular level then you need for analysis (e.g. it’s individual level, but you only need averages for different groups), or</p></li>
+<li><p>where data is formatted in a really efficient manner where better data management would allow it to fit.</p></li>
+</ul>
+<p>In these situations, the go-to strategy is <strong>chunking</strong>, which is the practice of:</p>
+<ul class="simple">
+<li><p>loading only a small part of your data, preprocessing it (dropping extra variables, dropping extra observations, taking averages, and/or storing the data in more efficient formats), and saving it away,</p></li>
+<li><p>then recombining all the now substantially smaller bits into a new analysis dataset that has everything you want and fits into data.</p></li>
+</ul>
+<p>Chunking is pretty easy with most data formats. In pandas, for example, you can specify what rows you want to import using either the <code class="docutils literal notranslate"><span class="pre">nrows</span></code> (to specify you only want the first <code class="docutils literal notranslate"><span class="pre">n</span></code> rows read into memory), or you can use the combination of <code class="docutils literal notranslate"><span class="pre">skiprows</span></code> and <code class="docutils literal notranslate"><span class="pre">nrows</span></code> to get a specific set of rows (i.e. “start right after the number of rows in <code class="docutils literal notranslate"><span class="pre">skiprows</span></code>, then take <code class="docutils literal notranslate"><span class="pre">nrows</span></code> from there). Or if you really want to be fancy, you can actually just use <code class="docutils literal notranslate"><span class="pre">read_csv</span></code> as an interator using
+<code class="docutils literal notranslate"><span class="pre">iterator=True</span></code> and <code class="docutils literal notranslate"><span class="pre">chunksize</span></code>, which will return an object that you can loop over and which pulls in the number of rows you specify in <code class="docutils literal notranslate"><span class="pre">chunksize</span></code> each pass of the loop.</p>
+<p>Types of thinning you may wish to do during import:</p>
+<ul class="simple">
+<li><p>Drop unneeded variables</p></li>
+<li><p>Convert strings variables to numeric or categorical/factor datatypes (Strings almost always have the largest memory footprint)</p></li>
+<li><p>Drop unneeeded observations</p></li>
+<li><p>Collapse observations</p></li>
+<li><p>Change numeric datatypes to more compressed formats (e.g. using <code class="docutils literal notranslate"><span class="pre">Float32</span></code> instead of <code class="docutils literal notranslate"><span class="pre">Float64</span></code> when you know you don’t need all the precision offered by <code class="docutils literal notranslate"><span class="pre">Float64</span></code>. See <a class="reference internal" href="ints_and_floats.html"><span class="doc">numbers in machines</span></a> for a refresher on tradeoffs from different data types. **Be especially careful compressing Ints from Int64 to Int32: it’s hard to overflow Int64, but very easy to overflow Int32!).</p></li>
+</ul>
+<p>Finally, note that some import functions can do this automatically without you having to chunk your data manually. For example, <code class="docutils literal notranslate"><span class="pre">read_csv</span></code> has a <code class="docutils literal notranslate"><span class="pre">usecols</span></code> option (where you can specify a subset of columns you want to keep), and a <code class="docutils literal notranslate"><span class="pre">dtypes</span></code> option (for specifying the data format in which you want data stored <em>as it’s streaming in</em> from disk).</p>
+<p><strong>Note: Memory management in Python:</strong> If you’re chunking, you need to know about how Python manages memory.</p>
+<p>In general, we never think about memory management. When you create an object, Python allocates it memory, and when no one is using an object any more, or when your code finishes running, Python throws it away. Great.</p>
+<p>But when you’re pushing the limits of your computer, it’s sometimes important to intervene to encourage Python to delete things sooner than it might otherwise.</p>
+<p>In general, Python will only remove something from memory <em>when there is no longer any way for the programmer to access that data</em>. So for example, if you ran the code:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;hello!&#39;</span>
+</pre></div>
+</div>
+</div>
+<p>In line 1, Python would create your list in memory. Then in line 2, it would delete that list since the only way you previously had to access that list (the variable <code class="docutils literal notranslate"><span class="pre">x</span></code>) has been reassigned, leaving you incapable of getting to the list.</p>
+<p>Why does this matter to you? Because if you have a big thing that you’re done with, and you want to delete it, the only way to do it is to reassign all the variables that previously pointed to it it something else (by convention, you often reassign them to <code class="docutils literal notranslate"><span class="pre">None</span></code>), or you use the <code class="docutils literal notranslate"><span class="pre">del</span></code> command:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="k">del</span> <span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<p>Just remember that <code class="docutils literal notranslate"><span class="pre">del</span></code> removes the <em>variable</em>, not the object. The object will only disappear if <em>nothing</em> points to it. So in this situation:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">x</span>
+<span class="k">del</span> <span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<p>Python won’t delete the list because while you deleted <code class="docutils literal notranslate"><span class="pre">x</span></code>, the list is still accessible via <code class="docutils literal notranslate"><span class="pre">y</span></code>!</p>
+</div>
+<div class="section" id="Strategy-2:-Buy-More-Memory">
+<h3>Strategy 2: Buy More Memory<a class="headerlink" href="#Strategy-2:-Buy-More-Memory" title="Permalink to this headline">¶</a></h3>
+<p>Don’t overlook this option. You can get 100gb of RAM new for about $300 (and this will only go down over time), which means you can easily buy a desktop PC with all the ram and processing power you want for well under a thousand dollars. That’s not a small amount of money, but <em>your</em> time as a data scientist is also valuable (both to you and to whoever is paying you), and if you can obviate having to deal with all these kinds of problems buy just buying a bigger computer (especially if it helps
+you avoid the strategies described below), it can be an incredibly good investment.</p>
+</div>
+<div class="section" id="Strategy-3:-Minimize-disk-access-penalties.">
+<h3>Strategy 3: Minimize disk-access penalties.<a class="headerlink" href="#Strategy-3:-Minimize-disk-access-penalties." title="Permalink to this headline">¶</a></h3>
+<p>There are a number of tools designed to minimize the penalties associated with moving data off disk. <code class="docutils literal notranslate"><span class="pre">HDF5</span></code>, for example, is a file format that does things like:</p>
+<ul class="simple">
+<li><p>compresses data (it’s actually faster to move a small amount of compressed data from the harddrive to main memory and then decompress it than it is to move a large amount of uncompressed memory off disk. That’s how big the penality is to read data off disk).</p></li>
+<li><p>can give you select rows or select columns from a dataset without loading the whole thing into memory first</p></li>
+<li><p>stores data in efficient memory formats.</p></li>
+</ul>
+<p>SQL, similarly, is designed to maximize the efficiency by which data can be pulled from disk, but in general if you aren’t in a situation where (a) lots of people are gonna be accessing the same data <em>at the same time</em>, or (b) you don’t plan to do tons of different analyses using the same dataset over a long period, the up front costs of setting up a SQL database overwhelm the benefits it has at the time you want to run a query.</p>
+<p>But it’s also worth emphasizing that the strategies described above are generally only efficient if your goal is to pull a <em>subset</em> of data from disk. This makes them useful for things like medical databases, where doctors want to be able to quickly pull the records of individual patients. But in data science, we <em>usually</em> want to load a lot of data at once, and so the ability to quickly pull subsets of data isn’t always super useful.</p>
+</div>
+<div class="section" id="Strategy-4:-Distributed-Computing">
+<h3>Strategy 4: Distributed Computing<a class="headerlink" href="#Strategy-4:-Distributed-Computing" title="Permalink to this headline">¶</a></h3>
+<p><strong>If absolutely everything else has failed</strong> it’s time to turn to distributed computing!</p>
+<p>Distributed computing is the practice of taking your task and your data, breaking it into smaller pieces, sending those pieces to different computers, running the “smaller pieces” on those different computers, then bringing back the results and recombining them into a single output.</p>
+<p>Distributed computing is amazing, and makes possible many things that would never be possible otherwise. But it is not without two very important substantial costs:</p>
+<ul class="simple">
+<li><p>Programmer time: it takes a lot of time to learn to use these systems, to set-up these systems, and to find a way to take code that works easily on one computer and parallelize it and distribute it across lots of computers. <strong>Note that not all jobs can be parallelized!</strong> See <a class="reference internal" href="parallelism.html"><span class="doc">parallelism</span></a>.</p></li>
+<li><p>Computer time: there is a <em>huge</em> fixed cost to break up jobs, moving those jobs between computers, and recombining the results. As a result, if a job <em>can</em> be done on one computer, it will <em>usually</em> run faster on the one computer than distributed across lots of computers.</p></li>
+</ul>
+<p>For these reasons, you should <em>only</em> use distributed computing if the following apply:</p>
+<ul class="simple">
+<li><p>Your job is highly parallelizable so you <em>can</em> distribute the job across lots of computers.</p></li>
+<li><p>You <em>can’t</em> do the job on one computer either because there isn’t enough space in memory, or because your job is parallelizable <em>and</em> you need far more processors than you can get on one computer to run the job in a reasonable period of time.</p>
+<ul>
+<li><p>One obvious case for this are situations where your data doesn’t even fit on the harddrives of one computer. This is a real problem for companies like Google and Facebook, and is actually one of the main reasons that distributed computing exists.</p></li>
+</ul>
+</li>
+</ul>
+<p>So if you’re in this domain, what options are open to you?</p>
+<p>The first big distributed computing platform in the world was <a class="reference external" href="https://en.wikipedia.org/wiki/Apache_Hadoop">Apache Hadoop</a>, but currently (late-2019), the most popular distributed computing platform is probably <a class="reference external" href="https://en.wikipedia.org/wiki/Apache_Spark">Apache Spark</a>, which you can kind of think of as Hadoop v2.0. If you want to use Spark, as a Python person you’ll probably do so using PySpark.</p>
+<p>Learning to use these distributed systems is outside the scope of this course, but if you want to get into it, you can find a nice <a class="reference external" href="https://realpython.com/pyspark-intro/">little tutorial here</a>.</p>
+<p>While Spark is popular, however, it is far from the only option. Most research institutions (Duke included) run research computing clusters using a system called <a class="reference external" href="https://en.wikipedia.org/wiki/Slurm_Workload_Manager">Slurm</a>, where users simply submit their jobs using a simple bash script along with specification for the number of processors, amount of RAM, etc. they want to use, and the system them runs that script when resources are free. A Slurm system doesn’t <em>do</em> as much as PySpark (which
+manages distribution of data around a system, and has code that parallelizes lots of common tasks), but if you’re doing simple distributed processes (like you want to run a single simulation millions of times), it has much less overhead, is much easier to learn, and is already running on many systems (whereas Spark has to be set up for you).</p>
+</div>
+</div>
+<div class="section" id="Exercises!">
+<h2>Exercises!<a class="headerlink" href="#Exercises!" title="Permalink to this headline">¶</a></h2>
+<p>Great! Now that you have some context for big data, let’s do some exercises.</p>
+<p><a class="reference external" href="exercises/exercise_bigdata.ipynb">Exercises</a></p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Practical DS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_schedule.html">CLASS SCHEDULE</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup_environment.html">Setting Up Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_python_packages.html">Managing Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_dataframes.html">Pandas 2: DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part2.html">Plotting, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyter.html">Jupyter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_and_github.html">Git and Github</a></li>
+</ul>
+<p class="caption"><span class="caption-text">SKILLS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_big_data.html">What is Big Data?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Working with Big Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Step-1:-Do-I-Have-“Big-Data”?">Step 1: Do I Have “Big Data”?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Step-2:-Pick-a-Strategy">Step 2: Pick a Strategy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Exercises!">Exercises!</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="what_is_big_data.html" title="previous chapter">What is Big Data?</a></li>
+      <li>Next: <a href="performance_understanding.html" title="next chapter">Speed in Python</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick Eubank.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/big_data_strategies.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

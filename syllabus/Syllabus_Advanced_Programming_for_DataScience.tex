@@ -1,0 +1,241 @@
+\documentclass[12pt]{article}
+
+
+
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts, amsmath, amssymb}
+\usepackage{multirow}
+\usepackage{epsfig}
+\usepackage{subfigure}
+\usepackage{subfloat}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+% \usepackage[document]{ragged2e}
+\usepackage{verbatim, rotating, paralist}
+\usepackage{enumerate}
+
+\usepackage{natbib}
+
+
+\usepackage{pdfsync}
+\usepackage{latexsym}
+\usepackage{amsthm}
+\usepackage{mathabx}
+
+\usepackage{stmaryrd}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+\usepackage{fancyhdr}
+
+
+\usepackage{parskip}
+\usepackage{anysize, indentfirst, setspace}
+\usepackage[right=1.75cm, left=1.75cm, top=3cm, bottom=3cm]{geometry}
+\usepackage{epigraph}
+\usepackage{appendix}
+
+
+\renewcommand{\topfraction}{.85}
+\renewcommand{\bottomfraction}{.7}
+\renewcommand{\textfraction}{.15}
+\renewcommand{\floatpagefraction}{.66}
+\renewcommand{\dbltopfraction}{.66}
+\renewcommand{\dblfloatpagefraction}{.66}
+
+
+
+
+\pagestyle{fancyplain}
+\rhead{\hfill \small \emph{POLISCI NUMBER -- TERM YEAR}}
+\cfoot{}
+
+\renewcommand{\headrulewidth}{0pt}
+
+
+
+%-------------------------- BEGIN DOCUMENT ----------------------------------%
+\begin{document}
+
+
+\singlespacing
+
+
+
+
+
+
+%------------------------- HEADER ---------------------------------%
+\thispagestyle{empty}
+\begin{minipage}[t]{.5\textwidth}
+	Nicholas Eubank \\
+	 Assistant Professor\\
+     \vspace*{0.1cm}
+\end{minipage}
+\begin{minipage}[t]{.5\textwidth}
+	\begin{flushright}  POLISCI NUMBER\\
+	TERM \& YEAR\\
+    \vspace*{0.1cm}
+\end{flushright}
+\end{minipage}
+
+
+% line
+\line(1,0){499}
+
+\vspace{.35in}
+
+\begin{center}
+	\textbf{\LARGE{Computer Science for} }\\
+	\vspace*{.05in}
+	\textbf{\LARGE{Data Science} } \\
+	\vspace*{.05in}
+	\textbf{\LARGE (CS for DS)}
+\end{center}
+
+
+
+
+
+
+
+%--------------------------------------------COURSE DESCRIPTION--------------------------------------------------%
+
+\section{Course Description}
+
+
+Computer science has much to offer the budding Data Scientist, but all too often computer science programs and texts just aren't designed with data science in mind. Computer science programs are full of useful concepts and topics, but they are often mixed in with lots of material that isn't relevant for non-academics or people not going into software development.
+
+This course is designed to provide an introduction to key computer science concepts of relevance to data scientists in an applied, efficient manner, including:
+
+\begin{itemize}
+	\item Defensive Programming: How to write code that minimizes the likelihood you'll make mistakes and maximizes the likelihood that when you do make mistakes, you'll be able to catch them.
+	\item How computers think about numbers and text: learn why 42.0 doesn't always equal 42.0.
+	\item Parallelization: What is parallel computing, why is it becoming more and more important, and what are it's limitations
+	\item Big Data and The Memory Hierarchy: Why working with big data requires categorically different strategies than smaller datasets.
+	\item Speed: Why are some programming languages fast and others slow, how do I write code that runs quickly, and how to I evaluate the speed of my code?
+\end{itemize}
+
+In addition to these core computer science concepts, students will also be introduced to a set of \textbf{ancillary skills and tools} which are often overlooked in courses that emphasis either just the core data science languages (Stata, Matlab, Python, or Julia), or just the statistics of methods like machine learning. We will explore the \emph{purpose} of these tools and why they may be of use to you, as well as doing hands-on exercises to develop comfort with these tools. In particular, we will cover are provided with information on:
+
+\begin{itemize}
+	\item The Terminal
+	\item Git and Github
+	\item How to Get Help Online
+\end{itemize}
+
+
+\section{Prerequisites and Course Fulfillment}
+
+This course also requires students be comfortable doing basic data manipulations (e.g. loading CSVs, tabulating data, merging data) in a language like Stata, R, Python, or Julia.
+
+
+% \section{Course Objectives}
+%
+% By the end of this course you, as a student, will be able to:
+%
+% \begin{enumerate}
+% 		\item Statistically describe patterns in political concepts and evaluate various aspects of descriptive measurement.
+% 		\item Describe the basic logic of causal inference and identify the relevant counterfactual in statements of cause and effect.
+% 		\item Specify and execute a regression and associated hypothesis test to evaluate a political relationship.
+%         \item Appraise the quality of statistical evidence presented in the news; e.g. public opinion surveys or descriptions of new research findings.
+% 		\item Perform basic statistical analyses of data in Stata, including calculating summary statistics, plotting variation, and running regressions.
+% \end{enumerate}
+
+
+
+%--------------------------------------------COURSE ASSIGNMENTS------------------------------------------------%
+% \section{Assignments \& Grading}
+%
+% \subsection{Hands-On Stata Exercises and Problems Sets (25\% of Grade)}
+%
+% Though problem sets can test many important concepts we will cover in this class, our learning goal is for you, the student, to be able to work with real data by the end of this course, and developing that skill requires practice. Throughout the course you will be asked to do several take-home assignments that involve doing basic analyses on real data using Stata.
+%
+% Part of learning to work with real data is learning to work through problems, so these assignments are \emph{individual efforts} -- please do not work with other students. Once you've seen someone else's code, it's very hard to duplicate it and short-circuit the learning process. In light of this, I will hold regular office hours where you are welcome to come and work on the coding exercises and seek help from me as needed.
+%
+% \subsection{Mid-Term Exam.  25\%}
+%
+% \subsection{Final Empirical Research Paper. 25\%}
+%
+% The final project for the class will be an empirical research paper, in which each student (or pair of students if you wish to work in a group of two) provides a basic analysis of real world data. Given the introductory nature of the course, we do not expect these analyses to be too complex, but students are expected to (a) develop a hypothesis about a political science question, (b) use Stata to analyze real data in the service of testing their hypothesis, and (c) discuss some of the limitations of their analysis (especially with respect to the validity of any \emph{causal} inferences they may wish to draw) and how in a perfect world with unlimited time and resources they might address those concerns.
+%
+% \subsection{Participation (25\% of Grade)}
+%
+% While the first portion of the class will consist primarily of learning statistics and Stata, in the second portion of the class there will be lots of in class discussions. So we can make the most of our time together, students should arrive in class having completed their readings and be prepared to discuss the material at hand. With that in mind, participation will be  25\% of your grade in the class.
+%
+% Participation will be graded as follows:\footnote{I borrow this excellent rubric more or less verbatim from the Stanford University Political Science Teaching Liaison Adriane Fresh.}
+%
+% \textbf{A range.}  You are fully \emph{and consistently} engaged in class discussion and activities.  You both listen and contribute actively.  You are well prepared for class.  Having done more than merely read the material, you have spent time thinking \emph{carefully and deeply} about the material's relationship to other materials and ideas presented in previous classes.  Your ideas about the material are \emph{substantive} (either constructive or critical); and they stimulate class discussions.  You question in addition to stating, and you do more than simply offering your opinion, but rather ground opinions that you may offer in the course materials and ideas.  You provide space for other students to share their ideas.  You \emph{build} on the contributions of your fellow students, and you listen and respond respectfully.  \\
+%
+% \textbf{B range.}  You are engaged in class discussion and activities.  You listen and contribute regularly.  You come well-prepared to class having read the material and your contributions show your familiarity, but your level of engagement lacks the depth accumulated through extra time spent thinking about the material.  You show interest and are respectful of the contributions of your fellow students.  \\
+%
+% \textbf{C range.}  You have met the minimum requirements of participation.  You are usually, but not always prepared.  You participate sometimes, but not regularly.  The comments that you offer show a basic familiarity with the materials, but do not help to build a coherent or productive discussion.  Your engagement with the contributions of your fellow students is minimal.  \\
+%
+% \textbf{D range.}  You have not met the minimum requirements of participation.  You are unprepared for class.  You have not read with the material with sufficient engagement to know even the most basic elements.  The contributions that you offer derail discussion, or you do not make contributions.  You are not engaged in actively listening or responding to the contributions of your fellow students.   \\
+%
+% \textbf{As should be clear from this rubric, above all it is important to emphasize that participation is evaluated on the basis of \emph{quality} and \emph{consistently}, \emph{not} quantity. }
+%
+%
+%
+%
+% \subsection{Late Assignments, Make Up Exams and Extra Credit}
+%
+%
+% \textbf{Grading}
+% All assignments will be given a numerical score on a 0-100 scale.  These scores will be multiplied by the value of the assignment (see above) and the following scale will be used to assign a final letter grade.  \\
+%
+% \hspace*{.2in} 98-100 A+ 	\hspace*{.6in}  88-80.9 B+  	\hspace*{.57in} 78-79.9 C+  		\hspace*{.44in} 60-70 D  	\\
+% \hspace*{.2in} 93-97.9 A	\hspace*{.68in} 83-87.9 B  	\hspace*{.695in} 73-77.9 C		\hspace*{.57in} below 60 D\\
+% \hspace*{.2in} 90-92.9 A- 	\hspace*{.63in} 	80-82.9 B- 	\hspace*{.64in} 70-72.9 C-	\\
+%
+
+\section{Course Schedule}
+
+\begin{center}
+	\textbf{Outlines of Specifics Material Being Covered \\
+	for Each Topic Can Be Found At \href{www.csfords.com}{www.csfords.com}} \\
+	All topics will also be paired with hands-on exercises and tutorials!
+\end{center}
+
+\vspace{.4in}
+\begin{center}
+	\textbf{PART I. The Tools of Data Science No One Taught You}
+\end{center}
+\vspace{.2in}
+
+\begin{itemize}
+	\item Week 1: The Terminal
+	\item Week 2: Git and Github
+	\item Week 3: Class 1: Getting help online
+	\item Week 3: Class 2: Jupyter Labs
+\end{itemize}
+
+\vspace{.4in}
+\begin{center}
+	\textbf{PART II. Programming, a CS Perspective}
+\end{center}
+\vspace{.2in}
+
+\begin{itemize}
+	\item Week 4: Defensive Programming, Decomposition
+	\item Week 5: Data Types
+	\item Week 6: Data Structures
+\end{itemize}
+
+\vspace{.4in}
+\begin{center}
+	\textbf{PART III. Computer Architecture For Data Science}
+\end{center}
+\vspace{.2in}
+
+\begin{itemize}
+	\item Week 7: Parallelization, Processors, and Amdhel's Law
+	\item Week 8: Big Data and the Memory Hierarchy
+	\item Week 9: Writing Performant Code
+\end{itemize}
+
+\end{document}

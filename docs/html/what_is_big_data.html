@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>What is Big Data? &#8212; Practical Data Science</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Big Data Strategies" href="big_data_strategies.html" />
+    <link rel="prev" title="Workflow Management" href="workflow.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="What-is-Big-Data?">
+<h1>What is Big Data?<a class="headerlink" href="#What-is-Big-Data?" title="Permalink to this headline">¶</a></h1>
+<p>Big Data is probably the only term that can compete with “data science” for frequency of use despite the fact no one means the same thing when they say it. In many contexts, for example, “big data” just refers to large datasets.</p>
+<p>In this course, however, we’ll use a much more precise definition: data is “big” if it doesn’t fit into RAM (which we’ll refer to here as <strong>main memory</strong> for reasons that will become clear later. ).</p>
+<div class="section" id="Why-does-it-matter-if-data-fits-into-main-memory?">
+<h2>Why does it matter if data fits into main memory?<a class="headerlink" href="#Why-does-it-matter-if-data-fits-into-main-memory?" title="Permalink to this headline">¶</a></h2>
+<p>Before we get into big data and strategies for working with it, we need to take a short digression into computer architecture.</p>
+<p>When you computer executes code – for example, adding up all the entries in a vector – it doesn’t all happen in one place. Your computer stores data (like your vector) in main memory (again, this is the term used for what you buy as RAM) where it has several gigabytes of space to put things. But actual mathematical operations happen in the processor, which is physically located in a different place in your computer. So to add two numbers, you computer must move those numbers from main memory
+into a <em>tiny</em> set of memory banks inside your processor from which they can be accessed, added, and the result stored. (Most modern processor cores have 16 innermost memory slots called “registers”, each of which can only store only 64 bits of data – i.e. a single number.)</p>
+<p>This is important because in data science, moving data back and forth from memory takes <em>much</em> longer than doing actual calcuations. Indeed, in a normal data scienc workflow, moving data back and forth from memory is a <em>huge</em> portion of what takes up the time your computer spends “working”, not doing actual calculations.</p>
+<p>This makes memory management important in general, but the problem becomes much acute when you can’t store your data in main memory. That’s because while you <em>can</em> store data on your harddrive, and move data directly from your harddrive to your processor and back, that process is <em>unimaginably</em> slow.</p>
+<p>How much slower? Data can move from main memory to the processor at a rate ~1,000 times faster than from a spinning harddrive, over 100 times faster than from SATA SSDs, and over 25 times faster than from m2 SSDs. (speeds estimted from transfer speed estimates <a class="reference external" href="https://en.wikipedia.org/wiki/Memory_hierarchy#Examples">here</a>).</p>
+<p>But even those transfer speeds are only half the story – hard drives also have higher <em>latency</em>, meaning that with harddrives, there’s a much longer lag between when you <em>ask</em> for data when the data transfer begins than with main memory. How much slower? This table re-scales actual latency times (the time between when you ask for a byte of data and when it arrives at the processor) to human time scales (don’t worry about the cache entries yet) (<a class="reference external" href="https://www.formulusblack.com/blog/compute-performance-distance-of-data-as-a-measure-of-latency/">from this excellent
+post</a>).</p>
+<p><img alt="human_time" src="_images/human_time.png" /></p>
+<p>As the table shows, if we were to pretend that a single tick of your processor (essentially how long it takes to add two numbers) took 1 second, then stopping to get <em>one byte</em> of data from main memory would take several minutes. And if we wanted to get data from a spinning harddrive, we’d have to wait between 11 days and <em>four months</em>. SSDs obviously perform much better than physical harddrives with spinning platters, but even those take hours to days. <em>And that’s just to get the first byte!</em>
+There are <em>also</em> the differences in transfer rates once data starts flowing!</p>
+<p>In other words, when working with large datasets, moving around your data is often the most expensive thing you will do, and the penalities for <em>not</em> being able to fit your data into main memory mean that something that might take minutes if you could do it with data in main memory could take days.</p>
+<div class="section" id="OK,-what’s-this-cache-stuff?">
+<h3>OK, what’s this cache stuff?<a class="headerlink" href="#OK,-what’s-this-cache-stuff?" title="Permalink to this headline">¶</a></h3>
+<p>Because of how expensive it is to move data back and forth from main memory, you computer has a set of intermediate memory banks between main memory and your processor called <em>caches</em>. Caches try to predict what data you might use in the future, and keep it close to the processor so it can be accessed faster. Caches can substantially improve performance, but as a programmer you don’t actually get to control what gets put into cache – your cache is managed by the operating system. There are some
+tricks for trying to use data in ways that are more likely to result in your computer being able to use data stored in cache (in general, your computer fills the cache with (a) data you’ve used recently, and (b) data that is stored <em>near</em> the data you’ve used recently, so doing everything you can with the same object at once <em>can</em> help a little), but honestly they’re just not something you should worry about. I just wanted to demystify “cache” for when you come across it.</p>
+</div>
+</div>
+<div class="section" id="OK…-So-how-do-I-deal-with-Big-Data?">
+<h2>OK… So how do I deal with Big Data?<a class="headerlink" href="#OK…-So-how-do-I-deal-with-Big-Data?" title="Permalink to this headline">¶</a></h2>
+<p>Check out <a class="reference internal" href="big_data_strategies.html"><span class="doc">Big Data Strategies here!</span></a>.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Practical DS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_schedule.html">CLASS SCHEDULE</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup_environment.html">Setting Up Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_python_packages.html">Managing Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_dataframes.html">Pandas 2: DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part2.html">Plotting, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyter.html">Jupyter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_and_github.html">Git and Github</a></li>
+</ul>
+<p class="caption"><span class="caption-text">SKILLS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow Management</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">What is Big Data?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Why-does-it-matter-if-data-fits-into-main-memory?">Why does it matter if data fits into main memory?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#OK…-So-how-do-I-deal-with-Big-Data?">OK… So how do I deal with Big Data?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="big_data_strategies.html">Working with Big Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="workflow.html" title="previous chapter">Workflow Management</a></li>
+      <li>Next: <a href="big_data_strategies.html" title="next chapter">Big Data Strategies</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick Eubank.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/what_is_big_data.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>
