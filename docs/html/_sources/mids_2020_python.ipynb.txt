@@ -51,6 +51,15 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
+    "## Python Exam\n",
+    "\n",
+    "When students have finalized their matriculations (something that is being held up in many cases due to Covid restrictions), we'll be moving the summer review to Sakai, where you will find the proficiency exam for this module. When it's up, we'll send you a notification! "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
     "## Additional Resources\n",
     "\n",
     "If you're an eager beaver and want some supplementary materials on Python, here are a couple great resources:\n",
@@ -66,10 +75,18 @@
    "source": [
     "## Getting Help\n",
     "\n",
-    "There are two ways to get help as you work through this module. \n",
+    "If you have questions about the module materials, please post questions in [Piazza Q&A](https://piazza.com/class/kar0ztzvl7s71r).\n",
     "\n",
-    "- First, signup for Piazza [here](piazza.com/duke/summer2020/mids2020)\n",
-    "- Second, I'll be holding office hours every Friday from 9am - 10am EST (sorry Californians -- this time is the best compromise to accomodate people in China and India). If you need to talk but can't make this time, please send me an email at [nick@nickeubank.com](mailto:nick@nickeubank.com) and we'll figure something out. "
+    "- Piazza is designed for students to respond to other students, with input from instructors when needed. \n",
+    "    - When you post a question, be sure to \"tag\" it with the module it relates to (see the small blue buttons near the top of the Piazza window, such as \"python,\" \"stats,\" and \"general\").\n",
+    "    - You should check Piazza periodically during each module and respond to questions from your peers, if you know the answer. You may also edit and improve answers posted by other students.\n",
+    "    - The instructors will check Piazza periodically, respond to open questions, and verify student responses. \n",
+    "    - Remember: you should not ask for (nor give other students) the exact answers to any of the graded quiz or exam questions in Piazza. Doing so will not ensure you, or your classmates, are prepared for your fall courses.  We certainly want you to help each other, but it is critical that you finish the online review confident in your own mastery of the material. \n",
+    "- If you have questions of a more personal or private nature, which you would not feel comfortable posting to the class Piazza forums, please direct the Piazza question only to the instructors (when creating a new post, choose Post to: Instructor(s) ).\n",
+    "\n",
+    "I will also be holding optional live, real-time \"office hours\" (online help sessions). These sessions will NOT be required; they are opportunities for students to get help, if students would like to talk directly to the instructor and other students. These sessions will be held in Zoom. To participate, you will need a computer with a reliable internet connection, headset with microphone (a microphone built into your computer may also work), and ideally a web camera. Prior to joining your first Zoom session, you should test your Zoom set up (you know... in case some how you haven't spent the last 3 months living on Zoom like the rest of us ;P). \n",
+    "\n",
+    "I'll be holding office hours every Friday from 9am - 10am EST (sorry Californians -- this time is the best compromise to accomodate people in China and India). If you need to talk but can't make this time, please send me an email at [nick@nickeubank.com](mailto:nick@nickeubank.com) and we'll figure something out. "
    ]
   },
   {
@@ -78,7 +95,10 @@
    "source": [
     "## Enrolling in DataCamp\n",
     "\n",
-    "To get a FREE DataCamp account for the summer, follow [this link](https://www.datacamp.com/groups/shared_links/52f8c4b1220a1925828f7d027e949a203a4a4e01227060416df64c9cabeb536d) and create a DataCamp account **using a gmail email address.**\n",
+    "You should have received an email inviting you to enroll in DataCamp. To enroll for **free**, you have two options:\n",
+    "\n",
+    "- Enroll using that linke **and the email address that invite was sent to**\n",
+    "- Follow [this link](https://www.datacamp.com/groups/shared_links/52f8c4b1220a1925828f7d027e949a203a4a4e01227060416df64c9cabeb536d) and create a DataCamp account **using a gmail email address.**\n",
     "\n",
     "I recognize it's weird we're asking you to use a gmail address, but DataCamp requires us to specify a single email domain for all class signups, and because of Covid not all students have been able to get all the paperwork they need to finalize their matriculation to Duke, and as a result they can't get Duke email addresses yet. So we've chosen gmail since even if you don't have a gmail account already, you can create one for free!"
    ]
