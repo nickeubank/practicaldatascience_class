@@ -24,7 +24,7 @@ This portion of the course will culminate in students picking a topic, developin
 
 `The Class Schedule can be found here <class_schedule.rst>`_
 
-`The full syllabus for this course can be downloaded here <https://github.com/nickeubank/practicaldatascience/raw/master/syllabus/Syllabus_PracticalDataScience.pdf>`_. Please note that this syllabus is subject to change up until he first day of class.
+`The full syllabus for this course can be downloaded here <https://github.com/nickeubank/practicaldatascience/raw/master/syllabus/Syllabus_PracticalDataScience.pdf>`_. Please note that this syllabus is subject to change up until the first day of class.
 
 
 Questions or comments?
