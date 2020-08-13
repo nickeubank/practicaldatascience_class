@@ -1,5 +1,7 @@
 ﻿"Date, Rm",Topic,Do Before Class,In-Class Exercise
-"Tues, Aug 18",- Class Introduction,N/A,
+"Tues, Aug 18",- Class Introduction,"- `Student Survey <https://forms.gle/p4z28BLH6TyBRBHg9>`_
+- `Watch Welcome Video <https://www.youtube.com/watch?v=f0awaGKfLEI>`_
+- `What is Data Science <https://www.youtube.com/watch?v=446X6hhXSjo>`_",
 "Thurs, Aug 20","- Command Line
 - Jupyter Lab / Notebooks","- `Command Line Basics <command_line_part1.ipynb>`_
 - Read and sign syllabus

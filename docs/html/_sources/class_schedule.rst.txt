@@ -3,6 +3,7 @@ Class Schedule
 
 `Class Zoom Link <https://duke.zoom.us/j/96026191020>`_
 
+
 Week One Schedule
 -----------------
 
