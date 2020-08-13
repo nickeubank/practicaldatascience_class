@@ -1,5 +1,12 @@
 Class Schedule
-==============
+=============
+
+`Class Zoom Link <https://duke.zoom.us/j/96026191020>`_
+
+Week One Schedule
+-----------------
+
+For week one of our class (August 17-21), we will be holding two synchronous sessions on both Tuesday and Thursday from 8:45am-9:45am and from 1:45pm-2:45pm (EDT). **YOU MUST ATTEND ONE OF THE SYNCHRONOUS SESSIONS ON EACH DAY.** Moving forward, we may change the times of these sessions based on the schedules of students who enroll in the class.
 
 .. csv-table::
    :file: class_schedule.csv

@@ -36,3 +36,4 @@ example_data/dask_data/*
 # docs/html/Solutions_*
 .ipynb_checkpoints/*
 source/exercises/.ipynb_checkpoints/*
+.vscode/*
