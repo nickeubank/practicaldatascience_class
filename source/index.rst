@@ -40,7 +40,7 @@ Questions or comments?
 Please let me know! All source files (and underlying jupyter notebooks) for this site can be `found on github <https://github.com/nickeubank/practicaldatascience/>`_, and you can raise issues there by creating a new issue, or by emailing me at `nick@nickeubank.com <mailto:nick@nickeubank.com>`_. 
 
 .. toctree:: 
-   :maxdepth: 2
+   :maxdepth: 1
    :hidden:
 
    CLASS SCHEDULE <class_schedule>
