@@ -7,13 +7,14 @@ Office Hours
 ------------
 
 Nathan: Wednesday 8:45-9:45am
+
 Vanessa: Monday 4-5pm
 
 
-Week One Schedule
------------------
+Class Time
+----------
 
-For week one of our class (August 17-21), we will be holding two synchronous sessions on both Tuesday and Thursday from 8:45am-9:45am and from 1:45pm-2:45pm (EDT). **YOU MUST ATTEND ONE OF THE SYNCHRONOUS SESSIONS ON EACH DAY.** Moving forward, we may change the times of these sessions based on the schedules of students who enroll in the class.
+Class will be Tuesdays and Thursdays from 1:45pm-3pm (EDT). **YOU MUST ATTEND THESE SYNCHRONOUS SESSIONS.**
 
 .. csv-table::
    :file: class_schedule.csv
