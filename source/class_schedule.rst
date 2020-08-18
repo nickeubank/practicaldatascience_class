@@ -3,6 +3,12 @@ Class Schedule
 
 `Class Zoom Link <https://duke.zoom.us/j/96026191020>`_
 
+Office Hours
+------------
+
+Nathan: Wednesday 8:45-9:45am
+Vanessa: Monday 4-5pm
+
 
 Week One Schedule
 -----------------
