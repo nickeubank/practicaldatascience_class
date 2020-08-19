@@ -6,8 +6,10 @@ Class Schedule
 Office Hours and Links
 --------------------------
 
-`Nick <https://duke.zoom.us/my/nickeubank>`_ : Friday 9am-10am
+`Nick <https://duke.zoom.us/my/nickeubank>`_ : Friday 9am-10ams
+
 `Nathan <https://us02web.zoom.us/j/4551839718?pwd=U2dCdWZlSkY4Ry9QdnFqRkJNaGdQUT09>`_ : Wednesday 8:45-9:45am
+
 `Vanessa <https://duke.zoom.us/j/91722970032>`_ : Monday 4-5pm
 
 Class Time
