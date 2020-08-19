@@ -3,10 +3,10 @@
 - `Watch Welcome Video <https://youtu.be/8IpLNrjINCA>`_
 - `What is Data Science? <https://www.youtube.com/watch?v=446X6hhXSjo>`_",
 "Thurs, Aug 20","- Command Line
-- Jupyter Lab / Notebooks","- `Command Line Basics <command_line_part1.ipynb>`_
-- Read and sign syllabus
+- Jupyter Lab / Notebooks","- `Read and sign syllabus <https://github.com/nickeubank/practicaldatascience/raw/master/syllabus/Syllabus_PracticalDataScience.pdf>`_
 - `Register with IPUMS <https://uma.pop.umn.edu/usa/user/new>`_
 - `Register for DataCamp <https://www.datacamp.com/home>`_
+- `Command Line Basics <command_line_part1.ipynb>`_
 - `Advanced Command Line <command_line_part2.ipynb>`_
 - `Setup Python <setup_environment.ipynb>`_
 - `Jupyter Tutorial <jupyter.ipynb>`_","- `Link 1 <exercises/Exercise_CommandLine_1_Basics.ipynb>`_
