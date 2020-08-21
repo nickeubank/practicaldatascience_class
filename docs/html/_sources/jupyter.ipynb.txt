@@ -93,7 +93,15 @@
     "  error in running command\n",
     "```\n",
     "\n",
-    "That means R can't find your installation of jupyter. That probably means anaconda isn't set up with your command line tool, so please go back and see `setup_environment.ipynb`. "
+    "That means R can't find your installation of jupyter. That probably means anaconda isn't set up with your command line tool, so please go back and see `setup_environment.ipynb`. \n",
+    "\n",
+    "**If the command `IRkernel::installspec()` generates this error:**\n",
+    "\n",
+    "```R\n",
+    " xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun\n",
+    "```\n",
+    "\n",
+    "If that means that R want you to install apple developer tools. Just run the following command at the command line (not in R, in your bash or oh-my-zsh session): `xcode-select --install`, or if that doesn't work, run `sudo xcode-select --reset`. This should lead to a somewhat slow software installation."
    ]
   },
   {

@@ -105,6 +105,11 @@ coming up. And when cleaning data, you are often writing very linear (this-line-
 </pre></div>
 </div>
 <p>That means R can’t find your installation of jupyter. That probably means anaconda isn’t set up with your command line tool, so please go back and see <code class="docutils literal notranslate"><span class="pre">setup_environment.ipynb</span></code>.</p>
+<p><strong>If the command ``IRkernel::installspec()`` generates this error:</strong></p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">xcrun</span><span class="o">:</span> <span class="n">error</span><span class="o">:</span> <span class="n">invalid</span> <span class="n">active</span> <span class="n">developer</span> <span class="nf">path </span><span class="p">(</span><span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Developer</span><span class="o">/</span><span class="n">CommandLineTools</span><span class="p">),</span> <span class="n">missing</span> <span class="n">xcrun</span> <span class="n">at</span><span class="o">:</span> <span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Developer</span><span class="o">/</span><span class="n">CommandLineTools</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">xcrun</span>
+</pre></div>
+</div>
+<p>If that means that R want you to install apple developer tools. Just run the following command at the command line (not in R, in your bash or oh-my-zsh session): <code class="docutils literal notranslate"><span class="pre">xcode-select</span> <span class="pre">--install</span></code>, or if that doesn’t work, run <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">xcode-select</span> <span class="pre">--reset</span></code>. This should lead to a somewhat slow software installation.</p>
 </div>
 <div class="section" id="Jupyter-Lab-Exercises!">
 <h2>Jupyter Lab Exercises!<a class="headerlink" href="#Jupyter-Lab-Exercises!" title="Permalink to this headline">¶</a></h2>
