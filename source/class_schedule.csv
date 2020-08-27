@@ -16,7 +16,8 @@
 - Packages
 - Python v. R / variables as pointers","- `Follow this link <https://gke.mybinder.org/v2/gh/ipython/ipython-in-depth/master?filepath=binder/Index.ipynb>`_ , then click ""Ipython - Beyond plain python"" and read that notebook. 
 - `Python packages <managing_python_packages.ipynb>`_
-- `variables v objects <vars_v_objects.ipynb>`_",`Link <exercises/Exercise_variables_v_objects.ipynb>`_
+- `variables v objects <vars_v_objects.ipynb>`_
+- `Python v. R <https://www.practicaldatascience.org/html/python_v_r.html>`_",`Link <exercises/Exercise_variables_v_objects.ipynb>`_
 "Tues, Sep 1",Numpy Basics,"- JVP pp 33-77
 - IF did not complete DataCamp: Do Numpy Section
 - `Numbers in Computer <ints_and_floats.ipynb>`_",`Link <exercises/Exercise_numpy.ipynb>`_
