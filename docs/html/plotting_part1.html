@@ -102,20 +102,33 @@ div.nboutput.container div.prompt pre {
 /* all prompts */
 div.nbinput.container div.prompt,
 div.nboutput.container div.prompt {
-    min-width: 5ex;
-    padding-top: 0.4em;
-    padding-right: 0.4em;
-    text-align: right;
-    flex: 0;
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
 }
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
 @media (max-width: 540px) {
     div.nbinput.container div.prompt,
     div.nboutput.container div.prompt {
+        width: unset;
         text-align: left;
         padding: 0.4em;
     }
     div.nboutput.container div.prompt.empty {
         padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
     }
 }
 
@@ -128,7 +141,6 @@ div.nboutput.container div.prompt pre {
 /* input/output area */
 div.nbinput.container div.input_area,
 div.nboutput.container div.output_area {
-    padding: 0.4em;
     -webkit-flex: 1;
     flex: 1;
     overflow: auto;
@@ -202,6 +214,27 @@ div.nboutput.container div.output_area.stderr {
 .ansi-bold { font-weight: bold; }
 .ansi-underline { text-decoration: underline; }
 
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
 /* Some additional styling taken form the Jupyter notebook CSS */
 div.rendered_html table {
   border: none;
@@ -259,6 +292,7 @@ objects you want to place on axes, all three of these alternative libraries allo
 <li><p>Basic <code class="docutils literal notranslate"><span class="pre">plotnine</span></code> plot types</p></li>
 </ol>
 <p>In <a class="reference internal" href="plotting_part2.html"><span class="doc">Plotting, Part 2</span></a>, well also get into different scales, axes, legend settings, faceting, themes, and other customizations. By the end of these two tutorials, you will be able to produce beautiful graphics such as this:</p>
+<p><img alt="3c3567ff24c343e6b2bb469045523f13" class="no-scaled-link" src="_images/beautiful_plot.png" style="width: 800px;" /></p>
 </div>
 <div class="section" id="plotnine-for-ggplot2-users">
 <h2><code class="docutils literal notranslate"><span class="pre">plotnine</span></code> for <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code> users<a class="headerlink" href="#plotnine-for-ggplot2-users" title="Permalink to this headline">¶</a></h2>
@@ -838,7 +872,7 @@ array([&#39;Asia&#39;, &#39;Europe&#39;, &#39;Africa&#39;, &#39;Americas&#39;, &
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
