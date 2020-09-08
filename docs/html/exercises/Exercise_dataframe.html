@@ -42,15 +42,10 @@ the 2017 ACS survey, and is a 10% sample of the ACS (which itself is a 1% sample
 <p>This data comes from <a class="reference external" href="https://usa.ipums.org/usa/">IPUMS</a>, which provides a very useful tool for getting subsets of major survey datasets, not just from the US, but <a class="reference external" href="https://international.ipums.org/international-action/sample_details">from government statistical agencies the world over</a>.</p>
 <p>This is <em>real</em> data, meaning that you are being provided the data as it is provided by IPUMS. Documentation for all variables used in this data can be found <a class="reference external" href="https://usa.ipums.org/usa-action/variables/group">here</a> (you can either search by variable name to figure out the meaning of a variable in this data, or search for something you want to see if a variable with the right name is in this data).</p>
 <p>Within this data is information on both the educational background and current earnings of a representative sample of Americans. We will now use this data to estimate the labor-market returns to graduating high school and college, and to learn something about the meaning of an educational degree.</p>
-<div class="section" id="Exercise-1">
-<h2>Exercise 1<a class="headerlink" href="#Exercise-1" title="Permalink to this headline">¶</a></h2>
-<p>Data for these <a class="reference external" href="https://github.com/nickeubank/MIDS_Data/tree/master/US_AmericanCommunitySurvey">exercises can be found here</a>. First, download <code class="docutils literal notranslate"><span class="pre">US_ACS_2017_10pct_sample.dta</span></code>.</p>
-</div>
-<div class="section" id="Exercise-2">
-<h2>Exercise 2<a class="headerlink" href="#Exercise-2" title="Permalink to this headline">¶</a></h2>
-<p>Now import <code class="docutils literal notranslate"><span class="pre">US_ACS_2017_10pct_sample.dta</span></code> into a pandas DataFrame. This can be done with the command <code class="docutils literal notranslate"><span class="pre">pd.read_stata</span></code>, which will read in files created in the program Stata (and which uses the file suffix <code class="docutils literal notranslate"><span class="pre">.dta</span></code>). This is a format commonly used by social scientists.</p>
+<p><strong>1)</strong> Data for these <a class="reference external" href="https://github.com/nickeubank/MIDS_Data/tree/master/US_AmericanCommunitySurvey">exercises can be found here</a>. First, download <code class="docutils literal notranslate"><span class="pre">US_ACS_2017_10pct_sample.dta</span></code>.</p>
+<p><strong>2)</strong> Now import <code class="docutils literal notranslate"><span class="pre">US_ACS_2017_10pct_sample.dta</span></code> into a pandas DataFrame. This can be done with the command <code class="docutils literal notranslate"><span class="pre">pd.read_stata</span></code>, which will read in files created in the program Stata (and which uses the file suffix <code class="docutils literal notranslate"><span class="pre">.dta</span></code>). This is a format commonly used by social scientists.</p>
 <div class="section" id="Getting-to-Know-Your-Data">
-<h3>Getting to Know Your Data<a class="headerlink" href="#Getting-to-Know-Your-Data" title="Permalink to this headline">¶</a></h3>
+<h2>Getting to Know Your Data<a class="headerlink" href="#Getting-to-Know-Your-Data" title="Permalink to this headline">¶</a></h2>
 <p>When you get a new dataset like this, it’s good to start by trying to get a feel for its contents and organization. Toy datasets you sometimes get in classes are often very small, and easy to look at, but this is a pretty large dataset, so you can’t just open it up and get a good sense of it. Here are some ways to get to know your data.</p>
 <p><strong>3)</strong> How many rows are in your data?</p>
 <p><strong>4)</strong> How many columns are in your data?</p>
@@ -100,7 +95,7 @@ jobs in the first place is called the “extensive margin”.)</p>
 <p><strong>14)</strong> Why do you think there is no benefit from moving from grade 9 to grade 10, or grade 10 to grade 11, but there is a huge benefit to moving from grade 11 to graduating high school (grade 12)?</p>
 </div>
 <div class="section" id="Take-aways">
-<h3>Take-aways<a class="headerlink" href="#Take-aways" title="Permalink to this headline">¶</a></h3>
+<h2>Take-aways<a class="headerlink" href="#Take-aways" title="Permalink to this headline">¶</a></h2>
 <p>Congratulations! You just discovered “the sheepskin effect!”: people with degrees tend to earn substantially more than people who have <em>almost</em> as much education, but don’t have an actual degree.</p>
 <p>In economics, this is viewed as evidence that the reason employers pay people with high school degrees more than those without degree is <em>not</em> that they think those who graduated high school have learned specific, useful skills. If that were the case, we would expect employee earnings to rise with every year of high school, since in each year of high school we learn more.</p>
 <p>Instead, this suggests employees pay high school graduates more because they think <em>the kind of people</em> who can finish high school are the <em>kind of people</em> who are likely to succeed at their jobs. Finishing high school, in other words, isn’t about accumulating specific knowledge; it’s about showing that you <em>are the kind of person</em> who can rise to the challenge of finishing high school, also suggesting you are also the kind of person who can succeed as an employee.</p>
@@ -108,7 +103,7 @@ jobs in the first place is called the “extensive margin”.)</p>
 <p>In other words, in the eyes of employers, a high school degree is a <em>signal</em> about the kind of person you are, not certification that you’ve learned a specific set of skills (an idea that earned <a class="reference external" href="https://en.wikipedia.org/wiki/Michael_Spence">Michael Spence</a> a Nobel Prize in Economics).</p>
 </div>
 <div class="section" id="Want-More-Practice?">
-<h3>Want More Practice?<a class="headerlink" href="#Want-More-Practice?" title="Permalink to this headline">¶</a></h3>
+<h2>Want More Practice?<a class="headerlink" href="#Want-More-Practice?" title="Permalink to this headline">¶</a></h2>
 <p><strong>(14)</strong> The US Census isn’t the only organization that published surveys of their populations – most countries in the world conduct regular surveys, and most publish versions of their data online.</p>
 <p>In addition to making US Census data available to researchers, IPUMS (through “IPUMS International”) also makes survey data available from a wide range of countries.</p>
 <p>So if you’d like more practice with basic data manipulations, go to <a class="reference external" href="https://international.ipums.org/international-action/variables/group">IPUMS International</a> and download information on income and education from the country of your choice:</p>
@@ -126,10 +121,9 @@ with unfinished dirt floors tend to be poorer than people with concrete floors) 
 <p><strong>(15)</strong> Repeat these exercises for your new dataset!</p>
 </div>
 <div class="section" id="Absolutely-positively-need-the-solutions?">
-<h3>Absolutely positively need the solutions?<a class="headerlink" href="#Absolutely-positively-need-the-solutions?" title="Permalink to this headline">¶</a></h3>
+<h2>Absolutely positively need the solutions?<a class="headerlink" href="#Absolutely-positively-need-the-solutions?" title="Permalink to this headline">¶</a></h2>
 <p><em>Don’t use this link until you’ve really, really spent time struggling with your code!</em> Doing so only results in you cheating yourself.</p>
 <p><a class="reference internal" href="../solutions_warning.html"><span class="doc">Link</span></a></p>
-</div>
 </div>
 </div>
 
