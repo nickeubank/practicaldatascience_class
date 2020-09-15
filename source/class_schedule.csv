@@ -35,7 +35,9 @@
 - Pandas: Cleaning","- WM Chapter 6
 - WM Chapter 7
 - `Python Strings <https://realpython.com/python-data-types/#strings>`_",`Link <exercises/Exercise_cleaning.ipynb>`_
-"Tues, Sep 22",- Pandas: Merging,- JVP pp 149 - 157,`Link <exercises/Exercise_merging.ipynb>`_
+"Tues, Sep 22","- Understanding Tracebacks
+- Pandas: Merging","- JVP pp 149 - 157
+- `What are Tracebacks? <https://www.youtube.com/watch?v=JD8BrXXNtjA>`_",`Link <exercises/Exercise_merging.ipynb>`_
 "Thurs, Sep 24","Big Data: What is it, how do I work with it?","- `What is Big Data? <what_is_big_data.ipynb>`_
 - `Strategies for Big Data <big_data_strategies.ipynb>`_
 - Download the dataset linked at the top of the linked exercise before class.",`Link <exercises/Exercise_bigdata.ipynb>`_
