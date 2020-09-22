@@ -12,7 +12,12 @@
    "metadata": {},
    "source": [
     "- [numpy Exercise Solutions](exercises/Solutions_numpy.ipynb)\n",
-    "- [Series Exercise Solutions](exercises/Solutions_series.ipynb)"
+    "- [Series Exercise Solutions](exercises/Solutions_series.ipynb)\n",
+    "- [DataFrame Exercise Solutions](exercises/Solutions_dataframe.ipynb)\n",
+    "- [Plotting, Basic Solutions](exercises/Solutions_plotting_part1.ipynb)\n",
+    "- [Plotting, Advanced Solutions](exercises/Solutions_plotting_part2.ipynb)\n",
+    "- [Indices Solutions](exercises/Solutions_indices.ipynb)\n",
+    "- [Missing Data Solutions](exercises/Solutions_missing.ipynb)"
    ]
   }
  ],
