@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt; &#8212; Practical Data Science</title>
+    <title>Question 1 &#8212; Practical Data Science</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -267,8 +267,16 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
+<div class="section" id="Question-1">
+<h1>Question 1<a class="headerlink" href="#Question-1" title="Permalink to this headline">¶</a></h1>
+<p>We load the data from github</p>
+<p>Here’s example code I want to type but note run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+<p><span class="math notranslate nohighlight">\(y = x*\beta + \epsilon\)</span></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -694,16 +702,17 @@ CategoricalDtype(categories=[&#39;boy&#39;, &#39;female&#39;], ordered=True)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">acs</span><span class="o">.</span><span class="n">age</span>
+<span></span><span class="c1"># Below is age</span>
+<span class="n">acs</span><span class="o">.</span><span class="n">age</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -730,6 +739,7 @@ Categories (97, object): [&#39;less than 1 year old&#39; &lt; &#39;1&#39; &lt; &
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">acs</span><span class="o">.</span><span class="n">age</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;90 (90+ year olds)&#39;</span><span class="p">,</span> <span class="s2">&quot;91&quot;</span><span class="p">)</span>
 </pre></div>
+</div>
 </div>
 </div>
 
