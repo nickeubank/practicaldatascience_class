@@ -1385,7 +1385,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 30,
+   "execution_count": 18,
    "metadata": {},
    "outputs": [
     {
@@ -1426,7 +1426,7 @@
        "Index: []"
       ]
      },
-     "execution_count": 30,
+     "execution_count": 18,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1444,7 +1444,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 21,
+   "execution_count": 19,
    "metadata": {},
    "outputs": [
     {
@@ -1453,7 +1453,7 @@
        "False"
       ]
      },
-     "execution_count": 21,
+     "execution_count": 19,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1471,7 +1471,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 24,
+   "execution_count": 20,
    "metadata": {},
    "outputs": [
     {
@@ -1480,7 +1480,7 @@
        "True"
       ]
      },
-     "execution_count": 24,
+     "execution_count": 20,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1498,7 +1498,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 25,
+   "execution_count": 21,
    "metadata": {},
    "outputs": [
     {
@@ -1507,7 +1507,7 @@
        "True"
       ]
      },
-     "execution_count": 25,
+     "execution_count": 21,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1518,7 +1518,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 26,
+   "execution_count": 22,
    "metadata": {},
    "outputs": [
     {
@@ -1527,7 +1527,7 @@
        "True"
       ]
      },
-     "execution_count": 26,
+     "execution_count": 22,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1538,7 +1538,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 27,
+   "execution_count": 23,
    "metadata": {},
    "outputs": [
     {
@@ -1547,7 +1547,7 @@
        "False"
       ]
      },
-     "execution_count": 27,
+     "execution_count": 23,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1565,7 +1565,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 29,
+   "execution_count": 24,
    "metadata": {},
    "outputs": [
     {
@@ -1612,7 +1612,7 @@
        "3  Mozambique  Africa        855       NaN"
       ]
      },
-     "execution_count": 29,
+     "execution_count": 24,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1630,7 +1630,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 31,
+   "execution_count": 25,
    "metadata": {},
    "outputs": [
     {
@@ -1677,7 +1677,7 @@
        "3  Mozambique  Africa        855       NaN"
       ]
      },
-     "execution_count": 31,
+     "execution_count": 25,
      "metadata": {},
      "output_type": "execute_result"
     }
