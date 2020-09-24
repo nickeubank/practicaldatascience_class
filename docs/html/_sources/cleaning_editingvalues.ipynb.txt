@@ -476,7 +476,9 @@
     "- `.str.lower()` / `.str.upper()`: Change the case of strings (there are lots of these formatting methods...)\n",
     "- `.str.contains()`: Look for a substring, return `True` if found\n",
     "- `.str.isnumeric()`: `True` if value could be converted to a number easily (e.g. \"10\"), returns `False` if not (e.g. \"Nick\")\n",
-    "- `.str.strip()`: Removes whitespaces at start or end of strings (a common cleanliness problem)"
+    "- `.str.strip()`: Removes whitespaces at start or end of strings (a common cleanliness problem)\n",
+    "\n",
+    "For a full list, [head over to the official pandas docs here!](https://pandas.pydata.org/pandas-docs/stable/user_guide/text.html#string-methods)"
    ]
   },
   {

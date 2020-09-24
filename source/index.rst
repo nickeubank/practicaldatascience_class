@@ -60,6 +60,7 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
    Plotting, Basics <plotting_part1>
    Plotting, Advanced <plotting_part2>
    Pandas 3: Views <views_and_copies_in_pandas>
+   Cleaning: Editing Values <cleaning_editingvalues>
 
 .. toctree:: 
    :maxdepth: 2
