@@ -34,7 +34,8 @@
 "Thurs, Sep 17","- Pandas: Loading and saving data
 - Pandas: Cleaning","- WM Chapter 6
 - WM Chapter 7
-- `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_",`Link <exercises/Exercise_cleaning.ipynb>`_
+- `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_
+- `Editing Values <cleaning_editingvalues.ipynb>`_",`Link <exercises/Exercise_cleaning.ipynb>`_
 "Tues, Sep 22","- Understanding Tracebacks
 - Pandas: Merging","- JVP pp 149 - 157
 - `What are Tracebacks? <https://www.youtube.com/watch?v=JD8BrXXNtjA>`_",`Link <exercises/Exercise_merging.ipynb>`_

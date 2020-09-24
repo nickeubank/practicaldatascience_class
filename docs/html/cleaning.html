@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fixing Data Cleanliness Problems &#8212; Practical Data Science</title>
+    <title>Data Cleaning &#8212; Practical Data Science</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -267,22 +267,21 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Fixing-Data-Cleanliness-Problems">
-<h1>Fixing Data Cleanliness Problems<a class="headerlink" href="#Fixing-Data-Cleanliness-Problems" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="Cleaning-Functions">
-<h2>Cleaning Functions<a class="headerlink" href="#Cleaning-Functions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Data-Cleaning">
+<h1>Data Cleaning<a class="headerlink" href="#Data-Cleaning" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Modifying-Data-Values">
+<h2>Modifying Data Values<a class="headerlink" href="#Modifying-Data-Values" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="Setting-Individual-Values">
-<h2>Setting Individual Values<a class="headerlink" href="#Setting-Individual-Values" title="Permalink to this headline">¶</a></h2>
+<p><strong>Cleaning Functions</strong></p>
+<p><strong>Setting Individual Values</strong></p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
@@ -622,6 +621,9 @@ array([[  1,   2],
 <p>Because the cells selected on the left have the same shapes as those being assigned, they can just be inserted element-wise.</p>
 <p>And that’s how you can make edits by hand, instead of by relying on methods like <code class="docutils literal notranslate"><span class="pre">.replace()</span></code>!</p>
 </div>
+<div class="section" id="Managing-Data-Types">
+<h2>Managing Data Types<a class="headerlink" href="#Managing-Data-Types" title="Permalink to this headline">¶</a></h2>
+</div>
 </div>
 
 
@@ -719,7 +721,7 @@ array([[  1,   2],
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/Untitled.ipynb.txt"
+      <a href="_sources/cleaning.ipynb.txt"
           rel="nofollow">Page source</a>
     </div>
 
