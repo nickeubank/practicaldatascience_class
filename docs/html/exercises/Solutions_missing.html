@@ -279,10 +279,14 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span></span><span class="o">%</span><span class="k">load_ext</span> lab_black
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
 <span class="c1"># Download the data</span>
-<span class="n">acs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_stata</span><span class="p">(</span><span class="s2">&quot;https://github.com/nickeubank/MIDS_Data/raw/master/US_AmericanCommunitySurvey/US_ACS_2017_10pct_sample.dta&quot;</span><span class="p">)</span>
+<span class="n">acs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_stata</span><span class="p">(</span>
+    <span class="s2">&quot;https://github.com/nickeubank/MIDS_Data/raw/master/US_AmericanCommunitySurvey/US_ACS_2017_10pct_sample.dta&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -291,7 +295,8 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">acs</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">acs</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -472,7 +477,7 @@ Name: inctot, Length: 8471, dtype: float64
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;inctot&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">acs</span><span class="p">[</span><span class="s1">&#39;inctot&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">9999999</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+<span></span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;inctot&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">acs</span><span class="p">[</span><span class="s2">&quot;inctot&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">9999999</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -512,7 +517,7 @@ Name: inctot, Length: 8471, dtype: float64
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">acs</span><span class="o">.</span><span class="n">inctot</span><span class="p">),</span> <span class="s1">&#39;age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span></span><span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">acs</span><span class="o">.</span><span class="n">inctot</span><span class="p">),</span> <span class="s2">&quot;age&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -541,7 +546,7 @@ Name: age, Length: 97, dtype: int64
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">acs</span><span class="o">.</span><span class="n">inctot</span><span class="p">),</span> <span class="s1">&#39;age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span></span><span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">acs</span><span class="o">.</span><span class="n">inctot</span><span class="p">),</span> <span class="s2">&quot;age&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -598,7 +603,7 @@ Name: empstat, dtype: int64
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">acs</span><span class="o">.</span><span class="n">empstat</span> <span class="o">==</span> <span class="s2">&quot;employed&quot;</span><span class="p">),</span> <span class="s1">&#39;inctot&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span></span><span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">acs</span><span class="o">.</span><span class="n">empstat</span> <span class="o">==</span> <span class="s2">&quot;employed&quot;</span><span class="p">),</span> <span class="s2">&quot;inctot&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -623,7 +628,9 @@ Name: empstat, dtype: int64
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># Avg Income</span>
-<span class="n">white</span> <span class="o">=</span> <span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;empstat&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;employed&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span><span class="p">),</span> <span class="s1">&#39;inctot&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">white</span> <span class="o">=</span> <span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;empstat&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;employed&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;race&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;white&quot;</span><span class="p">),</span> <span class="s2">&quot;inctot&quot;</span>
+<span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">white</span>
 </pre></div>
 </div>
@@ -642,7 +649,7 @@ Name: empstat, dtype: int64
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span></span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;race&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -665,18 +672,21 @@ Name: race, dtype: int64
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># Avg Black Income</span>
-<span class="n">black</span> <span class="o">=</span> <span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;empstat&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;employed&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black/african american/negro&#39;</span><span class="p">),</span> <span class="s1">&#39;inctot&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">black</span> <span class="o">=</span> <span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;empstat&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;employed&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;race&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;black/african american/negro&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;inctot&quot;</span><span class="p">,</span>
+<span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">black</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -733,8 +743,10 @@ Name: race, dtype: int64
 <span></span><span class="c1"># Now the exact estimates taking into account sampling weights</span>
 
 <span class="c1"># Calculate for each of population</span>
-<span class="n">white_employed</span> <span class="o">=</span> <span class="n">acs</span><span class="p">[(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;empstat&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;employed&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span><span class="p">)]</span>
-<span class="n">white_weighted</span> <span class="o">=</span> <span class="p">(</span><span class="n">white_employed</span><span class="p">[</span><span class="s1">&#39;inctot&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">white_employed</span><span class="p">[</span><span class="s1">&#39;perwt&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">white_employed</span><span class="p">[</span><span class="s1">&#39;perwt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">white_employed</span> <span class="o">=</span> <span class="n">acs</span><span class="p">[(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;empstat&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;employed&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;race&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;white&quot;</span><span class="p">)]</span>
+<span class="n">white_weighted</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">white_employed</span><span class="p">[</span><span class="s2">&quot;inctot&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">white_employed</span><span class="p">[</span><span class="s2">&quot;perwt&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">white_employed</span><span class="p">[</span><span class="s2">&quot;perwt&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 <span class="n">white_weighted</span>
 </pre></div>
 </div>
@@ -754,8 +766,12 @@ Name: race, dtype: int64
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># Calculate for each of population</span>
-<span class="n">black_employed</span> <span class="o">=</span> <span class="n">acs</span><span class="p">[(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;empstat&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;employed&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black/african american/negro&#39;</span><span class="p">)]</span>
-<span class="n">black_weighted</span> <span class="o">=</span> <span class="p">(</span><span class="n">black_employed</span><span class="p">[</span><span class="s1">&#39;inctot&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">black_employed</span><span class="p">[</span><span class="s1">&#39;perwt&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">black_employed</span><span class="p">[</span><span class="s1">&#39;perwt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">black_employed</span> <span class="o">=</span> <span class="n">acs</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;empstat&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;employed&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;race&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;black/african american/negro&quot;</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">black_weighted</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">black_employed</span><span class="p">[</span><span class="s2">&quot;inctot&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">black_employed</span><span class="p">[</span><span class="s2">&quot;perwt&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">black_employed</span><span class="p">[</span><span class="s2">&quot;perwt&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 <span class="n">black_weighted</span>
 </pre></div>
 </div>
@@ -775,7 +791,9 @@ Name: race, dtype: int64
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="p">((</span><span class="n">white</span><span class="o">-</span><span class="n">black</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">white_weighted</span> <span class="o">-</span> <span class="n">black_weighted</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">white_weighted</span> <span class="o">-</span> <span class="n">black_weighted</span><span class="p">)</span>
+<span></span><span class="p">((</span><span class="n">white</span> <span class="o">-</span> <span class="n">black</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">white_weighted</span> <span class="o">-</span> <span class="n">black_weighted</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span>
+    <span class="n">white_weighted</span> <span class="o">-</span> <span class="n">black_weighted</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -835,9 +853,11 @@ Name: race, dtype: int64
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">white_nonhisp</span> <span class="o">=</span> <span class="n">acs</span><span class="p">[(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span><span class="p">)</span> <span class="o">&amp;</span>
-                     <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;empstat&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;employed&#39;</span><span class="p">)</span> <span class="o">&amp;</span>
-                     <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;hispan&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;not hispanic&#39;</span><span class="p">)][[</span><span class="s1">&#39;inctot&#39;</span><span class="p">,</span><span class="s1">&#39;perwt&#39;</span><span class="p">]]</span>
+<span></span><span class="n">white_nonhisp</span> <span class="o">=</span> <span class="n">acs</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;race&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;white&quot;</span><span class="p">)</span>
+    <span class="o">&amp;</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;empstat&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;employed&quot;</span><span class="p">)</span>
+    <span class="o">&amp;</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;hispan&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;not hispanic&quot;</span><span class="p">)</span>
+<span class="p">][[</span><span class="s2">&quot;inctot&quot;</span><span class="p">,</span> <span class="s2">&quot;perwt&quot;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -847,7 +867,9 @@ Name: race, dtype: int64
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># White non-hispanic income</span>
-<span class="n">white_nonship_weighted</span> <span class="o">=</span> <span class="p">(</span><span class="n">white_nonhisp</span><span class="p">[</span><span class="s1">&#39;inctot&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">white_nonhisp</span><span class="p">[</span><span class="s1">&#39;perwt&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">white_nonhisp</span><span class="p">[</span><span class="s1">&#39;perwt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">white_nonship_weighted</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">white_nonhisp</span><span class="p">[</span><span class="s2">&quot;inctot&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">white_nonhisp</span><span class="p">[</span><span class="s2">&quot;perwt&quot;</span><span class="p">]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">white_nonhisp</span><span class="p">[</span><span class="s2">&quot;perwt&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 <span class="n">white_nonship_weighted</span>
 </pre></div>
 </div>
@@ -879,6 +901,15 @@ Name: race, dtype: int64
 <div class="highlight"><pre>
 0.5252989147705371
 </pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>

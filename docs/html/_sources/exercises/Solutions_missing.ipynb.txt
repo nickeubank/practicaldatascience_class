@@ -26,10 +26,14 @@
    "metadata": {},
    "outputs": [],
    "source": [
+    "%load_ext lab_black\n",
     "import pandas as pd\n",
     "import numpy as np\n",
+    "\n",
     "# Download the data\n",
-    "acs = pd.read_stata(\"https://github.com/nickeubank/MIDS_Data/raw/master/US_AmericanCommunitySurvey/US_ACS_2017_10pct_sample.dta\")"
+    "acs = pd.read_stata(\n",
+    "    \"https://github.com/nickeubank/MIDS_Data/raw/master/US_AmericanCommunitySurvey/US_ACS_2017_10pct_sample.dta\"\n",
+    ")"
    ]
   },
   {
@@ -149,7 +153,8 @@
     }
    ],
    "source": [
-    "for c in acs.columns: print(c)"
+    "for c in acs.columns:\n",
+    "    print(c)"
    ]
   },
   {
@@ -240,7 +245,7 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "acs['inctot'] = acs['inctot'].replace(9999999, np.nan)"
+    "acs[\"inctot\"] = acs[\"inctot\"].replace(9999999, np.nan)"
    ]
   },
   {
@@ -319,7 +324,7 @@
     }
    ],
    "source": [
-    "acs.loc[pd.isnull(acs.inctot), 'age'].value_counts()"
+    "acs.loc[pd.isnull(acs.inctot), \"age\"].value_counts()"
    ]
   },
   {
@@ -350,7 +355,7 @@
     }
    ],
    "source": [
-    "acs.loc[pd.notnull(acs.inctot), 'age'].value_counts()"
+    "acs.loc[pd.notnull(acs.inctot), \"age\"].value_counts()"
    ]
   },
   {
@@ -407,7 +412,7 @@
     }
    ],
    "source": [
-    "acs.loc[(acs.empstat == \"employed\"), 'inctot'].mean()"
+    "acs.loc[(acs.empstat == \"employed\"), \"inctot\"].mean()"
    ]
   },
   {
@@ -441,7 +446,9 @@
    ],
    "source": [
     "# Avg Income\n",
-    "white = acs.loc[(acs['empstat'] == 'employed') & (acs['race'] == 'white'), 'inctot'].mean()\n",
+    "white = acs.loc[\n",
+    "    (acs[\"empstat\"] == \"employed\") & (acs[\"race\"] == \"white\"), \"inctot\"\n",
+    "].mean()\n",
     "white"
    ]
   },
@@ -471,12 +478,12 @@
     }
    ],
    "source": [
-    "acs['race'].value_counts()"
+    "acs[\"race\"].value_counts()"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 13,
+   "execution_count": 25,
    "metadata": {},
    "outputs": [
     {
@@ -485,14 +492,17 @@
        "41747.949905123336"
       ]
      },
-     "execution_count": 13,
+     "execution_count": 25,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
     "# Avg Black Income\n",
-    "black = acs.loc[(acs['empstat'] == 'employed') & (acs['race'] == 'black/african american/negro'), 'inctot'].mean()\n",
+    "black = acs.loc[\n",
+    "    (acs[\"empstat\"] == \"employed\") & (acs[\"race\"] == \"black/african american/negro\"),\n",
+    "    \"inctot\",\n",
+    "].mean()\n",
     "black"
    ]
   },
@@ -565,8 +575,10 @@
     "# Now the exact estimates taking into account sampling weights\n",
     "\n",
     "# Calculate for each of population\n",
-    "white_employed = acs[(acs['empstat'] == 'employed') & (acs['race'] == 'white')]\n",
-    "white_weighted = (white_employed['inctot'] * white_employed['perwt'] / white_employed['perwt'].sum()).sum()\n",
+    "white_employed = acs[(acs[\"empstat\"] == \"employed\") & (acs[\"race\"] == \"white\")]\n",
+    "white_weighted = (\n",
+    "    white_employed[\"inctot\"] * white_employed[\"perwt\"] / white_employed[\"perwt\"].sum()\n",
+    ").sum()\n",
     "white_weighted"
    ]
   },
@@ -588,8 +600,12 @@
    ],
    "source": [
     "# Calculate for each of population\n",
-    "black_employed = acs[(acs['empstat'] == 'employed') & (acs['race'] == 'black/african american/negro')]\n",
-    "black_weighted = (black_employed['inctot'] * black_employed['perwt'] / black_employed['perwt'].sum()).sum()\n",
+    "black_employed = acs[\n",
+    "    (acs[\"empstat\"] == \"employed\") & (acs[\"race\"] == \"black/african american/negro\")\n",
+    "]\n",
+    "black_weighted = (\n",
+    "    black_employed[\"inctot\"] * black_employed[\"perwt\"] / black_employed[\"perwt\"].sum()\n",
+    ").sum()\n",
     "black_weighted"
    ]
   },
@@ -617,7 +633,9 @@
     }
    ],
    "source": [
-    "((white-black) - (white_weighted - black_weighted)) / (white_weighted - black_weighted)"
+    "((white - black) - (white_weighted - black_weighted)) / (\n",
+    "    white_weighted - black_weighted\n",
+    ")"
    ]
   },
   {
@@ -688,9 +706,11 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "white_nonhisp = acs[(acs['race'] == 'white') & \n",
-    "                     (acs['empstat'] == 'employed') & \n",
-    "                     (acs['hispan'] == 'not hispanic')][['inctot','perwt']]"
+    "white_nonhisp = acs[\n",
+    "    (acs[\"race\"] == \"white\")\n",
+    "    & (acs[\"empstat\"] == \"employed\")\n",
+    "    & (acs[\"hispan\"] == \"not hispanic\")\n",
+    "][[\"inctot\", \"perwt\"]]"
    ]
   },
   {
@@ -711,7 +731,9 @@
    ],
    "source": [
     "# White non-hispanic income\n",
-    "white_nonship_weighted = (white_nonhisp['inctot'] * white_nonhisp['perwt']).sum() / white_nonhisp['perwt'].sum()\n",
+    "white_nonship_weighted = (\n",
+    "    white_nonhisp[\"inctot\"] * white_nonhisp[\"perwt\"]\n",
+    ").sum() / white_nonhisp[\"perwt\"].sum()\n",
     "white_nonship_weighted"
    ]
   },
@@ -741,6 +763,13 @@
    "source": [
     "(white_nonship_weighted - black_weighted) / black_weighted"
    ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
   }
  ],
  "metadata": {
@@ -759,7 +788,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.7.3"
+   "version": "3.7.8"
   }
  },
  "nbformat": 4,
