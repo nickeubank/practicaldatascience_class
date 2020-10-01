@@ -35,6 +35,7 @@
 - Pandas: Cleaning","- WM Chapter 6
 - WM Chapter 7
 - `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_
+- `Identifying Problems <cleaning_identifying.ipynb>`_
 - `Editing Values <cleaning_editingvalues.ipynb>`_",`Link <exercises/Exercise_cleaning.ipynb>`_
 "Tues, Sep 22","- Understanding Tracebacks
 - Pandas: Merging","- JVP pp 149 - 157
@@ -47,6 +48,7 @@
 "Tues, Oct 6","- Defensive Programming
 - Workflow
 - Getting Help Online","- `Defensive Programming <defensive_programming.ipynb>`_
+- `Iceberg Principle <iceberg_principle.ipynb>`_
 - `Workflow Management <workflow.ipynb>`_
 - `Getting Help <getting_help.ipynb>`_",**Discuss mid-semester project in class**
 "Thurs, Oct 8",Groupby / Split-Apply-Combine,"- WM pp Chpt 10, 10.1, 10.2, 10.3",`Link <exercises/Exercise_groupby.ipynb>`_
