@@ -50,7 +50,7 @@
     "\n",
     "**(2)** On Computer A, create a new branch called \"this_is_gonna_be_a_problem\". \n",
     "\n",
-    "**(3)** In that branch, open the README.md and add to the title (the *very first line* of the readme) the year of data you're using (2016). \n",
+    "**(3)** In that branch, open the README.md and add to the title (the *very first line* of the readme) the year of data you're using (\"2016\"). \n",
     "\n",
     "**(4)** Commit and push your edits, and create a new pull request. If you look at your pull request, you should see:\n",
     "\n",
@@ -65,7 +65,7 @@
    "source": [
     "**(5)** Now, still on Computer A, switch back to the master branch and edit the README.md title (the *very* first line) by adding the details of the GDP per capita variable (e.g. \"Constant 2010 US$\"). \n",
     "\n",
-    "**(6)** Add, commit, and push those changes directly (no PR -- we want to modify the `master` branch directly. \n",
+    "**(6)** Add, commit, and push those changes directly (no PR -- we want to modify the `master` branch directly). \n",
     "\n",
     "**(7)** Now go back to your PR. You should see that because the master branch has now added edits *to the line you also edited since you created your branch,*, you can no longer just merge your edits! You'll see:\n",
     "\n",
@@ -80,7 +80,7 @@
     "\n",
     "Dealing with this situation requires several steps: \n",
     "\n",
-    "1. Pull from the repository (so that all the new edits to the master branch are stored in your master branch)\n",
+    "1. Pull from the repository (so that all the new edits to the master branch are stored in your master branch) with `git pull`\n",
     "2. Make sure you're currently on the branch `this_is_gonna_be_a_problem`\n",
     "3. Run \"git rebase master\".\n",
     "\n",
@@ -164,8 +164,6 @@
    "source": [
     "## A Note on Jupyter Notebooks\n",
     "\n",
-    "*Note: We're done with the \"team\" part of the exercises, so each pair can now work on its own in its own repository.*\n",
-    "\n",
     "Github is both great and terrible when it comes to Jupyter Notebooks. \n",
     "\n",
     "**(9)** To understand why, let's begin by having everyone add and push a Jupyter Notebook to their repository. Once you've pushed your files, navigate to the notebook on github in your browser. \n",
@@ -174,7 +172,7 @@
     "\n",
     "![notebook_not_rendered](../images/notebook_not_rendered.png)\n",
     "\n",
-    "The reason is that github has service that renders jupyter notebooks to look like, well... jupyter notebooks. And when you push a jupyter notebook, that notebook gets put into a queue for rendering, and it will thus only be visible as a rendered document when it gets to the front and gets rendered. This can take a while, so we'll just move on. But if you want to see what github looks like when presented a *rendered* notebook, you can find this page as a [github-rendered notebook here!](https://github.com/nickeubank/practicaldatascience/blob/master/source/exercises/Exercise_git.ipynb). \n",
+    "The reason is that github has service that renders jupyter notebooks to look like, well... jupyter notebooks. And when you push a jupyter notebook, that notebook gets put into a queue for rendering, and it will thus only be visible as a rendered document when it gets to the front and gets rendered. This can take a while, so we'll just move on. But if you want to see what github looks like when presented a *rendered* notebook, you can find this page as a [github-rendered notebook here!](https://github.com/nickeubank/practicaldatascience/blob/master/source/exercises/Exercise_git_2.ipynb). \n",
     "\n",
     "This happens because the pretty version of the jupyter notebook you know and love is a *rendered* interface. If you want to see what a jupyter notebook looks like behind the scenes, click the *raw* button on the notebooks github page. *That* is actually everything that is in a jupyter notebook -- a plaintext file in JSON formatting. \n",
     "\n",
@@ -283,7 +281,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.7.3"
+   "version": "3.7.8"
   }
  },
  "nbformat": 4,

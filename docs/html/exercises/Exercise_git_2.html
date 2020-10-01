@@ -61,12 +61,12 @@ that line of code, then it would delete those changes to use 2015 instead of 201
 <h2>Creating a Merge Conflict<a class="headerlink" href="#Creating-a-Merge-Conflict" title="Permalink to this headline">¶</a></h2>
 <p><strong>(1)</strong> On Computer A, first make sure you pull the recent edits (so you have the merged PR in your master branch).</p>
 <p><strong>(2)</strong> On Computer A, create a new branch called “this_is_gonna_be_a_problem”.</p>
-<p><strong>(3)</strong> In that branch, open the README.md and add to the title (the <em>very first line</em> of the readme) the year of data you’re using (2016).</p>
+<p><strong>(3)</strong> In that branch, open the README.md and add to the title (the <em>very first line</em> of the readme) the year of data you’re using (“2016”).</p>
 <p><strong>(4)</strong> Commit and push your edits, and create a new pull request. If you look at your pull request, you should see:</p>
 <p><img alt="ok_to_merge image" src="../_images/ok_to_merge.png" /></p>
 <p>That’s because at the moment, since you created your branch, no other changes have been made to the master branch that might conflict with your edits, so if you wanted to merge right now, git would know that it should use your edits.</p>
 <p><strong>(5)</strong> Now, still on Computer A, switch back to the master branch and edit the README.md title (the <em>very</em> first line) by adding the details of the GDP per capita variable (e.g. “Constant 2010 US$”).</p>
-<p><strong>(6)</strong> Add, commit, and push those changes directly (no PR – we want to modify the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch directly.</p>
+<p><strong>(6)</strong> Add, commit, and push those changes directly (no PR – we want to modify the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch directly).</p>
 <p><strong>(7)</strong> Now go back to your PR. You should see that because the master branch has now added edits <em>to the line you also edited since you created your branch,</em>, you can no longer just merge your edits! You’ll see:</p>
 <p><img alt="not ok to merge" src="../_images/not_ok_to_merge.png" /></p>
 </div>
@@ -74,7 +74,7 @@ that line of code, then it would delete those changes to use 2015 instead of 201
 <h2>Resolving a Merge Conflict<a class="headerlink" href="#Resolving-a-Merge-Conflict" title="Permalink to this headline">¶</a></h2>
 <p>Dealing with this situation requires several steps:</p>
 <ol class="arabic simple">
-<li><p>Pull from the repository (so that all the new edits to the master branch are stored in your master branch)</p></li>
+<li><p>Pull from the repository (so that all the new edits to the master branch are stored in your master branch) with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code></p></li>
 <li><p>Make sure you’re currently on the branch <code class="docutils literal notranslate"><span class="pre">this_is_gonna_be_a_problem</span></code></p></li>
 <li><p>Run “git rebase master”.</p></li>
 </ol>
@@ -127,12 +127,11 @@ struggling with the idea of rebasing and want to learn more, <a class="reference
 </div>
 <div class="section" id="A-Note-on-Jupyter-Notebooks">
 <h2>A Note on Jupyter Notebooks<a class="headerlink" href="#A-Note-on-Jupyter-Notebooks" title="Permalink to this headline">¶</a></h2>
-<p><em>Note: We’re done with the “team” part of the exercises, so each pair can now work on its own in its own repository.</em></p>
 <p>Github is both great and terrible when it comes to Jupyter Notebooks.</p>
 <p><strong>(9)</strong> To understand why, let’s begin by having everyone add and push a Jupyter Notebook to their repository. Once you’ve pushed your files, navigate to the notebook on github in your browser.</p>
 <p>The first thing you’ll likely see is… nothing:</p>
 <p><img alt="notebook_not_rendered" src="../_images/notebook_not_rendered.png" /></p>
-<p>The reason is that github has service that renders jupyter notebooks to look like, well… jupyter notebooks. And when you push a jupyter notebook, that notebook gets put into a queue for rendering, and it will thus only be visible as a rendered document when it gets to the front and gets rendered. This can take a while, so we’ll just move on. But if you want to see what github looks like when presented a <em>rendered</em> notebook, you can find this page as a <a class="reference external" href="https://github.com/nickeubank/practicaldatascience/blob/master/source/exercises/Exercise_git.ipynb">github-rendered notebook
+<p>The reason is that github has service that renders jupyter notebooks to look like, well… jupyter notebooks. And when you push a jupyter notebook, that notebook gets put into a queue for rendering, and it will thus only be visible as a rendered document when it gets to the front and gets rendered. This can take a while, so we’ll just move on. But if you want to see what github looks like when presented a <em>rendered</em> notebook, you can find this page as a <a class="reference external" href="https://github.com/nickeubank/practicaldatascience/blob/master/source/exercises/Exercise_git_2.ipynb">github-rendered notebook
 here!</a>.</p>
 <p>This happens because the pretty version of the jupyter notebook you know and love is a <em>rendered</em> interface. If you want to see what a jupyter notebook looks like behind the scenes, click the <em>raw</em> button on the notebooks github page. <em>That</em> is actually everything that is in a jupyter notebook – a plaintext file in JSON formatting.</p>
 <p>This is important to understand, because it also impacts how git manages changes to jupyter notebooks.</p>
