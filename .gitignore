@@ -37,3 +37,5 @@ example_data/dask_data/*
 .ipynb_checkpoints/*
 source/exercises/.ipynb_checkpoints/*
 .vscode/*
+source/azure_config.json
+source/tmp/*

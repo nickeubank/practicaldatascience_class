@@ -75,6 +75,13 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
 .. toctree:: 
    :maxdepth: 2
    :hidden:
+   :caption: CLOUD
+   What Is The Cloud? <cloud_what_is_it>
+   Setting Up Dask on AzureML <cloud_dask>
+
+.. toctree:: 
+   :maxdepth: 2
+   :hidden:
    :caption: SKILLS
 
    Getting Help Online <getting_help>

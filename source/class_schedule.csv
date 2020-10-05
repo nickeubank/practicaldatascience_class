@@ -20,7 +20,8 @@
 - `Python v. R <https://www.practicaldatascience.org/html/python_v_r.html>`_",`Link <exercises/Exercise_variables_v_objects.ipynb>`_
 "Tues, Sep 1",Numpy Basics,"- JVP pp 33-77
 - IF did not complete DataCamp: Do Numpy Section
-- `Numbers in Computer <ints_and_floats.ipynb>`_",`Link <exercises/Exercise_numpy.ipynb>`_
+- `Numbers in Computer <ints_and_floats.ipynb>`_
+- `OPTIONAL: How numpy works <https://www.nature.com/articles/s41586-020-2649-2>`_",`Link <exercises/Exercise_numpy.ipynb>`_
 "Thurs, Sep 3",Pandas: Series,- `Pandas 1: Series <pandas_series.ipynb>`_,`Link <exercises/Exercise_series.ipynb>`_
 "Tues, Sep 8",Pandas: DataFrames,- `Pandas 2: DataFrames <pandas_dataframes.ipynb>`_,`Link <exercises/Exercise_dataframe.ipynb>`_
 "Thurs, Sep 10","- Intro to Plotting with PlotNine
