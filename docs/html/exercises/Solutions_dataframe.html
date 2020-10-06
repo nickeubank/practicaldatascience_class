@@ -287,10 +287,14 @@ the 2017 ACS survey, and is a 10% sample of the ACS (which itself is a 1% sample
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span></span><span class="o">%</span><span class="k">load_ext</span> lab_black
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
 <span class="c1"># Download the data</span>
-<span class="n">acs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_stata</span><span class="p">(</span><span class="s2">&quot;https://github.com/nickeubank/MIDS_Data/raw/master/US_AmericanCommunitySurvey/US_ACS_2017_10pct_sample.dta&quot;</span><span class="p">)</span>
+<span class="n">acs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_stata</span><span class="p">(</span>
+    <span class="s2">&quot;https://github.com/nickeubank/MIDS_Data/raw/master/US_AmericanCommunitySurvey/US_ACS_2017_10pct_sample.dta&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -374,7 +378,8 @@ Index([&#39;year&#39;, &#39;datanum&#39;, &#39;serial&#39;, &#39;cbserial&#39;, 
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">acs</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">acs</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -503,7 +508,7 @@ diffhear
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">acs</span> <span class="o">=</span> <span class="n">acs</span><span class="p">[[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;empstat&#39;</span><span class="p">,</span> <span class="s1">&#39;inctot&#39;</span><span class="p">,</span> <span class="s1">&#39;educ&#39;</span><span class="p">]]</span>
+<span></span><span class="n">acs</span> <span class="o">=</span> <span class="n">acs</span><span class="p">[[</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;empstat&quot;</span><span class="p">,</span> <span class="s2">&quot;inctot&quot;</span><span class="p">,</span> <span class="s2">&quot;educ&quot;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -549,144 +554,144 @@ diffhear
   </thead>
   <tbody>
     <tr>
-      <th>153547</th>
-      <td>31</td>
+      <th>299688</th>
+      <td>15</td>
+      <td>n/a</td>
+      <td>0</td>
+      <td>grade 5, 6, 7, or 8</td>
+    </tr>
+    <tr>
+      <th>60572</th>
+      <td>18</td>
       <td>employed</td>
-      <td>19300</td>
+      <td>6000</td>
+      <td>grade 12</td>
+    </tr>
+    <tr>
+      <th>30162</th>
+      <td>42</td>
+      <td>not in labor force</td>
+      <td>0</td>
       <td>1 year of college</td>
     </tr>
     <tr>
-      <th>167428</th>
-      <td>62</td>
+      <th>203613</th>
+      <td>46</td>
       <td>employed</td>
-      <td>42600</td>
-      <td>2 years of college</td>
-    </tr>
-    <tr>
-      <th>204786</th>
-      <td>29</td>
-      <td>employed</td>
-      <td>700</td>
-      <td>4 years of college</td>
-    </tr>
-    <tr>
-      <th>146514</th>
-      <td>28</td>
-      <td>employed</td>
-      <td>10000</td>
-      <td>1 year of college</td>
-    </tr>
-    <tr>
-      <th>108727</th>
-      <td>38</td>
-      <td>employed</td>
-      <td>29800</td>
-      <td>1 year of college</td>
-    </tr>
-    <tr>
-      <th>520</th>
-      <td>65</td>
-      <td>employed</td>
-      <td>150200</td>
-      <td>4 years of college</td>
-    </tr>
-    <tr>
-      <th>2030</th>
-      <td>64</td>
-      <td>employed</td>
-      <td>108000</td>
+      <td>68000</td>
       <td>5+ years of college</td>
     </tr>
     <tr>
-      <th>295346</th>
-      <td>52</td>
-      <td>not in labor force</td>
-      <td>12700</td>
-      <td>grade 12</td>
-    </tr>
-    <tr>
-      <th>78699</th>
-      <td>55</td>
+      <th>169945</th>
+      <td>68</td>
       <td>employed</td>
-      <td>17100</td>
-      <td>1 year of college</td>
-    </tr>
-    <tr>
-      <th>21335</th>
-      <td>63</td>
-      <td>not in labor force</td>
-      <td>9900</td>
+      <td>46400</td>
       <td>grade 12</td>
     </tr>
     <tr>
-      <th>187871</th>
-      <td>4</td>
+      <th>267317</th>
+      <td>84</td>
+      <td>not in labor force</td>
+      <td>49000</td>
+      <td>grade 12</td>
+    </tr>
+    <tr>
+      <th>267598</th>
+      <td>62</td>
+      <td>not in labor force</td>
+      <td>19900</td>
+      <td>grade 12</td>
+    </tr>
+    <tr>
+      <th>225616</th>
+      <td>71</td>
+      <td>not in labor force</td>
+      <td>8900</td>
+      <td>grade 12</td>
+    </tr>
+    <tr>
+      <th>95262</th>
+      <td>1</td>
       <td>n/a</td>
       <td>9999999</td>
       <td>n/a or no schooling</td>
     </tr>
     <tr>
-      <th>270117</th>
-      <td>54</td>
-      <td>employed</td>
-      <td>18000</td>
-      <td>1 year of college</td>
-    </tr>
-    <tr>
-      <th>49805</th>
-      <td>55</td>
+      <th>5717</th>
+      <td>71</td>
       <td>not in labor force</td>
-      <td>10100</td>
-      <td>grade 9</td>
+      <td>94000</td>
+      <td>4 years of college</td>
     </tr>
     <tr>
-      <th>59154</th>
-      <td>37</td>
+      <th>61423</th>
+      <td>53</td>
       <td>employed</td>
-      <td>8000</td>
-      <td>5+ years of college</td>
+      <td>55000</td>
+      <td>grade 12</td>
     </tr>
     <tr>
-      <th>294172</th>
+      <th>189520</th>
+      <td>36</td>
+      <td>employed</td>
+      <td>40000</td>
+      <td>4 years of college</td>
+    </tr>
+    <tr>
+      <th>94082</th>
       <td>82</td>
       <td>not in labor force</td>
-      <td>12000</td>
+      <td>22700</td>
       <td>grade 12</td>
     </tr>
     <tr>
-      <th>199152</th>
-      <td>37</td>
-      <td>employed</td>
-      <td>100000</td>
-      <td>5+ years of college</td>
+      <th>141775</th>
+      <td>16</td>
+      <td>not in labor force</td>
+      <td>500</td>
+      <td>grade 10</td>
     </tr>
     <tr>
-      <th>230024</th>
-      <td>3</td>
-      <td>n/a</td>
-      <td>9999999</td>
-      <td>n/a or no schooling</td>
-    </tr>
-    <tr>
-      <th>284634</th>
-      <td>8</td>
+      <th>244018</th>
+      <td>10</td>
       <td>n/a</td>
       <td>9999999</td>
       <td>nursery school to grade 4</td>
     </tr>
     <tr>
-      <th>52496</th>
-      <td>33</td>
-      <td>unemployed</td>
-      <td>3000</td>
-      <td>grade 12</td>
+      <th>18306</th>
+      <td>17</td>
+      <td>not in labor force</td>
+      <td>0</td>
+      <td>grade 11</td>
     </tr>
     <tr>
-      <th>269954</th>
-      <td>75</td>
-      <td>not in labor force</td>
-      <td>17600</td>
-      <td>grade 5, 6, 7, or 8</td>
+      <th>216971</th>
+      <td>27</td>
+      <td>employed</td>
+      <td>46300</td>
+      <td>1 year of college</td>
+    </tr>
+    <tr>
+      <th>285635</th>
+      <td>57</td>
+      <td>employed</td>
+      <td>110000</td>
+      <td>4 years of college</td>
+    </tr>
+    <tr>
+      <th>55683</th>
+      <td>30</td>
+      <td>employed</td>
+      <td>34000</td>
+      <td>2 years of college</td>
+    </tr>
+    <tr>
+      <th>70139</th>
+      <td>34</td>
+      <td>employed</td>
+      <td>30000</td>
+      <td>n/a or no schooling</td>
     </tr>
   </tbody>
 </table>
@@ -710,7 +715,7 @@ diffhear
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">acs</span> <span class="o">=</span> <span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;inctot&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">9999999</span><span class="p">]</span>
+<span></span><span class="n">acs</span> <span class="o">=</span> <span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;inctot&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">9999999</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -722,7 +727,9 @@ jobs in the first place is called the “extensive margin”.)</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">acs</span> <span class="o">=</span> <span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">acs</span><span class="o">.</span><span class="n">empstat</span> <span class="o">==</span> <span class="s2">&quot;employed&quot;</span><span class="p">,</span> <span class="p">]</span>
+<span></span><span class="n">acs</span> <span class="o">=</span> <span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+    <span class="n">acs</span><span class="o">.</span><span class="n">empstat</span> <span class="o">==</span> <span class="s2">&quot;employed&quot;</span><span class="p">,</span>
+<span class="p">]</span>
 <span class="n">acs</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -758,73 +765,73 @@ jobs in the first place is called the “extensive margin”.)</p>
   </thead>
   <tbody>
     <tr>
-      <th>58592</th>
-      <td>40</td>
+      <th>187997</th>
+      <td>45</td>
       <td>employed</td>
-      <td>87000</td>
-      <td>grade 12</td>
+      <td>139000</td>
+      <td>4 years of college</td>
     </tr>
     <tr>
-      <th>82867</th>
-      <td>50</td>
+      <th>306335</th>
+      <td>34</td>
       <td>employed</td>
-      <td>65000</td>
-      <td>grade 12</td>
-    </tr>
-    <tr>
-      <th>28050</th>
-      <td>40</td>
-      <td>employed</td>
-      <td>140000</td>
-      <td>5+ years of college</td>
-    </tr>
-    <tr>
-      <th>7898</th>
-      <td>38</td>
-      <td>employed</td>
-      <td>65000</td>
+      <td>60000</td>
       <td>2 years of college</td>
     </tr>
     <tr>
-      <th>310941</th>
-      <td>23</td>
+      <th>119915</th>
+      <td>21</td>
       <td>employed</td>
-      <td>12000</td>
-      <td>2 years of college</td>
+      <td>6050</td>
+      <td>grade 12</td>
     </tr>
     <tr>
-      <th>252840</th>
-      <td>40</td>
+      <th>43453</th>
+      <td>31</td>
       <td>employed</td>
-      <td>72000</td>
-      <td>4 years of college</td>
-    </tr>
-    <tr>
-      <th>21168</th>
-      <td>41</td>
-      <td>employed</td>
-      <td>77000</td>
-      <td>4 years of college</td>
-    </tr>
-    <tr>
-      <th>167088</th>
-      <td>62</td>
-      <td>employed</td>
-      <td>55000</td>
+      <td>50000</td>
       <td>5+ years of college</td>
     </tr>
     <tr>
-      <th>220316</th>
-      <td>43</td>
+      <th>64370</th>
+      <td>37</td>
       <td>employed</td>
-      <td>52000</td>
+      <td>80000</td>
       <td>4 years of college</td>
     </tr>
     <tr>
-      <th>270231</th>
-      <td>63</td>
+      <th>159325</th>
+      <td>42</td>
       <td>employed</td>
-      <td>69000</td>
+      <td>100000</td>
+      <td>5+ years of college</td>
+    </tr>
+    <tr>
+      <th>312097</th>
+      <td>65</td>
+      <td>employed</td>
+      <td>18000</td>
+      <td>grade 12</td>
+    </tr>
+    <tr>
+      <th>121154</th>
+      <td>55</td>
+      <td>employed</td>
+      <td>120000</td>
+      <td>5+ years of college</td>
+    </tr>
+    <tr>
+      <th>199340</th>
+      <td>28</td>
+      <td>employed</td>
+      <td>22000</td>
+      <td>grade 12</td>
+    </tr>
+    <tr>
+      <th>104422</th>
+      <td>56</td>
+      <td>employed</td>
+      <td>32800</td>
       <td>grade 12</td>
     </tr>
   </tbody>
@@ -840,7 +847,7 @@ jobs in the first place is called the “extensive margin”.)</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span></span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;educ&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -864,37 +871,119 @@ nursery school to grade 4      468
 Name: educ, dtype: int64
 </pre></div></div>
 </div>
-<p><strong>10)</strong> There are a lot of values in here, so let’s just check a couple. What is the average value of <code class="docutils literal notranslate"><span class="pre">inctot</span></code> for people whose highest grade level is “grade 12” (in the US, that is someone who has graduated high school)?</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;grade 12&#39;</span><span class="p">,</span> <span class="s1">&#39;inctot&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span></span><span class="n">a</span> <span class="o">=</span> <span class="n">acs</span><span class="p">[</span><span class="s2">&quot;educ&quot;</span><span class="p">]</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+pd.read_fwf<span class="o">?</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-38957.76068179442
+<span class="ansi-red-fg">Signature:</span>
+pd<span class="ansi-blue-fg">.</span>read_fwf<span class="ansi-blue-fg">(</span>
+    filepath_or_buffer<span class="ansi-blue-fg">:</span> Union<span class="ansi-blue-fg">[</span>str<span class="ansi-blue-fg">,</span> pathlib<span class="ansi-blue-fg">.</span>Path<span class="ansi-blue-fg">,</span> IO<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">~</span>AnyStr<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span>
+    colspecs<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;infer&#39;</span><span class="ansi-blue-fg">,</span>
+    widths<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span>
+    infer_nrows<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">100</span><span class="ansi-blue-fg">,</span>
+    <span class="ansi-blue-fg">**</span>kwds<span class="ansi-blue-fg">,</span>
+<span class="ansi-blue-fg">)</span>
+<span class="ansi-red-fg">Docstring:</span>
+Read a table of fixed-width formatted lines into DataFrame.
+
+Also supports optionally iterating or breaking of the file
+into chunks.
+
+Additional help can be found in the `online docs for IO Tools
+&lt;https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html&gt;`_.
+
+Parameters
+----------
+filepath_or_buffer : str, path object or file-like object
+    Any valid string path is acceptable. The string could be a URL. Valid
+    URL schemes include http, ftp, s3, and file. For file URLs, a host is
+    expected. A local file could be:
+    ``file://localhost/path/to/table.csv``.
+
+    If you want to pass in a path object, pandas accepts any
+    ``os.PathLike``.
+
+    By file-like object, we refer to objects with a ``read()`` method,
+    such as a file handler (e.g. via builtin ``open`` function)
+    or ``StringIO``.
+colspecs : list of tuple (int, int) or &#39;infer&#39;. optional
+    A list of tuples giving the extents of the fixed-width
+    fields of each line as half-open intervals (i.e.,  [from, to[ ).
+    String value &#39;infer&#39; can be used to instruct the parser to try
+    detecting the column specifications from the first 100 rows of
+    the data which are not being skipped via skiprows (default=&#39;infer&#39;).
+widths : list of int, optional
+    A list of field widths which can be used instead of &#39;colspecs&#39; if
+    the intervals are contiguous.
+infer_nrows : int, default 100
+    The number of rows to consider when letting the parser determine the
+    `colspecs`.
+
+    .. versionadded:: 0.24.0
+**kwds : optional
+    Optional keyword arguments can be passed to ``TextFileReader``.
+
+Returns
+-------
+DataFrame or TextParser
+    A comma-separated values (csv) file is returned as two-dimensional
+    data structure with labeled axes.
+
+See Also
+--------
+DataFrame.to_csv : Write DataFrame to a comma-separated values (csv) file.
+read_csv : Read a comma-separated values (csv) file into DataFrame.
+
+Examples
+--------
+&gt;&gt;&gt; pd.read_fwf(&#39;data.csv&#39;)  # doctest: +SKIP
+<span class="ansi-red-fg">File:</span>      ~/miniconda3/lib/python3.7/site-packages/pandas/io/parsers.py
+<span class="ansi-red-fg">Type:</span>      function
+
+</pre></div></div>
+</div>
+<p><strong>10)</strong> There are a lot of values in here, so let’s just check a couple. What is the average value of <code class="docutils literal notranslate"><span class="pre">inctot</span></code> for people whose highest grade level is “grade 12” (in the US, that is someone who has graduated high school)?</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;grade 12&#39;</span><span class="p">,</span> <span class="s1">&#39;inctot&#39;</span><span class="p">]</span>.mean<span class="o">?</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Object `mean` not found.
 </pre></div></div>
 </div>
 <p><strong>11)</strong> What is the average income of someone who graduated college (“4 years of college”)? What does that suggest is the value of getting a college degree after graduating high school?</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;4 years of college&#39;</span><span class="p">,</span> <span class="s1">&#39;inctot&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span></span><span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;educ&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;4 years of college&quot;</span><span class="p">,</span> <span class="s2">&quot;inctot&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -903,7 +992,7 @@ Name: educ, dtype: int64
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -913,44 +1002,20 @@ Name: educ, dtype: int64
 </div>
 <p><strong>12)</strong> What is the average income for someone who has not finished high school? What does that suggest is the value of a high school diploma?</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Hasn&#39;t finished:</span>
-<span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;n/a or no schooling&#39;</span><span class="p">)</span> <span class="o">|</span>
-         <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;nursery school to grade 4&#39;</span><span class="p">)</span> <span class="o">|</span>
-         <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;grade 5, 6, 7, or 8&#39;</span><span class="p">)</span> <span class="o">|</span>
-         <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;grade 9&#39;</span><span class="p">)</span> <span class="o">|</span>
-         <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;grade 10&#39;</span><span class="p">)</span> <span class="o">|</span>
-         <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;grade 11&#39;</span><span class="p">),</span>
-        <span class="s1">&#39;inctot&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-26226.45692998571
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Or the other way around:</span>
-
-<span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="o">~</span><span class="p">((</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;grade 12&#39;</span><span class="p">)</span> <span class="o">|</span>
-           <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;1 year of college&#39;</span><span class="p">)</span> <span class="o">|</span>
-           <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;2 years of college&#39;</span><span class="p">)</span> <span class="o">|</span>
-           <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;4 years of college&#39;</span><span class="p">)</span> <span class="o">|</span>
-           <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;5+ years of college&#39;</span><span class="p">)</span>
-          <span class="p">),</span>
-        <span class="s1">&#39;inctot&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span></span><span class="c1"># Hasn&#39;t finished:</span>
+<span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;educ&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;n/a or no schooling&quot;</span><span class="p">)</span>
+    <span class="o">|</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;educ&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;nursery school to grade 4&quot;</span><span class="p">)</span>
+    <span class="o">|</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;educ&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;grade 5, 6, 7, or 8&quot;</span><span class="p">)</span>
+    <span class="o">|</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;educ&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;grade 9&quot;</span><span class="p">)</span>
+    <span class="o">|</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;educ&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;grade 10&quot;</span><span class="p">)</span>
+    <span class="o">|</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;educ&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;grade 11&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;inctot&quot;</span><span class="p">,</span>
+<span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -968,15 +1033,18 @@ Name: educ, dtype: int64
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Or if you want to use a little trick:</span>
-<span class="n">less_than_college</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;n/a or no schooling&#39;</span><span class="p">,</span>
-                     <span class="s1">&#39;nursery school to grade 4&#39;</span><span class="p">,</span>
-                     <span class="s1">&#39;grade 5, 6, 7, or 8&#39;</span><span class="p">,</span>
-                     <span class="s1">&#39;grade 9&#39;</span><span class="p">,</span>
-                     <span class="s1">&#39;grade 10&#39;</span><span class="p">,</span>
-                     <span class="s1">&#39;grade 11&#39;</span><span class="p">]</span>
+<span></span><span class="c1"># Or the other way around:</span>
 
-<span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">less_than_college</span><span class="p">),</span> <span class="s1">&#39;inctot&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+    <span class="o">~</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;educ&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;grade 12&quot;</span><span class="p">)</span>
+        <span class="o">|</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;educ&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;1 year of college&quot;</span><span class="p">)</span>
+        <span class="o">|</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;educ&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;2 years of college&quot;</span><span class="p">)</span>
+        <span class="o">|</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;educ&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;4 years of college&quot;</span><span class="p">)</span>
+        <span class="o">|</span> <span class="p">(</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;educ&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;5+ years of college&quot;</span><span class="p">)</span>
+    <span class="p">),</span>
+    <span class="s2">&quot;inctot&quot;</span><span class="p">,</span>
+<span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -991,6 +1059,34 @@ Name: educ, dtype: int64
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Or if you want to use a little trick:</span>
+<span class="n">less_than_college</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;n/a or no schooling&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nursery school to grade 4&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;grade 5, 6, 7, or 8&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;grade 9&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;grade 10&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;grade 11&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;educ&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">less_than_college</span><span class="p">),</span> <span class="s2">&quot;inctot&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+26226.45692998571
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1002,7 +1098,7 @@ Name: educ, dtype: int64
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1020,13 +1116,13 @@ Name: educ, dtype: int64
 <li><p>Average income for someone who completed 4 year of college (in the US, this means graduating college): _________</p></li>
 </ul>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;grade 9&#39;</span><span class="p">,</span> <span class="s1">&#39;grade 10&#39;</span><span class="p">,</span> <span class="s1">&#39;grade 11&#39;</span><span class="p">,</span> <span class="s1">&#39;grade 12&#39;</span><span class="p">,</span> <span class="s1">&#39;4 years of college&#39;</span><span class="p">]:</span>
-    <span class="n">avg_income</span> <span class="o">=</span> <span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">level</span><span class="p">,</span> <span class="s1">&#39;inctot&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;those who have finished </span><span class="si">{}</span><span class="s1"> earn </span><span class="si">{:,.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">avg_income</span><span class="p">))</span>
+<span></span><span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;grade 9&quot;</span><span class="p">,</span> <span class="s2">&quot;grade 10&quot;</span><span class="p">,</span> <span class="s2">&quot;grade 11&quot;</span><span class="p">,</span> <span class="s2">&quot;grade 12&quot;</span><span class="p">,</span> <span class="s2">&quot;4 years of college&quot;</span><span class="p">]:</span>
+    <span class="n">avg_income</span> <span class="o">=</span> <span class="n">acs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">acs</span><span class="p">[</span><span class="s2">&quot;educ&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">level</span><span class="p">,</span> <span class="s2">&quot;inctot&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;those who have finished </span><span class="si">{}</span><span class="s2"> earn </span><span class="si">{:,.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">avg_income</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1044,7 +1140,7 @@ those who have finished 4 years of college earn 75,485.05
 </div>
 <p><strong>14)</strong> Why do you think there is no benefit from moving from grade 9 to grade 10, or grade 10 to grade 11, but there is a huge benefit to moving from grade 11 to graduating high school (grade 12)?</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>

@@ -43,7 +43,7 @@
 <h2>Azure Subscription<a class="headerlink" href="#Azure-Subscription" title="Permalink to this headline">¶</a></h2>
 <p>Unsurprisingly, you have to sign up with Azure. The best way to do this will be <a class="reference external" href="https://azure.microsoft.com/en-us/free/students/">go here</a> and sign up a new account, which will also get you 100 dollars free. Note that if you have already done this and used your free 100 dollars… try and make a new account with a new email address? For example, most universities give you a short-hand email, but you can also get a “vanity” long name (e.g. my email is both <a class="reference external" href="mailto:nce8&#37;&#52;&#48;duke&#46;edu">nce8<span>&#64;</span>duke<span>&#46;</span>edu</a> and
 <a class="reference external" href="mailto:nick&#46;eubank&#37;&#52;&#48;duke&#46;edu">nick<span>&#46;</span>eubank<span>&#64;</span>duke<span>&#46;</span>edu</a>).</p>
-<p>Note that there are ways in an organization (like Duke) one can attach your account to a subscription, but in this case I’d like you to get the experience of doing this from step one forward so you know you can do it all on your own!</p>
+<p>Note that there are ways an organization (like Duke) one can attach your account to a subscription, but in this case I’d like you to get the experience of doing this from step one forward so you know you can do it all on your own!</p>
 <p>Once you have an account, you should end up at the Azure Portal page:</p>
 <p><img alt="azure_portal" src="_images/azure_portal.png" /></p>
 </div>
@@ -98,45 +98,37 @@ Windows experience.)</p>
 <div class="section" id="Storage-on-Azure">
 <h2>Storage on Azure<a class="headerlink" href="#Storage-on-Azure" title="Permalink to this headline">¶</a></h2>
 <p>As we discussed in the last tutorial, when working on the cloud your “compute” resources and your “storage” resources are sold (mostly) separately. This isn’t entirely true – your VM and your cluster computers have some harddrive space – but that memory is tied to that compute, and so when you shut down your compute, anything saved on those harddrives goes away. So normally we need to get some persistent storage for our data and results.</p>
-<div class="section" id="Getting-Storage">
-<h3>Getting Storage<a class="headerlink" href="#Getting-Storage" title="Permalink to this headline">¶</a></h3>
-<p>Like compute, storage is a “resource”, so to get it we need to:</p>
+<p>Thankfully, when you created your Workspace, Azure also created a “Storage Account” for you. Asure not only uses this Storage Account to store all metadata about your Workshop, but automatically connects this Storage Account to whenever you create a VM or cluster!</p>
+<p>To see this account:</p>
 <ol class="arabic simple">
 <li><p>Go back to your <a class="reference external" href="portal.azure.com">Azure Portal</a>,</p></li>
-<li><p>Click on “Create a resource”,</p></li>
-<li><p>Search for “Storage Account”, and</p></li>
-<li><p>Click “Create”.</p></li>
+<li><p>Click on “Storage Account.”</p></li>
 </ol>
-<p>For this point forward, you’re gonna see a LOT of options, and you can select almost all the defaults.</p>
-<ol class="arabic simple">
-<li><p>Put your storage account in the Resource Group you created above.</p></li>
-<li><p>Naming your Storage Account is a little more finicky than other things because it has to be unique <em>across all of Azure</em> because it’ll become part of a URL that can be used to access the data it stores. Moreover, you can’t have any symbols (like the dash we used above). So I’d go with your initials and some random numbers.</p></li>
-<li><p>On the first page, you can use all the defaults for now: a location that is close to you, Standard performance, StorageV2, whatever Replication it chooses as a default, and a Hot Blob access tier (default). Don’t worry what those mean for now.</p></li>
-<li><p>Hit <code class="docutils literal notranslate"><span class="pre">Review</span> <span class="pre">+</span> <span class="pre">Create</span></code> (you don’t need to see the other pages, the defaults are fine), then <code class="docutils literal notranslate"><span class="pre">Create</span></code>.</p></li>
-</ol>
-<p>You’ll then be brought to a page that lists all your Storage accounts which will probably look about like this:</p>
-<p><img alt="azure_storage_account_first" src="_images/azure_storage_account_first.png" /></p>
-<p>Um… what is that second Storage account with all the numbers you ask?</p>
-<p>When you created an AzureML Workspace, Azure needed to save that Workplace somewhere, so it actually created a dedicated Storage account for you and named it [name of your Workspace][string of random numbers]. In theory, you <em>can</em> use that storage for your data, but I think it makes sense to keep your data in a new Storage account.</p>
+<p>There you should see a Storage Account whose name is [your workspace name] plus a long series of random digits. (They add the random numbers because Storage account names are used as URLs, so they have to be unique across all of Azure).</p>
+<p>While you might <em>think</em> that Storage Accounts are where we put our data, though, that’s not quite right. Storage Accounts can hold 4 different kinds of things: Blob Containers, File Shares, Tables, and Queues. UGH.</p>
+<p>The good news is that, at this point in your life, you only need to worry about Blob Containers. As we mentioned in our “What is the Cloud” tutorial, Cloud storage comes in different flavors, and Blob is the most flexible, as it can hold anything (BLOB standands for <strong>B</strong>inary <strong>L</strong>arge <strong>OB</strong>ject storage). So unless you have reason to do otherwise, just use Blob Containers.</p>
+<p>Other types on Azure, just so you know them, are:</p>
+<ul class="simple">
+<li><p><strong>File storage</strong>: similar to Blob. File storage supports certain file sharing protocols that people may have been using before they came to the cloud, so makes life easy for people moving to the cloud. But fewer features than BLOB, so almost surely not for you. <em>Sounds</em> like the storage that’d be most familiar to a normal computer user, but it’s a trick. Use BLOB.</p></li>
+<li><p><strong>Queue storage</strong>: specialized storage for messaging services.</p></li>
+<li><p><strong>Table storage</strong>: What’s known as a NoSQL database system.</p></li>
+</ul>
+<p>And lest this whole “Storage Account” / Blob Containers / Files thing is getting confusing (I <em>know</em>, so many nested groups!!!), it looks something like this:</p>
+<p><img alt="azure_blob_containers" src="_images/azure_blob_containers.png" /></p>
+<div class="section" id="Create-Container-and-Add-Data">
+<h3>Create Container and Add Data<a class="headerlink" href="#Create-Container-and-Add-Data" title="Permalink to this headline">¶</a></h3>
+<p>So let’s add some data! On the left menu, and click on “Containers” under Blob Services.</p>
+<p>First, note that there is already a handful of Containers there – these store the data about your Workspace.</p>
+<p>But now we can create a new container for our data! So click the “+ Container” button, pick a name, and click “Create”. Congrats! You have a blob!</p>
+<p>We’ll talk more about managing data using Python or the command line later, but for the moment, let’s just upload an easy file. Click on your new Container, click “Upload” in the top left, and upload a file!</p>
 </div>
-<div class="section" id="Containers-and-Types-of-Storage">
-<h3>Containers and Types of Storage<a class="headerlink" href="#Containers-and-Types-of-Storage" title="Permalink to this headline">¶</a></h3>
-<p>OK, now the part where, if you’re me, you throw your hands up in the air and yell “OH COME ON!”: you can’t actually put data in a Storage account – you have to create a Container inside your Storage account first. I KNOW! I feel like some kind of weird digital set of <a class="reference external" href="http://gph.is/1OKgVOK">Russian Dolls</a>.</p>
-<p>So let’s pause to re-cap what all this looks like before we get into containers:</p>
-</div>
-</div>
-<div class="section" id="Compute-Options">
-<h2>Compute Options<a class="headerlink" href="#Compute-Options" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="VMs">
-<h3>VMs<a class="headerlink" href="#VMs" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="Dynamic-Cluster">
-<h3>Dynamic Cluster<a class="headerlink" href="#Dynamic-Cluster" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="Creating-A-New-Storage-Account">
+<h3>Creating A New Storage Account<a class="headerlink" href="#Creating-A-New-Storage-Account" title="Permalink to this headline">¶</a></h3>
+<p>If at some point you want a NEW Storage Account, just go back to the Portal, click “Add Resource” and search for Storage Account.</p>
 </div>
 </div>
-<div class="section" id="Storage">
-<h2>Storage<a class="headerlink" href="#Storage" title="Permalink to this headline">¶</a></h2>
-<p>Storage Accounts –&gt; Containers</p>
+<div class="section" id="Bringing-It-All-Together:-Accessing-Data-from-Compute">
+<h2>Bringing It All Together: Accessing Data from Compute<a class="headerlink" href="#Bringing-It-All-Together:-Accessing-Data-from-Compute" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
