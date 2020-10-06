@@ -129,6 +129,17 @@ Windows experience.)</p>
 </div>
 <div class="section" id="Bringing-It-All-Together:-Accessing-Data-from-Compute">
 <h2>Bringing It All Together: Accessing Data from Compute<a class="headerlink" href="#Bringing-It-All-Together:-Accessing-Data-from-Compute" title="Permalink to this headline">¶</a></h2>
+<p>OK, the final move: make your data visible from your virtual machines!</p>
+<p>There are two ways to do this: the super easy way that only works in AzureML, and the trickier but more general way. Let’s start with easy.</p>
+<p>NEXT PART IS WRONG AT THE MOMENT…</p>
+<div class="section" id="Registering-a-Datastore-in-Workspace">
+<h3>Registering a Datastore in Workspace<a class="headerlink" href="#Registering-a-Datastore-in-Workspace" title="Permalink to this headline">¶</a></h3>
+<p>The easy way to make things visible is to “register” your Blob Container from within your Workspace as a “Datastore”. Then you can access it like a mounted drive from inside any of your VMs!</p>
+<p>To do so, just go to your Workspace, and on the very bottom of the left hand menu click “Datastores.” You should see two default Workspace datastores there, but let’s make this interesting and add the file we just uploaded above. Now just click “+ Datastore” in the top left and connect it to the Blob Container you just created above, and you’re done! Note you’ll need your Storage Account key, which you can find by going back to the Azure Portal, clicking Storage Accounts, and clicking “Access
+Keys” on the left.</p>
+<p>Now if you spin-up a VM or cluster from your Workspace, you should see your Blob container as a directory right away! Here’s a JupyterLab window from a new VM after I registered <code class="docutils literal notranslate"><span class="pre">nce8-opioid</span></code>:</p>
+<p>And here’s what things look like from the command line:</p>
+</div>
 </div>
 </div>
 
