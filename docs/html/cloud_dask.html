@@ -386,6 +386,12 @@ WARNING - If &#39;script&#39; has been provided here and a script file name has 
 | python  | 3.7.8.final.0 | 3.6.9.final.0 | 3.6.9.final.0 |
 +---------+---------------+---------------+---------------+
   warnings.warn(version_module.VersionMismatchWarning(msg[0][&#34;warning&#34;]))
+WARNING - Retrying (Retry(total=2, connect=2, read=3, redirect=None, status=None)) after connection broken by &#39;NewConnectionError(&#39;&lt;urllib3.connection.HTTPSConnection object at 0x7f86333c3d10&gt;: Failed to establish a new connection: [Errno 60] Operation timed out&#39;)&#39;: /history/v1.0/subscriptions/bab5ec70-4531-48dc-9d25-2d73206d5741/resourceGroups/nce8/providers/Microsoft.MachineLearningServices/workspaces/nce8/experiments/dask-cloudprovider/runs/dask-cloudprovider_1601918130_97409214
+distributed.client - ERROR - Failed to reconnect to scheduler after 10.00 seconds, closing client
+ERROR - _GatheringFuture exception was never retrieved
+future: &lt;_GatheringFuture finished exception=CancelledError()&gt;
+concurrent.futures._base.CancelledError
+WARNING - Retrying (Retry(total=2, connect=2, read=3, redirect=None, status=None)) after connection broken by &#39;NewConnectionError(&#39;&lt;urllib3.connection.HTTPSConnection object at 0x7f867ab95dd0&gt;: Failed to establish a new connection: [Errno 60] Operation timed out&#39;)&#39;: /history/v1.0/subscriptions/bab5ec70-4531-48dc-9d25-2d73206d5741/resourceGroups/nce8/providers/Microsoft.MachineLearningServices/workspaces/nce8/experiments/dask-cloudprovider/runs/dask-cloudprovider_1601918130_97409214
 </pre></div></div>
 </div>
 <p>And you’re off to the races!</p>

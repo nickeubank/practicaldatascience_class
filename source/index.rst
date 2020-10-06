@@ -77,7 +77,8 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
    :hidden:
    :caption: CLOUD
    What Is The Cloud? <cloud_what_is_it>
-   Setting Up Dask on AzureML <cloud_dask>
+   AzureML <cloud_azureml>
+   Set Up Dask on AzureML <cloud_dask>
 
 .. toctree:: 
    :maxdepth: 2
