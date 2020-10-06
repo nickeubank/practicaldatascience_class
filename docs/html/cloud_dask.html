@@ -269,7 +269,6 @@ div.rendered_html tbody tr:hover {
 </style>
 <div class="section" id="Setting-up-a-Dask-Cluster-on-AzureML">
 <h1>Setting up a Dask Cluster on AzureML<a class="headerlink" href="#Setting-up-a-Dask-Cluster-on-AzureML" title="Permalink to this headline">¶</a></h1>
-<p>stuff</p>
 <div class="section" id="Starting-a-Dask-Cluster">
 <h2>Starting a Dask Cluster<a class="headerlink" href="#Starting-a-Dask-Cluster" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
@@ -288,7 +287,12 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># to load the workspace from configuration file</span>
+<span></span><span class="c1"># to load the workspace from configuration file.</span>
+<span class="c1"># You can also do this by specifing your subscription ID,</span>
+<span class="c1"># resource_group, and workspace_name, but those are</span>
+<span class="c1"># sensitive so I&#39;m using a config file I can exclude from</span>
+<span class="c1"># this repo. See Workspace docstring for details.</span>
+
 <span class="n">ws</span> <span class="o">=</span> <span class="n">Workspace</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="s2">&quot;azure_config.json&quot;</span><span class="p">)</span>
 </pre></div>
 </div>

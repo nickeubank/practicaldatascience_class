@@ -11,13 +11,6 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "stuff"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
     "## Starting a Dask Cluster"
    ]
   },
@@ -38,7 +31,12 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "# to load the workspace from configuration file\n",
+    "# to load the workspace from configuration file.\n",
+    "# You can also do this by specifing your subscription ID,\n",
+    "# resource_group, and workspace_name, but those are\n",
+    "# sensitive so I'm using a config file I can exclude from\n",
+    "# this repo. See Workspace docstring for details.\n",
+    "\n",
     "ws = Workspace.from_config(\"azure_config.json\")"
    ]
   },
