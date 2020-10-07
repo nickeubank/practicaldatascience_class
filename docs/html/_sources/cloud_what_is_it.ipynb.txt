@@ -49,7 +49,7 @@
     "\n",
     "\n",
     "\n",
-    "The key feature of cloud computing is that you only pay for what you use. If you are planning to actively use a computer 24/7 for years, in many ways it would probably be much cheaper to just buy the computer you want. But most of us only use our computers intermittently, and we only use them really intensely on rare occasions. Given that, it is often much cheaper to pay to rent a couple hundred cores every now and then (and get your computing done much faster when you actually need it) then to buy a really top-of-the-line desktop computer.\n",
+    "The key feature of cloud computing is that you only pay for what you use. If you are planning to actively use a computer 24/7 for years, in many ways it would probably be much cheaper to just buy the computer you want. But most of us only use our computers intermittently, and we only use them really intensely on rare occasions. Given that, it is often much cheaper to pay to rent a couple hundred cores every now and then then to buy a really top-of-the-line desktop computer (plus, you'll probably get your computing done much faster with the couple hundred cords than your desktop!).\n",
     "\n",
     "\n",
     "### Storage\n",
