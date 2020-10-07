@@ -8,7 +8,7 @@ Office Hours and Links
 
 `Nick <https://duke.zoom.us/my/nickeubank>`_ : Friday 3pm - 4pm
 
-`Nathan <https://us02web.zoom.us/j/4551839718?pwd=U2dCdWZlSkY4Ry9QdnFqRkJNaGdQUT09>`_ : Wednesday 8:45-9:45am
+`Nathan <https://us02web.zoom.us/j/4551839718?pwd=U2dCdWZlSkY4Ry9QdnFqRkJNaGdQUT09>`_ : Wednesday 12pm-1pm
 
 `Vanessa <https://duke.zoom.us/j/91722970032>`_ : Monday 4-5pm
 

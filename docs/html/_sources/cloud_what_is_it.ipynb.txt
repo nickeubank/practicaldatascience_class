@@ -48,14 +48,38 @@
     "### Compute\n",
     "\n",
     "\n",
+    "**Cloud Costs**\n",
     "\n",
-    "The key feature of cloud computing is that you only pay for what you use. If you are planning to actively use a computer 24/7 for years, in many ways it would probably be much cheaper to just buy the computer you want. But most of us only use our computers intermittently, and we only use them really intensely on rare occasions. Given that, it is often much cheaper to pay to rent a couple hundred cores every now and then then to buy a really top-of-the-line desktop computer (plus, you'll probably get your computing done much faster with the couple hundred cords than your desktop!).\n",
+    "A key feature of the economics of cloud computing is that **you only pay for what you use.** If you are planning to actively use a computer 24/7 for years, in many ways it would probably be much cheaper to just buy the computer you want. But most of us only use our computers intermittently, and we only use them really intensely on rare occasions. \n",
     "\n",
+    "Given that, it is often much cheaper to just rent a couple hundred cores when you actually need to do your intensive computing than buy a really top-of-the-line desktop computer you rarely actually use. Moreover, it is *often* (though no always!) the case that the couple hundred core cluster will not only be cheaper, but will probably get your job done much faster than that desktop computer ever could!\n",
     "\n",
     "### Storage\n",
     "\n",
+    "The good news is that, at this point in your life, you only need to worry about Blob Containers. As we mentioned in our \"What is the Cloud\" tutorial, Cloud storage comes in different flavors, and Blob is the most flexible, as it can hold anything (BLOB standands for **B**inary **L**arge **OB**ject storage). So unless you have reason to do otherwise, just use Blob Containers. \n",
+    "\n",
+    "Other types on Azure, just so you know them, are:\n",
+    "\n",
+    "- **File storage**: similar to Blob. File storage supports certain file sharing protocols that people may have been using before they came to the cloud, so makes life easy for people moving to the cloud. But fewer features than BLOB, so almost surely not for you. *Sounds* like the storage that'd be most familiar to a normal computer user, but it's a trick. Use BLOB. \n",
+    "- **Queue storage**: specialized storage for messaging services. \n",
+    "- **Table storage**: What's known as a NoSQL database system.\n",
+    "\n",
+    "\n",
     "### Networking\n",
     "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## A Final Note on Complexity\n",
+    "\n",
+    "A final note on complexity: because the Cloud is used for *so many* different purposes, and by such different users (everything from small businesses to Twitter and Netflix), it is almost infinitely configurable. If you want, you can just rent dedicated control of a couple physical computers, and not only control them, but also control all the network systems that connect them at the lowest level possible. \n",
+    "\n",
+    "But these tutorials assume you're an applied data scientist interested in analysis, and so I'm gonna do my very, *very* best to provide the smoothest on-ramp to these services as I can, showing you only what I think you need to know to feel comfortable using the tools you're using and to have a somewhat generalizable understanding of what's going on (so if things change a little in the future, you don't feel lost) without getting into the infinite possibilities of the cloud. \n",
+    "\n",
+    "If, when you're done, you say \"BUT I WANT TO CONFIGURE MY OWN VIRTUAL NETWORK AND DOCKER IMAGES AND KUBERNETES CONFIGURATIONS!\" (don't worry, none of that should mean anything to you), then good for you! The internet is *full* of in depth tutorials on those things. But if you just want to start using the Cloud to manipulation your data, then *hopefully* by the end of this section, you'll feel good to go!"
    ]
   }
  ],
