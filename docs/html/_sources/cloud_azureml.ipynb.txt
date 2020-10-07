@@ -140,7 +140,11 @@
     "\n",
     "### Creating A New Storage Account\n",
     "\n",
-    "If at some point you want a NEW Storage Account, just go back to the Portal, click \"Add Resource\" and search for Storage Account. "
+    "If at some point you want a NEW Storage Account, just go back to the Portal, click \"Add Resource\" and search for Storage Account. \n",
+    "\n",
+    "### Managing Storage from your local command line with Azure CLI\n",
+    "\n",
+    "Since you often want to upload lots of files from your own computer, it's often easiest to do file transfers with the [Azure Command Line Interface (CLI)](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli). In addition to creating Blob containers and such, you can also [upload and download files with the CLI](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-cli), or you can use [AzCopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10), which can synchronize two folders by seeing how they differ and only transfering changed data back and forth ([azcopy sync](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-blobs#synchronize-files)) kind of like `rsync`. "
    ]
   },
   {
@@ -154,26 +158,45 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "OK, the final move: make your data visible from your virtual machines!\n",
+    "OK, the final move: make your data visible from your virtual machines! We'll do much more of this from within Python in \n",
     "\n",
-    "There are two ways to do this: the super easy way that only works in AzureML, and the trickier but more general way. Let's start with easy. \n",
+    "### Mount Your Container as a Drive\n",
     "\n",
-    "NEXT PART IS WRONG AT THE MOMENT...\n",
+    "One way to make your data available is to use `blobfuse` to mount your Blob Container as though it were just a drive on your AzureML machine. `blobfuse` is already installed on all the AzureML machines, so its relatively easy to mount a drive. ([here are the full docs](https://github.com/Azure/azure-storage-fuse)). Just open a terminal (either using SSH, or if you didn't enable SSH, use Jupyter Lab to open a terminal, and run the following after replacing the angle bracket labels with real values (you shouldn't have any angle brackets when you're done!):\n",
     "\n",
+    "\n",
+    "```\n",
+    "# Create a cache on your local SSD\n",
+    "sudo mkdir /mnt/blobfusetmp -p\n",
+    "sudo chown azureuser /mnt/blobfusetmp\n",
+    "\n",
+    "# Make the login details visible\n",
+    "export AZURE_STORAGE_ACCOUNT=<yourstorageaccountname>\n",
+    "export AZURE_STORAGE_ACCESS_KEY=<yourstorageaccountkey>\n",
+    "\n",
+    "# Create a directory that\n",
+    "# will become the mounted drive\n",
+    "\n",
+    "mkdir <path-to-where-you-want-to-mount>\n",
+    "\n",
+    "blobfuse <path-to-where-you-want-to-mount> --container-name=<container-to-mount> --tmp-path=/mnt/blobfusetmp -o attr_timeout=240 -o entry_timeout=240 -o negative_timeout=120\n",
+    "\n",
+    "```\n",
+    "\n",
+    "And then your Blob container should appear in the folder you made with the `mkdir <path-to-where-you-want-to-mount>` argument. \n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
     "### Registering a Datastore in Workspace\n",
+    "\n",
+    "**STILL LEARNING THIS PART!** \n",
     "\n",
     "The easy way to make things visible is to \"register\" your Blob Container from within your Workspace as a \"Datastore\". Then you can access it like a mounted drive from inside any of your VMs! \n",
     "\n",
     "To do so, just go to your Workspace, and on the very bottom of the left hand menu click \"Datastores.\" You should see two default Workspace datastores there, but let's make this interesting and add the file we just uploaded above. Now just click \"+ Datastore\" in the top left and connect it to the Blob Container you just created above, and you're done! Note you'll need your Storage Account key, which you can find by going back to the Azure Portal, clicking Storage Accounts, and clicking \"Access Keys\" on the left. \n",
-    "\n",
-    "Now if you spin-up a VM or cluster from your Workspace, you should see your Blob container as a directory right away! Here's a JupyterLab window from a new VM after I registered `nce8-opioid`:\n",
-    "\n",
-    "\n",
-    "And here's what things look like from the command line:\n",
-    "\n",
-    "\n",
-    "\n",
-    "\n",
     "\n"
    ]
   }

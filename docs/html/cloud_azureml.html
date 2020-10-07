@@ -126,19 +126,43 @@ Windows experience.)</p>
 <h3>Creating A New Storage Account<a class="headerlink" href="#Creating-A-New-Storage-Account" title="Permalink to this headline">¶</a></h3>
 <p>If at some point you want a NEW Storage Account, just go back to the Portal, click “Add Resource” and search for Storage Account.</p>
 </div>
+<div class="section" id="Managing-Storage-from-your-local-command-line-with-Azure-CLI">
+<h3>Managing Storage from your local command line with Azure CLI<a class="headerlink" href="#Managing-Storage-from-your-local-command-line-with-Azure-CLI" title="Permalink to this headline">¶</a></h3>
+<p>Since you often want to upload lots of files from your own computer, it’s often easiest to do file transfers with the <a class="reference external" href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli">Azure Command Line Interface (CLI)</a>. In addition to creating Blob containers and such, you can also <a class="reference external" href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-cli">upload and download files with the CLI</a>, or you can use
+<a class="reference external" href="https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10">AzCopy</a>, which can synchronize two folders by seeing how they differ and only transfering changed data back and forth (<a class="reference external" href="https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-blobs#synchronize-files">azcopy sync</a>) kind of like <code class="docutils literal notranslate"><span class="pre">rsync</span></code>.</p>
+</div>
 </div>
 <div class="section" id="Bringing-It-All-Together:-Accessing-Data-from-Compute">
 <h2>Bringing It All Together: Accessing Data from Compute<a class="headerlink" href="#Bringing-It-All-Together:-Accessing-Data-from-Compute" title="Permalink to this headline">¶</a></h2>
-<p>OK, the final move: make your data visible from your virtual machines!</p>
-<p>There are two ways to do this: the super easy way that only works in AzureML, and the trickier but more general way. Let’s start with easy.</p>
-<p>NEXT PART IS WRONG AT THE MOMENT…</p>
+<p>OK, the final move: make your data visible from your virtual machines! We’ll do much more of this from within Python in</p>
+<div class="section" id="Mount-Your-Container-as-a-Drive">
+<h3>Mount Your Container as a Drive<a class="headerlink" href="#Mount-Your-Container-as-a-Drive" title="Permalink to this headline">¶</a></h3>
+<p>One way to make your data available is to use <code class="docutils literal notranslate"><span class="pre">blobfuse</span></code> to mount your Blob Container as though it were just a drive on your AzureML machine. <code class="docutils literal notranslate"><span class="pre">blobfuse</span></code> is already installed on all the AzureML machines, so its relatively easy to mount a drive. (<a class="reference external" href="https://github.com/Azure/azure-storage-fuse">here are the full docs</a>). Just open a terminal (either using SSH, or if you didn’t enable SSH, use Jupyter Lab to open a terminal, and run the following after replacing the angle bracket labels with
+real values (you shouldn’t have any angle brackets when you’re done!):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a cache on your local SSD</span>
+<span class="n">sudo</span> <span class="n">mkdir</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">blobfusetmp</span> <span class="o">-</span><span class="n">p</span>
+<span class="n">sudo</span> <span class="n">chown</span> <span class="n">azureuser</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">blobfusetmp</span>
+
+<span class="c1"># Make the login details visible</span>
+<span class="n">export</span> <span class="n">AZURE_STORAGE_ACCOUNT</span><span class="o">=&lt;</span><span class="n">yourstorageaccountname</span><span class="o">&gt;</span>
+<span class="n">export</span> <span class="n">AZURE_STORAGE_ACCESS_KEY</span><span class="o">=&lt;</span><span class="n">yourstorageaccountkey</span><span class="o">&gt;</span>
+
+<span class="c1"># Create a directory that</span>
+<span class="c1"># will become the mounted drive</span>
+
+<span class="n">mkdir</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">where</span><span class="o">-</span><span class="n">you</span><span class="o">-</span><span class="n">want</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">mount</span><span class="o">&gt;</span>
+
+<span class="n">blobfuse</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">where</span><span class="o">-</span><span class="n">you</span><span class="o">-</span><span class="n">want</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">mount</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">container</span><span class="o">-</span><span class="n">name</span><span class="o">=&lt;</span><span class="n">container</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">mount</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">tmp</span><span class="o">-</span><span class="n">path</span><span class="o">=/</span><span class="n">mnt</span><span class="o">/</span><span class="n">blobfusetmp</span> <span class="o">-</span><span class="n">o</span> <span class="n">attr_timeout</span><span class="o">=</span><span class="mi">240</span> <span class="o">-</span><span class="n">o</span> <span class="n">entry_timeout</span><span class="o">=</span><span class="mi">240</span> <span class="o">-</span><span class="n">o</span> <span class="n">negative_timeout</span><span class="o">=</span><span class="mi">120</span>
+</pre></div>
+</div>
+<p>And then your Blob container should appear in the folder you made with the <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">&lt;path-to-where-you-want-to-mount&gt;</span></code> argument.</p>
+</div>
 <div class="section" id="Registering-a-Datastore-in-Workspace">
 <h3>Registering a Datastore in Workspace<a class="headerlink" href="#Registering-a-Datastore-in-Workspace" title="Permalink to this headline">¶</a></h3>
+<p><strong>STILL LEARNING THIS PART!</strong></p>
 <p>The easy way to make things visible is to “register” your Blob Container from within your Workspace as a “Datastore”. Then you can access it like a mounted drive from inside any of your VMs!</p>
 <p>To do so, just go to your Workspace, and on the very bottom of the left hand menu click “Datastores.” You should see two default Workspace datastores there, but let’s make this interesting and add the file we just uploaded above. Now just click “+ Datastore” in the top left and connect it to the Blob Container you just created above, and you’re done! Note you’ll need your Storage Account key, which you can find by going back to the Azure Portal, clicking Storage Accounts, and clicking “Access
 Keys” on the left.</p>
-<p>Now if you spin-up a VM or cluster from your Workspace, you should see your Blob container as a directory right away! Here’s a JupyterLab window from a new VM after I registered <code class="docutils literal notranslate"><span class="pre">nce8-opioid</span></code>:</p>
-<p>And here’s what things look like from the command line:</p>
 </div>
 </div>
 </div>
