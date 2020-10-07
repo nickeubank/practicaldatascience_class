@@ -400,6 +400,23 @@ WARNING - Retrying (Retry(total=2, connect=2, read=3, redirect=None, status=None
 </div>
 <p>And you’re off to the races!</p>
 </div>
+<div class="section" id="Getting-Data-from-Azure">
+<h2>Getting Data from Azure<a class="headerlink" href="#Getting-Data-from-Azure" title="Permalink to this headline">¶</a></h2>
+<p>If your data is CSV or parquet…</p>
+<p>Load <code class="docutils literal notranslate"><span class="pre">adlfs</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">adlfs</span>
+</pre></div>
+</div>
+<p>Then just put your account data in a dictionary, put <code class="docutils literal notranslate"><span class="pre">az</span></code> at start of reads, and use the <code class="docutils literal notranslate"><span class="pre">storage_options</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dask.dataframe</span> <span class="k">as</span> <span class="nn">dd</span>
+
+<span class="n">storage_options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;account_name&#39;</span><span class="p">:</span> <span class="n">ACCOUNT_NAME</span><span class="p">,</span> <span class="s1">&#39;account_key&#39;</span><span class="p">:</span> <span class="n">ACCOUNT_KEY</span><span class="p">}</span>
+
+<span class="n">ddf</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;az://</span><span class="si">{CONTAINER}</span><span class="s1">/</span><span class="si">{FOLDER}</span><span class="s1">/*.csv&#39;</span><span class="p">,</span> <span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span><span class="p">)</span>
+<span class="n">ddf</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s1">&#39;az://</span><span class="si">{CONTAINER}</span><span class="s1">/folder.parquet&#39;</span><span class="p">,</span> <span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
