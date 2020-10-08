@@ -63,26 +63,37 @@ for and sending messages, but each of these interactions requires only a tiny am
 <p>But if what follows starts to sound overwhelmingly complex, I encourage you to quickly jump ahead to <a class="reference internal" href="cloud_dask.html"><span class="doc">the page where we actually set up a dask cluster and do some computing</span></a> to see what this looks like in practice, where hopefully you will see that it’s not nearly as bad as it seems like it’s going to be.</p>
 <div class="section" id="Compute">
 <h3>Compute<a class="headerlink" href="#Compute" title="Permalink to this headline">¶</a></h3>
-<p>As a data analyst, there are two ways that you can approach doing your work on the cloud: the first is just to get a virtual machine with lots of resources and use it as a single machine; the second is to rent a lot of machines and use them together in a cluster.</p>
+<p>As a data analyst, there are two ways that you can approach doing your work on the cloud: the first is just to get a <strong>big virtual machine</strong> with lots of resources and use it as a single machine; the second is to rent a lot of (usually smaller) machines and use them together in a <strong>cluster</strong>.</p>
+<p><strong>Single VMs</strong></p>
 <p>Getting a single large virtual machine is definitely the easier strategy if it works for your purposes. Working on a single virtual machine means you can use the normal programming practices you use on your personal computer. This makes these <em>great</em> choices if they work for your budget and provide the resources you need. I think <em>most</em> virtual machines top out at about 64 cores and about 256 gb of RAM, but bigger VMs do exist: Azure has some virtual machines that will go up to 128 cores and
-<em>start</em> at 480 GB RAM for about 3.60 an hour. You can see an <a class="reference external" href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/">overview of Azure options and prices here (look under the high performance computing options)</a>. And you can also get virtual machines that have as many as four GPUs as well</p>
-<p>The second option is a cluster.</p>
-<p><strong>Cloud Costs</strong></p>
-<p>A key feature of the economics of cloud computing is that <strong>you only pay for what you use.</strong> If you are planning to actively use a computer 24/7 for years, in many ways it would probably be much cheaper to just buy the computer you want. But most of us only use our computers intermittently, and we only use them really intensely on rare occasions.</p>
-<p>Given that, it is often much cheaper to just rent a couple hundred cores when you actually need to do your intensive computing than buy a really top-of-the-line desktop computer you rarely actually use. Moreover, it is <em>often</em> (though no always!) the case that the couple hundred core cluster will not only be cheaper, but will probably get your job done much faster than that desktop computer ever could!</p>
+<em>start</em> at 480 GB RAM for about 3.60 an hour (though half those cores from from a process called hyperthreading, so the performance you get won’t quite measure up to that core count). You can see an <a class="reference external" href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/">overview of Azure options and prices here (look under the high performance computing options)</a>, where you’ll also see offerings for GPU-centric computers, which can provide as many as four GPUs.</p>
+<p>Getting a single large virtual machine is often much easier logistically, and can be faster depending on the exact operation of your code (since different processes on one computer never have to send data across a network connection like in a cluster). Moreover, big virtual machines often seem suprisingly price competitive with clusters. The one downside to be aware of, though, is that as soon as you turn on a big virtual machine, you’re paying for all that hardware, even if you’re not using it.
+So if you go for a big VM, make sure you code is as close to ready to go as it can be (i.e. test on a smaller computer) before you move up.</p>
+<p><strong>Clusters</strong></p>
+<p>The other option is to create a compute cluster that consistents of lots of smaller computers. This has a couple advantages: first, they’re infinitely scalable (no core limits!), and second, you can play around with two or three nodes (cheap!) till you’re ready to go, then scale up the cluster to hundreds of nodes for your actual computations (unlike a single big VM).</p>
+<p>The downside, of course, is that working on a cluster requires software that can handle the fact that you need lots of physically distinct computers to work together. I’ll show you how we can do that with <code class="docutils literal notranslate"><span class="pre">dask</span></code>, but it is a complexity to be aware of.</p>
+<p>There can also be performance penalties to working with a cluster if your code requires moving data around a lot, since different computers have to communicate with one another by network connection.</p>
 </div>
 <div class="section" id="Storage">
 <h3>Storage<a class="headerlink" href="#Storage" title="Permalink to this headline">¶</a></h3>
-<p>The good news is that, at this point in your life, you only need to worry about Blob Containers. As we mentioned in our “What is the Cloud” tutorial, Cloud storage comes in different flavors, and Blob is the most flexible, as it can hold anything (BLOB standands for <strong>B</strong>inary <strong>L</strong>arge <strong>OB</strong>ject storage). So unless you have reason to do otherwise, just use Blob Containers.</p>
-<p>Other types on Azure, just so you know them, are:</p>
+<p>Cloud storage can vary in a number of ways. Most importantly for our purposes (and in order of performance) in varies in what it will accept, how quickly it can be accessed, and the level of data redundancy in storage.</p>
+<p><strong>Storage Types</strong></p>
+<p>Unlike your computer — that just has “files” — cloud storage offers some specialized storage for data with specfic properties. In general, however, you will probably always want to work with Blob storage. Blob is the most flexible type of storage, as it can hold anything (BLOB standands for <strong>B</strong>inary <strong>L</strong>arge <strong>OB</strong>ject storage). So unless you have reason to do otherwise, just use Blob storage.</p>
+<p>BUt so you know, other types of storage include:</p>
 <ul class="simple">
 <li><p><strong>File storage</strong>: similar to Blob. File storage supports certain file sharing protocols that people may have been using before they came to the cloud, so makes life easy for people moving to the cloud. But fewer features than BLOB, so almost surely not for you. <em>Sounds</em> like the storage that’d be most familiar to a normal computer user, but it’s a trick. Use BLOB.</p></li>
 <li><p><strong>Queue storage</strong>: specialized storage for messaging services.</p></li>
 <li><p><strong>Table storage</strong>: What’s known as a NoSQL database system.</p></li>
 </ul>
+<p><strong>Speed of Access</strong></p>
+<p>Storage usually comes in a couple speed tiers (sometimes called “hot”, “cold” and “archive”), the the faster the storage, the more expensive.</p>
+<p>If you’re doing active data science, you almost surely want “hot” storage. Archive is for data you hopefully never have to look at again (loading it can take hours), and I guess you could use “cold” to save a little money when you’re storing data you don’t plan to see again for months? But usually use hot.</p>
+<p><strong>Redundancy</strong></p>
+<p>All cloud storage is backed up / duplicated, but how aggressively varies. For example, most cloud storage offers a “geographic redundancy”, which means it has copies in different data centers, so if one data center goes down you can still access your data. You <em>can</em> pay for this, but really that’s for people who use storage to back a website who never want their customers to be unable to visit their site even if a data center is down for a few hours (which I think is super rare?).</p>
 </div>
 <div class="section" id="Networking">
 <h3>Networking<a class="headerlink" href="#Networking" title="Permalink to this headline">¶</a></h3>
+<p>The last thing to note is if you want different computers / storage to be able to see one another, you sometimes have to make sure they’re all on the same “virtual network”. We’ll use tools that take care of that for us in these exercises, but be aware this is part of cloud computing: if you rent multiple computers, you also need something setup to ensure they can see one another to communicate!</p>
 </div>
 </div>
 <div class="section" id="A-Final-Note-on-Complexity">
