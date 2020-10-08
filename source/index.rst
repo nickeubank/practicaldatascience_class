@@ -71,6 +71,7 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
    Command Line, Advanced  <command_line_part2>
    Jupyter <jupyter>
    Git and Github <git_and_github>
+   Parquet Format <parquet>
 
 .. toctree:: 
    :maxdepth: 2

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Using Parquet &#8212; Practical Data Science</title>
+    <title>Parquet &#8212; Practical Data Science</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -18,6 +18,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Cloud" href="cloud_what_is_it.html" />
+    <link rel="prev" title="Git and Github" href="git_and_github.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -267,9 +269,21 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Using-Parquet">
-<h1>Using Parquet<a class="headerlink" href="#Using-Parquet" title="Permalink to this headline">¶</a></h1>
-<p>Here’s a quick illustrated guide to using Parquet files in pandas.</p>
+<div class="section" id="Parquet">
+<h1>Parquet<a class="headerlink" href="#Parquet" title="Permalink to this headline">¶</a></h1>
+<p>When it comes to storing tabular data in Python, there are a lot of choices, many of which we’ve talked about before (HDF5, CSV, dta, etc.). However, the strorage format I think it best today (October 2020) is <code class="docutils literal notranslate"><span class="pre">parquet</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">parquet</span></code> has a number of strengths:</p>
+<ul class="simple">
+<li><p><strong>It preserves type information</strong>: Unlike a CSV, <code class="docutils literal notranslate"><span class="pre">parquet</span></code> files remember what columns are numeric, which are categorical, etc. etc., so when you re-load your data you can be assured it will look the same as it did when you saved it.</p></li>
+<li><p><strong>It’s fast:</strong> That type information means when loading, Python doesn’t have to try and figure out the types of each column.</p></li>
+<li><p><strong>It’s small:</strong> <code class="docutils literal notranslate"><span class="pre">parquet</span></code> compresses your data automatically (and no, that doesn’t slow it down – it fact it makes it faster. The reason is that getting data from memory is such a comparatively slow operation, it’s faster to load compressed data to RAM and then decompress it than to transfer larger uncompressed files).</p></li>
+<li><p><strong>It’s portable:</strong> <code class="docutils literal notranslate"><span class="pre">parquet</span></code> is not a Python-specific format – it’s an Apache Software Foundation standard.</p></li>
+<li><p><strong>It’s built for distributed computing:</strong> <code class="docutils literal notranslate"><span class="pre">parquet</span></code> was actually invented to support Hadoop distributed computing.</p></li>
+</ul>
+<p>To use it, install <code class="docutils literal notranslate"><span class="pre">fastparquet</span></code> with <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">fastparquet</span></code>. (Note there’s a second engine out there, <code class="docutils literal notranslate"><span class="pre">pyarrow</span></code>, but I’ve found people have fewer problems with <code class="docutils literal notranslate"><span class="pre">fastparquet</span></code>).</p>
+<div class="section" id="Using-parquet">
+<h2>Using parquet<a class="headerlink" href="#Using-parquet" title="Permalink to this headline">¶</a></h2>
+<p>Here’s some code examples for saving and loading <code class="docutils literal notranslate"><span class="pre">parquet</span></code> files:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -329,28 +343,28 @@ div.rendered_html tbody tr:hover {
   <tbody>
     <tr>
       <th>0</th>
-      <td>2242</td>
-      <td>FSMZFYOGWX</td>
+      <td>6740</td>
+      <td>EWCSKOLHUV</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>3780</td>
-      <td>USHEQWJIPT</td>
+      <td>7301</td>
+      <td>VFGZSHNCKL</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>9657</td>
-      <td>MHNYKXBOLB</td>
+      <td>7981</td>
+      <td>TAOQCCNKHH</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>5155</td>
-      <td>HSEVQEUYUG</td>
+      <td>739</td>
+      <td>QWFDEASRUM</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>4885</td>
-      <td>SMVHFZPNFC</td>
+      <td>3250</td>
+      <td>DQCFYWCFMX</td>
     </tr>
   </tbody>
 </table>
@@ -431,28 +445,28 @@ dtype: object
   <tbody>
     <tr>
       <th>0</th>
-      <td>2242</td>
-      <td>FSMZFYOGWX</td>
+      <td>6740</td>
+      <td>EWCSKOLHUV</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>3780</td>
-      <td>USHEQWJIPT</td>
+      <td>7301</td>
+      <td>VFGZSHNCKL</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>9657</td>
-      <td>MHNYKXBOLB</td>
+      <td>7981</td>
+      <td>TAOQCCNKHH</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>5155</td>
-      <td>HSEVQEUYUG</td>
+      <td>739</td>
+      <td>QWFDEASRUM</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>4885</td>
-      <td>SMVHFZPNFC</td>
+      <td>3250</td>
+      <td>DQCFYWCFMX</td>
     </tr>
   </tbody>
 </table>
@@ -521,27 +535,28 @@ dtype: object
   <tbody>
     <tr>
       <th>0</th>
-      <td>FSMZFYOGWX</td>
+      <td>EWCSKOLHUV</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>USHEQWJIPT</td>
+      <td>VFGZSHNCKL</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>MHNYKXBOLB</td>
+      <td>TAOQCCNKHH</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>HSEVQEUYUG</td>
+      <td>QWFDEASRUM</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>SMVHFZPNFC</td>
+      <td>DQCFYWCFMX</td>
     </tr>
   </tbody>
 </table>
 </div></div>
+</div>
 </div>
 <div class="section" id="Chunking-with-parquet">
 <h2>Chunking with parquet<a class="headerlink" href="#Chunking-with-parquet" title="Permalink to this headline">¶</a></h2>
@@ -585,31 +600,31 @@ dtype: object
 <div class="output_area docutils container">
 <div class="highlight"><pre>
           a           b
-0      2242  FSMZFYOGWX
-1      3780  USHEQWJIPT
-2      9657  MHNYKXBOLB
-3      5155  HSEVQEUYUG
-4      4885  SMVHFZPNFC
+0      6740  EWCSKOLHUV
+1      7301  VFGZSHNCKL
+2      7981  TAOQCCNKHH
+3       739  QWFDEASRUM
+4      3250  DQCFYWCFMX
 ...     ...         ...
-49995  5880  DDCZRSOYYX
-49996  4792  HNTHLENGQH
-49997   618  OXMWXAILJU
-49998   920  HSZUTZYTTL
-49999  7686  BTLUKYOPSG
+49995  9232  FDRSPGYWQK
+49996  3512  ZTVPEYODWM
+49997  3604  JNCMXHQTDB
+49998  3119  LDHOQVNKZP
+49999  6682  PDQAPAIHLV
 
 [50000 rows x 2 columns]
           a           b
-0      6669  EAVHNWCJJT
-1      9183  AHWBRUTJOP
-2      9871  AFNMSRRQSL
-3      1759  BVFVHYXNRE
-4      9755  BDKCYTCGSN
+0      1922  ZOGCWFRWHZ
+1      8675  NRZMUNYKZO
+2      4979  MCWILQYNYX
+3      2481  FPEEHRFGKA
+4      2829  AQYRGYKOOC
 ...     ...         ...
-49995   520  VAYOVPABGV
-49996  7175  TVFRIQKTPF
-49997  9917  LYXJVUZYFC
-49998  4495  CLRZXCSYJF
-49999   313  VBNJOOIICA
+49995  4896  LWCZOQLANI
+49996  7124  ARRWJCYPCO
+49997   459  YELIRSTLGV
+49998  5169  PBRGOPUJXJ
+49999  8696  GAWEGKTKXI
 
 [50000 rows x 2 columns]
 </pre></div></div>
@@ -659,54 +674,54 @@ dtype: object
   </thead>
   <tbody>
     <tr>
-      <th>10088</th>
-      <td>5746</td>
-      <td>HAZNSYFSSY</td>
+      <th>16717</th>
+      <td>1704</td>
+      <td>OBREANGVDA</td>
     </tr>
     <tr>
-      <th>22508</th>
-      <td>2294</td>
-      <td>YDDHYHYLUW</td>
+      <th>10232</th>
+      <td>3898</td>
+      <td>FTLOBLTJAA</td>
     </tr>
     <tr>
-      <th>45752</th>
-      <td>7374</td>
-      <td>QXKXUUSQIW</td>
+      <th>5049</th>
+      <td>6750</td>
+      <td>SFVMHGQEYN</td>
     </tr>
     <tr>
-      <th>35231</th>
-      <td>9102</td>
-      <td>CONWRQMHFV</td>
+      <th>24924</th>
+      <td>6396</td>
+      <td>JKLIAJOLZZ</td>
     </tr>
     <tr>
-      <th>45856</th>
-      <td>836</td>
-      <td>WSRBKDLGOO</td>
+      <th>24333</th>
+      <td>4622</td>
+      <td>PEVOFCIOXP</td>
     </tr>
     <tr>
-      <th>23624</th>
-      <td>7868</td>
-      <td>NJUOMMFJMQ</td>
+      <th>45816</th>
+      <td>2446</td>
+      <td>MXYZROVFIV</td>
     </tr>
     <tr>
-      <th>27220</th>
-      <td>8204</td>
-      <td>MTBOVIWOTB</td>
+      <th>12347</th>
+      <td>7040</td>
+      <td>XVQUNBQDEK</td>
     </tr>
     <tr>
-      <th>30374</th>
-      <td>8950</td>
-      <td>UNEHOMUWEX</td>
+      <th>42041</th>
+      <td>6730</td>
+      <td>HMAOJWGSTH</td>
     </tr>
     <tr>
-      <th>25098</th>
-      <td>7224</td>
-      <td>TCZVDZCNFO</td>
+      <th>13623</th>
+      <td>8652</td>
+      <td>USBEMPWYAH</td>
     </tr>
     <tr>
-      <th>17053</th>
-      <td>3480</td>
-      <td>SNCRFQVACY</td>
+      <th>44521</th>
+      <td>250</td>
+      <td>WTWFZMRKRJ</td>
     </tr>
   </tbody>
 </table>
@@ -750,11 +765,16 @@ dtype: object
 <li class="toctree-l1"><a class="reference internal" href="cleaning_editingvalues.html">Cleaning: Editing Values</a></li>
 </ul>
 <p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="command_line_part1.html">Command Line, Basics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="command_line_part2.html">Command Line, Advanced</a></li>
 <li class="toctree-l1"><a class="reference internal" href="jupyter.html">Jupyter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="git_and_github.html">Git and Github</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Parquet Format</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Using-parquet">Using parquet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Chunking-with-parquet">Chunking with parquet</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">CLOUD</span></p>
 <ul>
@@ -785,6 +805,8 @@ dtype: object
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="git_and_github.html" title="previous chapter">Git and Github</a></li>
+      <li>Next: <a href="cloud_what_is_it.html" title="next chapter">The Cloud</a></li>
   </ul></li>
 </ul>
 </div>
@@ -818,7 +840,7 @@ dtype: object
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/parquet_examples.ipynb.txt"
+      <a href="_sources/parquet.ipynb.txt"
           rel="nofollow">Page source</a>
     </div>
 

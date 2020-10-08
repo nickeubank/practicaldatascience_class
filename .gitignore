@@ -39,3 +39,4 @@ source/exercises/.ipynb_checkpoints/*
 .vscode/*
 source/azure_config.json
 source/tmp/*
+source/azure_*

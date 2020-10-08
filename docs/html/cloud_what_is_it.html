@@ -19,7 +19,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="AzureML" href="cloud_azureml.html" />
-    <link rel="prev" title="Git and Github" href="git_and_github.html" />
+    <link rel="prev" title="Parquet" href="parquet.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -60,8 +60,13 @@ for and sending messages, but each of these interactions requires only a tiny am
 <div class="section" id="Components-of-the-Cloud">
 <h2>Components of the Cloud<a class="headerlink" href="#Components-of-the-Cloud" title="Permalink to this headline">¶</a></h2>
 <p>In the next set of readings and exercises, we’ll be learning how – in a specific sense – we can setup virtual machines and <code class="docutils literal notranslate"><span class="pre">dask</span></code> clusters on the Microsoft Azure system. But for the moment, let’s focus on <em>general</em> principles of cloud computing – concepts that will apply whether you use Microsoft Azure, Amazon AWS, Google Cloud, or any other service.</p>
+<p>But if what follows starts to sound overwhelmingly complex, I encourage you to quickly jump ahead to <a class="reference internal" href="cloud_dask.html"><span class="doc">the page where we actually set up a dask cluster and do some computing</span></a> to see what this looks like in practice, where hopefully you will see that it’s not nearly as bad as it seems like it’s going to be.</p>
 <div class="section" id="Compute">
 <h3>Compute<a class="headerlink" href="#Compute" title="Permalink to this headline">¶</a></h3>
+<p>As a data analyst, there are two ways that you can approach doing your work on the cloud: the first is just to get a virtual machine with lots of resources and use it as a single machine; the second is to rent a lot of machines and use them together in a cluster.</p>
+<p>Getting a single large virtual machine is definitely the easier strategy if it works for your purposes. Working on a single virtual machine means you can use the normal programming practices you use on your personal computer. This makes these <em>great</em> choices if they work for your budget and provide the resources you need. I think <em>most</em> virtual machines top out at about 64 cores and about 256 gb of RAM, but bigger VMs do exist: Azure has some virtual machines that will go up to 128 cores and
+<em>start</em> at 480 GB RAM for about 3.60 an hour. You can see an <a class="reference external" href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/">overview of Azure options and prices here (look under the high performance computing options)</a>. And you can also get virtual machines that have as many as four GPUs as well</p>
+<p>The second option is a cluster.</p>
 <p><strong>Cloud Costs</strong></p>
 <p>A key feature of the economics of cloud computing is that <strong>you only pay for what you use.</strong> If you are planning to actively use a computer 24/7 for years, in many ways it would probably be much cheaper to just buy the computer you want. But most of us only use our computers intermittently, and we only use them really intensely on rare occasions.</p>
 <p>Given that, it is often much cheaper to just rent a couple hundred cores when you actually need to do your intensive computing than buy a really top-of-the-line desktop computer you rarely actually use. Moreover, it is <em>often</em> (though no always!) the case that the couple hundred core cluster will not only be cheaper, but will probably get your job done much faster than that desktop computer ever could!</p>
@@ -83,8 +88,10 @@ for and sending messages, but each of these interactions requires only a tiny am
 <div class="section" id="A-Final-Note-on-Complexity">
 <h2>A Final Note on Complexity<a class="headerlink" href="#A-Final-Note-on-Complexity" title="Permalink to this headline">¶</a></h2>
 <p>A final note on complexity: because the Cloud is used for <em>so many</em> different purposes, and by such different users (everything from small businesses to Twitter and Netflix), it is almost infinitely configurable. If you want, you can just rent dedicated control of a couple physical computers, and not only control them, but also control all the network systems that connect them at the lowest level possible.</p>
-<p>But these tutorials assume you’re an applied data scientist interested in analysis, and so I’m gonna do my very, <em>very</em> best to provide the smoothest on-ramp to these services as I can, showing you only what I think you need to know to feel comfortable using the tools you’re using and to have a somewhat generalizable understanding of what’s going on (so if things change a little in the future, you don’t feel lost) without getting into the infinite possibilities of the cloud.</p>
-<p>If, when you’re done, you say “BUT I WANT TO CONFIGURE MY OWN VIRTUAL NETWORK AND DOCKER IMAGES AND KUBERNETES CONFIGURATIONS!” (don’t worry, none of that should mean anything to you), then good for you! The internet is <em>full</em> of in depth tutorials on those things. But if you just want to start using the Cloud to manipulation your data, then <em>hopefully</em> by the end of this section, you’ll feel good to go!</p>
+<p>In these tutorials, though, I’m going to assume you’re an applied data scientist interested in analysis, and so I’m gonna do my very, <em>very</em> best to provide the smoothest on-ramp to these services as I can. I’ll show you only what I think you need to know to feel comfortable using the tools you’re using and to have a somewhat generalizable understanding of what’s going on (so if things change a little in the future, you don’t feel lost) without getting into the infinite possibilities of the
+cloud.</p>
+<p>In addition, I will do my best to use the tools you already know as much as possible: Python, pandas, and dask. Services like Amazon AWS and Microsoft Azure have all sorts of specialty tools for machine learning, and some day you may decide that you prefer those to what I’m gonna show you. But I’m a firm believer in minimizing the number of tools you need to learn, so I’ll try and keep things as focused as I can.</p>
+<p>Finally, if, when you’re done, you say “BUT I WANT TO CONFIGURE MY OWN VIRTUAL NETWORK AND DOCKER IMAGES AND KUBERNETES CONFIGURATIONS!” (don’t worry, none of that should mean anything to you), then good for you! The internet is <em>full</em> of in depth tutorials on those things. But if you just want to start using the Cloud to manipulation your data, then <em>hopefully</em> by the end of this section, you’ll feel good to go!</p>
 </div>
 </div>
 
@@ -128,6 +135,7 @@ for and sending messages, but each of these interactions requires only a tiny am
 <li class="toctree-l1"><a class="reference internal" href="command_line_part2.html">Command Line, Advanced</a></li>
 <li class="toctree-l1"><a class="reference internal" href="jupyter.html">Jupyter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="git_and_github.html">Git and Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
 </ul>
 <p class="caption"><span class="caption-text">CLOUD</span></p>
 <ul class="current">
@@ -164,7 +172,7 @@ for and sending messages, but each of these interactions requires only a tiny am
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="git_and_github.html" title="previous chapter">Git and Github</a></li>
+      <li>Previous: <a href="parquet.html" title="previous chapter">Parquet</a></li>
       <li>Next: <a href="cloud_azureml.html" title="next chapter">AzureML</a></li>
   </ul></li>
 </ul>
