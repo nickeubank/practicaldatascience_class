@@ -36,6 +36,17 @@
             
   <div class="section" id="Mount-Your-Container-as-a-Drive-with-blobfuse">
 <h1>Mount Your Container as a Drive with blobfuse<a class="headerlink" href="#Mount-Your-Container-as-a-Drive-with-blobfuse" title="Permalink to this headline">¶</a></h1>
+<p>Rather than accessing Azure storage through API calls, it can be nice to have your Azure Blob Container mounted on your computer like a regular directory. There are two ways to do this:</p>
+<div class="section" id="If-you’re-using-dask_cloudprovider">
+<h2>If you’re using dask_cloudprovider<a class="headerlink" href="#If-you’re-using-dask_cloudprovider" title="Permalink to this headline">¶</a></h2>
+<p>If you’re running a <code class="docutils literal notranslate"><span class="pre">dask</span></code> cluster, then you can get your Blob Container auto-mounted on your computer without having to do the above. You can do this by registering your Blob Container from within your Workspace as a “Datastore”. Then you can access it like a mounted drive from inside any of your VMs! (that’s what the <code class="docutils literal notranslate"><span class="pre">datastores=ws.datastores.values()</span></code> line means in the <code class="docutils literal notranslate"><span class="pre">AzureMLCluster</span></code> call you saw).</p>
+<p>To do so, just go to your Workspace, and on the very bottom of the left hand menu click “Datastores.” You should see two default Workspace datastores there, but let’s make this interesting and add the file we just uploaded above. Now just click <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">Datastore</span></code> in the top left and connect it to the Blob Container you just created above, and you’re done! Note you’ll need your Storage Account key, which you can find by going back to the Azure Portal, clicking Storage Accounts, and clicking “Access
+Keys” on the left.</p>
+<p>Next time you spin up a <code class="docutils literal notranslate"><span class="pre">dask</span></code> cluster with <code class="docutils literal notranslate"><span class="pre">dask_cloudprovider</span></code>, you’ll see your Container as a regular drive:</p>
+<p><img alt="azure_mounted_containers" src="_images/azure_mounted_containers.png" /></p>
+</div>
+<div class="section" id="If-you’re-managing-your-own-VM">
+<h2>If you’re managing your own VM<a class="headerlink" href="#If-you’re-managing-your-own-VM" title="Permalink to this headline">¶</a></h2>
 <p>One way to make your data available is to use <code class="docutils literal notranslate"><span class="pre">blobfuse</span></code> to mount your Blob Container as though it were just a drive on your AzureML machine. <code class="docutils literal notranslate"><span class="pre">blobfuse</span></code> is already installed on all the AzureML machines, so its relatively easy to mount a drive. (<a class="reference external" href="https://github.com/Azure/azure-storage-fuse">here are the full docs</a>). Just open a terminal (either using SSH, or if you didn’t enable SSH, use Jupyter Lab to open a terminal, and run the following after replacing the angle bracket labels with
 real values (you shouldn’t have any angle brackets when you’re done!):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a cache on your local SSD</span>
@@ -55,12 +66,6 @@ real values (you shouldn’t have any angle brackets when you’re done!):</p>
 </pre></div>
 </div>
 <p>And then your Blob container should appear in the folder you made with the <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">&lt;path-to-where-you-want-to-mount&gt;</span></code> argument.</p>
-<div class="section" id="Registering-a-Datastore-in-Workspace">
-<h2>Registering a Datastore in Workspace<a class="headerlink" href="#Registering-a-Datastore-in-Workspace" title="Permalink to this headline">¶</a></h2>
-<p><strong>STILL LEARNING THIS PART!</strong></p>
-<p>The easy way to make things visible is to “register” your Blob Container from within your Workspace as a “Datastore”. Then you can access it like a mounted drive from inside any of your VMs!</p>
-<p>To do so, just go to your Workspace, and on the very bottom of the left hand menu click “Datastores.” You should see two default Workspace datastores there, but let’s make this interesting and add the file we just uploaded above. Now just click “+ Datastore” in the top left and connect it to the Blob Container you just created above, and you’re done! Note you’ll need your Storage Account key, which you can find by going back to the Azure Portal, clicking Storage Accounts, and clicking “Access
-Keys” on the left.</p>
 </div>
 </div>
 

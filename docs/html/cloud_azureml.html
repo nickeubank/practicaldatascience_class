@@ -36,299 +36,76 @@
 
           <div class="body" role="main">
             
-  
-<style>
-/* CSS for nbsphinx extension */
-
-/* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
-    border: none;
-    padding: 0 0;
-    margin: 0;
-    box-shadow: none;
-}
-
-/* avoid gaps between output lines */
-div.nboutput.container div[class*=highlight] pre {
-    line-height: normal;
-}
-
-/* input/output containers */
-div.nbinput.container,
-div.nboutput.container {
-    display: -webkit-flex;
-    display: flex;
-    align-items: flex-start;
-    margin: 0;
-    width: 100%;
-}
-@media (max-width: 540px) {
-    div.nbinput.container,
-    div.nboutput.container {
-        flex-direction: column;
-    }
-}
-
-/* input container */
-div.nbinput.container {
-    padding-top: 5px;
-}
-
-/* last container */
-div.nblast.container {
-    padding-bottom: 5px;
-}
-
-/* input prompt */
-div.nbinput.container div.prompt pre {
-    color: #307FC1;
-}
-
-/* output prompt */
-div.nboutput.container div.prompt pre {
-    color: #BF5B3D;
-}
-
-/* all prompts */
-div.nbinput.container div.prompt,
-div.nboutput.container div.prompt {
-    width: 4.5ex;
-    padding-top: 5px;
-    position: relative;
-    user-select: none;
-}
-
-div.nbinput.container div.prompt > div,
-div.nboutput.container div.prompt > div {
-    position: absolute;
-    right: 0;
-    margin-right: 0.3ex;
-}
-
-@media (max-width: 540px) {
-    div.nbinput.container div.prompt,
-    div.nboutput.container div.prompt {
-        width: unset;
-        text-align: left;
-        padding: 0.4em;
-    }
-    div.nboutput.container div.prompt.empty {
-        padding: 0;
-    }
-
-    div.nbinput.container div.prompt > div,
-    div.nboutput.container div.prompt > div {
-        position: unset;
-    }
-}
-
-/* disable scrollbars on prompts */
-div.nbinput.container div.prompt pre,
-div.nboutput.container div.prompt pre {
-    overflow: hidden;
-}
-
-/* input/output area */
-div.nbinput.container div.input_area,
-div.nboutput.container div.output_area {
-    -webkit-flex: 1;
-    flex: 1;
-    overflow: auto;
-}
-@media (max-width: 540px) {
-    div.nbinput.container div.input_area,
-    div.nboutput.container div.output_area {
-        width: 100%;
-    }
-}
-
-/* input area */
-div.nbinput.container div.input_area {
-    border: 1px solid #e0e0e0;
-    border-radius: 2px;
-    background: #f5f5f5;
-}
-
-/* override MathJax center alignment in output cells */
-div.nboutput.container div[class*=MathJax] {
-    text-align: left !important;
-}
-
-/* override sphinx.ext.imgmath center alignment in output cells */
-div.nboutput.container div.math p {
-    text-align: left;
-}
-
-/* standard error */
-div.nboutput.container div.output_area.stderr {
-    background: #fdd;
-}
-
-/* ANSI colors */
-.ansi-black-fg { color: #3E424D; }
-.ansi-black-bg { background-color: #3E424D; }
-.ansi-black-intense-fg { color: #282C36; }
-.ansi-black-intense-bg { background-color: #282C36; }
-.ansi-red-fg { color: #E75C58; }
-.ansi-red-bg { background-color: #E75C58; }
-.ansi-red-intense-fg { color: #B22B31; }
-.ansi-red-intense-bg { background-color: #B22B31; }
-.ansi-green-fg { color: #00A250; }
-.ansi-green-bg { background-color: #00A250; }
-.ansi-green-intense-fg { color: #007427; }
-.ansi-green-intense-bg { background-color: #007427; }
-.ansi-yellow-fg { color: #DDB62B; }
-.ansi-yellow-bg { background-color: #DDB62B; }
-.ansi-yellow-intense-fg { color: #B27D12; }
-.ansi-yellow-intense-bg { background-color: #B27D12; }
-.ansi-blue-fg { color: #208FFB; }
-.ansi-blue-bg { background-color: #208FFB; }
-.ansi-blue-intense-fg { color: #0065CA; }
-.ansi-blue-intense-bg { background-color: #0065CA; }
-.ansi-magenta-fg { color: #D160C4; }
-.ansi-magenta-bg { background-color: #D160C4; }
-.ansi-magenta-intense-fg { color: #A03196; }
-.ansi-magenta-intense-bg { background-color: #A03196; }
-.ansi-cyan-fg { color: #60C6C8; }
-.ansi-cyan-bg { background-color: #60C6C8; }
-.ansi-cyan-intense-fg { color: #258F8F; }
-.ansi-cyan-intense-bg { background-color: #258F8F; }
-.ansi-white-fg { color: #C5C1B4; }
-.ansi-white-bg { background-color: #C5C1B4; }
-.ansi-white-intense-fg { color: #A1A6B2; }
-.ansi-white-intense-bg { background-color: #A1A6B2; }
-
-.ansi-default-inverse-fg { color: #FFFFFF; }
-.ansi-default-inverse-bg { background-color: #000000; }
-
-.ansi-bold { font-weight: bold; }
-.ansi-underline { text-decoration: underline; }
-
-
-div.nbinput.container div.input_area div[class*=highlight] > pre,
-div.nboutput.container div.output_area div[class*=highlight] > pre,
-div.nboutput.container div.output_area div[class*=highlight].math,
-div.nboutput.container div.output_area.rendered_html,
-div.nboutput.container div.output_area > div.output_javascript,
-div.nboutput.container div.output_area:not(.rendered_html) > img{
-    padding: 5px;
-}
-
-/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
-div.nbinput.container div.input_area > div[class^='highlight'],
-div.nboutput.container div.output_area > div[class^='highlight']{
-    overflow-y: hidden;
-}
-
-/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
-    display: none;
-}
-
-/* Some additional styling taken form the Jupyter notebook CSS */
-div.rendered_html table {
-  border: none;
-  border-collapse: collapse;
-  border-spacing: 0;
-  color: black;
-  font-size: 12px;
-  table-layout: fixed;
-}
-div.rendered_html thead {
-  border-bottom: 1px solid black;
-  vertical-align: bottom;
-}
-div.rendered_html tr,
-div.rendered_html th,
-div.rendered_html td {
-  text-align: right;
-  vertical-align: middle;
-  padding: 0.5em 0.5em;
-  line-height: normal;
-  white-space: normal;
-  max-width: none;
-  border: none;
-}
-div.rendered_html th {
-  font-weight: bold;
-}
-div.rendered_html tbody tr:nth-child(odd) {
-  background: #f5f5f5;
-}
-div.rendered_html tbody tr:hover {
-  background: rgba(66, 165, 245, 0.2);
-}
-</style>
-<div class="section" id="AzureML">
+  <div class="section" id="AzureML">
 <h1>AzureML<a class="headerlink" href="#AzureML" title="Permalink to this headline">¶</a></h1>
 <p>As we discussed in our previous reading, most of the cloud isn’t really designed for you, an applied data analyst. Thankfully, Microsoft has created a <em>really</em> impressive little world for applied data analysts we’ll be using called AzureML.</p>
-<p>Note that while these services are all labeled as being for “machine learning”, and they are optimized for standard “fit, test, predict”-esque scikit-learn workflows, they are also the place to go for doing other forms of data analysis too.</p>
-<p>So to get going, we’re going to set up the following things. At the moment, we’re not going to dive deep into exactly what they all are (because honestly, most have to do with giving people ways to break things up for billing in large organizations and don’t matter to an applied data scientist), but we’ll circle back and explore them all more later.</p>
+<p>But while this domain is called “machine learning”, and it is optimized for standard “fit, test, predict”-esque scikit-learn workflows, it is also the place to go for doing other forms of data analysis too.</p>
+<p>So to get going, we’re going to set up an Azure account as if you have never seen Azure before.</p>
+<p>Note that this is gonna seem like an <em>insane</em> amount of steps. Don’t worry! Most of this you only have to do once per project, and you don’t have to memorize this – this site will always exist for reference! Just go through it, try and generally absorb what’s going on, but don’t obsess about the details.</p>
 <div class="section" id="Azure-Subscription">
 <h2>Azure Subscription<a class="headerlink" href="#Azure-Subscription" title="Permalink to this headline">¶</a></h2>
 <p>Unsurprisingly, you have to sign up with Azure. The best way to do this will be <a class="reference external" href="https://azure.microsoft.com/en-us/free/students/">go here</a> and sign up a new account, which will also get you 100 dollars free. Note that if you have already done this and used your free 100 dollars… try and make a new account with a new email address? For example, most universities give you a short-hand email, but you can also get a “vanity” long name (e.g. my email is both <a class="reference external" href="mailto:nce8&#37;&#52;&#48;duke&#46;edu">nce8<span>&#64;</span>duke<span>&#46;</span>edu</a> and
 <a class="reference external" href="mailto:nick&#46;eubank&#37;&#52;&#48;duke&#46;edu">nick<span>&#46;</span>eubank<span>&#64;</span>duke<span>&#46;</span>edu</a>).</p>
-<p>Note that there are ways an organization (like Duke) one can attach your account to a subscription, but in this case I’d like you to get the experience of doing this from step one forward so you know you can do it all on your own!</p>
-<p>Once you have an account, you should end up at the Azure Portal page:</p>
+<p>If you do so, your Azure account will also be associated with a free-money <em>Subscription</em>. A Subscription is the name Azure has for the person responsible for paying the bills, and everything you do will have to be under a subscription. If you start using Azure for a company or other large organization (like Duke), your account will get connected to the institution’s subscription so your bills go to them. But for now, you can enjoy Microsoft’s free money.</p>
+<p>Once you have an account, you should end up at the Azure Portal page. This is your home for Azure, and you’ll come back here all the time.</p>
 <p><img alt="azure_portal" src="_images/azure_portal.png" /></p>
 </div>
 <div class="section" id="Create-a-Workspace">
 <h2>Create a Workspace<a class="headerlink" href="#Create-a-Workspace" title="Permalink to this headline">¶</a></h2>
-<p>All work within the AzureML ecosystem happens in a workspace, which you can think of as being like a github repo for your project, able to keep everything associated with a project in one place.</p>
+<p>All work within the AzureML ecosystem happens in a <em>Workspace</em>, which you can think of as being like a github repo for your project, able to keep everything associated with a project in one place.</p>
 <p>So setup a Workspace using the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/machine-learning/how-to-manage-workspace">directions here</a>, with a few added notes from me:</p>
 <ul class="simple">
-<li><p>You’re gonna have to name a LOT of things. Like a crazy number. It’s insane how many groups within groups within groups exist in Azure. So for everything I just recommend [your initials]-[name of thing you’re naming]. So when you have to name your workspace, I’d call it <code class="docutils literal notranslate"><span class="pre">nce-ws</span></code>. When when I name a resource group, I’d call it <code class="docutils literal notranslate"><span class="pre">nce-rg</span></code>. Later when you’re comfortable with Azure, you can get fancy, but for now this will keep you sane.</p></li>
-<li><p>At the stage it says “pick a resource group if you have one or create a new name”, you don’t have one, so make a new name. See the note above.</p></li>
+<li><p>You’re gonna have to name a LOT of things. Like a crazy number. It’s insane how many groups within groups within groups exist in Azure. So for everything I just recommend [your initials][name of thing you’re naming]. I use my Duke ID (<code class="docutils literal notranslate"><span class="pre">nce8</span></code>), so I’ve named my Workspace <code class="docutils literal notranslate"><span class="pre">nce8ws</span></code>. Then when I name a resource group, I’d call it <code class="docutils literal notranslate"><span class="pre">nce8rg</span></code>. Later when you’re comfortable with Azure, you can get fancy, but for now this will keep you sane.</p>
+<ul>
+<li><p>Note that some services allow underscores, some allow dashes, and some don’t allow either, so… if you can avoid them, you’ll be able to keep a more consistent naming scheme.</p></li>
 </ul>
-<p>Once you create a workspace, you’ll be brought to a workspace page. Note that as of October 2020, Microsoft was in the process of migrating from one interface to another, so if you see this in the middle of your landing page:</p>
+</li>
+<li><p>At the stage it says “pick a Resource Group if you have one or create a new name”, you don’t have one, so make a new name. See the note above.</p></li>
+</ul>
+<p>Once you create a Workspace, you’ll be brought to a Workspace page. As of October 2020, Microsoft is in the process of migrating from one interface to another, so if you see this in the middle of your landing page:</p>
 <p><img alt="azure_new_mlstudio" src="_images/azure_new_mlstudio.png" /></p>
-<p>Select launch now, and you should end up on a page whose URL starts with <code class="docutils literal notranslate"><span class="pre">ml.azure.com</span></code>, and which looks like this:</p>
+<p>Select “Launch Now”, and you should end up on a page whose URL starts with <code class="docutils literal notranslate"><span class="pre">ml.azure.com</span></code>, and which looks like this:</p>
 <p><img alt="azure_ml_studio" src="_images/azure_ml_studio.png" /></p>
 <div class="section" id="Resources-&amp;-Resource-Groups">
 <h3>Resources &amp; Resource Groups<a class="headerlink" href="#Resources-&-Resource-Groups" title="Permalink to this headline">¶</a></h3>
-<p>OK, so what was that resource group you created?</p>
-<p>In Azure, all the concrete things you want to use – a virtual machine, a distributed cluster, a network storage drive – are called “resources”, and every resource has to live in a resource group. I <em>think</em> the goal of this is that if all the resources for a project live in one resource group, then when you finish the project you can easily delete them all, and I think they’re useful for corporations to manage billing. In this project, we’ll only have the one resource group you created when you
-made your working group.</p>
+<p>OK, so what was that <em>Resource Group</em> you created?</p>
+<p>In Azure, all the concrete things you want to use – a virtual machine, a distributed cluster, a network storage drive – are called <em>Resources</em>, and every resource has to live in a <em>Resource Group</em>. I <em>think</em> the goal of this is that if all the Resources for a project live in one Resource Group, then when you finish the project you can easily delete them all, and I think they’re useful for corporations to manage billing. Personally, I find it’s just kinda annoying. :)</p>
+<p>In this project, we’ll only have the one Resource Group you created when you made your Workspace.</p>
 </div>
 </div>
 <div class="section" id="Compute-on-Azure">
 <h2>Compute on Azure<a class="headerlink" href="#Compute-on-Azure" title="Permalink to this headline">¶</a></h2>
 <p>In this class, we’ll talk about two types of computing resources you can get through AzureML:</p>
 <ol class="arabic simple">
-<li><p><strong>Rent a single Virtual Machine (VM)</strong>: The first option for compute resources on AzureML is to just rent a single computer with lots of ram and processors. The advantage of this is that it’s very easy to setup, you can interact with the VM using Jupyter, Jupyter Lab, or Rstudio’s full graphical user interfaces just as you would on your personal laptop, just with more power. The <em>downside</em> is that there’s a limit to how many resources you can get in a VM, and they tend to be <em>relatively</em>
-expensive (since you’re renting premium hardware).</p></li>
-<li><p><strong>Rent a cluster</strong>: Here’s the real value of AzureML – it allows you to very easily setup a <em>scalable</em> cluster of as many computers as you want. Generally, you set up your cluster with simple individual computers (“nodes”) to manage cost (10 basic computers are cheaper than 1 fancy computer), then you use them with a program like dask to do distributed work with large datasets.</p></li>
+<li><p><strong>Rent a single Virtual Machine (VM)</strong>: The first option for compute resources on AzureML is to just rent a single computer with lots of ram and processors. The advantage of this is that it’s very easy to setup, you can interact with the VM using Jupyter, Jupyter Lab, or Rstudio’s full graphical user interfaces just as you would on your personal laptop, just with more power. The <em>downside</em> is that there’s a limit to how many resources you can get in a VM (at most, 128 cores or 4 V100 GPUs as
+of late 2020).</p></li>
+<li><p><strong>Rent a cluster</strong>: Here’s the real value of AzureML – it allows you to very easily setup a <em>scalable</em> cluster of as many computers as you want. Generally, you set up your cluster with simple individual computers (“nodes”) to manage cost, then you use them with a program like <code class="docutils literal notranslate"><span class="pre">dask</span></code> to do distributed work with large datasets.</p>
+<ul class="simple">
+<li><p>If you care, I’m 99% sure that what AzureML is setting up is a cluster of Docker containers (a way of creating fast Virtual Machines) managed through Kubernetes (a tool for managing and scaling clusters of Docker containers). If that means nothing to you, don’t worry about it.</p></li>
+</ul>
+</li>
 </ol>
 <div class="section" id="Renting-a-VM">
 <h3>Renting a VM<a class="headerlink" href="#Renting-a-VM" title="Permalink to this headline">¶</a></h3>
-<p>To setup compute resources, go into your ML workspace (URL starts with <code class="docutils literal notranslate"><span class="pre">ml.azure.com</span></code>) and click on “Compute” towards the bottom of the menu on the left.</p>
-<p>The first option for adding compute is “Compute Instances” – this is a simple VM. So let’s set one up! Click “Create”, pick “CPU” as your virtual machine type for now (you can also pick a GPU-centric VM), then check out all the options for “Virtual machine sizes”. As you will see, you can get computers with up to 72 individual cores, or up to 256 gb RAM! These are <em>single machines</em> with all these resources! Amazing, right?</p>
-<p>The only catch to be aware of is the cost, which is also in that dropdown – if you do rent 72 cores, it’ll cost you about 3 dollars an hour. If you just have a day of work you really need, this is a great deal; if you plan to be running simulations for a week… well, that’s pretty darn expensive (though still way less than buying your own dedicated computer!).</p>
-<p>To try things out, let’s get a basic model – I’m gonna start a <code class="docutils literal notranslate"><span class="pre">Standard_D11_v2</span></code> for 18 cents an hour. :)</p>
-<p>Now once you have a VM, you can connect in two ways: you can get your familiar graphical user interface using Remote Desktop, or you can connect via the commandline by enabling SSH (which you will see is an option here). Enabling SSH requires setting a public key, which takes some work, so lets skip it for now and just leave that turned off, but if/when you want that option, you can find directions for setting up <a class="reference external" href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys#provide-an-ssh-public-key-when-deploying-a-vm">SSH keys
-here</a>. Click “Create”, and go grab a cup of coffee while your machine gets setup! (You’ll have to wait about 5-7 minutes for it to get going).</p>
-<p>Once it’s running, click on the name of your VM in your list of compute resources, and then click on the “Run” tab. There, on the right side, you’ll see a series of links to Jupyter, JupyterLab, RSTudio, and (if you enabled it) ssh:</p>
+<p>To setup compute resources, go into your ML workspace (URL starts with <code class="docutils literal notranslate"><span class="pre">ml.azure.com</span></code>) and click on <code class="docutils literal notranslate"><span class="pre">Compute</span></code> towards the bottom of the menu on the left.</p>
+<p>The first option for adding compute is <code class="docutils literal notranslate"><span class="pre">Compute</span> <span class="pre">Instances</span></code> – this is a simple VM. So let’s set one up! Click <code class="docutils literal notranslate"><span class="pre">Create</span></code>, pick <code class="docutils literal notranslate"><span class="pre">CPU</span></code> as your virtual machine type for now (you can also pick a GPU-centric VM if you want!), then check out all the options for <code class="docutils literal notranslate"><span class="pre">Virtual</span> <span class="pre">machine</span> <span class="pre">sizes</span></code>. As you will see, you can get computers with up to 72 individual cores, or up to 256 gb RAM! These are <em>single machines</em> with all these resources! Amazing, right? Note some may be greyed out to prevent you from
+overspending – you can get those, just takes some extra permissions so Azure is sure you can afford it.</p>
+<p>The only catch to be aware of is the cost, which is also in that dropdown – if you do rent a single machine with 72 cores, it’ll cost you about 3 dollars an hour. If you just have a day of work you really need, this is a great deal; if you plan to be running simulations for a week… well, that’s pretty darn expensive (though still way less than buying your own dedicated computer!).</p>
+<p>To try things out, let’s get a basic model – I’m gonna start a <code class="docutils literal notranslate"><span class="pre">Standard_D11_v2</span></code> for 18 cents an hour.</p>
+<p>Now once you have a VM, you can connect in two ways: you can use JupyterLab, RStudio, or Jupyter; or you can connect via the commandline by enabling SSH (which you will see is an option here). Enabling SSH requires sharing the public key from your personal computer, which takes a little work, so lets skip it for now and just leave that turned off. If/when you want that option, you can find directions for setting up <a class="reference external" href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys#provide-an-ssh-public-key-when-deploying-a-vm">SSH keys
+here</a>. The other ways to connect will become available when the machine is up andr unning. Click <code class="docutils literal notranslate"><span class="pre">Create</span></code>, and go grab a cup of coffee while your machine gets setup! (You’ll have to wait about 5-7 minutes for it to get going).</p>
+<p>Once it’s running, click on the name of your VM in your list of compute resources, and then click on the <code class="docutils literal notranslate"><span class="pre">Run</span></code> tab. There, on the right side, you’ll see a series of links to Jupyter, JupyterLab, RSTudio, and (if you enabled it) ssh:</p>
 <p><img alt="azure_vm_services" src="_images/azure_vm_services.png" /></p>
 <p>Just click on those links and the service you requested for the VM will pop up! TA-DA! You’re running Jupyter on the cloud!</p>
-<p>(Because we’re in AzureML, the VMs offered are all running the linux operating system and come with standard Data Science software installed. If you want a different kind of VM – say, a windows machine, or a linux machine without software pre-installed – go back to your <a class="reference external" href="https://portal.azure.com/#home">Azure Portal page</a>, and select “Virtual Machines.” There you can completely control the configuration of your VM, and even set up a remote desktop connection if you want to use a regular
-Windows experience.)</p>
-<p>If you want to go the VM route, you may also be interested in how you can mount cloud storage just like another volumn on your computer instead of accessing it from your Python code. If so, be sure to check out the later lesson on <a class="reference internal" href="cloud_azurestorage.html"><span class="doc">Azure Storage configurations</span></a></p>
+<p>(Because we’re in AzureML, the VMs offered are all running the linux operating system and come with standard Data Science software installed. If you want a different kind of VM – say, a Windows machine, or a linux machine without software pre-installed – go back to your <a class="reference external" href="https://portal.azure.com/#home">Azure Portal page</a>, and select “Virtual Machines.” There you can completely control the configuration of your VM, and even set up a Remote Desktop Connection if you want to use a regular
+Windows experience with full graphical user interface.)</p>
+<p>If you want to go the VM route, you may also be interested in how you can mount your Cloud storage just like another volumn on your computer instead of accessing it through fancy Python libraries. If so, be sure to check out the later lesson on <a class="reference internal" href="cloud_azurestorage.html"><span class="doc">Azure Storage configurations</span></a></p>
 </div>
 <div class="section" id="Setting-Up-A-Cluster">
 <h3>Setting Up A Cluster<a class="headerlink" href="#Setting-Up-A-Cluster" title="Permalink to this headline">¶</a></h3>
 <p>The other thing you can do is setup a full computer cluster, with is a collection of (generally smaller) computers that are all networked together to act as one.</p>
-<p>The great thing about AzureML is that you can create a cluster that starts with, say, two nodes (computers), but then scale it up to 100 nodes when you want to run a bit of computationally intensive code! Then when you’re done, those nodes will automatically shut down when they’ve been idle for a set period of time, and you’ll be back to the two nodes. And that means you only have to pay for the 100 nodes <em>when you are using them!</em>. Pretty amazing, honestly.</p>
-<p>OK, but we’re not gonna set up a cluster here in the browser because it’s actually <em>much</em> easier to set up a cluster from a Python session (especially if you want to use <code class="docutils literal notranslate"><span class="pre">dask</span></code>), so for now I’ll just point out that if you click on the “Compute clusters” tab of the “Compute” section of your workspace, you can see how you set up a cluster from here. It’s not hard, but it’s even easier from Python.</p>
+<p>The great thing about AzureML is that you can create a cluster that starts with, say, two computers (nodes), but then scale it up to 100 nodes when you’ve debugged your code and are ready to run a bit of computationally intensive code. Then when you’re done, those nodes will automatically shut down after they’ve been idle for a set period of time, and you’ll be back to the two nodes. And that means you only have to pay for the 100 nodes <em>when you are using them!</em>. Pretty amazing, honestly.</p>
+<p>OK, but we’re not gonna set up a cluster here inthe browser because it’s actually <em>much</em> easier to set up a cluster from a Python session (especially if you want to use <code class="docutils literal notranslate"><span class="pre">dask</span></code>), so for now I’ll just point out that if you click on the <code class="docutils literal notranslate"><span class="pre">Compute</span> <span class="pre">clusters</span></code> tab of the <code class="docutils literal notranslate"><span class="pre">Compute</span></code> section of your workspace, you can see how you set up a cluster from here. It’s not hard, but it’s even easier from Python.</p>
 </div>
 </div>
 <div class="section" id="Storage-on-Azure">
@@ -351,31 +128,26 @@ Windows experience.)</p>
 </ul>
 <p>And lest this whole “Storage Account” / Blob Containers / Files thing is getting confusing (I <em>know</em>, so many nested groups!!!), it looks something like this:</p>
 <p><img alt="azure_blob_containers" src="_images/azure_blob_containers.png" /></p>
-<div class="section" id="Create-Container-and-Add-Data">
-<h3>Create Container and Add Data<a class="headerlink" href="#Create-Container-and-Add-Data" title="Permalink to this headline">¶</a></h3>
-<p>So let’s add some data! On the left menu, and click on “Containers” under Blob Services.</p>
-<p>First, note that there is already a handful of Containers there – these store the data about your Workspace.</p>
-<p>But now we can create a new container for our data! So click the “+ Container” button, pick a name, and click “Create”. Congrats! You have a blob!</p>
-<p>We’ll talk more about managing data using Python or the command line later, but for the moment, let’s just upload an easy file. Click on your new Container, click “Upload” in the top left, and upload a file!</p>
 </div>
 <div class="section" id="Creating-A-New-Storage-Account">
-<h3>Creating A New Storage Account<a class="headerlink" href="#Creating-A-New-Storage-Account" title="Permalink to this headline">¶</a></h3>
-<p>If at some point you want a NEW Storage Account, just go back to the Portal, click “Add Resource” and search for Storage Account.</p>
-</div>
-<div class="section" id="Managing-Storage-from-your-local-command-line-with-Azure-CLI">
-<h3>Managing Storage from your local command line with Azure CLI<a class="headerlink" href="#Managing-Storage-from-your-local-command-line-with-Azure-CLI" title="Permalink to this headline">¶</a></h3>
-<p>Since you often want to upload lots of files from your own computer, it’s often easiest to do file transfers with the <a class="reference external" href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli">Azure Command Line Interface (CLI)</a>. In addition to creating Blob containers and such, you can also <a class="reference external" href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-cli">upload and download files with the CLI</a>, or you can use
-<a class="reference external" href="https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10">AzCopy</a>, which can synchronize two folders by seeing how they differ and only transfering changed data back and forth (<a class="reference external" href="https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-blobs#synchronize-files">azcopy sync</a>) kind of like <code class="docutils literal notranslate"><span class="pre">rsync</span></code>.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
-</pre></div>
+<h2>Creating A New Storage Account<a class="headerlink" href="#Creating-A-New-Storage-Account" title="Permalink to this headline">¶</a></h2>
+<p>Even though it isn’t strictly necessary since we have a Storage Account associated with our Workspace, let’s setup a new standalone Storage Account so you can see how it works. First, make sure you’re in your “Storage Accounts” page (you can go back to your Portal and search for it if you need to).</p>
+<p>Then on the top right, click on the <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">Add</span></code> button:</p>
+<p><img alt="azure_addstorageaccount" src="_images/azure_addstorageaccount.png" /></p>
+<p>Put it in the Resource Group you already have, give it a good name (I used <code class="docutils literal notranslate"><span class="pre">nce8sa</span></code>), and just accept the defaults. Congratulations!</p>
+<div class="section" id="Create-Container-and-Add-Data">
+<h3>Create Container and Add Data<a class="headerlink" href="#Create-Container-and-Add-Data" title="Permalink to this headline">¶</a></h3>
+<p>So let’s add some data! Navigate to your Storage Accounts page, and click on the Storage Account you just created. Then on the left menu, and click on <code class="docutils literal notranslate"><span class="pre">Containers</span></code> under Blob Services.</p>
+<p>But now we can create a new Container for our data! So click the <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">Container</span></code> button, pick a name, and click <code class="docutils literal notranslate"><span class="pre">Create</span></code>. Congrats! You have a blob!</p>
+<p>We’ll talk more about managing data using Python or the command line later, but for the moment, let’s just upload an easy file. Click on your new Container, click <code class="docutils literal notranslate"><span class="pre">Upload</span></code> in the top left, and upload a file!</p>
 </div>
 </div>
-</div>
+<div class="section" id="Now-To-Do-Some-Computing!">
+<h2>Now To Do Some Computing!<a class="headerlink" href="#Now-To-Do-Some-Computing!" title="Permalink to this headline">¶</a></h2>
+<p>Congratulations – you’re now all set up. You have an Azure account, a Subscription, a Storage Account with a Blob container with a little data, and a Workspace. Now we’ll move on to actually setting up and running a <code class="docutils literal notranslate"><span class="pre">dask</span></code> cluster.</p>
+<p>One last note: if you find all this pointing and clicking tedious, there are tools to manage all this kind of stuff from the command line, but because you need to know what you’re looking for to know what commands to use, I think seeing the Azure websites with all their menus is a better way to start off. But if you do want to get into command line tools, you can read about the <a class="reference external" href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli">Azure Command Line Interface (CLI)</a> here, and as
+we’ll see later, there are also lots of Python libraries that can do the same from within a Python session.</p>
+<p><a class="reference internal" href="cloud_dask.html"><span class="doc">Let’s do some actual data science!</span></a></p>
 </div>
 </div>
 
@@ -429,6 +201,8 @@ Windows experience.)</p>
 <li class="toctree-l2"><a class="reference internal" href="#Create-a-Workspace">Create a Workspace</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Compute-on-Azure">Compute on Azure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Storage-on-Azure">Storage on Azure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Creating-A-New-Storage-Account">Creating A New Storage Account</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Now-To-Do-Some-Computing!">Now To Do Some Computing!</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Set Up Dask on AzureML</a></li>

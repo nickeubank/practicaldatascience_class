@@ -37,9 +37,9 @@
   <p>OpenSSH_8.1p1, LibreSSL 2.7.3
 debug1: Reading configuration data /etc/ssh/ssh_config
 debug1: /etc/ssh/ssh_config line 47: Applying options for *
-debug2: resolve_canonicalize: hostname 40.76.157.133 is address
+debug2: resolve_canonicalize: hostname 52.191.100.91 is address
 debug2: ssh_connect_direct
-debug1: Connecting to 40.76.157.133 [40.76.157.133] port 50001.
+debug1: Connecting to 52.191.100.91 [52.191.100.91] port 50000.
 debug1: Connection established.
 debug1: identity file /Users/Nick/github/practicaldatascience/source/tmp/key type 0
 debug1: identity file /Users/Nick/github/practicaldatascience/source/tmp/key-cert type -1
@@ -47,8 +47,8 @@ debug1: Local version string SSH-2.0-OpenSSH_8.1
 debug1: Remote protocol version 2.0, remote software version OpenSSH_7.2p2 Ubuntu-4ubuntu2.8
 debug1: match: OpenSSH_7.2p2 Ubuntu-4ubuntu2.8 pat OpenSSH_7.0*,OpenSSH_7.1*,OpenSSH_7.2*,OpenSSH_7.3*,OpenSSH_7.4*,OpenSSH_7.5*,OpenSSH_7.6*,OpenSSH_7.7* compat 0x04000002
 debug2: fd 3 setting O_NONBLOCK
-debug1: Authenticating to 40.76.157.133:50001 as ‘dask’
-debug3: put_host_port: [40.76.157.133]:50001
+debug1: Authenticating to 52.191.100.91:50000 as ‘dask’
+debug3: put_host_port: [52.191.100.91]:50000
 debug3: hostkeys_foreach: reading file “/Users/Nick/.ssh/known_hosts”
 debug3: send packet: type 20
 debug1: SSH2_MSG_KEXINIT sent
@@ -87,14 +87,14 @@ debug1: kex: client-&gt;server cipher: chacha20-poly1305&#64;openssh.com MAC: <i
 debug3: send packet: type 30
 debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
 debug3: receive packet: type 31
-debug1: Server host key: ecdsa-sha2-nistp256 SHA256:2CyoWiLoOvV4cgyg8uFLmku6MYEOF3wSj8p0Y1qufe8
-debug3: put_host_port: [40.76.157.133]:50001
-debug3: put_host_port: [40.76.157.133]:50001
+debug1: Server host key: ecdsa-sha2-nistp256 SHA256:Dd8pRe9w3sreFuIxI5o4l8GXA3Y4hOhEo5QyZliGlcg
+debug3: put_host_port: [52.191.100.91]:50000
+debug3: put_host_port: [52.191.100.91]:50000
 debug3: hostkeys_foreach: reading file “/Users/Nick/.ssh/known_hosts”
 debug3: hostkeys_foreach: reading file “/Users/Nick/.ssh/known_hosts”
 debug1: checking without port identifier
 debug3: hostkeys_foreach: reading file “/Users/Nick/.ssh/known_hosts”
-Warning: Permanently added ‘[40.76.157.133]:50001’ (ECDSA) to the list of known hosts.
+Warning: Permanently added ‘[52.191.100.91]:50000’ (ECDSA) to the list of known hosts.
 debug3: send packet: type 21
 debug2: set_newkeys: mode 1
 debug1: rekey out after 134217728 blocks
@@ -104,7 +104,7 @@ debug3: receive packet: type 21
 debug1: SSH2_MSG_NEWKEYS received
 debug2: set_newkeys: mode 0
 debug1: rekey in after 134217728 blocks
-debug1: Will attempt key: /Users/Nick/github/practicaldatascience/source/tmp/key RSA SHA256:gpDNnFPkZTDkqlJMQ0JrgkliHSM8Q/PumlEn3cFkrwo explicit
+debug1: Will attempt key: /Users/Nick/github/practicaldatascience/source/tmp/key RSA SHA256:bisOaUZzWjpduFVj5N1Wh7UwH9K2xFXNmzlvAyDirL0 explicit
 debug2: pubkey_prepare: done
 debug3: send packet: type 5
 debug3: receive packet: type 7
@@ -122,30 +122,30 @@ debug3: authmethod_lookup publickey
 debug3: remaining preferred: keyboard-interactive,password
 debug3: authmethod_is_enabled publickey
 debug1: Next authentication method: publickey
-debug1: Offering public key: /Users/Nick/github/practicaldatascience/source/tmp/key RSA SHA256:gpDNnFPkZTDkqlJMQ0JrgkliHSM8Q/PumlEn3cFkrwo explicit
+debug1: Offering public key: /Users/Nick/github/practicaldatascience/source/tmp/key RSA SHA256:bisOaUZzWjpduFVj5N1Wh7UwH9K2xFXNmzlvAyDirL0 explicit
 debug3: send packet: type 50
 debug2: we sent a publickey packet, wait for reply
 debug3: receive packet: type 60
-debug1: Server accepts key: /Users/Nick/github/practicaldatascience/source/tmp/key RSA SHA256:gpDNnFPkZTDkqlJMQ0JrgkliHSM8Q/PumlEn3cFkrwo explicit
-debug3: sign_and_send_pubkey: RSA SHA256:gpDNnFPkZTDkqlJMQ0JrgkliHSM8Q/PumlEn3cFkrwo
+debug1: Server accepts key: /Users/Nick/github/practicaldatascience/source/tmp/key RSA SHA256:bisOaUZzWjpduFVj5N1Wh7UwH9K2xFXNmzlvAyDirL0 explicit
+debug3: sign_and_send_pubkey: RSA SHA256:bisOaUZzWjpduFVj5N1Wh7UwH9K2xFXNmzlvAyDirL0
 debug3: sign_and_send_pubkey: signing using rsa-sha2-512
 debug3: send packet: type 50
 debug3: receive packet: type 52
 debug1: Authentication succeeded (publickey).
-Authenticated to 40.76.157.133 ([40.76.157.133]:50001).
-debug1: Local connections to 0.0.0.0:9000 forwarded to remote address 10.0.0.5:8888
+Authenticated to 52.191.100.91 ([52.191.100.91]:50000).
+debug1: Local connections to 0.0.0.0:9000 forwarded to remote address 10.0.0.4:8888
 debug3: channel_setup_fwd_listener_tcpip: type 2 wildcard 0 addr 0.0.0.0
 debug1: Local forwarding listening on 0.0.0.0 port 9000.
 debug2: fd 4 setting O_NONBLOCK
 debug3: fd 4 is O_NONBLOCK
 debug1: channel 0: new [port listener]
-debug1: Local connections to 0.0.0.0:9001 forwarded to remote address 10.0.0.5:8787
+debug1: Local connections to 0.0.0.0:9001 forwarded to remote address 10.0.0.4:8787
 debug3: channel_setup_fwd_listener_tcpip: type 2 wildcard 0 addr 0.0.0.0
 debug1: Local forwarding listening on 0.0.0.0 port 9001.
 debug2: fd 5 setting O_NONBLOCK
 debug3: fd 5 is O_NONBLOCK
 debug1: channel 1: new [port listener]
-debug1: Local connections to 0.0.0.0:9002 forwarded to remote address 10.0.0.5:8786
+debug1: Local connections to 0.0.0.0:9002 forwarded to remote address 10.0.0.4:8786
 debug3: channel_setup_fwd_listener_tcpip: type 2 wildcard 0 addr 0.0.0.0
 debug1: Local forwarding listening on 0.0.0.0 port 9002.
 debug2: fd 6 setting O_NONBLOCK
@@ -157,7 +157,7 @@ debug1: Requesting no-more-sessions&#64;openssh.com
 debug3: send packet: type 80
 debug1: Entering interactive session.
 debug1: pledge: network
-debug1: Connection to port 9002 forwarding to 10.0.0.5 port 8786 requested.
+debug1: Connection to port 9002 forwarding to 10.0.0.4 port 8786 requested.
 debug2: fd 7 setting TCP_NODELAY
 debug3: fd 7 is O_NONBLOCK
 debug3: fd 7 is O_NONBLOCK
@@ -167,7 +167,7 @@ debug3: receive packet: type 80
 debug1: client_input_global_request: rtype hostkeys-00&#64;openssh.com want_reply 0
 debug3: receive packet: type 91
 debug2: channel 3: open confirm rwindow 2097152 rmax 32768
-debug1: Connection to port 9002 forwarding to 10.0.0.5 port 8786 requested.
+debug1: Connection to port 9002 forwarding to 10.0.0.4 port 8786 requested.
 debug2: fd 8 setting TCP_NODELAY
 debug3: fd 8 is O_NONBLOCK
 debug3: fd 8 is O_NONBLOCK
@@ -175,7 +175,7 @@ debug1: channel 4: new [direct-tcpip]
 debug3: send packet: type 90
 debug3: receive packet: type 91
 debug2: channel 4: open confirm rwindow 2097152 rmax 32768
-debug1: Connection to port 9002 forwarding to 10.0.0.5 port 8786 requested.
+debug1: Connection to port 9002 forwarding to 10.0.0.4 port 8786 requested.
 debug2: fd 9 setting TCP_NODELAY
 debug3: fd 9 is O_NONBLOCK
 debug3: fd 9 is O_NONBLOCK
@@ -183,54 +183,111 @@ debug1: channel 5: new [direct-tcpip]
 debug3: send packet: type 90
 debug3: receive packet: type 91
 debug2: channel 5: open confirm rwindow 2097152 rmax 32768
-debug2: channel 5: window 1998523 sent adjust 98629
-debug2: channel 5: window 1998261 sent adjust 98891
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: rcvd adjust 98324
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619
-debug2: channel 5: window 1998533 sent adjust 98619</p>
+debug2: channel 4: rcvd adjust 105695
+debug2: channel 4: rcvd adjust 114688
+debug2: channel 4: rcvd adjust 131072
+debug2: channel 4: rcvd adjust 131072
+debug2: channel 4: rcvd adjust 131072
+debug2: channel 4: rcvd adjust 131072
+debug1: Connection to port 9001 forwarding to 10.0.0.4 port 8787 requested.
+debug2: fd 10 setting TCP_NODELAY
+debug3: fd 10 is O_NONBLOCK
+debug3: fd 10 is O_NONBLOCK
+debug1: channel 6: new [direct-tcpip]
+debug3: send packet: type 90
+debug1: Connection to port 9001 forwarding to 10.0.0.4 port 8787 requested.
+debug2: fd 11 setting TCP_NODELAY
+debug3: fd 11 is O_NONBLOCK
+debug3: fd 11 is O_NONBLOCK
+debug1: channel 7: new [direct-tcpip]
+debug3: send packet: type 90
+debug3: receive packet: type 91
+debug2: channel 6: open confirm rwindow 2097152 rmax 32768
+debug3: receive packet: type 91
+debug2: channel 7: open confirm rwindow 2097152 rmax 32768
+debug1: Connection to port 9001 forwarding to 10.0.0.4 port 8787 requested.
+debug2: fd 12 setting TCP_NODELAY
+debug3: fd 12 is O_NONBLOCK
+debug3: fd 12 is O_NONBLOCK
+debug1: channel 8: new [direct-tcpip]
+debug3: send packet: type 90
+debug3: receive packet: type 91
+debug2: channel 8: open confirm rwindow 2097152 rmax 32768
+debug2: channel 5: window 1998773 sent adjust 98379
+debug2: channel 8: window 1998334 sent adjust 98818
+debug2: channel 7: read&lt;=0 rfd 11 len 0
+debug2: channel 7: read failed
+debug2: channel 7: chan_shutdown_read (i0 o0 sock 11 wfd 11 efd -1 [closed])
+debug2: channel 7: input open -&gt; drain
+debug2: channel 7: ibuf empty
+debug2: channel 7: send eof
+debug3: send packet: type 96
+debug2: channel 7: input drain -&gt; closed
+debug3: receive packet: type 96
+debug2: channel 7: rcvd eof
+debug2: channel 7: output open -&gt; drain
+debug2: channel 7: obuf empty
+debug2: channel 7: chan_shutdown_write (i3 o1 sock 11 wfd 11 efd -1 [closed])
+debug2: channel 7: output drain -&gt; closed
+debug3: receive packet: type 97
+debug2: channel 7: rcvd close
+debug3: channel 7: will not send data after close
+debug2: channel 7: send close
+debug3: send packet: type 97
+debug2: channel 7: is dead
+debug2: channel 7: garbage collecting
+debug1: channel 7: free: direct-tcpip: listening port 9001 for 10.0.0.4 port 8787, connect from 127.0.0.1 port 62495 to 127.0.0.1 port 9001, nchannels 9
+debug3: channel 7: status: The following connections are open:
+#3 direct-tcpip: listening port 9002 for 10.0.0.4 port 8786, connect from 127.0.0.1 port 62400 to 127.0.0.1 port 9002 (t4 r0 i0/0 o0/0 e[closed]/0 fd 7/7/-1 sock 7 cc -1)
+#4 direct-tcpip: listening port 9002 for 10.0.0.4 port 8786, connect from 127.0.0.1 port 62408 to 127.0.0.1 port 9002 (t4 r1 i0/0 o0/0 e[closed]/0 fd 8/8/-1 sock 8 cc -1)
+#5 direct-tcpip: listening port 9002 for 10.0.0.4 port 8786, connect from 127.0.0.1 port 62410 to 127.0.0.1 port 9002 (t4 r2 i0/0 o0/0 e[closed]/0 fd 9/9/-1 sock 9 cc -1)
+#6 direct-tcpip: listening port 9001 for 10.0.0.4 port 8787, connect from 127.0.0.1 port 62494 to 127.0.0.1 port 9001 (t4 r3 i0/0 o0/0 e[closed]/0 fd 10/10/-1 sock 10 cc -1)
+#7 direct-tcpip: listening port 9001 for 10.0.0.4 port 8787, connect from 127.0.0.1 port 62495 to 127.0.0.1 port 9001 (t4 r4 i3/0 o3/0 e[closed]/0 fd 11/11/-1 sock 11 cc -1)
+#8 direct-tcpip: listening port 9001 for 10.0.0.4 port 8787, connect from 127.0
+debug2: channel 8: window 1998282 sent adjust 98870
+debug2: channel 8: window 1998430 sent adjust 98722
+debug2: channel 8: window 1998525 sent adjust 98627
+debug2: channel 5: window 1997772 sent adjust 99380
+debug2: channel 8: window 1997364 sent adjust 99788
+debug2: channel 8: window 1998106 sent adjust 99046
+debug2: channel 6: read&lt;=0 rfd 10 len 0
+debug2: channel 6: read failed
+debug2: channel 6: chan_shutdown_read (i0 o0 sock 10 wfd 10 efd -1 [closed])
+debug2: channel 6: input open -&gt; drain
+debug2: channel 6: ibuf empty
+debug2: channel 6: send eof
+debug3: send packet: type 96
+debug2: channel 6: input drain -&gt; closed
+debug3: receive packet: type 96
+debug2: channel 6: rcvd eof
+debug2: channel 6: output open -&gt; drain
+debug2: channel 6: obuf empty
+debug2: channel 6: chan_shutdown_write (i3 o1 sock 10 wfd 10 efd -1 [closed])
+debug2: channel 6: output drain -&gt; closed
+debug3: receive packet: type 97
+debug2: channel 6: rcvd close
+debug3: channel 6: will not send data after close
+debug2: channel 6: send close
+debug3: send packet: type 97
+debug2: channel 6: is dead
+debug2: channel 6: garbage collecting
+debug1: channel 6: free: direct-tcpip: listening port 9001 for 10.0.0.4 port 8787, connect from 127.0.0.1 port 62494 to 127.0.0.1 port 9001, nchannels 8
+debug3: channel 6: status: The following connections are open:
+#3 direct-tcpip: listening port 9002 for 10.0.0.4 port 8786, connect from 127.0.0.1 port 62400 to 127.0.0.1 port 9002 (t4 r0 i0/0 o0/0 e[closed]/0 fd 7/7/-1 sock 7 cc -1)
+#4 direct-tcpip: listening port 9002 for 10.0.0.4 port 8786, connect from 127.0.0.1 port 62408 to 127.0.0.1 port 9002 (t4 r1 i0/0 o0/0 e[closed]/0 fd 8/8/-1 sock 8 cc -1)
+#5 direct-tcpip: listening port 9002 for 10.0.0.4 port 8786, connect from 127.0.0.1 port 62410 to 127.0.0.1 port 9002 (t4 r2 i0/0 o0/0 e[closed]/0 fd 9/9/-1 sock 9 cc -1)
+#6 direct-tcpip: listening port 9001 for 10.0.0.4 port 8787, connect from 127.0.0.1 port 62494 to 127.0.0.1 port 9001 (t4 r3 i3/0 o3/0 e[closed]/0 fd 10/10/-1 sock 10 cc -1)
+#8 direct-tcpip: listening port 9001 for 10.0.0.4 port 8787, connect from 127.0.0.1 port 62497 to 127.0.0.1 port 9001 (t4 r5 i0/0 o0/0 e[closed]/0 fd 12/12/-1 sock 12 cc -1)</p>
+<p>debug2: channel 8: window 1998748 sent adjust 98404
+debug2: channel 8: window 1998808 sent adjust 98344
+debug2: channel 8: window 1998813 sent adjust 98339
+debug2: channel 5: window 1998045 sent adjust 99107
+debug2: channel 8: window 1998457 sent adjust 98695
+debug2: channel 8: window 1998203 sent adjust 98949
+debug2: channel 8: window 1998326 sent adjust 98826
+debug2: channel 5: window 1997918 sent adjust 99234
+debug2: channel 8: window 1998572 sent adjust 98580
+debug3: send packet: type 1</p>
 
 
           </div>
