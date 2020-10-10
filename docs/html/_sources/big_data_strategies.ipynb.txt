@@ -50,7 +50,7 @@
     "- loading only a small part of your data, preprocessing it (dropping extra variables, dropping extra observations, taking averages, and/or storing the data in more efficient formats), and saving it away,\n",
     "- then recombining all the now substantially smaller bits into a new analysis dataset that has everything you want and fits into data. \n",
     "\n",
-    "Chunking is pretty easy with most data formats. In pandas, for example, you can specify what rows you want to import using either the `nrows` (to specify you only want the first `n` rows read into memory), or you can use the combination of `skiprows` and `nrows` to get a specific set of rows (i.e. \"start right after the number of rows in `skiprows`, then take `nrows` from there). Or if you really want to be fancy, you can actually just use `read_csv` as an interator using `iterator=True` and `chunksize`, which will return an object that you can loop over and which pulls in the number of rows you specify in `chunksize` each pass of the loop. \n",
+    "Chunking is pretty easy with most data formats. In pandas, for example, you can specify what rows you want to import using either the `nrows` (to specify you only want the first `n` rows read into memory), or you can use the combination of `skiprows` and `nrows` to get a specific set of rows (i.e. \"start right after the number of rows in `skiprows`, then take `nrows` from there). Or if you really want to be fancy, you can actually just use `read_csv` as an interator using `iterator=True` and `chunksize`, which will return an object that you can loop over and which pulls in the number of rows you specify in `chunksize` each pass of the loop.  We'll also discuss a tool (`dask`) that helps automate this process, though using it properly requires understanding how it works, so we won't introduce it till later.\n",
     "\n",
     "Types of thinning you may wish to do during import: \n",
     "\n",
@@ -130,9 +130,13 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "### Strategy 2: Buy More Memory\n",
+    "### Strategy 2: Pay for More Memory\n",
     "\n",
-    "Don't overlook this option. You can get 100gb of RAM new for about $300 (and this will only go down over time), which means you can easily buy a desktop PC with all the ram and processing power you want for well under a thousand dollars. That's not a small amount of money, but *your* time as a data scientist is also valuable (both to you and to whoever is paying you), and if you can obviate having to deal with all these kinds of problems buy just buying a bigger computer (especially if it helps you avoid the strategies described below), it can be an incredibly good investment. "
+    "Don't overlook this option: buying RAM doesn't cost a fortune (especially for desktops), and renting a single big virtual machine on the cloud can be similarly cost effective. \n",
+    "\n",
+    "For example, you can get 100gb of RAM new for about $300 (and this will only go down over time), which means you can easily buy a desktop PC with all the ram and processing power you want for well under a thousand dollars. That's not a small amount of money, but *your* time as a data scientist is also valuable (both to you and to whoever is paying you), and if you can obviate having to deal with all these kinds of problems buy just buying a bigger computer (especially if it helps you avoid the strategies described below), it can be an incredibly good investment. \n",
+    "\n",
+    "And you can rent a Virtual Machine with hundreds of GB of RAM for a couple bucks an hour, something [we'll discuss in a later lesson](cloud_what_is_it.ipynb)."
    ]
   },
   {
@@ -160,7 +164,7 @@
     "\n",
     "**If absolutely everything else has failed** it's time to turn to distributed computing!\n",
     "\n",
-    "Distributed computing is the practice of taking your task and your data, breaking it into smaller pieces, sending those pieces to different computers, running the \"smaller pieces\" on those different computers, then bringing back the results and recombining them into a single output. \n",
+    "Distributed computing (using lots of individual computers working in concern in a \"cluster\") is the practice of taking your task and your data, breaking it into smaller pieces, sending those pieces to different computers, running the \"smaller pieces\" on those different computers, then bringing back the results and recombining them into a single output. \n",
     "\n",
     "Distributed computing is amazing, and makes possible many things that would never be possible otherwise. But it is not without two very important substantial costs:\n",
     "\n",
@@ -175,11 +179,9 @@
     "\n",
     "So if you're in this domain, what options are open to you?\n",
     "\n",
-    "The first big distributed computing platform in the world was [Apache Hadoop](https://en.wikipedia.org/wiki/Apache_Hadoop), but currently (late-2019), the most popular distributed computing platform is probably [Apache Spark](https://en.wikipedia.org/wiki/Apache_Spark), which you can kind of think of as Hadoop v2.0. If you want to use Spark, as a Python person you'll probably do so using PySpark. \n",
+    "The Cloud! There are a few platforms for managing a distributed cluster of computers, including things you may have heard of like [Apache Hadoop](https://en.wikipedia.org/wiki/Apache_Hadoop) or [Apache Spark](https://en.wikipedia.org/wiki/Apache_Spark), which you can kind of think of as Hadoop v2.0.\n",
     "\n",
-    "Learning to use these distributed systems is outside the scope of this course, but if you want to get into it, you can find a nice [little tutorial here](https://realpython.com/pyspark-intro/).\n",
-    "\n",
-    "While Spark is popular, however, it is far from the only option. Most research institutions (Duke included) run research computing clusters using a system called [Slurm](https://en.wikipedia.org/wiki/Slurm_Workload_Manager), where users simply submit their jobs using a simple bash script along with specification for the number of processors, amount of RAM, etc. they want to use, and the system them runs that script when resources are free. A Slurm system doesn't *do* as much as PySpark (which manages distribution of data around a system, and has code that parallelizes lots of common tasks), but if you're doing simple distributed processes (like you want to run a single simulation millions of times), it has much less overhead, is much easier to learn, and is already running on many systems (whereas Spark has to be set up for you). "
+    "In this class, though, we'll primarily focus on how to use a program called `dask`, which has the same syntax as `pandas`, but works like Spark. We'll cover `dask` [in a later class](distributed_computing.ipynb), then also learn to setup a `dask` cluster on the [Microsoft Azure system too](cloud_azureml.ipynb)!\n"
    ]
   },
   {
@@ -210,7 +212,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.7.3"
+   "version": "3.7.8"
   }
  },
  "nbformat": 4,
