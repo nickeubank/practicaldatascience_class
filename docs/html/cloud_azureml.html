@@ -71,7 +71,7 @@ enjoy Microsoft’s free money, but also (and more importantly) so you feel like
 <h3>Resources &amp; Resource Groups<a class="headerlink" href="#Resources-&-Resource-Groups" title="Permalink to this headline">¶</a></h3>
 <p>OK, so what was that <em>Resource Group</em> you created?</p>
 <p>In Azure, all the concrete things you want to use – a virtual machine, a distributed cluster, a network storage drive – are called <em>Resources</em>, and every resource has to live in a <em>Resource Group</em>. I <em>think</em> the goal of this is that if all the Resources for a project live in one Resource Group, then when you finish the project you can easily delete them all, and I think they’re useful for corporations to manage billing. Personally, I find it’s just kinda annoying. :)</p>
-<p>In this project, we’ll only have the one Resource Group you created when you made your Workspace.</p>
+<p>In this project, we’ll only have the one Resource Group you created when you made your Workspace. You can see that Resource Group (and play with its settings) if you to Azure Portal, type “Resource Groups” into the search bar across the top, and select Resource Groups. This is also where you can add more Resource Groups if you need them in the future, and as we’ll discuss below, where you can set spending alerts.</p>
 </div>
 </div>
 <div class="section" id="Compute-on-Azure">
@@ -143,6 +143,12 @@ Windows experience with full graphical user interface.)</p>
 <p>We’ll talk more about managing data using Python or the command line later, but for the moment, let’s just upload an easy file. Click on your new Container, click <code class="docutils literal notranslate"><span class="pre">Upload</span></code> in the top left, and upload a file!</p>
 </div>
 </div>
+<div class="section" id="Monitor-Your-Spending">
+<h2>Monitor Your Spending<a class="headerlink" href="#Monitor-Your-Spending" title="Permalink to this headline">¶</a></h2>
+<p>One last little safeguard: Azure doesn’t let you set spending caps, but you can set up alerts. To do so, go back to Azure Portal and select the Resource Group you created with your Workspace. Click on it, then click “Cost alerts” on the left hand side.</p>
+<p>Then click <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">Add</span></code>, set a budget and hit <code class="docutils literal notranslate"><span class="pre">Next</span></code>. Then put in your email first (or it gets grumpy), then set some alerts for, say, 25%, 50%, 75% and 100% of your budget. Trust me – we’ll try hard to only set things up so that if you forget about them they’ll shut themselves down, but the worst thing in the world is forgetting you left a VM running and coming back a week later to find a bill of hundreds of dollars! So add these alerts!</p>
+<p>Again, in your own work, <strong>alerts are Resource Group specific</strong> so you have to set them every time you create a Resource Group!</p>
+</div>
 <div class="section" id="Now-To-Do-Some-Computing!">
 <h2>Now To Do Some Computing!<a class="headerlink" href="#Now-To-Do-Some-Computing!" title="Permalink to this headline">¶</a></h2>
 <p>Congratulations – you’re now all set up. You have an Azure account, a Subscription, a Storage Account with a Blob container with a little data, and a Workspace. Now we’ll move on to actually setting up and running a <code class="docutils literal notranslate"><span class="pre">dask</span></code> cluster.</p>
@@ -203,6 +209,7 @@ we’ll see later, there are also lots of Python libraries that can do the same 
 <li class="toctree-l2"><a class="reference internal" href="#Compute-on-Azure">Compute on Azure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Storage-on-Azure">Storage on Azure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Creating-A-New-Storage-Account">Creating A New Storage Account</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Monitor-Your-Spending">Monitor Your Spending</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Now-To-Do-Some-Computing!">Now To Do Some Computing!</a></li>
 </ul>
 </li>

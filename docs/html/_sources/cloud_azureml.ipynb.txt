@@ -54,7 +54,7 @@
     "\n",
     "In Azure, all the concrete things you want to use -- a virtual machine, a distributed cluster, a network storage drive -- are called *Resources*, and every resource has to live in a *Resource Group*. I *think* the goal of this is that if all the Resources for a project live in one Resource Group, then when you finish the project you can easily delete them all, and I think they're useful for corporations to manage billing. Personally, I find it's just kinda annoying. :) \n",
     "\n",
-    "In this project, we'll only have the one Resource Group you created when you made your Workspace. "
+    "In this project, we'll only have the one Resource Group you created when you made your Workspace. You can see that Resource Group (and play with its settings) if you to Azure Portal, type \"Resource Groups\" into the search bar across the top, and select Resource Groups. This is also where you can add more Resource Groups if you need them in the future, and as we'll discuss below, where you can set spending alerts."
    ]
   },
   {
@@ -157,9 +157,26 @@
     "\n",
     "But now we can create a new Container for our data! So click the `+ Container` button, pick a name, and click `Create`. Congrats! You have a blob!\n",
     "\n",
-    "We'll talk more about managing data using Python or the command line later, but for the moment, let's just upload an easy file. Click on your new Container, click `Upload` in the top left, and upload a file!\n",
+    "We'll talk more about managing data using Python or the command line later, but for the moment, let's just upload an easy file. Click on your new Container, click `Upload` in the top left, and upload a file!"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Monitor Your Spending\n",
     "\n",
+    "One last little safeguard: Azure doesn't let you set spending caps, but you can set up alerts. To do so, go back to Azure Portal and select the Resource Group you created with your Workspace. Click on it, then click \"Cost alerts\" on the left hand side.\n",
     "\n",
+    "Then click `+ Add`, set a budget and hit `Next`. Then put in your email first (or it gets grumpy), then set some alerts for, say, 25%, 50%, 75% and 100% of your budget. Trust me -- we'll try hard to only set things up so that if you forget about them they'll shut themselves down, but the worst thing in the world is forgetting you left a VM running and coming back a week later to find a bill of hundreds of dollars! So add these alerts!\n",
+    "\n",
+    "Again, in your own work, **alerts are Resource Group specific** so you have to set them every time you create a Resource Group!"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
     "## Now To Do Some Computing!\n",
     "\n",
     "Congratulations -- you're now all set up. You have an Azure account, a Subscription, a Storage Account with a Blob container with a little data, and a Workspace. Now we'll move on to actually setting up and running a `dask` cluster. \n",
