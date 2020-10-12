@@ -6,7 +6,7 @@
    "source": [
     "# Setting up a Dask Cluster on AzureML\n",
     "\n",
-    "In this lesson, we'll be using a dask cluster to replicate the [exercise we did in the Big Data section](exercises/Exercise_bigdata.ipynb) where we loaded global temperature data to measure global warming at a number of locations. You can get the data we're using for this [exercise here](https://www.dropbox.com/s/oq36w90hm9ltgvc/global_climate_data.zip?dl=0)). \n",
+    "In this lesson, we'll be using a dask cluster to replicate the [exercise we did in the Big Data section](exercises/Exercise_bigdata.ipynb) where we loaded global temperature data to measure global warming at a number of locations. You can get the data we're using for this [exercise here](https://www.dropbox.com/s/oq36w90hm9ltgvc/global_climate_data.zip?dl=0)). I'm also assuming you already have a Azure account and an AzureML workspace setup -- [go back here if you don't](cloud_azureml.ipynb)!\n",
     "\n",
     "**Want to use Amazon AWS?** You can do that too! The package we use to launch our cluster below also supports AWS. We won't go through that here, but you can find [info on it here](https://cloudprovider.dask.org/en/stable/index.html).\n",
     "\n",
