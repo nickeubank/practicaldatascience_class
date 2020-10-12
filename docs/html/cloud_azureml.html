@@ -145,9 +145,9 @@ Windows experience with full graphical user interface.)</p>
 </div>
 <div class="section" id="Monitor-Your-Spending">
 <h2>Monitor Your Spending<a class="headerlink" href="#Monitor-Your-Spending" title="Permalink to this headline">¶</a></h2>
-<p>One last little safeguard: Azure doesn’t let you set spending caps, but you can set up alerts. To do so, go back to Azure Portal and select the Resource Group you created with your Workspace. Click on it, then click “Cost alerts” on the left hand side.</p>
+<p>One last little safeguard: Azure doesn’t let you set spending caps, but you can set up alerts. To do so, go back to Azure Portal and select the Subscriptions (search in the top bar if the key icon isn’t already up). Click on it, then click “Cost alerts” on the left hand side.</p>
 <p>Then click <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">Add</span></code>, set a budget and hit <code class="docutils literal notranslate"><span class="pre">Next</span></code>. Then put in your email first (or it gets grumpy), then set some alerts for, say, 25%, 50%, 75% and 100% of your budget. Trust me – we’ll try hard to only set things up so that if you forget about them they’ll shut themselves down, but the worst thing in the world is forgetting you left a VM running and coming back a week later to find a bill of hundreds of dollars! So add these alerts!</p>
-<p>Again, in your own work, <strong>alerts are Resource Group specific</strong> so you have to set them every time you create a Resource Group!</p>
+<p>Note you can also set alerts <em>by Resource Group</em>, but if you do, there’s always a risk you’ll create a new Resource Group at some point and forget to add alerts, then do something silly, so I just tag them to my subscription so it covers everything.</p>
 </div>
 <div class="section" id="Now-To-Do-Some-Computing!">
 <h2>Now To Do Some Computing!<a class="headerlink" href="#Now-To-Do-Some-Computing!" title="Permalink to this headline">¶</a></h2>
