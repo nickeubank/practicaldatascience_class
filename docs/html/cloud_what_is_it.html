@@ -87,7 +87,8 @@ died back in the queue to ensure everything still gets done.</p>
 </div>
 <div class="section" id="Storage">
 <h3>Storage<a class="headerlink" href="#Storage" title="Permalink to this headline">¶</a></h3>
-<p>Cloud storage can vary in a number of ways. Most importantly for our purposes (and in order of performance) in varies in what it will accept, how quickly it can be accessed, and the level of data redundancy in storage.</p>
+<p>Storage is one of the coolest parts of the Cloud. That’s because: it’s (effectively) infinite! Not Dropbox file size limits, not harddrive constraints. If you can afford it (details of pricing below), you can store it.</p>
+<p>When you get Cloud storage, you should be aware it comes in many flavors. Most importantly for our purposes (and in order of performance) in varies in what it will accept, how quickly it can be accessed, and the level of data redundancy in storage.</p>
 <p><strong>Storage Types</strong></p>
 <p>Unlike your computer — that just has “files” — cloud storage offers some specialized storage for data with specfic properties. In general, however, you will probably always want to work with Blob storage. Blob is the most flexible type of storage, as it can hold anything (BLOB standands for <strong>B</strong>inary <strong>L</strong>arge <strong>OB</strong>ject storage). So unless you have reason to do otherwise, just use Blob storage.</p>
 <p>BUt so you know, other types of storage include:</p>
@@ -101,6 +102,8 @@ died back in the queue to ensure everything still gets done.</p>
 <p>If you’re doing active data science, you almost surely want “hot” storage. Archive is for data you hopefully never have to look at again (loading it can take hours), and I guess you could use “cold” to save a little money when you’re storing data you don’t plan to see again for months? But usually use hot.</p>
 <p><strong>Redundancy</strong></p>
 <p>All cloud storage is backed up / duplicated, but how aggressively varies. For example, most cloud storage offers a “geographic redundancy”, which means it has copies in different data centers, so if one data center goes down you can still access your data. You <em>can</em> pay for this, but really that’s for people who use storage to back a website who never want their customers to be unable to visit their site even if a data center is down for a few hours (which I think is super rare?).</p>
+<p><strong>Storage Cost</strong></p>
+<p>So what’s storage cost? Here’s a <a class="reference external" href="https://azure.microsoft.com/en-us/pricing/details/storage/">full list of prices for Azure</a>, but for what you’re most likely to use (hot, locally redundant Blob storage), probably about <strong>20 dollars per TB per month.</strong> So not nothing, but not awful.</p>
 </div>
 <div class="section" id="Networking">
 <h3>Networking<a class="headerlink" href="#Networking" title="Permalink to this headline">¶</a></h3>
