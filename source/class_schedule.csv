@@ -43,7 +43,8 @@
 - `What are Tracebacks? <https://www.youtube.com/watch?v=JD8BrXXNtjA>`_",`Link <exercises/Exercise_merging.ipynb>`_
 "Thurs, Sep 24","Big Data: What is it, how do I work with it?","- `What is Big Data? <what_is_big_data.ipynb>`_
 - `Strategies for Big Data <big_data_strategies.ipynb>`_
-- Download the dataset linked at the top of the linked exercise before class.",`Link <exercises/Exercise_bigdata.ipynb>`_
+- Download the dataset linked at the top of the linked exercise before class.
+- `Parquet Format <parquet.ipynb>`_",`Link <exercises/Exercise_bigdata.ipynb>`_
 "Tues, Sep 29",Collaborating using Github,- `Git and Github <git_and_github.ipynb>`_,`Link <exercises/Exercise_git.ipynb>`_
 "Thurs, Oct 1",Git and Github 2,,`Link <exercises/Exercise_git_2.ipynb>`_
 "Tues, Oct 6","- Defensive Programming
@@ -56,8 +57,9 @@
 "Tues, Oct 13","- Pandas: Reshaping
 - Pandas: Categoricals","- WM 8.3
 - `Pandas reshaping (with pics!) <https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html>`_
-- `What is goal of reshaping? <https://www.jstatsoft.org/index.php/jss/article/view/v059i10/v59i10.pdf>`_
-- Categoricals: WM 12.1",`Link <exercises/Exercise_reshaping.ipynb>`_
+- `What is goal of reshaping? <https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwifqfmGn6_sAhWfgnIEHQo2AwAQFjACegQIAxAC&url=https%3A%2F%2Fvita.had.co.nz%2Fpapers%2Ftidy-data.pdf&usg=AOvVaw3HDG0hKNeQpAOVcdczJizw>`_
+- Categoricals: WM 12.1
+- **Project Strategy Plan Due**",`Link <exercises/Exercise_reshaping.ipynb>`_
 "Thurs, Oct 15",Speed and Performance in Python,"- `Understanding Performance <performance_understanding.ipynb>`_
 - `Improving Performance <performance_solutions.ipynb>`_",[finish groupby and reshaping exercises]
 "Tues, Oct 20",Statistics with statsmodels,"- WM Chapter 13, 13.1, 13.2, 13.3
