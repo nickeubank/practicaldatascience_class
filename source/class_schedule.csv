@@ -76,5 +76,7 @@
 - Distributed Computing, Part 1","- `Parallel Computing <parallelism.ipynb>`_
 - `Distributed Computing with dask <distributed_computing.ipynb>`_",`Link <exercises/Exercise_dask.ipynb>`_
 "Thurs, Nov 5","Distributed Computing, Part 2",**OPIOID PROJECT DUE**,`Link <exercises/Exercise_dask_realdata.ipynb>`_
-"Tues, Nov 10","Distributed Computing, Part 3",,
+"Tues, Nov 10","Distributed Computing, Part 3","- `What is The Cloud <cloud_what_is_it.ipynb>`_
+- `Getting Setup on Azure <cloud_azureml.ipynb>`_
+- `Dask on Azure <clould_dask.ipynb>`_",
 "Thurs, Nov 12",Julia,- `Julia for Academic Research <https://www.youtube.com/watch?v=C4dMYHzW-SY>`_,- Discuss Final Project
