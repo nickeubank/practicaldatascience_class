@@ -278,17 +278,40 @@ div.rendered_html tbody tr:hover {
 <h3>Testing Your Assumptions<a class="headerlink" href="#Testing-Your-Assumptions" title="Permalink to this headline">¶</a></h3>
 <p>It’s important to be able to test whether the data you are working with really is organized the way you think it is, especially when working with groupby, so let’s discuss how to check your answer to number 2 with <code class="docutils literal notranslate"><span class="pre">duplicated</span></code>. Consider the following data:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;social_security_numbers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">111111111</span><span class="p">,</span> <span class="mi">222222222</span><span class="p">,</span> <span class="mi">222222222</span><span class="p">,</span> <span class="mi">333333333</span><span class="p">,</span> <span class="mi">333333333</span><span class="p">],</span> <span class="s1">&#39;second_column&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]})</span>
+<span></span><span class="o">%</span><span class="k">load_ext</span> lab_black
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;social_security_numbers&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="mi">111111111</span><span class="p">,</span>
+            <span class="mi">222222222</span><span class="p">,</span>
+            <span class="mi">222222222</span><span class="p">,</span>
+            <span class="mi">333333333</span><span class="p">,</span>
+            <span class="mi">333333333</span><span class="p">,</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;second_column&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">],</span>
+    <span class="p">}</span>
+<span class="p">)</span>
 <span class="n">df</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The lab_black extension is already loaded. To reload it, use:
+  %reload_ext lab_black
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -346,7 +369,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>If we want to see if there are any duplicate rows in the dataset, we can use <code class="docutils literal notranslate"><span class="pre">.duplicated()</span></code>:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -355,7 +378,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -371,16 +394,16 @@ dtype: bool
 <p>As you can see, <code class="docutils literal notranslate"><span class="pre">.duplicated()</span></code> looks at each row, and returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if it has seen the row it is looking at before. Note that it doesn’t tag <em>all</em> the rows that look similar – it treats the first instance of a row as unique, and only tags subsequent repitions are “duplicates” (You can change this behavior with keyword arguments if you want all rows tagged).</p>
 <p>Duplicated can also be used to test for duplicates on a sub-set of rows. For example, if we want to test for rows with duplicate values of the variable <code class="docutils literal notranslate"><span class="pre">social_security_numbers</span></code>, we can type:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">([</span><span class="s1">&#39;social_security_numbers&#39;</span><span class="p">])</span>
+<span></span><span class="n">df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">([</span><span class="s2">&quot;social_security_numbers&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -398,16 +421,16 @@ dtype: bool
 <p>When you run <code class="docutils literal notranslate"><span class="pre">.any()</span></code> on an array of booleans, it returns a single value of <code class="docutils literal notranslate"><span class="pre">True</span></code> if <em>any</em> entries are <code class="docutils literal notranslate"><span class="pre">True</span></code>, and a single value of <code class="docutils literal notranslate"><span class="pre">False</span></code> if <em>no</em> entries are <code class="docutils literal notranslate"><span class="pre">True</span></code>. (You can also use <code class="docutils literal notranslate"><span class="pre">.all()</span></code> to test if all entries are false).</p>
 <p>Thus the command: <code class="docutils literal notranslate"><span class="pre">df.duplicated(['social_security_numbers'])</span></code> will return <code class="docutils literal notranslate"><span class="pre">False</span></code> if <code class="docutils literal notranslate"><span class="pre">social_security_numbers</span></code> uniquely idenfies every row in our dataset (since there are no duplicates)! If any rows are duplicated, then <code class="docutils literal notranslate"><span class="pre">social_security_numbers</span></code> doesn’t uniquely identify our observations (i.e. each row does not represent a unique person):</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">([</span><span class="s1">&#39;social_security_numbers&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+<span></span><span class="n">df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">([</span><span class="s2">&quot;social_security_numbers&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -417,7 +440,7 @@ True
 </div>
 <p>This might feel backward, so you can also add a <code class="docutils literal notranslate"><span class="pre">not</span></code> before the test if you want. :) In fact, in my code I add an explicit test using the <code class="docutils literal notranslate"><span class="pre">assert</span></code> statement. The command <code class="docutils literal notranslate"><span class="pre">assert</span></code> says “if the thing that follows this is <code class="docutils literal notranslate"><span class="pre">True</span></code>, don’t do anything; if it’s False, raise an exception. So in my code, I often write:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -432,7 +455,7 @@ True
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">AssertionError</span>                            Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-10-f30d4b630726&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">&lt;ipython-input-7-f30d4b630726&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
 <span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span><span class="ansi-green-fg">assert</span> <span class="ansi-green-fg">not</span> df<span class="ansi-blue-fg">.</span>duplicated<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">&#39;social_security_numbers&#39;</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>any<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
 
 <span class="ansi-red-fg">AssertionError</span>:
@@ -454,9 +477,15 @@ True
 <p>There is a temptation to try and use a function like <code class="docutils literal notranslate"><span class="pre">apply</span></code> to do this all in one big swing, but it’s much safer, easier, and actually faster to do the problem in smaller steps.</p>
 <p><strong>Hint:</strong> <code class="docutils literal notranslate"><span class="pre">transform</span></code> should probably make an appearance…</p>
 <p>This merges are an easy place to do things wrong, so I’d also recommend eye-balling your data to be sure you did things right!</p>
-<p><strong>(7)</strong> Plot the share of violent arrestees that are Black against the share of felony drug arrestees that are Black. Do they look proportionate?</p>
+<p><strong>(6a)</strong> We’re about to start studying this data by plotting the share of violent arrestees that are Black against the share of felony drug arrestees that are Black. But the moment where you finish your data manipulations and are about to start you data analysis is a <em>great</em> time to just make sure everything in your data looks good. Let’s run a few checks:</p>
+<ul class="simple">
+<li><p>Are your values of the share of felony arrestees who were arrested for violent crimes reasonable (greater than 0 and less than 1)?</p></li>
+<li><p>You’re about to analyze the data using only the rows for the Black racial group. How many unique counties are there with data for Black arrestees? How many for White arrestees? Do you remember how many counties there are in CA (google is your friend if not!).</p></li>
+<li><p>Do you have the same number of observations for all the years you’re studying?</p></li>
+</ul>
+<p><strong>(7)</strong> Now plot the share of violent arrestees that are Black against the share of felony drug arrestees that are Black. Do they look proportionate?</p>
 <p><strong>Hint:</strong> You can add a reference line with the code <code class="docutils literal notranslate"><span class="pre">geom_abline()</span></code>. Just specify an intercept and slope (<code class="docutils literal notranslate"><span class="pre">intercept=</span></code> and <code class="docutils literal notranslate"><span class="pre">slope=</span></code>) as keyword arguments.</p>
-<p>(A quick note of warning on interpretation: these results can tell you whether Black Californians make up a larger proportion of <em>arrests</em> for certain types of crimes, not whether they make up a larger proportion of people who <em>commit</em> a give type of crime! Those <em>might</em> be the same, but they might not… this data just can’t answer that question.)</p>
+<p>(A quick note of warning on interpretation: these results can tell you whether Black Californians make up a larger proportion of <em>arrests</em> for certain types of crimes, not whether they make up a larger proportion of people who <em>commit</em> a give type of crime! For example, there is extensive data that shows that Black and White Americans <em>use</em> drugs at the same rate, but Black Americans are arrested for drug use <em>much</em> more often. So be aware that arrests != crimes committed.)</p>
 <p><strong>(8)</strong> Let’s look at look at trends in arrests over time. For example, is the proportion of arrests for drug use that are Californians of Color categories changing over time? (for non-Americans: “people of color” is a term for people who do not identify as White, and includes a range of identities, including Black, Hispanic, Asian, Middle Eastern, etc…)</p>
 <p>Plot the proportion of drug arrestees that are White over time.</p>
 <p><strong>(9)</strong> As you look at the results you just plotted, you should see that the share of arrestees who are White has been declining over time. Does that necessary imply that police have been shifting their attention away from White Californians and towards Californians of Color?</p>
