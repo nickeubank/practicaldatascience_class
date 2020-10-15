@@ -332,8 +332,13 @@
     "\n",
     "- Are your values of the share of felony arrestees who were arrested for violent crimes reasonable (greater than 0 and less than 1)?\n",
     "- You're about to analyze the data using only the rows for the Black racial group. How many unique counties are there with data for Black arrestees? How many for White arrestees? Do you remember how many counties there are in CA (google is your friend if not!).\n",
-    "- Do you have the same number of observations for all the years you're studying? \n",
-    "\n",
+    "- Do you have the same number of observations for all the years you're studying? "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
     "**(7)** Now plot the share of violent arrestees that are Black against the share of felony drug arrestees that are Black. Do they look proportionate?\n",
     "\n",
     "**Hint:** You can add a reference line with the code `geom_abline()`. Just specify an intercept and slope (`intercept=` and `slope=`) as keyword arguments. "
