@@ -277,8 +277,8 @@ don’t</span></a>!</p>
 <p>If you want to follow along, just decompress the <code class="docutils literal notranslate"><span class="pre">ghcnd_daily.tar.gz</span></code> file and upload the resulting <code class="docutils literal notranslate"><span class="pre">.csv</span></code> into a Blob container using the web interface. Note this will take a little while. Will talk about more efficient methods of upload in our next tutorial.</p>
 <p>To run this code, in addition the <code class="docutils literal notranslate"><span class="pre">dask</span></code> and <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, which you should already have installed, you’ll need to install the following packages (<code class="docutils literal notranslate"><span class="pre">azureml-sdk</span></code> and <code class="docutils literal notranslate"><span class="pre">dask_cloudprovider</span></code>) with the following commands:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">azure</span><span class="o">-</span><span class="n">storage</span><span class="o">-</span><span class="n">blob</span> <span class="c1"># For managing storage</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">azureml</span><span class="o">-</span><span class="n">sdk</span>                         <span class="c1"># For managing compute</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">dask_cloudprovider</span><span class="o">=</span><span class="mf">0.4</span><span class="o">.</span><span class="mi">1</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">azureml</span><span class="o">-</span><span class="n">sdk</span><span class="o">==</span><span class="mf">1.14</span>                   <span class="c1"># For managing compute</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">dask_cloudprovider</span><span class="o">==</span><span class="mf">0.4</span><span class="o">.</span><span class="mi">1</span>
 </pre></div>
 </div>
 <p>Note that <code class="docutils literal notranslate"><span class="pre">dask_cloudprovider</span></code> sometimes doesn’t load the right version if you don’t specify, and as of October 2020 the right version isn’t even on <code class="docutils literal notranslate"><span class="pre">conda-forge</span></code>, so don’t use <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span></code>. You can also pip install <code class="docutils literal notranslate"><span class="pre">azure-storage-blob</span></code> if you prefer <code class="docutils literal notranslate"><span class="pre">pip</span></code> to <code class="docutils literal notranslate"><span class="pre">conda</span></code>.</p>
@@ -327,14 +327,14 @@ don’t</span></a>!</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># Start up a cluster!</span>
 <span class="n">amlcluster</span> <span class="o">=</span> <span class="n">AzureMLCluster</span><span class="p">(</span>
     <span class="n">ws</span><span class="p">,</span>
-    <span class="n">vm_size</span><span class="o">=</span><span class="s2">&quot;STANDARD_DS13_V2&quot;</span><span class="p">,</span>  <span class="c1"># Azure VM size for the Compute Target,</span>
+    <span class="n">vm_size</span><span class="o">=</span><span class="s2">&quot;STANDARD_DS3_V2&quot;</span><span class="p">,</span>  <span class="c1"># Azure VM size for the Compute Target,</span>
     <span class="n">datastores</span><span class="o">=</span><span class="n">ws</span><span class="o">.</span><span class="n">datastores</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>  <span class="c1"># Azure ML Datastores to mount on the headnode</span>
     <span class="n">environment_definition</span><span class="o">=</span><span class="n">ws</span><span class="o">.</span><span class="n">environments</span><span class="p">[</span>
         <span class="s2">&quot;AzureML-Dask-CPU&quot;</span>
@@ -346,30 +346,21 @@ don’t</span></a>!</p>
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-WARNING - If &#39;script&#39; has been provided here and a script file name has been specified in &#39;run_config&#39;, &#39;script&#39; provided in ScriptRunConfig initialization will take precedence.
-WARNING - If &#39;arguments&#39; has been provided here and arguments have been specified in &#39;run_config&#39;, &#39;arguments&#39; provided in ScriptRunConfig initialization will take precedence.
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
+<div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-...................................................
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-1-2fada2ed5976&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-red-fg"># Start up a cluster!</span>
+<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> amlcluster = AzureMLCluster(
+</span><span class="ansi-green-intense-fg ansi-bold">      3</span>     ws<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span>     vm_size<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#34;STANDARD_DS3_V2&#34;</span><span class="ansi-blue-fg">,</span>  <span class="ansi-red-fg"># Azure VM size for the Compute Target,</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span>     datastores<span class="ansi-blue-fg">=</span>ws<span class="ansi-blue-fg">.</span>datastores<span class="ansi-blue-fg">.</span>values<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span>  <span class="ansi-red-fg"># Azure ML Datastores to mount on the headnode</span>
 
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-WARNING - If &#39;script&#39; has been provided here and a script file name has been specified in &#39;run_config&#39;, &#39;script&#39; provided in ScriptRunConfig initialization will take precedence.
+<span class="ansi-red-fg">NameError</span>: name &#39;AzureMLCluster&#39; is not defined
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">

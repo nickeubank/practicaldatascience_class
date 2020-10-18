@@ -115,7 +115,7 @@ Windows experience with full graphical user interface.)</p>
 <p>Thankfully, when you created your Workspace, Azure also created a “Storage Account” for you. Asure not only uses this Storage Account to store all metadata about your Workshop, but automatically connects this Storage Account to whenever you create a VM or cluster!</p>
 <p>To see this account:</p>
 <ol class="arabic simple">
-<li><p>Go back to your <a class="reference external" href="portal.azure.com">Azure Portal</a>,</p></li>
+<li><p>Go back to your <a class="reference external" href="http://portal.azure.com">Azure Portal</a>,</p></li>
 <li><p>Click on “Storage Account.”</p></li>
 </ol>
 <p>There you should see a Storage Account whose name is [your workspace name] plus a long series of random digits. (They add the random numbers because Storage account names are used as URLs, so they have to be unique across all of Azure).</p>
@@ -151,6 +151,7 @@ Windows experience with full graphical user interface.)</p>
 </div>
 <div class="section" id="Monitor-Your-Spending">
 <h2>Monitor Your Spending<a class="headerlink" href="#Monitor-Your-Spending" title="Permalink to this headline">¶</a></h2>
+<p><em>Note: As of October 2020, this service is in preview for paid accounts, but likely won’t work if you’re just using a free demo account, sorry! I’m leaving it here for reference, however, since should be everywhere soon!</em></p>
 <p>One last little safeguard: Azure doesn’t let you set spending caps, but you can set up alerts. To do so, go back to Azure Portal and select the Subscriptions (search in the top bar if the key icon isn’t already up). Click on it, then click “Cost alerts” on the left hand side.</p>
 <p>Then click <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">Add</span></code>, set a budget and hit <code class="docutils literal notranslate"><span class="pre">Next</span></code>. Then put in your email first (or it gets grumpy), then set some alerts for, say, 25%, 50%, 75% and 100% of your budget. Trust me – we’ll try hard to only set things up so that if you forget about them they’ll shut themselves down, but the worst thing in the world is forgetting you left a VM running and coming back a week later to find a bill of hundreds of dollars! So add these alerts!</p>
 <p>Note you can also set alerts <em>by Resource Group</em>, but if you do, there’s always a risk you’ll create a new Resource Group at some point and forget to add alerts, then do something silly, so I just tag them to my subscription so it covers everything.</p>
