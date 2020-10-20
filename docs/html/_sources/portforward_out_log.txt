@@ -1,9 +1,9 @@
 OpenSSH_8.1p1, LibreSSL 2.7.3
 debug1: Reading configuration data /etc/ssh/ssh_config
 debug1: /etc/ssh/ssh_config line 47: Applying options for *
-debug2: resolve_canonicalize: hostname 20.62.154.157 is address
+debug2: resolve_canonicalize: hostname 20.185.99.173 is address
 debug2: ssh_connect_direct
-debug1: Connecting to 20.62.154.157 [20.62.154.157] port 50001.
+debug1: Connecting to 20.185.99.173 [20.185.99.173] port 50001.
 debug1: Connection established.
 debug1: identity file /Users/Nick/github/practicaldatascience/source/tmp/key type 0
 debug1: identity file /Users/Nick/github/practicaldatascience/source/tmp/key-cert type -1
@@ -11,8 +11,8 @@ debug1: Local version string SSH-2.0-OpenSSH_8.1
 debug1: Remote protocol version 2.0, remote software version OpenSSH_7.2p2 Ubuntu-4ubuntu2.8
 debug1: match: OpenSSH_7.2p2 Ubuntu-4ubuntu2.8 pat OpenSSH_7.0*,OpenSSH_7.1*,OpenSSH_7.2*,OpenSSH_7.3*,OpenSSH_7.4*,OpenSSH_7.5*,OpenSSH_7.6*,OpenSSH_7.7* compat 0x04000002
 debug2: fd 3 setting O_NONBLOCK
-debug1: Authenticating to 20.62.154.157:50001 as 'dask'
-debug3: put_host_port: [20.62.154.157]:50001
+debug1: Authenticating to 20.185.99.173:50001 as 'dask'
+debug3: put_host_port: [20.185.99.173]:50001
 debug3: hostkeys_foreach: reading file "/Users/Nick/.ssh/known_hosts"
 debug3: send packet: type 20
 debug1: SSH2_MSG_KEXINIT sent
@@ -51,14 +51,14 @@ debug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC: <implicit
 debug3: send packet: type 30
 debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
 debug3: receive packet: type 31
-debug1: Server host key: ecdsa-sha2-nistp256 SHA256:mniQHurDC6dLtjWjsHAz8xBM7u2/aekPv/cNJNIOUTw
-debug3: put_host_port: [20.62.154.157]:50001
-debug3: put_host_port: [20.62.154.157]:50001
+debug1: Server host key: ecdsa-sha2-nistp256 SHA256:gq1j73d5yzYvC+VP7kWrGv69nmC7i2haztd03c7hZlA
+debug3: put_host_port: [20.185.99.173]:50001
+debug3: put_host_port: [20.185.99.173]:50001
 debug3: hostkeys_foreach: reading file "/Users/Nick/.ssh/known_hosts"
 debug3: hostkeys_foreach: reading file "/Users/Nick/.ssh/known_hosts"
 debug1: checking without port identifier
 debug3: hostkeys_foreach: reading file "/Users/Nick/.ssh/known_hosts"
-Warning: Permanently added '[20.62.154.157]:50001' (ECDSA) to the list of known hosts.
+Warning: Permanently added '[20.185.99.173]:50001' (ECDSA) to the list of known hosts.
 debug3: send packet: type 21
 debug2: set_newkeys: mode 1
 debug1: rekey out after 134217728 blocks
@@ -68,7 +68,7 @@ debug3: receive packet: type 21
 debug1: SSH2_MSG_NEWKEYS received
 debug2: set_newkeys: mode 0
 debug1: rekey in after 134217728 blocks
-debug1: Will attempt key: /Users/Nick/github/practicaldatascience/source/tmp/key RSA SHA256:Nqs2bGM/FBguYY1tZr6KVlv+riRVWWyZViCJtsuhU2I explicit
+debug1: Will attempt key: /Users/Nick/github/practicaldatascience/source/tmp/key RSA SHA256:hQmyQwbXu+hIBkyLbDhSLGrBSzj10z2mg8OgP81uPXg explicit
 debug2: pubkey_prepare: done
 debug3: send packet: type 5
 debug3: receive packet: type 7
@@ -86,17 +86,17 @@ debug3: authmethod_lookup publickey
 debug3: remaining preferred: keyboard-interactive,password
 debug3: authmethod_is_enabled publickey
 debug1: Next authentication method: publickey
-debug1: Offering public key: /Users/Nick/github/practicaldatascience/source/tmp/key RSA SHA256:Nqs2bGM/FBguYY1tZr6KVlv+riRVWWyZViCJtsuhU2I explicit
+debug1: Offering public key: /Users/Nick/github/practicaldatascience/source/tmp/key RSA SHA256:hQmyQwbXu+hIBkyLbDhSLGrBSzj10z2mg8OgP81uPXg explicit
 debug3: send packet: type 50
 debug2: we sent a publickey packet, wait for reply
 debug3: receive packet: type 60
-debug1: Server accepts key: /Users/Nick/github/practicaldatascience/source/tmp/key RSA SHA256:Nqs2bGM/FBguYY1tZr6KVlv+riRVWWyZViCJtsuhU2I explicit
-debug3: sign_and_send_pubkey: RSA SHA256:Nqs2bGM/FBguYY1tZr6KVlv+riRVWWyZViCJtsuhU2I
+debug1: Server accepts key: /Users/Nick/github/practicaldatascience/source/tmp/key RSA SHA256:hQmyQwbXu+hIBkyLbDhSLGrBSzj10z2mg8OgP81uPXg explicit
+debug3: sign_and_send_pubkey: RSA SHA256:hQmyQwbXu+hIBkyLbDhSLGrBSzj10z2mg8OgP81uPXg
 debug3: sign_and_send_pubkey: signing using rsa-sha2-512
 debug3: send packet: type 50
 debug3: receive packet: type 52
 debug1: Authentication succeeded (publickey).
-Authenticated to 20.62.154.157 ([20.62.154.157]:50001).
+Authenticated to 20.185.99.173 ([20.185.99.173]:50001).
 debug1: Local connections to 0.0.0.0:9000 forwarded to remote address 10.0.0.5:8888
 debug3: channel_setup_fwd_listener_tcpip: type 2 wildcard 0 addr 0.0.0.0
 debug1: Local forwarding listening on 0.0.0.0 port 9000.
@@ -131,27 +131,6 @@ debug3: receive packet: type 80
 debug1: client_input_global_request: rtype hostkeys-00@openssh.com want_reply 0
 debug3: receive packet: type 91
 debug2: channel 3: open confirm rwindow 2097152 rmax 32768
-debug1: Connection to port 9002 forwarding to 10.0.0.5 port 8786 requested.
-debug2: fd 8 setting TCP_NODELAY
-debug3: fd 8 is O_NONBLOCK
-debug3: fd 8 is O_NONBLOCK
-debug1: channel 4: new [direct-tcpip]
-debug3: send packet: type 90
-debug3: receive packet: type 91
-debug2: channel 4: open confirm rwindow 2097152 rmax 32768
-debug1: Connection to port 9002 forwarding to 10.0.0.5 port 8786 requested.
-debug2: fd 9 setting TCP_NODELAY
-debug3: fd 9 is O_NONBLOCK
-debug3: fd 9 is O_NONBLOCK
-debug1: channel 5: new [direct-tcpip]
-debug3: send packet: type 90
-debug3: receive packet: type 91
-debug2: channel 5: open confirm rwindow 2097152 rmax 32768
-debug2: channel 4: rcvd adjust 107400
-debug2: channel 4: rcvd adjust 114688
-debug2: channel 4: rcvd adjust 131072
-debug2: channel 5: window 1997954 sent adjust 99198
-debug2: channel 5: window 1998348 sent adjust 98804
-debug2: channel 4: rcvd adjust 99380
-debug2: channel 5: window 1995028 sent adjust 102124
-debug3: send packet: type 1
+debug3: receive packet: type 98
+debug1: client_input_channel_req: channel 3 rtype keepalive@openssh.com reply 1
+debug3: send packet: type 100

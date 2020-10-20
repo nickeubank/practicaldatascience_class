@@ -66,17 +66,18 @@
 - `Skim ""Linear Models"" <https://www.statsmodels.org/stable/regression.html>`_
 - `Skim ""Discrete Dep Var Models"" <https://www.statsmodels.org/stable/discretemod.html>`_
 - `Patsy: Differences from R <https://patsy.readthedocs.io/en/latest/R-comparison.html>`_",`Link <exercises/Exercise_statsmodels.ipynb>`_
-"Thurs, Oct 22",Machine Learning with sckikit-learn,"- JVP pp 331 - 359
-- **Opioid Project Rough Draft Due**",`Link <exercises/Exercise_scikit_learn.ipynb>`_
+"Thurs, Oct 22",Machine Learning with sckikit-learn,- JVP pp 331 - 359,`Link <exercises/Exercise_scikit_learn.ipynb>`_
 "Tues, Oct 27",- Defining Your Own Estimators,"- Review linear regression as matrix manipulations. `Here's a nice review. <https://www.stat.purdue.edu/~boli/stat512/lectures/topic3.pdf>`_
 - `Review how to define classes <https://realpython.com/python3-object-oriented-programming/>`_",`Link <exercises/Exercise_codeyourownlinearregression.ipynb>`_
 "Thurs, Oct 29","- Data Science: Backwards Design
-- Regular Expressions",- `Regular Expressions Tutorial <https://scotch.io/tutorials/an-introduction-to-regex-in-python>`_,
+- Regular Expressions","- `Regular Expressions Tutorial <https://scotch.io/tutorials/an-introduction-to-regex-in-python>`_
+- **Opioid Project Rough Draft Due**",
 "Tues, Nov 3","- Parallelism 
 - Distributed Computing, Part 1","- `Parallel Computing <parallelism.ipynb>`_
 - `Distributed Computing with dask <distributed_computing.ipynb>`_",`Link <exercises/Exercise_dask.ipynb>`_
-"Thurs, Nov 5","Distributed Computing, Part 2",**OPIOID PROJECT DUE**,`Link <exercises/Exercise_dask_realdata.ipynb>`_
+"Thurs, Nov 5","Distributed Computing, Part 2",,`Link <exercises/Exercise_dask_realdata.ipynb>`_
 "Tues, Nov 10","Distributed Computing, Part 3","- `What is The Cloud <cloud_what_is_it.ipynb>`_
 - `Getting Setup on Azure <cloud_azureml.ipynb>`_
 - `Dask on Azure <clould_dask.ipynb>`_",
-"Thurs, Nov 12",Julia,- `Julia for Academic Research <https://www.youtube.com/watch?v=C4dMYHzW-SY>`_,- Discuss Final Project
+"Thurs, Nov 12",Julia,"- `Julia for Academic Research <https://www.youtube.com/watch?v=C4dMYHzW-SY>`_
+'**OPIOID PROJECT DUE (Extensions available upon request to assigned date for PDS final)**",- Discuss Final Project
