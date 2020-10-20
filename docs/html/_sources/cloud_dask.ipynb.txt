@@ -20,7 +20,9 @@
     "pip install dask_cloudprovider==0.4.1\n",
     "```\n",
     "\n",
-    "Note that `dask_cloudprovider` sometimes doesn't load the right version if you don't specify, and as of October 2020 the right version isn't even on `conda-forge`, so don't use `conda install`. You can also pip install `azure-storage-blob` if you prefer `pip` to `conda`. "
+    "Note that `dask_cloudprovider` sometimes doesn't load the right version if you don't specify, and as of October 2020 the right version isn't even on `conda-forge`, so don't use `conda install`. You can also pip install `azure-storage-blob` if you prefer `pip` to `conda`.\n",
+    "\n",
+    "**If you are using Jupyter Lab:** the dask_cloudprovider package makes use of IPython Widgets, which aren't installed in Jupyter Lab by default. So if you're using Jupyter Lab, please install the [IPython Widget extension](https://ipywidgets.readthedocs.io/en/stable/user_install.html#installing-the-jupyterlab-extension) before you move forward! If, after you type `amlcluster` after creating it below, you see `VBox(children=`..., that means you didn't successfully install the widget."
    ]
   },
   {
