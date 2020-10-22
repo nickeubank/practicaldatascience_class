@@ -17,7 +17,7 @@
     "```\n",
     "pip install azure-storage-blob # For managing storage\n",
     "pip install azureml-sdk                         # For managing compute\n",
-    "pip install dask_cloudprovider==0.4.1\n",
+    "pip install \"dask_cloudprovider[all]\"==0.4.1\n",
     "```\n",
     "\n",
     "Note that `dask_cloudprovider` sometimes doesn't load the right version if you don't specify, and as of October 2020 the right version isn't even on `conda-forge`, so don't use `conda install`. You can also pip install `azure-storage-blob` if you prefer `pip` to `conda`.\n",
@@ -75,8 +75,50 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Note that when you run the block above, you will probably see a new browser window pop up asking you to signin, unless you've already done so recently. \n",
+    "\n",
+    "If you ever want to change the account your logged into (e.g. to move from a personal account to an institutional account) you can be more explicit about how you want to login by running this code:\n",
+    "\n",
+    "```python\n",
+    "from azureml.core.authentication import InteractiveLoginAuthentication\n",
+    "auth = InteractiveLoginAuthentication(tenant_id=<tenant_id for account you want to use>)\n",
+    "\n",
+    "ws = Workspace(\n",
+    "    subscription_id=account[\"subscription_id\"],\n",
+    "    resource_group=account[\"resource_group\"],\n",
+    "    workspace_name=account[\"workspace_name\"],\n",
+    "    auth=auth\n",
+    ")\n",
+    "```\n",
+    "\n",
+    "Where your tenant_id identifies the organization managing your account (e.g. Duke has a tenant ID). But most people only have one account (you have an Azure for Students account if you made a student account, or a personal tenant ID if you verified your account with a credit card), so hopefully this isn't an issue for you!"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "In the next step we'll spin up a new cluster. Before we do so, though, it's worth covering a few things:\n",
+    "\n",
+    "- This will spin up a *new* compute cluster that's completely independent of any compute you currently have running. \n",
+    "- This cluster also has a time-out setting, so if nothing happens in the cluster for the specified time (here, 7200 seconds), the cluster will shut down so you aren't paying for anything. \n",
+    "- `vm_size` dictates the size of *each node* in your new cluster. There are a couple ways to see the range of VM specifications available. You can find a general summary [here](https://docs.microsoft.com/en-us/azure/virtual-machines/sizes), but you may also find it help to navigate to your workspace in your broswer, click `Compute`, click the `Compute Clusters` tab, hit `+ New`, then look at the \"Virtual machine size\" dropdown to see more options and the exact names assigned to each configuration. \n",
+    "- To protect people from running up insane bills they can't actually pay, Azure has some default limits on the number of CPUs you can have running at any time. You can see this quota by going to the `Compute Clusters` tab using the steps above and clicking the `View Quota`. This will tell you the total number of cores you can be running at any one time *across all of Azure*. That means if you have a single VM up and running, that counts against the quota you might want to allocate to a cluster! \n",
+    "    - For free student accounts, this quota is quite low: 6 CPUs. So the cluster we'll create below is quite small. **If your cluster allocation is above the quota, the code we run below will just hang.** Sadly, you don't get an informative error message. \n",
+    "    - If you have a paid account, you also have a quota, though likely a much higher one (my Duke account has a 300 CPU quota). If you're running into quota limits, [you can ask that they be increased](https://docs.microsoft.com/en-us/azure/machine-learning/how-to-manage-quotas).\n",
+    "- These clusters are scalable, so the `initial_node_count` is just that: your *initial* node count. So it often makes sense to start a little slow then scale up using the widget that appears below when you're sure you're done debugging. \n",
+    "\n",
+    "**The next cell should take between 5 and 15 minutes to run!**\n",
+    "\n",
+    "Personally, I usually see the little progress dots get about halfway across my notebook before it finishes."
+   ]
+  },
+  {
    "cell_type": "code",
-   "execution_count": 19,
+   "execution_count": 4,
    "metadata": {},
    "outputs": [
     {
@@ -91,7 +133,7 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "..................................................................\n",
+      "....................................................................\n",
       "\n"
      ]
     },
@@ -107,26 +149,27 @@
     "# Start up a cluster!\n",
     "amlcluster = AzureMLCluster(\n",
     "    ws,\n",
-    "    vm_size=\"STANDARD_DS11_V2\",  # Azure VM size for the Compute Target,\n",
+    "    vm_size=\"STANDARD_DS11_V2\",  # Azure VM size for the Compute Target. This VM has only 2 CPUs.\n",
     "    datastores=ws.datastores.values(),  # Azure ML Datastores to mount on the headnode\n",
     "    environment_definition=ws.environments[\n",
     "        \"AzureML-Dask-CPU\"\n",
     "    ],  # Azure ML Environment to run on the cluster\n",
     "    jupyter=True,  # Flag to start JupyterLab session on the headnode\n",
-    "    initial_node_count=3,  # number of nodes to start\n",
     "    scheduler_idle_timeout=7200,  # scheduler idle timeout in seconds\n",
+    "    initial_node_count=3,         # Number of cores to start with. \n",
+    "                                  # We only use 3 to stay below 6 CPUs quota of student accounts\n",
     ")"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
+   "execution_count": 6,
    "metadata": {},
    "outputs": [
     {
      "data": {
       "application/vnd.jupyter.widget-view+json": {
-       "model_id": "4e9aba20ead547b685bdf3318ae5e9d9",
+       "model_id": "c082db73a2be461280f471101634ecf3",
        "version_major": 2,
        "version_minor": 0
       },
@@ -146,6 +189,22 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
+    "The tools that make this webside won't render the IPython widget that should appear for you when you run `amlcluster`, but you should see this:\n",
+    "\n",
+    "![azure_cluster_widget.png](images/azure_cluster_widget.png)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Also, note that the function `AzureMLCluster` will \"finish\" as soon as there's a single node in the cluster, but if you asked for more than one initial node, those will continue to spin up in the background. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
     "## Using Your Cluster\n",
     "\n",
     "There are two ways to use your cluster: You can click on the link above to open a connection to JupyterLab running on one of the computers in your cluster, or connect from here with this command:"
@@ -153,23 +212,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
+   "execution_count": 7,
    "metadata": {},
    "outputs": [
     {
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "/Users/Nick/miniconda3/lib/python3.7/site-packages/distributed/client.py:1130: VersionMismatchWarning: Mismatched versions found\n",
+      "/Users/Nick/miniconda3/lib/python3.7/site-packages/distributed/client.py:1129: VersionMismatchWarning: Mismatched versions found\n",
       "\n",
-      "+-------------+---------------+---------------+---------------+\n",
-      "| Package     | client        | scheduler     | workers       |\n",
-      "+-------------+---------------+---------------+---------------+\n",
-      "| dask        | 2.28.0        | 2.30.0        | 2.30.0        |\n",
-      "| distributed | 2.28.0        | 2.30.0        | 2.30.0        |\n",
-      "| numpy       | 1.19.1        | 1.19.2        | 1.19.2        |\n",
-      "| python      | 3.7.8.final.0 | 3.6.9.final.0 | 3.6.9.final.0 |\n",
-      "+-------------+---------------+---------------+---------------+\n",
+      "+---------+---------------+---------------+---------------+\n",
+      "| Package | client        | scheduler     | workers       |\n",
+      "+---------+---------------+---------------+---------------+\n",
+      "| python  | 3.7.8.final.0 | 3.6.9.final.0 | 3.6.9.final.0 |\n",
+      "+---------+---------------+---------------+---------------+\n",
       "  warnings.warn(version_module.VersionMismatchWarning(msg[0][\"warning\"]))\n"
      ]
     }
@@ -211,7 +267,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": 8,
    "metadata": {},
    "outputs": [
     {
@@ -283,7 +339,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
+   "execution_count": 9,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -296,7 +352,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
+   "execution_count": 10,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -317,7 +373,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
+   "execution_count": 11,
    "metadata": {},
    "outputs": [
     {
@@ -650,7 +706,7 @@
        "[10 rows x 128 columns]"
       ]
      },
-     "execution_count": 10,
+     "execution_count": 11,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -698,7 +754,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
+   "execution_count": 12,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -714,7 +770,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 12,
+   "execution_count": 13,
    "metadata": {},
    "outputs": [
     {
@@ -1673,7 +1729,7 @@
        "Dask Name: getitem, 256 tasks"
       ]
      },
-     "execution_count": 12,
+     "execution_count": 13,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1693,7 +1749,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 13,
+   "execution_count": 14,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1711,7 +1767,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 14,
+   "execution_count": 15,
    "metadata": {},
    "outputs": [
     {
@@ -1731,7 +1787,7 @@
        "Name: value31, Length: 87, dtype: int64"
       ]
      },
-     "execution_count": 14,
+     "execution_count": 15,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1744,7 +1800,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "Now the really cool thing: if we use the link for our dashboard we got when we created our dask cluster, we can see our cluster working:\n",
+    "Now the really cool thing: if we use the link for our dashboard we got when we created our dask cluster, we can see our cluster working (note the exact number of processes will vary depending on how you specified your cluster above. This pick comes from a 16 core cluster):\n",
     "\n",
     "![azure_dask_scalingup](images/azure_dask_scalingup.png)\n"
    ]
@@ -1758,7 +1814,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 15,
+   "execution_count": 16,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1782,7 +1838,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 16,
+   "execution_count": 17,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1793,7 +1849,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 17,
+   "execution_count": 18,
    "metadata": {},
    "outputs": [
     {
@@ -1816,10 +1872,10 @@
     {
      "data": {
       "text/plain": [
-       "<ggplot: (8773220872765)>"
+       "<ggplot: (8792594166313)>"
       ]
      },
-     "execution_count": 17,
+     "execution_count": 18,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1855,14 +1911,22 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 18,
+   "execution_count": 19,
    "metadata": {},
    "outputs": [
     {
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "distributed.batched - INFO - Batched Comm Closed: \n",
+      "tornado.application - ERROR - Exception in callback <bound method Client._heartbeat of <Client: 'tcp://10.0.0.4:8786' processes=3 threads=6, memory=44.12 GB>>\n",
+      "Traceback (most recent call last):\n",
+      "  File \"/Users/Nick/miniconda3/lib/python3.7/site-packages/tornado/ioloop.py\", line 907, in _run\n",
+      "    return self.callback()\n",
+      "  File \"/Users/Nick/miniconda3/lib/python3.7/site-packages/distributed/client.py\", line 1173, in _heartbeat\n",
+      "    self.scheduler_comm.send({\"op\": \"heartbeat-client\"})\n",
+      "  File \"/Users/Nick/miniconda3/lib/python3.7/site-packages/distributed/batched.py\", line 146, in send\n",
+      "    raise CommClosedError\n",
+      "distributed.comm.core.CommClosedError\n",
       "distributed.client - ERROR - Failed to reconnect to scheduler after 10.00 seconds, closing client\n",
       "ERROR - _GatheringFuture exception was never retrieved\n",
       "future: <_GatheringFuture finished exception=CancelledError()>\n",

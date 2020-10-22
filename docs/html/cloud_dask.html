@@ -278,7 +278,7 @@ don’t</span></a>!</p>
 <p>To run this code, in addition the <code class="docutils literal notranslate"><span class="pre">dask</span></code> and <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, which you should already have installed, you’ll need to install the following packages (<code class="docutils literal notranslate"><span class="pre">azureml-sdk</span></code> and <code class="docutils literal notranslate"><span class="pre">dask_cloudprovider</span></code>) with the following commands:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">azure</span><span class="o">-</span><span class="n">storage</span><span class="o">-</span><span class="n">blob</span> <span class="c1"># For managing storage</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="n">azureml</span><span class="o">-</span><span class="n">sdk</span>                         <span class="c1"># For managing compute</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">dask_cloudprovider</span><span class="o">==</span><span class="mf">0.4</span><span class="o">.</span><span class="mi">1</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;dask_cloudprovider[all]&quot;</span><span class="o">==</span><span class="mf">0.4</span><span class="o">.</span><span class="mi">1</span>
 </pre></div>
 </div>
 <p>Note that <code class="docutils literal notranslate"><span class="pre">dask_cloudprovider</span></code> sometimes doesn’t load the right version if you don’t specify, and as of October 2020 the right version isn’t even on <code class="docutils literal notranslate"><span class="pre">conda-forge</span></code>, so don’t use <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span></code>. You can also pip install <code class="docutils literal notranslate"><span class="pre">azure-storage-blob</span></code> if you prefer <code class="docutils literal notranslate"><span class="pre">pip</span></code> to <code class="docutils literal notranslate"><span class="pre">conda</span></code>.</p>
@@ -327,22 +327,54 @@ don’t</span></a>!</p>
 </pre></div>
 </div>
 </div>
+<p>Note that when you run the block above, you will probably see a new browser window pop up asking you to signin, unless you’ve already done so recently.</p>
+<p>If you ever want to change the account your logged into (e.g. to move from a personal account to an institutional account) you can be more explicit about how you want to login by running this code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">azureml.core.authentication</span> <span class="kn">import</span> <span class="n">InteractiveLoginAuthentication</span>
+<span class="n">auth</span> <span class="o">=</span> <span class="n">InteractiveLoginAuthentication</span><span class="p">(</span><span class="n">tenant_id</span><span class="o">=&lt;</span><span class="n">tenant_id</span> <span class="k">for</span> <span class="n">account</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="n">use</span><span class="o">&gt;</span><span class="p">)</span>
+
+<span class="n">ws</span> <span class="o">=</span> <span class="n">Workspace</span><span class="p">(</span>
+    <span class="n">subscription_id</span><span class="o">=</span><span class="n">account</span><span class="p">[</span><span class="s2">&quot;subscription_id&quot;</span><span class="p">],</span>
+    <span class="n">resource_group</span><span class="o">=</span><span class="n">account</span><span class="p">[</span><span class="s2">&quot;resource_group&quot;</span><span class="p">],</span>
+    <span class="n">workspace_name</span><span class="o">=</span><span class="n">account</span><span class="p">[</span><span class="s2">&quot;workspace_name&quot;</span><span class="p">],</span>
+    <span class="n">auth</span><span class="o">=</span><span class="n">auth</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Where your tenant_id identifies the organization managing your account (e.g. Duke has a tenant ID). But most people only have one account (you have an Azure for Students account if you made a student account, or a personal tenant ID if you verified your account with a credit card), so hopefully this isn’t an issue for you!</p>
+<p>In the next step we’ll spin up a new cluster. Before we do so, though, it’s worth covering a few things:</p>
+<ul class="simple">
+<li><p>This will spin up a <em>new</em> compute cluster that’s completely independent of any compute you currently have running.</p></li>
+<li><p>This cluster also has a time-out setting, so if nothing happens in the cluster for the specified time (here, 7200 seconds), the cluster will shut down so you aren’t paying for anything.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vm_size</span></code> dictates the size of <em>each node</em> in your new cluster. There are a couple ways to see the range of VM specifications available. You can find a general summary <a class="reference external" href="https://docs.microsoft.com/en-us/azure/virtual-machines/sizes">here</a>, but you may also find it help to navigate to your workspace in your broswer, click <code class="docutils literal notranslate"><span class="pre">Compute</span></code>, click the <code class="docutils literal notranslate"><span class="pre">Compute</span> <span class="pre">Clusters</span></code> tab, hit <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">New</span></code>, then look at the “Virtual machine size” dropdown to see more options and the exact names assigned to each
+configuration.</p></li>
+<li><p>To protect people from running up insane bills they can’t actually pay, Azure has some default limits on the number of CPUs you can have running at any time. You can see this quota by going to the <code class="docutils literal notranslate"><span class="pre">Compute</span> <span class="pre">Clusters</span></code> tab using the steps above and clicking the <code class="docutils literal notranslate"><span class="pre">View</span> <span class="pre">Quota</span></code>. This will tell you the total number of cores you can be running at any one time <em>across all of Azure</em>. That means if you have a single VM up and running, that counts against the quota you might want to allocate to a
+cluster!</p>
+<ul>
+<li><p>For free student accounts, this quota is quite low: 6 CPUs. So the cluster we’ll create below is quite small. <strong>If your cluster allocation is above the quota, the code we run below will just hang.</strong> Sadly, you don’t get an informative error message.</p></li>
+<li><p>If you have a paid account, you also have a quota, though likely a much higher one (my Duke account has a 300 CPU quota). If you’re running into quota limits, <a class="reference external" href="https://docs.microsoft.com/en-us/azure/machine-learning/how-to-manage-quotas">you can ask that they be increased</a>.</p></li>
+</ul>
+</li>
+<li><p>These clusters are scalable, so the <code class="docutils literal notranslate"><span class="pre">initial_node_count</span></code> is just that: your <em>initial</em> node count. So it often makes sense to start a little slow then scale up using the widget that appears below when you’re sure you’re done debugging.</p></li>
+</ul>
+<p><strong>The next cell should take between 5 and 15 minutes to run!</strong></p>
+<p>Personally, I usually see the little progress dots get about halfway across my notebook before it finishes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># Start up a cluster!</span>
 <span class="n">amlcluster</span> <span class="o">=</span> <span class="n">AzureMLCluster</span><span class="p">(</span>
     <span class="n">ws</span><span class="p">,</span>
-    <span class="n">vm_size</span><span class="o">=</span><span class="s2">&quot;STANDARD_DS11_V2&quot;</span><span class="p">,</span>  <span class="c1"># Azure VM size for the Compute Target,</span>
+    <span class="n">vm_size</span><span class="o">=</span><span class="s2">&quot;STANDARD_DS11_V2&quot;</span><span class="p">,</span>  <span class="c1"># Azure VM size for the Compute Target. This VM has only 2 CPUs.</span>
     <span class="n">datastores</span><span class="o">=</span><span class="n">ws</span><span class="o">.</span><span class="n">datastores</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>  <span class="c1"># Azure ML Datastores to mount on the headnode</span>
     <span class="n">environment_definition</span><span class="o">=</span><span class="n">ws</span><span class="o">.</span><span class="n">environments</span><span class="p">[</span>
         <span class="s2">&quot;AzureML-Dask-CPU&quot;</span>
     <span class="p">],</span>  <span class="c1"># Azure ML Environment to run on the cluster</span>
     <span class="n">jupyter</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># Flag to start JupyterLab session on the headnode</span>
-    <span class="n">initial_node_count</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>  <span class="c1"># number of nodes to start</span>
     <span class="n">scheduler_idle_timeout</span><span class="o">=</span><span class="mi">7200</span><span class="p">,</span>  <span class="c1"># scheduler idle timeout in seconds</span>
+    <span class="n">initial_node_count</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>         <span class="c1"># Number of cores to start with.</span>
+                                  <span class="c1"># We only use 3 to stay below 6 CPUs quota of student accounts</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -361,7 +393,7 @@ WARNING - If &#39;arguments&#39; has been provided here and arguments have been 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-..................................................................
+....................................................................
 
 </pre></div></div>
 </div>
@@ -374,7 +406,7 @@ WARNING - If &#39;script&#39; has been provided here and a script file name has 
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -386,14 +418,17 @@ WARNING - If &#39;script&#39; has been provided here and a script file name has 
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "4e9aba20ead547b685bdf3318ae5e9d9", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "c082db73a2be461280f471101634ecf3", "version_major": 2, "version_minor": 0}</script></div>
 </div>
+<p>The tools that make this webside won’t render the IPython widget that should appear for you when you run <code class="docutils literal notranslate"><span class="pre">amlcluster</span></code>, but you should see this:</p>
+<p><img alt="azure_cluster_widget.png" src="_images/azure_cluster_widget.png" /></p>
+<p>Also, note that the function <code class="docutils literal notranslate"><span class="pre">AzureMLCluster</span></code> will “finish” as soon as there’s a single node in the cluster, but if you asked for more than one initial node, those will continue to spin up in the background.</p>
 </div>
 <div class="section" id="Using-Your-Cluster">
 <h2>Using Your Cluster<a class="headerlink" href="#Using-Your-Cluster" title="Permalink to this headline">¶</a></h2>
 <p>There are two ways to use your cluster: You can click on the link above to open a connection to JupyterLab running on one of the computers in your cluster, or connect from here with this command:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -408,16 +443,13 @@ WARNING - If &#39;script&#39; has been provided here and a script file name has 
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/Users/Nick/miniconda3/lib/python3.7/site-packages/distributed/client.py:1130: VersionMismatchWarning: Mismatched versions found
+/Users/Nick/miniconda3/lib/python3.7/site-packages/distributed/client.py:1129: VersionMismatchWarning: Mismatched versions found
 
-+-------------+---------------+---------------+---------------+
-| Package     | client        | scheduler     | workers       |
-+-------------+---------------+---------------+---------------+
-| dask        | 2.28.0        | 2.30.0        | 2.30.0        |
-| distributed | 2.28.0        | 2.30.0        | 2.30.0        |
-| numpy       | 1.19.1        | 1.19.2        | 1.19.2        |
-| python      | 3.7.8.final.0 | 3.6.9.final.0 | 3.6.9.final.0 |
-+-------------+---------------+---------------+---------------+
++---------+---------------+---------------+---------------+
+| Package | client        | scheduler     | workers       |
++---------+---------------+---------------+---------------+
+| python  | 3.7.8.final.0 | 3.6.9.final.0 | 3.6.9.final.0 |
++---------+---------------+---------------+---------------+
   warnings.warn(version_module.VersionMismatchWarning(msg[0][&#34;warning&#34;]))
 </pre></div></div>
 </div>
@@ -437,7 +469,7 @@ WARNING - If &#39;script&#39; has been provided here and a script file name has 
 <p>The <code class="docutils literal notranslate"><span class="pre">numpy</span></code> and <code class="docutils literal notranslate"><span class="pre">python</span></code> issues don’t seem like to cause big problems (though if you have a mismatch and get problems down the road, consider changing your Python version!), but the fact that the schedulers and workers have one package I don’t (<code class="docutils literal notranslate"><span class="pre">lz4</span></code>) is a problem, so I installed it before moving forward. (<code class="docutils literal notranslate"><span class="pre">lz4</span></code> is a compression algorithm used to send data back and forth, so not having it is a big problem).</p>
 <p>First, we’ll contect to the container where I put the climate data. As you saw in the last exercise, you can upload data using the Azure web interface, and I would do that if you want to do these exercises. However there are more efficient tools we’ll cover in the <a class="reference internal" href="cloud_azurestorage.html"><span class="doc">next lesson</span></a>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -501,7 +533,7 @@ readme.txt
 </div>
 <p>But since I don’t want you to see all my secret codes, I’m gonna load my information from a file. You can do this, but you can also put them in your code <em>if your code isn’t public!</em></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -514,7 +546,7 @@ readme.txt
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -535,7 +567,7 @@ readme.txt
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -544,7 +576,7 @@ readme.txt
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -860,7 +892,7 @@ ValueError: Mismatched dtypes found in `pd.read_csv`/`pd.read_table`.
 </div>
 <p>Let’s start by asking <code class="docutils literal notranslate"><span class="pre">dask</span></code> to go through this entire dataset and just pull out data for the station near my home in Colorado, and calculating the average daily max-temp for each month:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -870,7 +902,7 @@ ValueError: Mismatched dtypes found in `pd.read_csv`/`pd.read_table`.
 </div>
 <p>Now as you may recall, <code class="docutils literal notranslate"><span class="pre">dask</span></code> hasn’t actually run the code above – it’s just making a plan and waiting till I run <code class="docutils literal notranslate"><span class="pre">.compute()</span></code> to actually execute, so if I check on <code class="docutils literal notranslate"><span class="pre">temps</span></code>, I’ll see:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -879,7 +911,7 @@ ValueError: Mismatched dtypes found in `pd.read_csv`/`pd.read_table`.
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1828,7 +1860,7 @@ ValueError: Mismatched dtypes found in `pd.read_csv`/`pd.read_table`.
 rather <code class="docutils literal notranslate"><span class="pre">temps</span> <span class="pre">=</span> <span class="pre">c.persist(temps)</span></code>.</p>
 <p>Finally, one other note: this dataset is actually pretty small for Cloud computing, and since most of what we’re doing is reading in data and filtering it, it involves a lot of moving data around. As a result it’d be much faster on a single really large VM (which doesn’t need to use network connections to pass around data). But I wanted an example I could run relatively quickly and easily. :)</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1840,7 +1872,7 @@ rather <code class="docutils literal notranslate"><span class="pre">temps</span>
 quick to remind users</a>: “For data that fits into RAM, Pandas can often be faster and easier to use than Dask DataFrame. While ‘Big Data’ tools can be exciting, they are almost always worse than normal data tools while those remain appropriate.”</p>
 <p>But let’s carry on with this on the cluster for practice.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1849,7 +1881,7 @@ quick to remind users</a>: “For data that fits into RAM, Pandas can often be f
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1868,11 +1900,11 @@ quick to remind users</a>: “For data that fits into RAM, Pandas can often be f
 Name: value31, Length: 87, dtype: int64
 </pre></div></div>
 </div>
-<p>Now the really cool thing: if we use the link for our dashboard we got when we created our dask cluster, we can see our cluster working:</p>
+<p>Now the really cool thing: if we use the link for our dashboard we got when we created our dask cluster, we can see our cluster working (note the exact number of processes will vary depending on how you specified your cluster above. This pick comes from a 16 core cluster):</p>
 <p><img alt="azure_dask_scalingup" src="_images/azure_dask_scalingup.png" /></p>
 <p>So let’s replace those with missing, calculate averages across all the days in each month, and also convert from 1/10th of a degree Centigrade to Centigrade units:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1890,7 +1922,7 @@ Name: value31, Length: 87, dtype: int64
 </div>
 <p>Now finally we can collect our results on our personal computer, create a “time” variable that uses years and months for plotting, and plot our temperatures!</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1901,7 +1933,7 @@ Name: value31, Length: 87, dtype: int64
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1930,16 +1962,16 @@ Name: value31, Length: 87, dtype: int64
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/cloud_dask_30_1.png" src="_images/cloud_dask_30_1.png" />
+<img alt="_images/cloud_dask_34_1.png" src="_images/cloud_dask_34_1.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;ggplot: (8773220872765)&gt;
+&lt;ggplot: (8792594166313)&gt;
 </pre></div></div>
 </div>
 <p>And that, my friends, is global warming.</p>
@@ -1948,7 +1980,7 @@ Name: value31, Length: 87, dtype: int64
 <h2>Done with your cluster?<a class="headerlink" href="#Done-with-your-cluster?" title="Permalink to this headline">¶</a></h2>
 <p>You have two options: you can shut it down manually with the method <code class="docutils literal notranslate"><span class="pre">.close()</span></code> on your cluster object. Thankfully, though, we also set a timeout condition when we created our cluster with the <code class="docutils literal notranslate"><span class="pre">scheduler_idle_timeout</span></code> keyword. We set it to 7200, so if your cluster is idle for two-hours, it will shut itself down (so you don’t go broke).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1961,7 +1993,15 @@ Name: value31, Length: 87, dtype: int64
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-distributed.batched - INFO - Batched Comm Closed:
+tornado.application - ERROR - Exception in callback &lt;bound method Client._heartbeat of &lt;Client: &#39;tcp://10.0.0.4:8786&#39; processes=3 threads=6, memory=44.12 GB&gt;&gt;
+Traceback (most recent call last):
+  File &#34;/Users/Nick/miniconda3/lib/python3.7/site-packages/tornado/ioloop.py&#34;, line 907, in _run
+    return self.callback()
+  File &#34;/Users/Nick/miniconda3/lib/python3.7/site-packages/distributed/client.py&#34;, line 1173, in _heartbeat
+    self.scheduler_comm.send({&#34;op&#34;: &#34;heartbeat-client&#34;})
+  File &#34;/Users/Nick/miniconda3/lib/python3.7/site-packages/distributed/batched.py&#34;, line 146, in send
+    raise CommClosedError
+distributed.comm.core.CommClosedError
 distributed.client - ERROR - Failed to reconnect to scheduler after 10.00 seconds, closing client
 ERROR - _GatheringFuture exception was never retrieved
 future: &lt;_GatheringFuture finished exception=CancelledError()&gt;

@@ -283,7 +283,7 @@ don’t</span></a>!</p>
 <p><strong>If you are using Jupyter Lab:</strong> the dask_cloudprovider package makes use of IPython Widgets, which aren’t installed in Jupyter Lab by default. So if you’re using Jupyter Lab, please install the <a class="reference external" href="https://ipywidgets.readthedocs.io/en/stable/user_install.html#installing-the-jupyterlab-extension">IPython Widget extension</a> before you move forward! If, after you type <code class="docutils literal notranslate"><span class="pre">amlcluster</span></code> after creating it below, you see <code class="docutils literal notranslate"><span class="pre">VBox(children=</span></code>…, that means you didn’t successfully install the widget.</p>
 <div class="section" id="Starting-a-Dask-Cluster">
 <h2>Starting a Dask Cluster<a class="headerlink" href="#Starting-a-Dask-Cluster" title="Permalink to this headline">¶</a></h2>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
@@ -294,23 +294,8 @@ don’t</span></a>!</p>
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">ImportError</span>                               Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-1-bd4e41519547&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> get_ipython<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>run_line_magic<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;load_ext&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;lab_black&#39;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-green-fg">from</span> azureml<span class="ansi-blue-fg">.</span>core <span class="ansi-green-fg">import</span> Workspace<span class="ansi-blue-fg">,</span> Experiment
-<span class="ansi-green-fg">----&gt; 3</span><span class="ansi-red-fg"> </span><span class="ansi-green-fg">from</span> dask_cloudprovider <span class="ansi-green-fg">import</span> AzureMLCluster
-
-<span class="ansi-red-fg">ImportError</span>: cannot import name &#39;AzureMLCluster&#39; from &#39;dask_cloudprovider&#39; (/Users/Nick/miniconda3/lib/python3.7/site-packages/dask_cloudprovider/__init__.py)
-</pre></div></div>
-</div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -326,8 +311,8 @@ don’t</span></a>!</p>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -340,15 +325,77 @@ don’t</span></a>!</p>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">UserErrorException</span>                        Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-3-5911b7c0795d&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span>     subscription_id<span class="ansi-blue-fg">=</span>account<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">&#34;subscription_id&#34;</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span>     resource_group<span class="ansi-blue-fg">=</span>account<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">&#34;resource_group&#34;</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span>
+<span class="ansi-green-fg">----&gt; 5</span><span class="ansi-red-fg">     </span>workspace_name<span class="ansi-blue-fg">=</span>account<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">&#34;workspace_name&#34;</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">      6</span> )
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/azureml/core/workspace.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, subscription_id, resource_group, workspace_name, auth, _location, _disable_service_check, _workspace_id, sku, tags)</span>
+<span class="ansi-green-intense-fg ansi-bold">    201</span>         <span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> _disable_service_check<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    202</span>             auto_rest_workspace = _commands.get_workspace(
+<span class="ansi-green-fg">--&gt; 203</span><span class="ansi-red-fg">                 auth, subscription_id, resource_group, workspace_name)
+</span><span class="ansi-green-intense-fg ansi-bold">    204</span>             self<span class="ansi-blue-fg">.</span>_workspace_autorest_object <span class="ansi-blue-fg">=</span> auto_rest_workspace
+<span class="ansi-green-intense-fg ansi-bold">    205</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/azureml/_project/_commands.py</span> in <span class="ansi-cyan-fg">get_workspace</span><span class="ansi-blue-fg">(auth, subscription_id, resource_group_name, workspace_name)</span>
+<span class="ansi-green-intense-fg ansi-bold">    370</span>     &#34;&#34;&#34;
+<span class="ansi-green-intense-fg ansi-bold">    371</span>     <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 372</span><span class="ansi-red-fg">         </span>workspaces <span class="ansi-blue-fg">=</span> auth<span class="ansi-blue-fg">.</span>_get_service_client<span class="ansi-blue-fg">(</span>AzureMachineLearningWorkspaces<span class="ansi-blue-fg">,</span> subscription_id<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>workspaces
+<span class="ansi-green-intense-fg ansi-bold">    373</span>         return WorkspacesOperations.get(
+<span class="ansi-green-intense-fg ansi-bold">    374</span>             workspaces<span class="ansi-blue-fg">,</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/azureml/core/authentication.py</span> in <span class="ansi-cyan-fg">_get_service_client</span><span class="ansi-blue-fg">(self, client_class, subscription_id, subscription_bound, base_url)</span>
+<span class="ansi-green-intense-fg ansi-bold">    156</span>         <span class="ansi-green-fg">if</span> subscription_id<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    157</span>             all_subscription_list<span class="ansi-blue-fg">,</span> tenant_id <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_get_all_subscription_ids<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 158</span><span class="ansi-red-fg">             </span>self<span class="ansi-blue-fg">.</span>_check_if_subscription_exists<span class="ansi-blue-fg">(</span>subscription_id<span class="ansi-blue-fg">,</span> all_subscription_list<span class="ansi-blue-fg">,</span> tenant_id<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    159</span>
+<span class="ansi-green-intense-fg ansi-bold">    160</span>         <span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> base_url<span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/azureml/core/authentication.py</span> in <span class="ansi-cyan-fg">_check_if_subscription_exists</span><span class="ansi-blue-fg">(self, subscription_id, subscription_id_list, tenant_id)</span>
+<span class="ansi-green-intense-fg ansi-bold">    540</span>     <span class="ansi-green-fg">def</span> _check_if_subscription_exists<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> subscription_id<span class="ansi-blue-fg">,</span> subscription_id_list<span class="ansi-blue-fg">,</span> tenant_id<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    541</span>         super(InteractiveLoginAuthentication, self)._check_if_subscription_exists(subscription_id,
+<span class="ansi-green-fg">--&gt; 542</span><span class="ansi-red-fg">                                                                                   subscription_id_list, tenant_id)
+</span><span class="ansi-green-intense-fg ansi-bold">    543</span>
+<span class="ansi-green-intense-fg ansi-bold">    544</span>     <span class="ansi-green-fg">def</span> _get_ambient<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/azureml/core/authentication.py</span> in <span class="ansi-cyan-fg">_check_if_subscription_exists</span><span class="ansi-blue-fg">(self, subscription_id, subscription_id_list, tenant_id)</span>
+<span class="ansi-green-intense-fg ansi-bold">    241</span>                                      &#34;authentication mechanisms in azureml-sdk.&#34;.format(tenant_id,
+<span class="ansi-green-intense-fg ansi-bold">    242</span>                                                                                         subscription_id<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-fg">--&gt; 243</span><span class="ansi-red-fg">                                                                                         subscription_id_list))
+</span><span class="ansi-green-intense-fg ansi-bold">    244</span>
+<span class="ansi-green-intense-fg ansi-bold">    245</span> <span class="ansi-green-fg">def</span> _login_on_failure_decorator<span class="ansi-blue-fg">(</span>lock_to_use<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-red-fg">UserErrorException</span>: UserErrorException:
+        Message: You are currently logged-in to cb72c54e-4a31-4d9e-b14a-1ea36dfac94c tenant. You don&#39;t have access to d30fe1e1-98ac-49f0-9618-f7fbfd03f9d2 subscription, please check if it is in this tenant. All the subscriptions that you have access to in this tenant are =
+ [SubscriptionInfo(subscription_name=&#39;MIDS FundCode:4511871&#39;, subscription_id=&#39;bab5ec70-4531-48dc-9d25-2d73206d5741&#39;)].
+ Please refer to aka.ms/aml-notebook-auth for different authentication mechanisms in azureml-sdk.
+        InnerException None
+        ErrorResponse
+{
+    &#34;error&#34;: {
+        &#34;code&#34;: &#34;UserError&#34;,
+        &#34;message&#34;: &#34;You are currently logged-in to cb72c54e-4a31-4d9e-b14a-1ea36dfac94c tenant. You don&#39;t have access to d30fe1e1-98ac-49f0-9618-f7fbfd03f9d2 subscription, please check if it is in this tenant. All the subscriptions that you have access to in this tenant are = \n [SubscriptionInfo(subscription_name=&#39;MIDS FundCode:4511871&#39;, subscription_id=&#39;bab5ec70-4531-48dc-9d25-2d73206d5741&#39;)]. \n Please refer to aka.ms/aml-notebook-auth for different authentication mechanisms in azureml-sdk.&#34;
+    }
+}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># Start up a cluster!</span>
 <span class="n">amlcluster</span> <span class="o">=</span> <span class="n">AzureMLCluster</span><span class="p">(</span>
     <span class="n">ws</span><span class="p">,</span>
-    <span class="n">vm_size</span><span class="o">=</span><span class="s2">&quot;STANDARD_DS3_V2&quot;</span><span class="p">,</span>  <span class="c1"># Azure VM size for the Compute Target,</span>
+    <span class="n">vm_size</span><span class="o">=</span><span class="s2">&quot;STANDARD_DS11_V2&quot;</span><span class="p">,</span>  <span class="c1"># Azure VM size for the Compute Target,</span>
     <span class="n">datastores</span><span class="o">=</span><span class="n">ws</span><span class="o">.</span><span class="n">datastores</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>  <span class="c1"># Azure ML Datastores to mount on the headnode</span>
     <span class="n">environment_definition</span><span class="o">=</span><span class="n">ws</span><span class="o">.</span><span class="n">environments</span><span class="p">[</span>
         <span class="s2">&quot;AzureML-Dask-CPU&quot;</span>
@@ -359,6 +406,23 @@ don’t</span></a>!</p>
 <span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-4-ae1df01a36f9&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-red-fg"># Start up a cluster!</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> amlcluster = AzureMLCluster(
+<span class="ansi-green-fg">----&gt; 3</span><span class="ansi-red-fg">     </span>ws<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span>     vm_size<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#34;STANDARD_DS11_V2&#34;</span><span class="ansi-blue-fg">,</span>  <span class="ansi-red-fg"># Azure VM size for the Compute Target,</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span>     datastores<span class="ansi-blue-fg">=</span>ws<span class="ansi-blue-fg">.</span>datastores<span class="ansi-blue-fg">.</span>values<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span>  <span class="ansi-red-fg"># Azure ML Datastores to mount on the headnode</span>
+
+<span class="ansi-red-fg">NameError</span>: name &#39;ws&#39; is not defined
+</pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
