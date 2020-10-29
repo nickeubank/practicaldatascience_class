@@ -99,6 +99,7 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
    Solving Performance Probs <performance_solutions>
    Parallel Computing <parallelism>
    Distributed Computing <distributed_computing>
+   Backwards Design <backwards_design>
 
 .. toctree::
    :maxdepth: 2

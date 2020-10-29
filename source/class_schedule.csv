@@ -70,7 +70,8 @@
 "Tues, Oct 27",- Defining Your Own Estimators,"- Review linear regression as matrix manipulations. `Here's a nice review. <https://www.stat.purdue.edu/~boli/stat512/lectures/topic3.pdf>`_
 - `Review how to define classes <https://realpython.com/python3-object-oriented-programming/>`_",`Link <exercises/Exercise_codeyourownlinearregression.ipynb>`_
 "Thurs, Oct 29","- Data Science: Backwards Design
-- Regular Expressions","- `Regular Expressions Tutorial <https://scotch.io/tutorials/an-introduction-to-regex-in-python>`_
+- Regular Expressions","- `Backwards Design <backwards_design.ipynb>`_
+- `Regular Expressions Tutorial <https://scotch.io/tutorials/an-introduction-to-regex-in-python>`_
 - **Opioid Project Rough Draft Due**",
 "Tues, Nov 3","- Parallelism 
 - Distributed Computing, Part 1","- `Parallel Computing <parallelism.ipynb>`_
