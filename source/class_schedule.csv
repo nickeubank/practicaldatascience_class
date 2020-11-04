@@ -73,12 +73,13 @@
 - Regular Expressions","- `Backwards Design <backwards_design.ipynb>`_
 - `Regular Expressions Tutorial <https://scotch.io/tutorials/an-introduction-to-regex-in-python>`_
 - **Opioid Project Rough Draft Due**",
-"Tues, Nov 3","- Parallelism 
+"Tues, Nov 3","ELECTION DAY, NO CLASS",,
+"Thurs, Nov 5","- Parallelism 
 - Distributed Computing, Part 1","- `Parallel Computing <parallelism.ipynb>`_
-- `Distributed Computing with dask <distributed_computing.ipynb>`_",`Link <exercises/Exercise_dask.ipynb>`_
-"Thurs, Nov 5","Distributed Computing, Part 2",,`Link <exercises/Exercise_dask_realdata.ipynb>`_
-"Tues, Nov 10","Distributed Computing, Part 3","- `What is The Cloud <cloud_what_is_it.ipynb>`_
+- `Distributed Computing with dask <distributed_computing.ipynb>`_","- `Link <exercises/Exercise_dask.ipynb>`_
+- `Link <exercises/Exercise_dask_realdata.ipynb>`_"
+"Tues, Nov 10","Distributed Computing, Azure","- `What is The Cloud <cloud_what_is_it.ipynb>`_
 - `Getting Setup on Azure <cloud_azureml.ipynb>`_
 - `Dask on Azure <clould_dask.ipynb>`_",
-"Thurs, Nov 12",Julia,"- `Julia for Academic Research <https://www.youtube.com/watch?v=C4dMYHzW-SY>`_
-'**OPIOID PROJECT DUE (Extensions available upon request to assigned date for PDS final)**",- Discuss Final Project
+"Thurs, Nov 12","Distributed Computing, Azure 2",**OPIOID PROJECT DUE (Extensions available upon request to assigned date for PDS final)**,
+,,,
