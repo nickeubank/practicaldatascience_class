@@ -272,15 +272,28 @@ div.rendered_html tbody tr:hover {
 <h1>Dask DataFrames<a class="headerlink" href="#Dask-DataFrames" title="Permalink to this headline">¶</a></h1>
 <p>(Note: This tutorial is a fork of the official dask tutorial, which you can <a class="reference external" href="https://github.com/dask/dask-tutorial">find here</a>)</p>
 <p>In this tutorial, we will use <code class="docutils literal notranslate"><span class="pre">dask.dataframe</span></code> to do parallel operations on dask dataframes look and feel like Pandas dataframes but they run on the same infrastructure that powers <code class="docutils literal notranslate"><span class="pre">dask.delayed</span></code>.</p>
+<div class="section" id="Install-Dask">
+<h2>Install Dask<a class="headerlink" href="#Install-Dask" title="Permalink to this headline">¶</a></h2>
+<p>Let’s start by installing dask with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">dask</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="Start-your-own-cluster!">
 <h2>Start your own cluster!<a class="headerlink" href="#Start-your-own-cluster!" title="Permalink to this headline">¶</a></h2>
 <p>dask has many backends, but the one that’s most versitile (and often most performant) is the <code class="docutils literal notranslate"><span class="pre">distributed</span></code> backend, so let’s use that here. Run:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span>
+<span class="n">client</span>
 </pre></div>
 </div>
 <p>to create a set of workers on your computer. This cluster is running only on your own computer, but it operates exactly the way it would work on a cloud cluster where these workers live on other computers.</p>
-<p><strong>Note:</strong> these workers communication via networking protocols, so your firewall / anti-virus may ask if it’s ok to let Python accept connections (it is!). If you can’t get your system running, it may be due to your firewall / anti-virus. In that case, try <code class="docutils literal notranslate"><span class="pre">client</span> <span class="pre">=</span> <span class="pre">Client(processes=False)</span></code>. This will create four workers hiding in the same process (obviating the need for network protocols for communication).</p>
+<p>When you type <code class="docutils literal notranslate"><span class="pre">client</span></code> in a jupyter notebook, you should see the clusters status pop up like this:</p>
+<p><img alt="dask_status" src="../_images/dask_status.png" /></p>
+<p>This status tells me that I have four processes running on my computer, each of which running 4 threads (for 16 cores total). In addition, it tells me that the cluster sees that I have about 34GB of memory for it to play with.</p>
+<p>One cool thing you’ll see is that this panel includes a link to a Dashboard. Click this link, and a new tab will open in your browser that shows you, in real time, what your dask cluster is doing! We’ll come back to this later.</p>
+<p><strong>Note:</strong> these workers communication via networking protocols, so your firewall / anti-virus may ask if it’s ok to let Python accept connections (it is!). If you can’t get your system running, it may be due to your firewall / anti-virus. In that case, try <code class="docutils literal notranslate"><span class="pre">client</span> <span class="pre">=</span> <span class="pre">Client(processes=False)</span></code>. This will create four workers hiding in the same process (obviating the need for network protocols for communication between processes). Don’t worry if that last bit doesn’t make sense – those are
+implementation details you don’t ahve to worry about! :)</p>
 <div class="section" id="Real-Data">
 <h3>Real Data<a class="headerlink" href="#Real-Data" title="Permalink to this headline">¶</a></h3>
 <p>Lets try this with an extract of flights in the USA across several years. This data is specific to flights out of the three airports in the New York City area. To begin, download <a class="reference external" href="https://storage.googleapis.com/dask-tutorial-data/nycflights.tar.gz">NYC Flight data here</a>, and unzip it somewhere you can find it.</p>
@@ -294,7 +307,7 @@ div.rendered_html tbody tr:hover {
 <p><strong>(2)</strong> Look at your dataframe by just calling it (<code class="docutils literal notranslate"><span class="pre">df</span></code>). Notice that the respresentation of the dataframe object contains no data - Dask has just done enough to read the start of the first file, and infer the column names and types.</p>
 <p><strong>(3)</strong> now use <code class="docutils literal notranslate"><span class="pre">df.head()</span></code> to ask dask to actually load a few rows.</p>
 <p>We can view the start and end of the data</p>
-<p><strong>(4)</strong> Now try and run <code class="docutils literal notranslate"><span class="pre">df.tail()</span></code>!</p>
+<p><strong>(4)</strong> Now try and run <code class="docutils literal notranslate"><span class="pre">df.tail()</span></code>.</p>
 </div>
 <div class="section" id="What-just-happened?">
 <h3>What just happened?<a class="headerlink" href="#What-just-happened?" title="Permalink to this headline">¶</a></h3>
@@ -375,7 +388,8 @@ Wall time: 2.45 s
 </div>
 <div class="section" id="Let’s-do-some-manipulations!">
 <h2>Let’s do some manipulations!<a class="headerlink" href="#Let’s-do-some-manipulations!" title="Permalink to this headline">¶</a></h2>
-<p>In this section we do a few <code class="docutils literal notranslate"><span class="pre">dask.dataframe</span></code> computations. If you are comfortable with Pandas then these should be familiar. You will have to think about when to call <code class="docutils literal notranslate"><span class="pre">compute</span></code>.</p>
+<p>In this section we do a few <code class="docutils literal notranslate"><span class="pre">dask.dataframe</span></code> computations. If you are comfortable with Pandas then these should be familiar. You will have to think about when to call <code class="docutils literal notranslate"><span class="pre">.compute()</span></code>.</p>
+<p>When you run <code class="docutils literal notranslate"><span class="pre">.compute()</span></code>, you can also move over to your Dashboard (remember that link in the panel that openned when you created <code class="docutils literal notranslate"><span class="pre">client</span></code>?) to see your cluster working!</p>
 <p><strong>(7)</strong> In total, what is the average delay (<code class="docutils literal notranslate"><span class="pre">DepDelay</span></code>) for non-canceled flights?</p>
 <p><strong>(8)</strong> In total, how many non-cancelled flights were taken from each airport?</p>
 <p><em>Hint</em>: use <code class="docutils literal notranslate"><span class="pre">df.groupby</span></code> and <code class="docutils literal notranslate"><span class="pre">size</span></code>.</p>
@@ -474,7 +488,7 @@ Wall time: 2 s
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/exercises_Exercise_dask_25_0.png" src="../_images/exercises_Exercise_dask_25_0.png" />
+<img alt="../_images/exercises_Exercise_dask_26_0.png" src="../_images/exercises_Exercise_dask_26_0.png" />
 </div>
 </div>
 <p>But lets try by passing both to a single <code class="docutils literal notranslate"><span class="pre">compute</span></code> call.</p>
@@ -558,93 +572,6 @@ Name: CRSDepTime, dtype: int64
 9   1990-01-10 15:40:00
 dtype: datetime64[ns]
 </pre></div></div>
-</div>
-<div class="section" id="Custom-code-and-Dask-Dataframe">
-<h3>Custom code and Dask Dataframe<a class="headerlink" href="#Custom-code-and-Dask-Dataframe" title="Permalink to this headline">¶</a></h3>
-<p>Notice that we never had to call <code class="docutils literal notranslate"><span class="pre">.compute()</span></code>! That’s because when we call a non-dask function on a dask dataframe, dask doesn’t know how to do it in parallel, so it brings in the whole dataframe and then passes it to your non-dask function. We can get away with that here because our data is small, but with a big dataset, your computer would crash!</p>
-<p>Now we could swap out <code class="docutils literal notranslate"><span class="pre">pd.to_timedelta</span></code> for <code class="docutils literal notranslate"><span class="pre">dd.to_timedelta</span></code> (the dask implementation of <code class="docutils literal notranslate"><span class="pre">to_timedelta</span></code>), and we’d be fine. But let’s say that Dask hadn’t implemented a <code class="docutils literal notranslate"><span class="pre">dd.to_timedelta</span></code> that works on Dask DataFrames. What would you do then?</p>
-<p><code class="docutils literal notranslate"><span class="pre">dask.dataframe</span></code> provides a few methods to make applying custom functions to Dask DataFrames easier:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="http://dask.pydata.org/en/latest/dataframe-api.html#dask.dataframe.DataFrame.map_partitions">map_partitions</a>: Apply function to each chunk.</p></li>
-<li><p><a class="reference external" href="http://dask.pydata.org/en/latest/dataframe-api.html#dask.dataframe.DataFrame.map_overlap">map_overlap</a>: Allows you to apply to each chunk AND roll over a few rows (for things like rolling averages)</p></li>
-<li><p><a class="reference external" href="http://dask.pydata.org/en/latest/dataframe-api.html#dask.dataframe.DataFrame.reduction">reduction</a>: Allows you to write a full, custom reduction function (where you specify how you’d reduce each chunk, then how you’d re-combine those reduced chunks).</p></li>
-</ul>
-<p>Of these, <code class="docutils literal notranslate"><span class="pre">map_partition</span></code> is the easiest. It says “just apply this function to each chunk”. Any operation that operates on each row individually can work with <code class="docutils literal notranslate"><span class="pre">map_partition</span></code>!</p>
-<p>The basic idea is to apply a function that operates on a DataFrame to each partition. In this case, we’ll apply <code class="docutils literal notranslate"><span class="pre">pd.to_timedelta</span></code>.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">hours</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">CRSDepTime</span> <span class="o">//</span> <span class="mi">100</span>
-<span class="c1"># hours_timedelta = pd.to_timedelta(hours, unit=&#39;h&#39;)</span>
-<span class="n">hours_timedelta</span> <span class="o">=</span> <span class="n">hours</span><span class="o">.</span><span class="n">map_partitions</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">)</span>
-
-<span class="n">minutes</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">CRSDepTime</span> <span class="o">%</span> <span class="mi">100</span>
-<span class="c1"># minutes_timedelta = pd.to_timedelta(minutes, unit=&#39;m&#39;)</span>
-<span class="n">minutes_timedelta</span> <span class="o">=</span> <span class="n">minutes</span><span class="o">.</span><span class="n">map_partitions</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">)</span>
-
-<span class="n">departure_timestamp</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Date</span> <span class="o">+</span> <span class="n">hours_timedelta</span> <span class="o">+</span> <span class="n">minutes_timedelta</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">departure_timestamp</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Dask Series Structure:
-npartitions=10
-    datetime64[ns]
-               ...
-         ...
-               ...
-               ...
-dtype: datetime64[ns]
-Dask Name: add, 110 tasks
-</pre></div></div>
-</div>
-<p>And you’ll see <em>this</em> time not everything ran all at once!</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">departure_timestamp</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-0   1990-01-01 15:40:00
-1   1990-01-02 15:40:00
-2   1990-01-03 15:40:00
-3   1990-01-04 15:40:00
-4   1990-01-05 15:40:00
-dtype: datetime64[ns]
-</pre></div></div>
-</div>
-<p><strong>(11)</strong> Rewrite what I did above to use a single call to <code class="docutils literal notranslate"><span class="pre">map_partitions</span></code> so that everything is done at once.</p>
-<p>This will be slightly more efficient than two separate calls, as it reduces the number of tasks in the graph.</p>
-<p>Do so by writing a single function that accomplishes what you want:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_departure_timestamp</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
-     <span class="c1"># Do conversions here</span>
-</pre></div>
-</div>
 </div>
 </div>
 <div class="section" id="Limitations">
@@ -766,6 +693,7 @@ dtype: datetime64[ns]
 <li class="toctree-l1"><a class="reference internal" href="../performance_solutions.html">Solving Performance Probs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../parallelism.html">Parallel Computing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../backwards_design.html">Backwards Design</a></li>
 </ul>
 <p class="caption"><span class="caption-text">OTHER</span></p>
 <ul>

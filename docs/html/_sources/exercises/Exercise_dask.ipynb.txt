@@ -21,6 +21,19 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
+    "## Install Dask\n",
+    "\n",
+    "Let's start by installing dask with:\n",
+    "\n",
+    "```\n",
+    "conda install -c conda-forge dask \n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
     "## Start your own cluster!\n",
     "\n",
     "dask has many backends, but the one that's most versitile (and often most performant) is the `distributed` backend, so let's use that here. Run:\n",
@@ -28,11 +41,20 @@
     "```python\n",
     "from dask.distributed import Client\n",
     "client = Client()\n",
+    "client\n",
     "```\n",
     "\n",
     "to create a set of workers on your computer. This cluster is running only on your own computer, but it operates exactly the way it would work on a cloud cluster where these workers live on other computers. \n",
     "\n",
-    "**Note:** these workers communication via networking protocols, so your firewall / anti-virus may ask if it's ok to let Python accept connections (it is!). If you can't get your system running, it may be due to your firewall / anti-virus. In that case, try `client = Client(processes=False)`. This will create four workers hiding in the same process (obviating the need for network protocols for communication). "
+    "When you type `client` in a jupyter notebook, you should see the clusters status pop up like this:\n",
+    "\n",
+    "![dask_status](../images/dask_status.png)\n",
+    "\n",
+    "This status tells me that I have four processes running on my computer, each of which running 4 threads (for 16 cores total). In addition, it tells me that the cluster sees that I have about 34GB of memory for it to play with. \n",
+    "\n",
+    "One cool thing you'll see is that this panel includes a link to a Dashboard. Click this link, and a new tab will open in your browser that shows you, in real time, what your dask cluster is doing! We'll come back to this later.\n",
+    "\n",
+    "**Note:** these workers communication via networking protocols, so your firewall / anti-virus may ask if it's ok to let Python accept connections (it is!). If you can't get your system running, it may be due to your firewall / anti-virus. In that case, try `client = Client(processes=False)`. This will create four workers hiding in the same process (obviating the need for network protocols for communication between processes). Don't worry if that last bit doesn't make sense -- those are implementation details you don't ahve to worry about! :) "
    ]
   },
   {
@@ -79,7 +101,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "**(4)** Now try and run `df.tail()`!"
+    "**(4)** Now try and run `df.tail()`."
    ]
   },
   {
@@ -190,7 +212,9 @@
    "source": [
     "## Let's do some manipulations!\n",
     "\n",
-    "In this section we do a few `dask.dataframe` computations. If you are comfortable with Pandas then these should be familiar. You will have to think about when to call `compute`."
+    "In this section we do a few `dask.dataframe` computations. If you are comfortable with Pandas then these should be familiar. You will have to think about when to call `.compute()`. \n",
+    "\n",
+    "When you run `.compute()`, you can also move over to your Dashboard (remember that link in the panel that openned when you created `client`?) to see your cluster working!"
    ]
   },
   {
@@ -472,126 +496,6 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "### Custom code and Dask Dataframe\n",
-    "\n",
-    "Notice that we never had to call `.compute()`! That's because when we call a non-dask function on a dask dataframe, dask doesn't know how to do it in parallel, so it brings in the whole dataframe and then passes it to your non-dask function. We can get away with that here because our data is small, but with a big dataset, your computer would crash!\n",
-    "\n",
-    "Now we could swap out `pd.to_timedelta` for `dd.to_timedelta` (the dask implementation of `to_timedelta`), and we'd be fine. But let's say that Dask hadn't implemented a `dd.to_timedelta` that works on Dask DataFrames. What would you do then?\n",
-    "\n",
-    "`dask.dataframe` provides a few methods to make applying custom functions to Dask DataFrames easier:\n",
-    "\n",
-    "- [map_partitions](http://dask.pydata.org/en/latest/dataframe-api.html#dask.dataframe.DataFrame.map_partitions): Apply function to each chunk. \n",
-    "- [map_overlap](http://dask.pydata.org/en/latest/dataframe-api.html#dask.dataframe.DataFrame.map_overlap): Allows you to apply to each chunk AND roll over a few rows (for things like rolling averages)\n",
-    "- [reduction](http://dask.pydata.org/en/latest/dataframe-api.html#dask.dataframe.DataFrame.reduction): Allows you to write a full, custom reduction function (where you specify how you'd reduce each chunk, then how you'd re-combine those reduced chunks).\n",
-    "\n",
-    "Of these, `map_partition` is the easiest. It says \"just apply this function to each chunk\". Any operation that operates on each row individually can work with `map_partition`!"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "The basic idea is to apply a function that operates on a DataFrame to each partition.\n",
-    "In this case, we'll apply `pd.to_timedelta`."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 25,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "hours = df.CRSDepTime // 100\n",
-    "# hours_timedelta = pd.to_timedelta(hours, unit='h')\n",
-    "hours_timedelta = hours.map_partitions(pd.to_timedelta, unit='h')\n",
-    "\n",
-    "minutes = df.CRSDepTime % 100\n",
-    "# minutes_timedelta = pd.to_timedelta(minutes, unit='m')\n",
-    "minutes_timedelta = minutes.map_partitions(pd.to_timedelta, unit='m')\n",
-    "\n",
-    "departure_timestamp = df.Date + hours_timedelta + minutes_timedelta"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 26,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "Dask Series Structure:\n",
-       "npartitions=10\n",
-       "    datetime64[ns]\n",
-       "               ...\n",
-       "         ...      \n",
-       "               ...\n",
-       "               ...\n",
-       "dtype: datetime64[ns]\n",
-       "Dask Name: add, 110 tasks"
-      ]
-     },
-     "execution_count": 26,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "departure_timestamp"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "And you'll see *this* time not everything ran all at once!"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 27,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "0   1990-01-01 15:40:00\n",
-       "1   1990-01-02 15:40:00\n",
-       "2   1990-01-03 15:40:00\n",
-       "3   1990-01-04 15:40:00\n",
-       "4   1990-01-05 15:40:00\n",
-       "dtype: datetime64[ns]"
-      ]
-     },
-     "execution_count": 27,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "departure_timestamp.compute().head()"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "**(11)** Rewrite what I did above to use a single call to `map_partitions` so that everything is done at once. \n",
-    "\n",
-    "This will be slightly more efficient than two separate calls, as it reduces the number of tasks in the graph.\n",
-    "\n",
-    "Do so by writing a single function that accomplishes what you want:\n",
-    "\n",
-    "```python\n",
-    "def compute_departure_timestamp(df):\n",
-    "     # Do conversions here\n",
-    "```"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
     "## Limitations"
    ]
   },
@@ -678,7 +582,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.7.3"
+   "version": "3.7.8"
   }
  },
  "nbformat": 4,
