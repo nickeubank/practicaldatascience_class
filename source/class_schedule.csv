@@ -8,10 +8,10 @@
 - `Register for DataCamp <https://www.datacamp.com/home>`_
 - `Command Line Basics <command_line_part1.ipynb>`_
 - `Setup Python <setup_environment.ipynb>`_
-- `Jupyter Tutorial <jupyter.ipynb>`_","- `Link 1 <exercises/Exercise_CommandLine_1_Basics.ipynb>`_
-- `Link 2 <exercises/Exercise_jupyterlab.ipynb>`_"
+- `Jupyter Tutorial <jupyter.ipynb>`_","`Link 1 <exercises/Exercise_CommandLine_1_Basics.ipynb>`_
+`Link 2 <exercises/Exercise_jupyterlab.ipynb>`_"
 "Fri, Aug 21",**SOFTWARE INSTALL DAY**,A day of trouble shooting install issues,
-"Tues, Aug 25",- Advanced Command Line,- `Advanced Command Line <command_line_part2.ipynb>`_,- `Link <exercises/Exercise_CommandLine_2_Advanced.ipynb>`_
+"Tues, Aug 25",- Advanced Command Line,- `Advanced Command Line <command_line_part2.ipynb>`_,`Link <exercises/Exercise_CommandLine_2_Advanced.ipynb>`_
 "Thurs, Aug 27","- IPython
 - Packages
 - Python v. R / variables as pointers","- `Follow this link <https://gke.mybinder.org/v2/gh/ipython/ipython-in-depth/master?filepath=binder/Index.ipynb>`_ , then click ""Ipython - Beyond plain python"" and read that notebook. 
@@ -76,10 +76,12 @@
 "Tues, Nov 3","ELECTION DAY, NO CLASS",,
 "Thurs, Nov 5","- Parallelism 
 - Distributed Computing","- `Parallel Computing <parallelism.ipynb>`_
-- `Distributed Computing with dask <distributed_computing.ipynb>`_","- `Link <exercises/Exercise_dask.ipynb>`_
-- `Link <exercises/Exercise_dask_realdata.ipynb>`_"
+- `Distributed Computing with dask <distributed_computing.ipynb>`_","`Link 1 <exercises/Exercise_dask.ipynb>`_
+`Link 2 <exercises/Exercise_dask_realdata.ipynb>`_"
 "Tues, Nov 10","Distributed Computing, Azure","- `What is The Cloud <cloud_what_is_it.ipynb>`_
 - `Getting Setup on Azure <cloud_azureml.ipynb>`_
-- `Dask on Azure <clould_dask.ipynb>`_",
-"Thurs, Nov 12","Distributed Computing, Azure 2",**OPIOID PROJECT DUE (Extensions available upon request to assigned date for PDS final)**,
+- `Dask on Azure <clould_dask.ipynb>`_",`Link <exercises/Exercise_azure_arcos.ipynb>`_
+"Thurs, Nov 12","Distributed Computing, Azure 2","- **OPIOID PROJECT DUE (Extensions available upon request to assigned date for PDS final)**
+- `Azure Storage <cloud_azurestorage.ipynb>`_
+- `More Azure Concepts <cloud_more_concepts.ipynb>`_",
 TBD,Julia,`Julia <https://www.youtube.com/watch?v=C4dMYHzW-SY>`_,
