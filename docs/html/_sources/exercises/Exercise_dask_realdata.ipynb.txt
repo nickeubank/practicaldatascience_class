@@ -11,11 +11,43 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "Last week, we used dask to play with a few datasets to get a feel for how dask works. In order to help us develop code that would run quickly, however, we worked with very small, safe datasets. \n",
-    "\n",
-    "Today, we will continue to work with dask, but this time using much larger datasets. This means that (a) doing things incorrectly may lead to your computer crashing (So save all your open files before you start!), and (b) many of the commands you are being asked run will take several minutes each. \n",
+    "Today, we're gonna do some of the manipulations you were doing over the last several weeks for your Opioid project, but now in dask! \n",
     "\n",
     "For familiarity, and so you can see what advantages dask can bring to your workflow, today we'll be working with the DEA ARCOS drug shipment database published by the Washington Post! However, to strike a balance between size and speed, we'll be working with a slightly thinned version that has only the last two years of data, instead of all six."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Start your own cluster!\n",
+    "\n",
+    "dask has many backends, but the one that's most versitile (and often most performant) is the `distributed` backend, so let's use that here. Run:\n",
+    "\n",
+    "```python\n",
+    "from dask.distributed import Client\n",
+    "client = Client()\n",
+    "client\n",
+    "```\n",
+    "\n",
+    "to create a set of workers on your computer. This cluster is running only on your own computer, but it operates exactly the way it would work on a cloud cluster where these workers live on other computers. \n",
+    "\n",
+    "When you type `client` in a jupyter notebook, you should see the clusters status pop up like this:\n",
+    "\n",
+    "![dask_status](../images/dask_status.png)\n",
+    "\n",
+    "This status tells me that I have four processes running on my computer, each of which running 4 threads (for 16 cores total). In addition, it tells me that the cluster sees that I have about 34GB of memory for it to play with. \n",
+    "\n",
+    "One cool thing you'll see is that this panel includes a link to a Dashboard. Click this link, and a new tab will open in your browser that shows you, in real time, what your dask cluster is doing! We'll come back to this later.\n",
+    "\n",
+    "**Note:** these workers communication via networking protocols, so your firewall / anti-virus may ask if it's ok to let Python accept connections (it is!). If you can't get your system running, it may be due to your firewall / anti-virus. In that case, try `client = Client(processes=False)`. This will create four workers hiding in the same process (obviating the need for network protocols for communication between processes). Don't worry if that last bit doesn't make sense -- those are implementation details you don't ahve to worry about! :) "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Let's load some data!"
    ]
   },
   {
@@ -62,9 +94,16 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
+    "Remember when you're working with dask, nothing actually runs until you either run `.compute()`, or use a method that triggers immediate execution (like `.head()`, or a save function). "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
     "**(4)** Now let's calculate, *for each state*, what company shipped the most pills?\n",
     "\n",
-    "Note you will quickly find that you can't sort in dask -- sorting in parallel is *really* tricky! So you'll have to work around that. Do what you need to do on the big dataset first, then compute it all so you get it as a regular pandas dataframe, then finish. "
+    "Note you will quickly find that you can't sort in dask -- sorting in parallel is *really* tricky! So you'll have to work around that. Do what you need to do on the big dataset first, then run `.compute()` so you get the data returned as a regular pandas dataframe, then finish. "
    ]
   },
   {
