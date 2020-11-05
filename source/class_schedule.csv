@@ -75,7 +75,7 @@
 - **Opioid Project Rough Draft Due**",
 "Tues, Nov 3","ELECTION DAY, NO CLASS",,
 "Thurs, Nov 5","- Parallelism 
-- Distributed Computing, Part 1","- `Parallel Computing <parallelism.ipynb>`_
+- Distributed Computing","- `Parallel Computing <parallelism.ipynb>`_
 - `Distributed Computing with dask <distributed_computing.ipynb>`_","- `Link <exercises/Exercise_dask.ipynb>`_
 - `Link <exercises/Exercise_dask_realdata.ipynb>`_"
 "Tues, Nov 10","Distributed Computing, Azure","- `What is The Cloud <cloud_what_is_it.ipynb>`_

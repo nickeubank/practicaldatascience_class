@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Importing ARCOS Data with Dask &#8212; Practical Data Science</title>
+    <title>Importing Opioid Shipment Data on Azure &#8212; Practical Data Science</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -34,35 +34,62 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="Importing-ARCOS-Data-with-Dask">
-<h1>Importing ARCOS Data with Dask<a class="headerlink" href="#Importing-ARCOS-Data-with-Dask" title="Permalink to this headline">¶</a></h1>
-<p>Last week, we used dask to play with a few datasets to get a feel for how dask works. In order to help us develop code that would run quickly, however, we worked with very small, safe datasets.</p>
-<p>Today, we will continue to work with dask, but this time using much larger datasets. This means that (a) doing things incorrectly may lead to your computer crashing (So save all your open files before you start!), and (b) many of the commands you are being asked run will take several minutes each.</p>
-<p>For familiarity, and so you can see what advantages dask can bring to your workflow, today we’ll be working with the DEA ARCOS drug shipment database published by the Washington Post! However, to strike a balance between size and speed, we’ll be working with a slightly thinned version that has only the last two years of data, instead of all six.</p>
+  <div class="section" id="Importing-Opioid-Shipment-Data-on-Azure">
+<h1>Importing Opioid Shipment Data on Azure<a class="headerlink" href="#Importing-Opioid-Shipment-Data-on-Azure" title="Permalink to this headline">¶</a></h1>
+<p>Yup, it’s time to work with everyone’s favorite data: The DEA ARCOS opioid drug shipment database! But today we’re gonna work with this data not on our personal computers, but instead on a dask cluster running on Microsoft Azure.</p>
+<p>For these exercises, you’ll need an Azure account with available credits. The easiest way to do this is to set up a new account (either by signing up as a student, or just using a new gmail account to sign up as a new regular user). <a class="reference internal" href="../cloud_azureml.html"><span class="doc">You can find instructions for doing so here</span></a>.</p>
+<p>As with our last exercise using dask, to strike a balance between keeping the data big enough to be interesting and small enough you don’t have to wait around too long, we’ll be working with a slightly thinned version that has only two years of data, instead of all six.</p>
+<div class="section" id="Loading-Data-to-Azure">
+<h2>Loading Data to Azure<a class="headerlink" href="#Loading-Data-to-Azure" title="Permalink to this headline">¶</a></h2>
 <p><strong>(1)</strong> Download the thinned ARCOS data <a class="reference external" href="https://www.dropbox.com/s/o7nc6yvrwog4ozi/arcos_2011_2012.tsv.zip?dl=0">from this link</a>. It should be about 2GB zipped, 25 GB unzipped.</p>
-<p><strong>(2)</strong> Our goal today is going to be to find the pharmaceutical company that has shipped the most pills (<code class="docutils literal notranslate"><span class="pre">DOSAGE_UNIT</span></code>) in the US.</p>
-<p>When working with large datasets, it is good practice to begin by prototyping your code with a subset of your data. So begin by using <code class="docutils literal notranslate"><span class="pre">pandas</span></code> to read in the first 100,000 lines of the ARCOS data and write pandas code to compute the shipments from each shipper (the group that reported the shipment).</p>
-<p><strong>(3)</strong> Now let’s turn to dask. Re-write your code for dask, and calculate the total shipments by reporting company. Remember:</p>
+<p><strong>(2)</strong> Let’s upload this data to Azure by creating a new Storage Account and Blob Container (you may have already done this while reading about Azure in today’s readings, but let’s do it again for practice!). If you can’t remember how to do it, <a class="reference external" href="https://www.practicaldatascience.org/html/cloud_azureml.html#Storage-on-Azure">you can review instructions here</a>.</p>
+<p>If you have an existing Resource Group, you can use that, but if not remember you’ll have to create one of those too!</p>
+<p><strong>(3)</strong> Once you have a Blob Container, unzip your data and then start the upload process through the web browser interface (will talk about other tools for managing data tomorrow).</p>
+<p>Note you <strong>must</strong> unzip your files first! Annoying, I know. There are ways to upload zipped files and unzip them later, but they’re surprisingly complicated, and dask won’t read a zipped file.</p>
+</div>
+<div class="section" id="Setting-Up-Dask-on-AzureML">
+<h2>Setting Up Dask on AzureML<a class="headerlink" href="#Setting-Up-Dask-on-AzureML" title="Permalink to this headline">¶</a></h2>
+<p><strong>(4)</strong> While that’s happening, let’s get ready to start a <code class="docutils literal notranslate"><span class="pre">dask</span></code> cluster. First, let’s create a new Workspace! Again, you probably did this already, but let’s do it again anyway. :) Practice makes perfect. Again, <a class="reference external" href="https://www.practicaldatascience.org/html/cloud_azureml.html#Create-a-Workspace">directions are here if you’ve forgotten</a>.</p>
+<p><strong>(5)</strong> Now, following the example <a class="reference internal" href="../cloud_dask.html"><span class="doc">from the readings</span></a>, create a new notebook and write your code to start a dask cluster and get it running!</p>
+</div>
+<div class="section" id="Actually-Analyzing-Data">
+<h2>Actually Analyzing Data<a class="headerlink" href="#Actually-Analyzing-Data" title="Permalink to this headline">¶</a></h2>
+<p>OK, is your dask cluster up and running? And has your data upload finished? Then it’s time to start analyzing some data!</p>
+<p>Starting from the code you wrote for our last exercise (where you used dask to load your arcos data on your own computer), let’s write some code to analyze the ARCOS data you’ve written on the cloud.</p>
+<p><strong>(6)</strong> Our goal today is going to be to find the pharmaceutical company that has shipped the most pills (<code class="docutils literal notranslate"><span class="pre">DOSAGE_UNIT</span></code>) in the US. So write some code to identify this company. A few reminders:</p>
+<ul class="simple">
+<li><p>Remember to work on your analysis code BELOW the cell where you created your <code class="docutils literal notranslate"><span class="pre">Client</span></code> instance (e.g. where you ran <code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">=</span> <span class="pre">Client(amlcluster)</span></code>). You don’t want to keep re-running that.</p></li>
+<li><p>Remember that to read the file, you’ll need to pass your Azure Storage Account secrets to the <code class="docutils literal notranslate"><span class="pre">read_csv</span></code> function.</p></li>
+<li><p><strong>The same tricks we’ve been practicing before still apply here: start by only reading in the first couple thousand lines for debugging before you start using dask on the full data!</strong></p></li>
+<li><p>Just because we’re on a cluster doesn’t mean we have unlimited resources! Each of the computers we’re using is relativley small, so we still want to do things like only load the columns we need.</p></li>
+</ul>
+<p>Since we can only use <code class="docutils literal notranslate"><span class="pre">dask</span></code> given how we’re connected to the cluster, we need to ask dask to just give us the first few rows as a dataframe. dask doesn’t support the <code class="docutils literal notranslate"><span class="pre">nrows</span></code> keyword, but you can get the same effect using <code class="docutils literal notranslate"><span class="pre">.head(n=rows_to_get)</span></code>. So rather than running:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dask.dataframe</span> <span class="k">as</span> <span class="nn">dd</span>
+<span class="n">rows_to_get</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="n">rows_to_get</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can just run:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dask.dataframe</span> <span class="k">as</span> <span class="nn">dd</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">rows_to_get</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and <code class="docutils literal notranslate"><span class="pre">df</span></code> will be a pandas DataFrame. Note that if you try and use the <code class="docutils literal notranslate"><span class="pre">nrows</span></code> keyword, dask will kindly remind you to use <code class="docutils literal notranslate"><span class="pre">.head()</span></code> instead, so if you forget, don’t worry about it.</p>
+<p><strong>(7)</strong> Now let’s run our full dataset on dask, calculating the total shipments by reporting company. Remember:</p>
 <ul class="simple">
 <li><p>Start by spinning up a cluster</p></li>
 <li><p>Dask won’t read compressed files, so you have to unzip your ARCOS data.</p></li>
 <li><p>Start your cluster in a cell all by itself since you don’t want to keep re-running the “start a cluster” code.</p></li>
 <li><p>Don’t load columns you don’t need!</p></li>
 </ul>
-<p>If you need to review dask basic code, <a class="reference internal" href="../distributed_computing.html"><span class="doc">check here</span></a>.</p>
 <p>As you run your code, make sure to click on the Dashboard link below where you created your cluster:</p>
 <p><img alt="dask_dashboard" src="../_images/dask_dashboard.png" /></p>
 <p>Among other things, the bar across the bottom should give you a sense of how long your task will take:</p>
 <p><img alt="dask_progress" src="../_images/dask_progress.png" /></p>
-<p>(For context, my core (which has 8 physical cores that present as 16 with hyperthreading) took about 30 seconds. My computer is fast, but most computers should be done within a couple minutes).</p>
-<p><strong>(4)</strong> Now let’s calculate, <em>for each state</em>, what company shipped the most pills?</p>
+<p><strong>(8)</strong> Now let’s calculate, <em>for each state</em>, what company shipped the most pills?</p>
 <p>Note you will quickly find that you can’t sort in dask – sorting in parallel is <em>really</em> tricky! So you’ll have to work around that. Do what you need to do on the big dataset first, then compute it all so you get it as a regular pandas dataframe, then finish.</p>
 <p>Does this seem like a situation where a single company is responsible for the opioid epidemic?</p>
-<p><strong>(5)</strong> Now go ahead and try and re-do the chunking you did by hand for your project – calculate, for each year, the total morphine equivalents sent to each county in the US.</p>
-<div class="section" id="Absolutely-positively-need-the-solutions?">
-<h2>Absolutely positively need the solutions?<a class="headerlink" href="#Absolutely-positively-need-the-solutions?" title="Permalink to this headline">¶</a></h2>
-<p><em>Don’t use this link until you’ve really, really spent time struggling with your code!</em> Doing so only results in you cheating yourself.</p>
-<p><a class="reference internal" href="../solutions_warning.html"><span class="doc">Link</span></a></p>
+<p><strong>(9)</strong> Now go ahead and try and re-do the chunking you did by hand for your project using dask – calculate, for each year, the total morphine equivalents sent to each county in the US.</p>
 </div>
 </div>
 
@@ -173,7 +200,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/exercises/Exercise_dask_realdata.ipynb.txt"
+      <a href="../_sources/exercises/Exercise_azure_arcos.ipynb.txt"
           rel="nofollow">Page source</a>
     </div>
 
