@@ -80,7 +80,7 @@
 `Link 2 <exercises/Exercise_dask_realdata.ipynb>`_"
 "Tues, Nov 10","Distributed Computing, Azure","- `What is The Cloud <cloud_what_is_it.ipynb>`_
 - `Getting Setup on Azure <cloud_azureml.ipynb>`_
-- `Dask on Azure <clould_dask.ipynb>`_",`Link <exercises/Exercise_azure_arcos.ipynb>`_
+- `Dask on Azure <cloud_dask.ipynb>`_",`Link <exercises/Exercise_azure_arcos.ipynb>`_
 "Thurs, Nov 12","Distributed Computing, Azure 2","- **OPIOID PROJECT DUE (Extensions available upon request to assigned date for PDS final)**
 - `Azure Storage <cloud_azurestorage.ipynb>`_
 - `More Azure Concepts <cloud_more_concepts.ipynb>`_",
