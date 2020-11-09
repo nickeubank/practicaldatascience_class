@@ -38,10 +38,10 @@
 <h1>Importing Opioid Shipment Data on Azure<a class="headerlink" href="#Importing-Opioid-Shipment-Data-on-Azure" title="Permalink to this headline">¶</a></h1>
 <p>Yup, it’s time to work with everyone’s favorite data: The DEA ARCOS opioid drug shipment database! But today we’re gonna work with this data not on our personal computers, but instead on a dask cluster running on Microsoft Azure.</p>
 <p>For these exercises, you’ll need an Azure account with available credits. The easiest way to do this is to set up a new account (either by signing up as a student, or just using a new gmail account to sign up as a new regular user). <a class="reference internal" href="../cloud_azureml.html"><span class="doc">You can find instructions for doing so here</span></a>.</p>
-<p>As with our last exercise using dask, to strike a balance between keeping the data big enough to be interesting and small enough you don’t have to wait around too long, we’ll be working with a thinned version that has only January and February from 2011 and 2012. This way the workflow you develop will be same the same workflow you’d use for the full dataset, of course, but we can move quickly, even on the limited resources you’re allowed to use on a free account.</p>
+<p>As with our last exercise using dask, to strike a balance between keeping the data big enough to be interesting and small enough you don’t have to wait around too long, we’ll be working with a slightly thinned version that has only two years of data, instead of all six.</p>
 <div class="section" id="Loading-Data-to-Azure">
 <h2>Loading Data to Azure<a class="headerlink" href="#Loading-Data-to-Azure" title="Permalink to this headline">¶</a></h2>
-<p><strong>(1)</strong> Download the thinned ARCOS data <a class="reference external" href="https://www.dropbox.com/s/mm0wwwho61pc6q7/arcos_jan_feb_2011_2012.tsv.zip?dl=0">from this link</a>. It should be about 250MB zipped, 2.31 GB unzipped.</p>
+<p><strong>(1)</strong> Download the thinned ARCOS data <a class="reference external" href="https://www.dropbox.com/s/o7nc6yvrwog4ozi/arcos_2011_2012.tsv.zip?dl=0">from this link</a>. It should be about 2GB zipped, 25 GB unzipped.</p>
 <p><strong>(2)</strong> Let’s upload this data to Azure by creating a new Storage Account and Blob Container (you may have already done this while reading about Azure in today’s readings, but let’s do it again for practice!). If you can’t remember how to do it, <a class="reference external" href="https://www.practicaldatascience.org/html/cloud_azureml.html#Storage-on-Azure">you can review instructions here</a>.</p>
 <p>If you have an existing Resource Group, you can use that, but if not remember you’ll have to create one of those too!</p>
 <p><strong>(3)</strong> Once you have a Blob Container, unzip your data and then start the upload process through the web browser interface (will talk about other tools for managing data tomorrow).</p>
@@ -56,7 +56,7 @@
 <h2>Actually Analyzing Data<a class="headerlink" href="#Actually-Analyzing-Data" title="Permalink to this headline">¶</a></h2>
 <p>OK, is your dask cluster up and running? And has your data upload finished? Then it’s time to start analyzing some data!</p>
 <p>Starting from the code you wrote for our last exercise (where you used dask to load your arcos data on your own computer), let’s write some code to analyze the ARCOS data you’ve written on the cloud.</p>
-<p><strong>(6)</strong> Our goal today is going to be to find the pharmaceutical company that has shipped the most opioids (<code class="docutils literal notranslate"><span class="pre">CALC_BASE_WT_IN_GM</span> <span class="pre">*</span> <span class="pre">MME_Conversion_Factor</span></code>) in the US. So write some code to identify this company. A few reminders:</p>
+<p><strong>(6)</strong> Our goal today is going to be to find the pharmaceutical company that has shipped the most pills (<code class="docutils literal notranslate"><span class="pre">DOSAGE_UNIT</span></code>) in the US. So write some code to identify this company. A few reminders:</p>
 <ul class="simple">
 <li><p>Remember to work on your analysis code BELOW the cell where you created your <code class="docutils literal notranslate"><span class="pre">Client</span></code> instance (e.g. where you ran <code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">=</span> <span class="pre">Client(amlcluster)</span></code>). You don’t want to keep re-running that.</p></li>
 <li><p>Remember that to read the file, you’ll need to pass your Azure Storage Account secrets to the <code class="docutils literal notranslate"><span class="pre">read_csv</span></code> function.</p></li>
@@ -89,9 +89,7 @@
 <p><strong>(8)</strong> Now let’s calculate, <em>for each state</em>, what company shipped the most pills?</p>
 <p>Note you will quickly find that you can’t sort in dask – sorting in parallel is <em>really</em> tricky! So you’ll have to work around that. Do what you need to do on the big dataset first, then compute it all so you get it as a regular pandas dataframe, then finish.</p>
 <p>Does this seem like a situation where a single company is responsible for the opioid epidemic?</p>
-<p><strong>(9)</strong> Now go ahead and try and re-do the chunking you did by hand for your project using dask – calculate, for each year, the total opioids sent to each county in the US (note that I’ve included <code class="docutils literal notranslate"><span class="pre">year</span></code> as its own variable so you don’t have to parse <code class="docutils literal notranslate"><span class="pre">TRANSACTION_DATE</span></code>).</p>
-<p><strong>(10)</strong> In several of the preceding analyses, we loaded nearly the same data before doing slightly different data wrangling manipulations. In these situations, it is often best to not run these manipulations separately, but instead to run the common component of the analyses (here, loading the data), then caching your code using the <code class="docutils literal notranslate"><span class="pre">.persist()</span></code> method (e.g. <code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">client.persist(df)</span></code>).</p>
-<p>Take the code you’ve already written to try and generate answers to questions 7, 8, and 9 <em>efficiently</em> using <code class="docutils literal notranslate"><span class="pre">persist</span></code>. If you have time, you can then run each of your answers above again and time them, then compare that total run time to how long your new code (that uses <code class="docutils literal notranslate"><span class="pre">persist</span></code>) takes.</p>
+<p><strong>(9)</strong> Now go ahead and try and re-do the chunking you did by hand for your project using dask – calculate, for each year, the total morphine equivalents sent to each county in the US.</p>
 </div>
 </div>
 
@@ -202,7 +200,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/exercises/Exercise_azure_arcos.ipynb.txt"
+      <a href="../_sources/exercises/Exercise_azure_arcos-Copy1.ipynb.txt"
           rel="nofollow">Page source</a>
     </div>
 

@@ -281,6 +281,11 @@ don’t</span></a>!</p>
 <span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;dask_cloudprovider[all]&quot;</span><span class="o">==</span><span class="mf">0.4</span><span class="o">.</span><span class="mi">1</span>
 </pre></div>
 </div>
+<p>In addition, <em>most</em> people will also need to run the following installs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">adlfs</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">lz4</span>
+</pre></div>
+</div>
 <p>Note that <code class="docutils literal notranslate"><span class="pre">dask_cloudprovider</span></code> sometimes doesn’t load the right version if you don’t specify, and as of October 2020 the right version isn’t even on <code class="docutils literal notranslate"><span class="pre">conda-forge</span></code>, so don’t use <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span></code>. You can also pip install <code class="docutils literal notranslate"><span class="pre">azure-storage-blob</span></code> if you prefer <code class="docutils literal notranslate"><span class="pre">pip</span></code> to <code class="docutils literal notranslate"><span class="pre">conda</span></code>.</p>
 <p><strong>If you are using Jupyter Lab:</strong> the dask_cloudprovider package makes use of IPython Widgets, which aren’t installed in Jupyter Lab by default. So if you’re using Jupyter Lab, please install the <a class="reference external" href="https://ipywidgets.readthedocs.io/en/stable/user_install.html#installing-the-jupyterlab-extension">IPython Widget extension</a> before you move forward! If, after you type <code class="docutils literal notranslate"><span class="pre">amlcluster</span></code> after creating it below, you see <code class="docutils literal notranslate"><span class="pre">VBox(children=</span></code>…, that means you didn’t successfully install the widget.</p>
 <div class="section" id="Starting-a-Dask-Cluster">
@@ -367,7 +372,7 @@ can be running at any one time <em>across all of Azure</em>. That means if you h
 <span></span><span class="c1"># Start up a cluster!</span>
 <span class="n">amlcluster</span> <span class="o">=</span> <span class="n">AzureMLCluster</span><span class="p">(</span>
     <span class="n">ws</span><span class="p">,</span>
-    <span class="n">vm_size</span><span class="o">=</span><span class="s2">&quot;STANDARD_DS11_V2&quot;</span><span class="p">,</span>  <span class="c1"># Azure VM size for the Compute Target. This VM has only 2 CPUs.</span>
+    <span class="n">vm_size</span><span class="o">=</span><span class="s2">&quot;Standard_D11_v2&quot;</span><span class="p">,</span>  <span class="c1"># Azure VM size for the Compute Target. This VM has only 2 CPUs.</span>
     <span class="n">datastores</span><span class="o">=</span><span class="n">ws</span><span class="o">.</span><span class="n">datastores</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>  <span class="c1"># Azure ML Datastores to mount on the headnode</span>
     <span class="n">environment_definition</span><span class="o">=</span><span class="n">ws</span><span class="o">.</span><span class="n">environments</span><span class="p">[</span>
         <span class="s2">&quot;AzureML-Dask-CPU&quot;</span>
@@ -534,19 +539,6 @@ readme.txt
 </div>
 <p>But since I don’t want you to see all my secret codes, I’m gonna load my information from a file. You can do this, but you can also put them in your code <em>if your code isn’t public!</em></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Dask connects with a protocl</span>
-<span class="kn">import</span> <span class="nn">json</span>
-
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/users/nick/azure_secrets/azure_sa_name_and_key.json&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">storage_options</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
@@ -560,7 +552,7 @@ readme.txt
         <span class="n">flag_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">flag</span><span class="si">}</span><span class="s2">flag</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">})</span>
 
 <span class="n">temps</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;az://globaltemps/ghcnd_daily.csv&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;az://globaltemps/ghcnd_daily.csv&quot;</span><span class="p">,</span>
     <span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span><span class="p">,</span>
     <span class="n">dtype</span><span class="o">=</span><span class="n">flag_dict</span><span class="p">,</span>
 <span class="p">)</span>
@@ -1963,7 +1955,7 @@ Name: value31, Length: 87, dtype: int64
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/cloud_dask_34_1.png" src="_images/cloud_dask_34_1.png" />
+<img alt="_images/cloud_dask_33_1.png" src="_images/cloud_dask_33_1.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2104,6 +2096,7 @@ founders about <cite>both ``dask`</cite> and coiled here &lt;<a class="reference
 <li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backwards_design.html">Backwards Design</a></li>
 </ul>
 <p class="caption"><span class="caption-text">OTHER</span></p>
 <ul>

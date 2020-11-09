@@ -42,3 +42,7 @@ source/tmp/*
 source/azure_*
 source/portforward_out_log.txt
 *Untitled*
+source/exercises/portforward_out_log.txt
+source/exercises/tmp/*
+portforward_out_log.*
+*/portforward_out_log.*
