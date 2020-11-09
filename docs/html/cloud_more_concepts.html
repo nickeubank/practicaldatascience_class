@@ -275,7 +275,8 @@ div.rendered_html tbody tr:hover {
 sophisticated (the redirect to a web page). Here we’ll provide a basic overview of why there are different options, and why you might prefer one of the other.</p>
 <div class="section" id="Keys-and-Secrets">
 <h3>Keys and Secrets<a class="headerlink" href="#Keys-and-Secrets" title="Permalink to this headline">¶</a></h3>
-<p>But there are a number of problems with secrets and keys to be aware of:</p>
+<p>Keys and secrets are long strings of numbers and symbols that are used as passwords for various services. For example, we accessed our storage by using a very long secret key.</p>
+<p>Keys are often really easy to use initially, but there are a number of problems with secrets and keys to be aware of:</p>
 <ul class="simple">
 <li><p><strong>Not personalized:</strong> Suppose that somehow your key gets out – you inadvertently put it in a public github repo file, or there’s some concern that a resource you created wasn’t secured. Well, if you now have to cancel that key, it will immediately break <em>everything</em> currently using that key! So a small leak results in you having to reset all your resources and networks.</p></li>
 <li><p><strong>Hard to cycle:</strong> Similarly, its good security practice to cycle your keys, meaning that from time to time you change them (just like your password!). But with a hard-coded key, that causes problems because you may have many resources all using a specific key, and if you try to change it you’d have to go to all those services and change the key to keep them working.</p></li>
@@ -284,6 +285,7 @@ sophisticated (the redirect to a web page). Here we’ll provide a basic overvie
 </div>
 <div class="section" id="Azure-Active-Directory-(Azure-AD-or-ADD)">
 <h3>Azure Active Directory (Azure AD or ADD)<a class="headerlink" href="#Azure-Active-Directory-(Azure-AD-or-ADD)" title="Permalink to this headline">¶</a></h3>
+<p>The alternative to secrets and keys is to use a third-party service to manage authentication. You may not realize it, but that’s what you’re doing any time you click that “Sign-in with Google” or “Sign-in with Facebook” button on a website.</p>
 </div>
 <div class="section" id="SSH-and-SSH-Keys">
 <h3>SSH and SSH Keys<a class="headerlink" href="#SSH-and-SSH-Keys" title="Permalink to this headline">¶</a></h3>
@@ -357,7 +359,6 @@ sophisticated (the redirect to a web page). Here we’ll provide a basic overvie
 <li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_azureml.html">Starting with AzureML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Set Up Dask on AzureML</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_azurestorage.html">Managing Azure Storage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_mountingazure.html">More Storage Tricks</a></li>
 </ul>
 <p class="caption"><span class="caption-text">SKILLS</span></p>
@@ -371,6 +372,7 @@ sophisticated (the redirect to a web page). Here we’ll provide a basic overvie
 <li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backwards_design.html">Backwards Design</a></li>
 </ul>
 <p class="caption"><span class="caption-text">OTHER</span></p>
 <ul>

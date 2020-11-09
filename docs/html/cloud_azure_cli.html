@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Managing Data on Azure &#8212; Practical Data Science</title>
+    <title>Azure from the Command Line &#8212; Practical Data Science</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -18,8 +18,6 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Mount Your Container as a Drive with blobfuse" href="cloud_mountingazure.html" />
-    <link rel="prev" title="Setting up a Dask Cluster on AzureML" href="cloud_dask.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -269,68 +267,42 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Managing-Data-on-Azure">
-<h1>Managing Data on Azure<a class="headerlink" href="#Managing-Data-on-Azure" title="Permalink to this headline">¶</a></h1>
-<p>Azure has quite a few ways to manage your data. Of all these, I think <code class="docutils literal notranslate"><span class="pre">azcopy</span></code> is the easiest to use, so I’m going to show you that, but I’ll then show you some alternatives.</p>
-<div class="section" id="Azure-CLI">
-<h2>Azure CLI<a class="headerlink" href="#Azure-CLI" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>Installation: Follow directions for your OS <a class="reference external" href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli">here</a></p></li>
-</ul>
+<div class="section" id="Azure-from-the-Command-Line">
+<h1>Azure from the Command Line<a class="headerlink" href="#Azure-from-the-Command-Line" title="Permalink to this headline">¶</a></h1>
+<p>In our past tutorials, we mostly manipulated our Azure resources using the Azure web interface, but once you get comfortable with Azure, you’ll likely find this a little clunky for some things.</p>
+<p>Thankfully, Azure <em>also</em> has a Command Line Interface (CLI)! In addition to letting you manage all your resources, it can also help you managing things like data uploads or downloads (so you don’t have to navigate to your Container in your browser).</p>
+<p>Azure CLI is easy to install using the directions for your operating system <a class="reference external" href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli">here</a>.</p>
+<p>Then all authorization is managed by just running <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">login</span></code> – that’ll open a login in your browser which will then authorize your session for whatever you want to do!</p>
+<p>The only catch is that if you want to login to a different “tenant” within your account (e.g. if you have an account with free student credits AND the ability to use resources billed to your company or school), you have to specify your tenant (e.g. <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">login</span> <span class="pre">--tenant</span> <span class="pre">&lt;tenant&gt;</span></code>). You can find your tenant ID by going to portal.azure.com, selecting “Azure Active Directory”, and looking at your Overview tab.</p>
+<p>Then you can basically do anything you can do through the web interface from the command line! <a class="reference external" href="https://docs.microsoft.com/en-us/cli/azure/get-started-with-azure-cli">You can find a great quickstart guide</a> for an overview of how it all works.</p>
+<div class="section" id="Managing-Storage-with-Azure-CLI">
+<h2>Managing Storage with Azure CLI<a class="headerlink" href="#Managing-Storage-with-Azure-CLI" title="Permalink to this headline">¶</a></h2>
+<p>The one set of tools within the Azure CLI I <em>will</em> make sure to point out are tools for uploading and downloading data. There’s <a class="reference external" href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-cli">a tutorial here</a>, but the basic syntax is very simple:</p>
+<p><strong>Upload Data:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az storage blob upload <span class="se">\</span>
+    --account-name &lt;storage-account&gt; <span class="se">\</span>
+    --container-name &lt;container&gt; <span class="se">\</span>
+    --name helloworld <span class="se">\</span>
+    --file helloworld <span class="se">\</span>
+    --auth-mode login
+</pre></div>
 </div>
-<div class="section" id="Managing-Storage-with-Python">
-<h2>Managing Storage with Python<a class="headerlink" href="#Managing-Storage-with-Python" title="Permalink to this headline">¶</a></h2>
-<p>Want to do this with Python instead? Here ya go! Just be aware that the code that runs this will hang for a LONG time while this upload takes place…</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">azure.storage.blob</span> <span class="kn">import</span> <span class="n">BlobServiceClient</span>
-<span class="c1"># Load connection string so y&#39;all can&#39;t see it!</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;~/azure_secrets/azure_sa_connection_string.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">connection_string</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-
-<span class="c1"># Connect to storage account</span>
-<span class="n">blob_service_client</span> <span class="o">=</span> <span class="n">BlobServiceClient</span><span class="o">.</span><span class="n">from_connection_string</span><span class="p">(</span><span class="n">connection_string</span><span class="p">)</span>
-
-<span class="c1"># Because I have to rerun this file</span>
-<span class="c1"># a lot, first I&#39;ll see if container already</span>
-<span class="c1"># exists, and if it is, I&#39;ll delete it.</span>
-<span class="c1"># You won&#39;t really need this block...</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">blob_service_client</span><span class="o">.</span><span class="n">delete_container</span><span class="p">(</span><span class="s1">&#39;temperatures&#39;</span><span class="p">)</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span> <span class="c1"># Give operation time to finish.</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Container found and deleted&quot;</span><span class="p">)</span>
-<span class="k">except</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No container to delete!&quot;</span><span class="p">)</span>
-
-<span class="c1"># Now create container!</span>
-<span class="n">container_client</span> <span class="o">=</span> <span class="n">blob_service_client</span><span class="o">.</span><span class="n">create_container</span><span class="p">(</span><span class="s1">&#39;temperatures&#39;</span><span class="p">)</span>
-
-
-<span class="c1"># Prep upload</span>
-
-<span class="n">blob_client</span> <span class="o">=</span> <span class="n">blob_service_client</span><span class="o">.</span><span class="n">get_blob_client</span><span class="p">(</span><span class="n">container</span><span class="o">=</span><span class="s1">&#39;temperatures&#39;</span><span class="p">,</span>
-                                                  <span class="n">blob</span><span class="o">=</span><span class="s1">&#39;ghcnd_daily_30gb.tar.gz&#39;</span><span class="p">)</span>
-
-<span class="n">file_directory</span> <span class="o">=</span> <span class="s1">&#39;/users/nick/dropbox/MIDS_Data_Prep/&#39;</span> \
-                 <span class="s1">&#39;ClimateData/processed_for_students/&#39;</span> \
-                 <span class="s1">&#39;global_climate_data/&#39;</span>
-
-<span class="n">files_to_upload</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ghcnd_daily_30gb.dat&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;ghcnd-stations.txt&#39;</span><span class="p">]</span>
-
-<span class="c1"># Upload our file!</span>
-<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files_to_upload</span><span class="p">:</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_directory</span> <span class="o">+</span> <span class="n">f</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
-        <span class="n">blob_client</span><span class="o">.</span><span class="n">upload_blob</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-
-<span class="c1"># Check to make sure it worked:</span>
-<span class="n">blob_list</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">list_blobs</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">blob</span> <span class="ow">in</span> <span class="n">blob_list</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">blob</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<p><strong>Download Data:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az storage blob download <span class="se">\</span>
+    --account-name &lt;storage-account&gt; <span class="se">\</span>
+    --container-name &lt;container&gt; <span class="se">\</span>
+    --name helloworld <span class="se">\</span>
+    --file ~/destination/path/for/file <span class="se">\</span>
+    --auth-mode login
 </pre></div>
 </div>
 </div>
-<div class="section" id="AzCopy">
-<h2>AzCopy<a class="headerlink" href="#AzCopy" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Moving-Lots-of-Data?">
+<h2>Moving Lots of Data?<a class="headerlink" href="#Moving-Lots-of-Data?" title="Permalink to this headline">¶</a></h2>
+<p>The Azure CLI is a good tool, but if you’re moving data around a lot, here’s an even better tool that may be worth your investment: AzCopy. It’s a little less friendly to setup than the Azure CLI, but its much more powerful.</p>
+<p>For example, we often have folders of data we want to mirror on Azure, use for computations, then when we’re done running some calculations, we might want to bring the updated version of the folder back to our computer. Rather than moving data file by file with Azure CLI, or even just copying the data all together, we can use <code class="docutils literal notranslate"><span class="pre">azcopy</span></code> to <em>sync</em> the two folders – you just point at the folder you want to sync, and it will synchronize the contents across platforms, transfering only the data
+that’s actually different between two folders (like <code class="docutils literal notranslate"><span class="pre">rsync</span></code>, if you know what that is!)</p>
+<p>So here’s a setup guide for AzCopy, sorry it’s kinda annoying.</p>
 <div class="section" id="Installing-azcopy">
 <h3>Installing azcopy<a class="headerlink" href="#Installing-azcopy" title="Permalink to this headline">¶</a></h3>
 <p>To install <code class="docutils literal notranslate"><span class="pre">azcopy</span></code>, download the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10">relevant version from here</a> and unzip the download. The follow these directions:</p>
@@ -345,7 +317,7 @@ div.rendered_html tbody tr:hover {
 <p><strong>Linux</strong></p>
 <p>See above, but skip step 4.</p>
 <p><strong>Windows</strong>:</p>
-<p>Damned if I know!</p>
+<p>Similarly, you want to copy the downloaded folder somewhere on your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> variable, so run <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$PATH</span></code>, then put the <code class="docutils literal notranslate"><span class="pre">azcopy</span></code> file in any folder in that list of folders.</p>
 </div>
 <div class="section" id="Authorizing-azcopy">
 <h3>Authorizing azcopy<a class="headerlink" href="#Authorizing-azcopy" title="Permalink to this headline">¶</a></h3>
@@ -422,8 +394,6 @@ azcopy login --tenant-id <span class="s2">&quot;XXXXXX-XXXX-XXXX-XXXX-XXXXXXXX&q
 </pre></div>
 </div>
 <p>Here’s the full <code class="docutils literal notranslate"><span class="pre">azcopy</span></code> <a class="reference external" href="https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10">documentation</a>.</p>
-<p><strong>Syncing Folders with azcopy</strong></p>
-<p>Often we have a copy of a folder we want mirrored on Azure, and then when we’re done running some calculations, we want to bring the updated version of the folder back to our computer. Rather than copying the whole folder, though, you can run <code class="docutils literal notranslate"><span class="pre">azcopy</span> <span class="pre">sync</span></code>, which is smart enough to only transfer things that are different between two folders (like <code class="docutils literal notranslate"><span class="pre">rsync</span></code>, if you know what that is!)</p>
 </div>
 </div>
 </div>
@@ -472,16 +442,10 @@ azcopy login --tenant-id <span class="s2">&quot;XXXXXX-XXXX-XXXX-XXXX-XXXXXXXX&q
 <li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
 </ul>
 <p class="caption"><span class="caption-text">CLOUD</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_azureml.html">Starting with AzureML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Set Up Dask on AzureML</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Managing Azure Storage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Azure-CLI">Azure CLI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Managing-Storage-with-Python">Managing Storage with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#AzCopy">AzCopy</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_mountingazure.html">More Storage Tricks</a></li>
 </ul>
 <p class="caption"><span class="caption-text">SKILLS</span></p>
@@ -507,8 +471,6 @@ azcopy login --tenant-id <span class="s2">&quot;XXXXXX-XXXX-XXXX-XXXX-XXXXXXXX&q
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="cloud_dask.html" title="previous chapter">Setting up a Dask Cluster on AzureML</a></li>
-      <li>Next: <a href="cloud_mountingazure.html" title="next chapter">Mount Your Container as a Drive with blobfuse</a></li>
   </ul></li>
 </ul>
 </div>
@@ -542,7 +504,7 @@ azcopy login --tenant-id <span class="s2">&quot;XXXXXX-XXXX-XXXX-XXXX-XXXXXXXX&q
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/cloud_azurestorage.ipynb.txt"
+      <a href="_sources/cloud_azure_cli.ipynb.txt"
           rel="nofollow">Page source</a>
     </div>
 
