@@ -161,3 +161,8 @@ debug2: channel 5: window 1998760 sent adjust 98392
 debug2: channel 4: rcvd adjust 108837
 debug2: channel 4: rcvd adjust 127210
 debug2: channel 4: rcvd adjust 105393
+debug2: channel 5: window 1997544 sent adjust 99608
+debug2: channel 5: window 1998760 sent adjust 98392
+debug2: channel 5: window 1998748 sent adjust 98404
+debug2: channel 4: rcvd adjust 109385
+debug2: channel 5: window 1982741 sent adjust 114411

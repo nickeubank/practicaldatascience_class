@@ -1893,8 +1893,8 @@ rather <code class="docutils literal notranslate"><span class="pre">temps</span>
 <p>OK, now we have our subset, and we can calculate what we want. Note that in reality, the data for this one station is actually easily small enough to put on my own computer, so I could have just run <code class="docutils literal notranslate"><span class="pre">data_on_own_comp</span> <span class="pre">=</span> <span class="pre">temps.compute()</span></code> above and moved the final dataset to my personal computer. Indeed, as you may recall from our <a class="reference internal" href="parallelism.html"><span class="doc">previous lesson on parallelism</span></a>, if you don’t have to use distributed computing, you probably don’t want to! Even the authors of <code class="docutils literal notranslate"><span class="pre">dask</span></code> <a class="reference external" href="https://docs.dask.org/en/latest/dataframe-best-practices.html#use-pandas">are
 quick to remind users</a>: “For data that fits into RAM, Pandas can often be faster and easier to use than Dask DataFrame. While ‘Big Data’ tools can be exciting, they are almost always worse than normal data tools while those remain appropriate.”</p>
 <p>But let’s carry on with this on the cluster for practice.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1902,11 +1902,31 @@ quick to remind users</a>: “For data that fits into RAM, Pandas can often be f
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+-9999    613
+ 122      23
+ 300      21
+ 244      20
+ 294      20
+        ...
+-78        1
+-67        1
+-56        1
+ 361       1
+ 378       1
+Name: value31, Length: 87, dtype: int64
+</pre></div></div>
+</div>
 <p>Now the really cool thing: if we use the link for our dashboard we got when we created our dask cluster, we can see our cluster working (note the exact number of processes will vary depending on how you specified your cluster above. This pick comes from a 16 core cluster):</p>
 <p><img alt="azure_dask_scalingup" src="_images/azure_dask_scalingup.png" /></p>
 <p>So let’s replace those with missing, calculate averages across all the days in each month, and also convert from 1/10th of a degree Centigrade to Centigrade units:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1924,7 +1944,7 @@ quick to remind users</a>: “For data that fits into RAM, Pandas can often be f
 </div>
 <p>Now finally we can collect our results on our personal computer, create a “time” variable that uses years and months for plotting, and plot our temperatures!</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1934,8 +1954,8 @@ quick to remind users</a>: “For data that fits into RAM, Pandas can often be f
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1951,6 +1971,30 @@ quick to remind users</a>: “For data that fits into RAM, Pandas can often be f
 <span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/Nick/miniconda3/lib/python3.7/site-packages/plotnine/stats/smoothers.py:311: PlotnineWarning: Confidence intervals are not yet implementedfor lowess smoothings.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/cloud_dask_36_1.png" src="_images/cloud_dask_36_1.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;ggplot: (8787636679641)&gt;
+</pre></div></div>
 </div>
 <p>And that, my friends, is global warming.</p>
 </div>
