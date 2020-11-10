@@ -18,7 +18,6 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Managing, Uploading and Downloading Data to Azure" href="cloud_azurestorage.html" />
     <link rel="prev" title="AzureML" href="cloud_azureml.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -473,7 +472,7 @@ WARNING - If &#39;script&#39; has been provided here and a script file name has 
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">numpy</span></code> and <code class="docutils literal notranslate"><span class="pre">python</span></code> issues don’t seem like to cause big problems (though if you have a mismatch and get problems down the road, consider changing your Python version!), but the fact that the schedulers and workers have one package I don’t (<code class="docutils literal notranslate"><span class="pre">lz4</span></code>) is a problem, so I installed it before moving forward. (<code class="docutils literal notranslate"><span class="pre">lz4</span></code> is a compression algorithm used to send data back and forth, so not having it is a big problem).</p>
-<p>First, we’ll contect to the container where I put the climate data. As you saw in the last exercise, you can upload data using the Azure web interface, and I would do that if you want to do these exercises. However there are more efficient tools we’ll cover in the <a class="reference internal" href="cloud_azurestorage.html"><span class="doc">next lesson</span></a>.</p>
+<p>First, we’ll contect to the container where I put the climate data. As you saw in the last exercise, you can upload data using the Azure web interface, and I would do that if you want to do these exercises. However there are more efficient tools we’ll cover in the <a class="reference external" href="cloud_azurestorage.ipynb">next lesson</a>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
@@ -2011,18 +2010,9 @@ concurrent.futures._base.CancelledError
 <li><p>Curious how <code class="docutils literal notranslate"><span class="pre">dask</span></code> compares to other tools for distributed computing? Here’s a <a class="reference external" href="https://docs.dask.org/en/latest/spark.html">conceptual comparison to Spark</a>, and here’s a <a class="reference external" href="https://arxiv.org/abs/1907.13030">case study comparison of performance</a>. Comparisons will usually depend a lot on the specifics of the work being done, but at least in this case, <code class="docutils literal notranslate"><span class="pre">dask</span></code> was a little faster than Spark. In the interview noted below, they also cite an example of <code class="docutils literal notranslate"><span class="pre">dask</span></code> beating Spark by 40x in a
 project they worked on. And here’s <a class="reference external" href="https://www.saturncloud.io/s/random-forest-on-gpus-2000x-faster-than-apache-spark/">one report of a 2000x speed up doing random forests</a> moving from Spark to dask. As they say, mileage may vary, but I think it’s safe to say you aren’t giving anything up performance wise by using <code class="docutils literal notranslate"><span class="pre">dask</span></code> and its familiar syntax instead of Spark.</p></li>
 <li><p>Interested in using <code class="docutils literal notranslate"><span class="pre">dask</span></code> in your company and want help? There’s a great new company created by the founders of <code class="docutils literal notranslate"><span class="pre">dask</span></code> to provide enterprise support for <code class="docutils literal notranslate"><span class="pre">dask</span></code> <a class="reference external" href="https://coiled.io/">called coiled</a> (No, I have no affiliation with them, I just think these companies that try to offer paid support services to businesses to help them move from closed source software to open source are a great way to help make open source software better). You can also hear a fun interview with the
-founders about <cite>both ``dask`</cite> and coiled here &lt;<a class="reference external" href="https://talkpython.fm/episodes/show/285/dask-as-a-platform-service-with-coiled">https://talkpython.fm/episodes/show/285/dask-as-a-platform-service-with-coiled</a>&gt;`__.</p></li>
+founders about <a class="reference external" href="https://talkpython.fm/episodes/show/285/dask-as-a-platform-service-with-coiled">both dask and coiled here</a>.</p></li>
 <li><p>The folks from coiled have also compiled a <a class="reference external" href="https://coiled.io/videos/">great collection of videos and tutorials about dask and Python at scale here</a></p></li>
 <li><p>Working with GPUs? There’s a project to offer the kind of CPU parallelization we get from <code class="docutils literal notranslate"><span class="pre">dask</span></code> for GPUs called <a class="reference external" href="https://docs.rapids.ai/api/cudf/stable/dask-cudf.html">dask-cudf</a> (part of the <a class="reference external" href="https://rapids.ai/index.html">RAPIDS project</a>. The project is young but growing quickly. My guess, though, is that those libraries will become the infrastructure for updates to tools like <code class="docutils literal notranslate"><span class="pre">dask-ml</span></code> rather than something most applied people need to play with. But putting it here as an FYI!</p></li>
-</ul>
-</div>
-<div class="section" id="Next-Steps">
-<h2>Next Steps<a class="headerlink" href="#Next-Steps" title="Permalink to this headline">¶</a></h2>
-<p>OK, that’s our short demo of computing on Azure with dask. I hope you found it useful!</p>
-<p>As for next steps, I’d suggest the following readings, after which you should go play with your own project!</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="cloud_azurestorage.html"><span class="doc">Managing Storage</span></a>: A discussion of better tools for uploading, downloading, and synchronizing data.</p></li>
-<li><p><a class="reference internal" href="cloud_mountingazure.html"><span class="doc">Mounting Storage</span></a>: A way to set-up easier access to your storage from your compute nodes.</p></li>
 </ul>
 </div>
 </div>
@@ -2079,10 +2069,8 @@ founders about <cite>both ``dask`</cite> and coiled here &lt;<a class="reference
 <li class="toctree-l2"><a class="reference internal" href="#Using-Your-Cluster">Using Your Cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Done-with-your-cluster?">Done with your cluster?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Extensions-and-Fun-Resources">Extensions and Fun Resources</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Next-Steps">Next Steps</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_azurestorage.html">Managing Azure Storage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_mountingazure.html">More Storage Tricks</a></li>
 </ul>
 <p class="caption"><span class="caption-text">SKILLS</span></p>
@@ -2109,7 +2097,6 @@ founders about <cite>both ``dask`</cite> and coiled here &lt;<a class="reference
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="cloud_azureml.html" title="previous chapter">AzureML</a></li>
-      <li>Next: <a href="cloud_azurestorage.html" title="next chapter">Managing, Uploading and Downloading Data to Azure</a></li>
   </ul></li>
 </ul>
 </div>

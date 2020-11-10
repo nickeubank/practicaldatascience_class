@@ -82,8 +82,8 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
    What Is The Cloud? <cloud_what_is_it>
    Starting with AzureML <cloud_azureml>
    Set Up Dask on AzureML <cloud_dask>
-   Managing Azure Storage <cloud_azurestorage>
-   More Storage Tricks <cloud_mountingazure>
+   Azure Command Line Tools <cloud_azure_cli>
+   Azure Authentication <cloud_authentication>
 
 .. toctree:: 
    :maxdepth: 2

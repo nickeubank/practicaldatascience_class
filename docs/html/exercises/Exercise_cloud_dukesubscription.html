@@ -5,21 +5,21 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>More Cloud Concepts and Vocabulary &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
+    <title>Time to Scale! &#8212; Practical Data Science</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
    
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
@@ -267,38 +267,8 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="More-Cloud-Concepts-and-Vocabulary">
-<h1>More Cloud Concepts and Vocabulary<a class="headerlink" href="#More-Cloud-Concepts-and-Vocabulary" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="Azure-Active-Directory">
-<h2>Azure Active Directory<a class="headerlink" href="#Azure-Active-Directory" title="Permalink to this headline">¶</a></h2>
-<p>OK, so what on earth <em>is</em> this “Active Directory” / “Azure AD” referenced everywhere?!</p>
-<p>You may have noticed in the preceding exercises that sometimes we got access to Azure resources by passing secret keys consisting of a long string of letters and numbers (which I had to load from files so you couldn’t see them), and sometimes we ran a code that directed us to visit a webpage and login using our usual Azure logins. That’s because Azure (and indeed all cloud platforms) current support a range of authentication methods, some very basic (those secret keys), and some much more
-sophisticated (the redirect to a web page). Here we’ll provide a basic overview of why there are different options, and why you might prefer one of the other.</p>
-<div class="section" id="Keys-and-Secrets">
-<h3>Keys and Secrets<a class="headerlink" href="#Keys-and-Secrets" title="Permalink to this headline">¶</a></h3>
-<p>Keys and secrets are long strings of numbers and symbols that are used as passwords for various services. For example, we accessed our storage by using a very long secret key.</p>
-<p>Keys are often really easy to use initially, but there are a number of problems with secrets and keys to be aware of:</p>
-<ul class="simple">
-<li><p><strong>Not personalized:</strong> Suppose that somehow your key gets out – you inadvertently put it in a public github repo file, or there’s some concern that a resource you created wasn’t secured. Well, if you now have to cancel that key, it will immediately break <em>everything</em> currently using that key! So a small leak results in you having to reset all your resources and networks.</p></li>
-<li><p><strong>Hard to cycle:</strong> Similarly, its good security practice to cycle your keys, meaning that from time to time you change them (just like your password!). But with a hard-coded key, that causes problems because you may have many resources all using a specific key, and if you try to change it you’d have to go to all those services and change the key to keep them working.</p></li>
-<li><p><strong>No scope:</strong> With a key, people usually either have the key or they don’t, making access binary. You usually can’t create a key that gives people read-only access, and a key that gives people edit access, etc.</p></li>
-</ul>
-</div>
-<div class="section" id="Azure-Active-Directory-(Azure-AD-or-ADD)">
-<h3>Azure Active Directory (Azure AD or ADD)<a class="headerlink" href="#Azure-Active-Directory-(Azure-AD-or-ADD)" title="Permalink to this headline">¶</a></h3>
-<p>The alternative to secrets and keys is to use a third-party service to manage authentication. You may not realize it, but that’s what you’re doing any time you click that “Sign-in with Google” or “Sign-in with Facebook” button on a website.</p>
-</div>
-<div class="section" id="SSH-and-SSH-Keys">
-<h3>SSH and SSH Keys<a class="headerlink" href="#SSH-and-SSH-Keys" title="Permalink to this headline">¶</a></h3>
-</div>
-</div>
-<div class="section" id="Virtualization-and-Management">
-<h2>Virtualization and Management<a class="headerlink" href="#Virtualization-and-Management" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="Docker">
-<h3>Docker<a class="headerlink" href="#Docker" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="Kubernetes">
-<h3>Kubernetes<a class="headerlink" href="#Kubernetes" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="Time-to-Scale!">
+<h1>Time to Scale!<a class="headerlink" href="#Time-to-Scale!" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -306,8 +276,6 @@ sophisticated (the redirect to a web page). Here we’ll provide a basic overvie
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span>
 </pre></div>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -319,7 +287,7 @@ sophisticated (the redirect to a web page). Here we’ll provide a basic overvie
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">Practical DS</a></h1>
+<h1 class="logo"><a href="../index.html">Practical DS</a></h1>
 
 
 
@@ -330,68 +298,68 @@ sophisticated (the redirect to a web page). Here we’ll provide a basic overvie
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="class_schedule.html">CLASS SCHEDULE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../class_schedule.html">CLASS SCHEDULE</a></li>
 </ul>
 <p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="setup_environment.html">Setting Up Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="managing_python_packages.html">Managing Packages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_v_r.html">Python / R Differences</a></li>
-<li class="toctree-l1"><a class="reference internal" href="vars_v_objects.html">Python: Vars v Objects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ints_and_floats.html">Numbers in Computers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pandas_series.html">Pandas 1: Series</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pandas_dataframes.html">Pandas 2: DataFrames</a></li>
-<li class="toctree-l1"><a class="reference internal" href="plotting_part1.html">Plotting, Basics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="plotting_part2.html">Plotting, Advanced</a></li>
-<li class="toctree-l1"><a class="reference internal" href="views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cleaning_editingvalues.html">Cleaning: Editing Values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../setup_environment.html">Setting Up Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../managing_python_packages.html">Managing Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pandas_dataframes.html">Pandas 2: DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plotting_part2.html">Plotting, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cleaning_editingvalues.html">Cleaning: Editing Values</a></li>
 </ul>
 <p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="command_line_part1.html">Command Line, Basics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="command_line_part2.html">Command Line, Advanced</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jupyter.html">Jupyter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="git_and_github.html">Git and Github</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pr_review.html">Reviewing Code on Github</a></li>
-<li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../jupyter.html">Jupyter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git_and_github.html">Git and Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pr_review.html">Reviewing Code on Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parquet.html">Parquet Format</a></li>
 </ul>
 <p class="caption"><span class="caption-text">CLOUD</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_azureml.html">Starting with AzureML</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Set Up Dask on AzureML</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_mountingazure.html">More Storage Tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_what_is_it.html">What Is The Cloud?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_azureml.html">Starting with AzureML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_dask.html">Set Up Dask on AzureML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_mountingazure.html">More Storage Tricks</a></li>
 </ul>
 <p class="caption"><span class="caption-text">SKILLS</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Getting Help Online</a></li>
-<li class="toctree-l1"><a class="reference internal" href="defensive_programming.html">Defensive Programming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="what_is_big_data.html">What is Big Data?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="big_data_strategies.html">Working with Big Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="performance_understanding.html">Understanding Performance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="backwards_design.html">Backwards Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow.html">Workflow Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../what_is_big_data.html">What is Big Data?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../big_data_strategies.html">Working with Big Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance_solutions.html">Solving Performance Probs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../backwards_design.html">Backwards Design</a></li>
 </ul>
 <p class="caption"><span class="caption-text">OTHER</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="not_a_mids_student.html">Not a MIDS Student?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cheatsheets.html">Cheat Sheets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cheatsheets.html">Cheat Sheets</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
   </ul></li>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
@@ -418,7 +386,7 @@ sophisticated (the redirect to a web page). Here we’ll provide a basic overvie
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/cloud_more_concepts.ipynb.txt"
+      <a href="../_sources/exercises/Exercise_cloud_dukesubscription.ipynb.txt"
           rel="nofollow">Page source</a>
     </div>
 

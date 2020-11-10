@@ -82,6 +82,6 @@
 - `Getting Setup on Azure <cloud_azureml.ipynb>`_
 - `Dask on Azure <cloud_dask.ipynb>`_",`Link <exercises/Exercise_azure_arcos.ipynb>`_
 "Thurs, Nov 12","Distributed Computing, Azure 2","- **OPIOID PROJECT DUE (Extensions available upon request to assigned date for PDS final)**
-- `Azure from Command Line <cloud_azure_cli.ipynb>`_
-- `More Azure Concepts <cloud_more_concepts.ipynb>`_",
+- `More Azure Concepts <cloud_authentication.ipynb>`_
+- `Azure from Command Line <cloud_azure_cli.ipynb>`_",
 TBD,Julia,`Julia <https://www.youtube.com/watch?v=C4dMYHzW-SY>`_,
