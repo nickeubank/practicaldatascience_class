@@ -284,10 +284,13 @@ don’t</span></a>!</p>
 <p>In addition, <em>most</em> people will also need to run the following installs:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">adlfs</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="n">lz4</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">jupyterlab</span> <span class="o">--</span><span class="n">upgrade</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">dask</span> <span class="o">--</span><span class="n">upgrade</span>
 </pre></div>
 </div>
 <p>Note that <code class="docutils literal notranslate"><span class="pre">dask_cloudprovider</span></code> sometimes doesn’t load the right version if you don’t specify, and as of October 2020 the right version isn’t even on <code class="docutils literal notranslate"><span class="pre">conda-forge</span></code>, so don’t use <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span></code>. You can also pip install <code class="docutils literal notranslate"><span class="pre">azure-storage-blob</span></code> if you prefer <code class="docutils literal notranslate"><span class="pre">pip</span></code> to <code class="docutils literal notranslate"><span class="pre">conda</span></code>.</p>
-<p><strong>If you are using Jupyter Lab:</strong> the dask_cloudprovider package makes use of IPython Widgets, which aren’t installed in Jupyter Lab by default. So if you’re using Jupyter Lab, please install the <a class="reference external" href="https://ipywidgets.readthedocs.io/en/stable/user_install.html#installing-the-jupyterlab-extension">IPython Widget extension</a> before you move forward! If, after you type <code class="docutils literal notranslate"><span class="pre">amlcluster</span></code> after creating it below, you see <code class="docutils literal notranslate"><span class="pre">VBox(children=</span></code>…, that means you didn’t successfully install the widget.</p>
+<p><strong>If you are using Jupyter Lab:</strong> the dask_cloudprovider package makes use of IPython Widgets, which aren’t installed in Jupyter Lab by default. So if you’re using Jupyter Lab, please install the <a class="reference external" href="https://ipywidgets.readthedocs.io/en/stable/user_install.html">IPython Widget extension</a> before you move forward! If, after you type <code class="docutils literal notranslate"><span class="pre">amlcluster</span></code> after creating it below, you see <code class="docutils literal notranslate"><span class="pre">VBox(children=</span></code>…, that means you didn’t successfully install the widget.</p>
+<p><strong>If you get an ``KeyError: ‘workers’``:</strong> You probably have an old version of dask. Make sure to run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">dask</span> <span class="pre">--upgrade</span></code> (I’m running 2.30).</p>
 <div class="section" id="Starting-a-Dask-Cluster">
 <h2>Starting a Dask Cluster<a class="headerlink" href="#Starting-a-Dask-Cluster" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
@@ -1987,13 +1990,22 @@ Name: value31, Length: 87, dtype: int64
 <img alt="_images/cloud_dask_36_1.png" src="_images/cloud_dask_36_1.png" />
 </div>
 </div>
-<div class="nboutput nblast docutils container">
+<div class="nboutput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 &lt;ggplot: (8787636679641)&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+WARNING - Retrying (Retry(total=2, connect=2, read=3, redirect=None, status=None)) after connection broken by &#39;NewConnectionError(&#39;&lt;urllib3.connection.HTTPSConnection object at 0x7fe06d1a40d0&gt;: Failed to establish a new connection: [Errno 60] Operation timed out&#39;)&#39;: /history/v1.0/subscriptions/bab5ec70-4531-48dc-9d25-2d73206d5741/resourceGroups/nce8rg/providers/Microsoft.MachineLearningServices/workspaces/nce8ws/experiments/dask-cloudprovider/runs/dask-cloudprovider_1605035025_604db21f
+WARNING - Retrying (Retry(total=2, connect=2, read=3, redirect=None, status=None)) after connection broken by &#39;NewConnectionError(&#39;&lt;urllib3.connection.HTTPSConnection object at 0x7fe06d184490&gt;: Failed to establish a new connection: [Errno 61] Connection refused&#39;)&#39;: /history/v1.0/subscriptions/bab5ec70-4531-48dc-9d25-2d73206d5741/resourceGroups/nce8rg/providers/Microsoft.MachineLearningServices/workspaces/nce8ws/experiments/dask-cloudprovider/runs/dask-cloudprovider_1605035025_604db21f
 </pre></div></div>
 </div>
 <p>And that, my friends, is global warming.</p>

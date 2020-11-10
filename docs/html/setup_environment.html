@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Installing Python, Anaconda, and Atom &#8212; Practical Data Science</title>
+    <title>Installing Python, Conda, and VSCode &#8212; Practical Data Science</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -36,39 +36,28 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="Installing-Python,-Anaconda,-and-Atom">
-<h1>Installing Python, Anaconda, and Atom<a class="headerlink" href="#Installing-Python,-Anaconda,-and-Atom" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="Installing-Python,-Conda,-and-VSCode">
+<h1>Installing Python, Conda, and VSCode<a class="headerlink" href="#Installing-Python,-Conda,-and-VSCode" title="Permalink to this headline">¶</a></h1>
 <p>In this tutorial, we’ll go over how to set up all the tools you need to not only work effectively in Python, but also get going with the Jupyter ecosystem, which supports not only Python, but also R, Julia, and more.</p>
 <div class="section" id="Installing-Atom">
 <h2>Installing Atom<a class="headerlink" href="#Installing-Atom" title="Permalink to this headline">¶</a></h2>
-<p>Before we install Anaconda, I would first suggest everyone install a good text editor if you don’t already have one. I recommend Atom, installation and setup directions for which can be <a class="reference internal" href="atom_text_editor.html"><span class="doc">found here</span></a>.</p>
+<p>Before we install miniconda, I would first suggest everyone install a good text editor if you don’t already have one. I recommend VSCode, installation and setup directions for which can be <a class="reference external" href="vscode_text_editor.ipynb">found here</a>.</p>
 </div>
-<div class="section" id="Installing-Anaconda">
-<h2>Installing Anaconda<a class="headerlink" href="#Installing-Anaconda" title="Permalink to this headline">¶</a></h2>
-<p>The first thing we need to do is download the Anaconda Python distribution. The Anaconda distribution is not the only way to get Python – indeed, there’s a good chance a version of Python is already installed on your computer – but the Anaconda installation does a number of very nice things:</p>
-<ul class="simple">
-<li><p>Installs a clean installation of the latest version of Python</p></li>
-<li><p>Installs of a large number of packages that are commonly used in scientific computing</p></li>
-<li><p>Provides a “package manager” – a tool for installing new packages in the future and updating already installed packages.</p></li>
-</ul>
-<p>To install Python, go to the <a class="reference external" href="https://www.anaconda.com/distribution/#download-section">Anaconda Download page</a>, download and install the most recent Python 3.x version of Anaconda (as of June 2016, this was Python 3.7).</p>
-<div class="section" id="Installation-Note-for-Mac-Users">
-<h3>Installation Note for Mac Users<a class="headerlink" href="#Installation-Note-for-Mac-Users" title="Permalink to this headline">¶</a></h3>
-<p><strong>When installing, make sure to choose “Install for Me Only” when you have a choice of installation locations:</strong></p>
-<p><img alt="osx-install-destination" src="_images/osx-install-destination.png" /></p>
-<p>Installing for all users, or picking a location yourself seems to lead to lots of weird problems with the jupyter ecosystem.</p>
-</div>
+<div class="section" id="Installing-miniconda">
+<h2>Installing miniconda<a class="headerlink" href="#Installing-miniconda" title="Permalink to this headline">¶</a></h2>
+<p>The first thing we need to do is download the <code class="docutils literal notranslate"><span class="pre">miniconda</span></code> Python package manager. Note this is distinct from the <em>Anaconda distribution</em>. The Anaconda distribution comes with a ton of pre-installed packages. That’s nice initially, but tends to lead to problems since having all those packages introduces the possibility of package conflicts. So we’ll use <code class="docutils literal notranslate"><span class="pre">miniconda</span></code>, which <em>just</em> installs Python and the package manager. Then you can add only what you need!</p>
+<p>To install Python, go to the <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">miniconda Download page</a>, download and install the most recent Python 3.x version of miniconda (as of Oct 2020, this was Python 3.8). (On a Mac, the <code class="docutils literal notranslate"><span class="pre">Pkg</span></code> installer is easier to use).</p>
 <div class="section" id="Installation-Note-for-Windows-Users">
 <h3>Installation Note for Windows Users<a class="headerlink" href="#Installation-Note-for-Windows-Users" title="Permalink to this headline">¶</a></h3>
 <p>One of the checkboxes during the Windows installation is “do you want to add Anaconda to your PATH?”. Although anaconda recommends against this, it is very helpful for using python using <code class="docutils literal notranslate"><span class="pre">Cmder</span></code>, so select yes. This is easy to change later if you ever feel the need.</p>
 </div>
-<div class="section" id="If-there’s-a-Python-3.7,-why-is-there-also-a-Python-2.7-available?">
-<h3>If there’s a Python 3.7, why is there also a Python 2.7 available?<a class="headerlink" href="#If-there’s-a-Python-3.7,-why-is-there-also-a-Python-2.7-available?" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="If-there’s-a-Python-3.8,-why-is-there-also-a-Python-2.7-available?">
+<h3>If there’s a Python 3.8, why is there also a Python 2.7 available?<a class="headerlink" href="#If-there’s-a-Python-3.8,-why-is-there-also-a-Python-2.7-available?" title="Permalink to this headline">¶</a></h3>
 <p>In 2000, Python 3 was first released. Python 3 fixed a lot of things people disliked about Python, but in the process it made some changes that meant code written in Python 2 would not work any more. To ease the transition to Python 3, both Python 2 and Python 3 have been supported for several years so people could keep running their Python 2 projects while they finished the transition. Almost everything is now in Python 3, so since you don’t have any old code to worry about, you want Python 3.</p>
 </div>
 </div>
-<div class="section" id="Using-Anaconda-with-Oh-My-Zsh-(Macs)">
-<h2>Using Anaconda with Oh-My-Zsh (Macs)<a class="headerlink" href="#Using-Anaconda-with-Oh-My-Zsh-(Macs)" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Using-miniconda-with-Oh-My-Zsh-(Macs)">
+<h2>Using miniconda with Oh-My-Zsh (Macs)<a class="headerlink" href="#Using-miniconda-with-Oh-My-Zsh-(Macs)" title="Permalink to this headline">¶</a></h2>
 <p>If you installed Oh-My-Zsh during the command line exercises (<a class="reference internal" href="command_line_part1.html"><span class="doc">as suggested here</span></a>, then Anaconda won’t work right away. The problem is that when you install Anaconda, it adds some code to the <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> file in your user directory. The <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> file contains code the is run every time you open a new <code class="docutils literal notranslate"><span class="pre">bash</span></code> command line session (as discussed at the end of <a class="reference internal" href="command_line_part2.html"><span class="doc">Advanced Command Line</span></a>), and the code Anaconda adds adds Anaconda
 to your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> variable.</p>
 <p>But Oh-My-Zsh doesn’t run the <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> file when it opens; it runs the <code class="docutils literal notranslate"><span class="pre">.zshrc</span></code> file. So what we have to do is move the code Anaconda put in <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> into <code class="docutils literal notranslate"><span class="pre">.zshrc</span></code>. You can do this as follows:</p>
@@ -168,7 +157,7 @@ bash-3.2$
 </div>
 <div class="section" id="Change-the-Default-Channel">
 <h2>Change the Default Channel<a class="headerlink" href="#Change-the-Default-Channel" title="Permalink to this headline">¶</a></h2>
-<p>One of the main purposes of Anaconda is to help you install and manage Python packages. When installing and updated packages, the Anaconda software actually has the ability to pull packages from any number of sources. As of mid-2019, there’s one group that provides the best source for packages: <code class="docutils literal notranslate"><span class="pre">conda-forge</span></code>. So to make that your system’s default, open the command line (after installing Anaconda – if it was open while installing this won’t work) and type the following two commands:</p>
+<p>One of the main purposes of Anaconda is to help you install and manage Python packages. When installing and updated packages, the Anaconda software actually has the ability to pull packages from any number of sources. As of mid-2020, there’s one group that provides the best source for packages: <code class="docutils literal notranslate"><span class="pre">conda-forge</span></code>. So to make that your system’s default, open the command line (after installing Anaconda – if it was open while installing this won’t work) and type the following two commands:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="n">add</span> <span class="n">channels</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span>
 <span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="nb">set</span> <span class="n">channel_priority</span> <span class="n">strict</span>
 </pre></div>
@@ -200,8 +189,8 @@ bash-3.2$
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Setting Up Python</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Installing-Atom">Installing Atom</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Installing-Anaconda">Installing Anaconda</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Using-Anaconda-with-Oh-My-Zsh-(Macs)">Using Anaconda with Oh-My-Zsh (Macs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Installing-miniconda">Installing miniconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Using-miniconda-with-Oh-My-Zsh-(Macs)">Using miniconda with Oh-My-Zsh (Macs)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Change-the-Default-Channel">Change the Default Channel</a></li>
 </ul>
 </li>
@@ -230,8 +219,8 @@ bash-3.2$
 <li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_azureml.html">Starting with AzureML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Set Up Dask on AzureML</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_azurestorage.html">Managing Azure Storage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_mountingazure.html">More Storage Tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
 </ul>
 <p class="caption"><span class="caption-text">SKILLS</span></p>
 <ul>
@@ -244,6 +233,7 @@ bash-3.2$
 <li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backwards_design.html">Backwards Design</a></li>
 </ul>
 <p class="caption"><span class="caption-text">OTHER</span></p>
 <ul>

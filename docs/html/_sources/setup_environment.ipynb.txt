@@ -4,7 +4,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "# Installing Python, Anaconda, and Atom"
+    "# Installing Python, Conda, and VSCode"
    ]
   },
   {
@@ -20,36 +20,24 @@
    "source": [
     "## Installing Atom\n",
     "\n",
-    "Before we install Anaconda, I would first suggest everyone install a good text editor if you don't already have one. I recommend Atom, installation and setup directions for which can be [found here](atom_text_editor.ipynb)."
+    "Before we install miniconda, I would first suggest everyone install a good text editor if you don't already have one. I recommend VSCode, installation and setup directions for which can be [found here](vscode_text_editor.ipynb)."
    ]
   },
   {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## Installing Anaconda\n",
+    "## Installing miniconda\n",
     "\n",
-    "The first thing we need to do is download the Anaconda Python distribution. The Anaconda distribution is not the only way to get Python – indeed, there’s a good chance a version of Python is already installed on your computer – but the Anaconda installation does a number of very nice things:\n",
+    "The first thing we need to do is download the `miniconda` Python package manager. Note this is distinct from the *Anaconda distribution*. The Anaconda distribution comes with a ton of pre-installed packages. That's nice initially, but tends to lead to problems since having all those packages introduces the possibility of package conflicts. So we'll use `miniconda`, which *just* installs Python and the package manager. Then you can add only what you need!\n",
     "\n",
-    "- Installs a clean installation of the latest version of Python\n",
-    "- Installs of a large number of packages that are commonly used in scientific computing\n",
-    "- Provides a \"package manager\" – a tool for installing new packages in the future and updating already installed packages.\n",
-    "\n",
-    "To install Python, go to the [Anaconda Download page](https://www.anaconda.com/distribution/#download-section), download and install the most recent Python 3.x version of Anaconda (as of June 2016, this was Python 3.7). \n",
-    "\n",
-    "### Installation Note for Mac Users\n",
-    "\n",
-    "**When installing, make sure to choose \"Install for Me Only\" when you have a choice of installation locations:** \n",
-    "\n",
-    "![osx-install-destination](images/osx-install-destination.png)\n",
-    "\n",
-    "Installing for all users, or picking a location yourself seems to lead to lots of weird problems with the jupyter ecosystem. \n",
+    "To install Python, go to the [miniconda Download page](https://docs.conda.io/en/latest/miniconda.html), download and install the most recent Python 3.x version of miniconda (as of Oct 2020, this was Python 3.8). (On a Mac, the `Pkg` installer is easier to use). \n",
     "\n",
     "### Installation Note for Windows Users\n",
     "\n",
     "One of the checkboxes during the Windows installation is \"do you want to add Anaconda to your PATH?\". Although anaconda recommends against this, it is very helpful for using python using `Cmder`, so select yes. This is easy to change later if you ever feel the need.  \n",
     "\n",
-    "### If there's a Python 3.7, why is there also a Python 2.7 available?\n",
+    "### If there's a Python 3.8, why is there also a Python 2.7 available?\n",
     "\n",
     "In 2000, Python 3 was first released. Python 3 fixed a lot of things people disliked about Python, but in the process it made some changes that meant code written in Python 2 would not work any more. To ease the transition to Python 3, both Python 2 and Python 3 have been supported for several years so people could keep running their Python 2 projects while they finished the transition. Almost everything is now in Python 3, so since you don’t have any old code to worry about, you want Python 3."
    ]
@@ -58,7 +46,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## Using Anaconda with Oh-My-Zsh (Macs)\n",
+    "## Using miniconda with Oh-My-Zsh (Macs)\n",
     "\n",
     "If you installed Oh-My-Zsh during the command line exercises ([as suggested here](command_line_part1.ipynb), then Anaconda won't work right away. The problem is that when you install Anaconda, it adds some code to the `.bash_profile` file in your user directory. The `.bash_profile` file contains code the is run every time you open a new `bash` command line session (as discussed at the end of [Advanced Command Line](command_line_part2.ipynb)), and the code Anaconda adds adds Anaconda to your `PATH` variable. \n",
     "\n",
@@ -178,7 +166,7 @@
    "source": [
     "## Change the Default Channel\n",
     "\n",
-    "One of the main purposes of Anaconda is to help you install and manage Python packages. When installing and updated packages, the Anaconda software actually has the ability to pull packages from any number of sources. As of mid-2019, there's one group that provides the best source for packages: `conda-forge`. So to make that your system's default, open the command line (after installing Anaconda -- if it was open while installing this won't work) and type the following two commands:\n",
+    "One of the main purposes of Anaconda is to help you install and manage Python packages. When installing and updated packages, the Anaconda software actually has the ability to pull packages from any number of sources. As of mid-2020, there's one group that provides the best source for packages: `conda-forge`. So to make that your system's default, open the command line (after installing Anaconda -- if it was open while installing this won't work) and type the following two commands:\n",
     "\n",
     "```\n",
     "conda config --add channels conda-forge\n",
@@ -203,7 +191,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.7.3"
+   "version": "3.7.8"
   }
  },
  "nbformat": 4,
