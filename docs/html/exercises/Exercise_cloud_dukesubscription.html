@@ -34,250 +34,32 @@
 
           <div class="body" role="main">
             
-  
-<style>
-/* CSS for nbsphinx extension */
-
-/* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
-    border: none;
-    padding: 0 0;
-    margin: 0;
-    box-shadow: none;
-}
-
-/* avoid gaps between output lines */
-div.nboutput.container div[class*=highlight] pre {
-    line-height: normal;
-}
-
-/* input/output containers */
-div.nbinput.container,
-div.nboutput.container {
-    display: -webkit-flex;
-    display: flex;
-    align-items: flex-start;
-    margin: 0;
-    width: 100%;
-}
-@media (max-width: 540px) {
-    div.nbinput.container,
-    div.nboutput.container {
-        flex-direction: column;
-    }
-}
-
-/* input container */
-div.nbinput.container {
-    padding-top: 5px;
-}
-
-/* last container */
-div.nblast.container {
-    padding-bottom: 5px;
-}
-
-/* input prompt */
-div.nbinput.container div.prompt pre {
-    color: #307FC1;
-}
-
-/* output prompt */
-div.nboutput.container div.prompt pre {
-    color: #BF5B3D;
-}
-
-/* all prompts */
-div.nbinput.container div.prompt,
-div.nboutput.container div.prompt {
-    width: 4.5ex;
-    padding-top: 5px;
-    position: relative;
-    user-select: none;
-}
-
-div.nbinput.container div.prompt > div,
-div.nboutput.container div.prompt > div {
-    position: absolute;
-    right: 0;
-    margin-right: 0.3ex;
-}
-
-@media (max-width: 540px) {
-    div.nbinput.container div.prompt,
-    div.nboutput.container div.prompt {
-        width: unset;
-        text-align: left;
-        padding: 0.4em;
-    }
-    div.nboutput.container div.prompt.empty {
-        padding: 0;
-    }
-
-    div.nbinput.container div.prompt > div,
-    div.nboutput.container div.prompt > div {
-        position: unset;
-    }
-}
-
-/* disable scrollbars on prompts */
-div.nbinput.container div.prompt pre,
-div.nboutput.container div.prompt pre {
-    overflow: hidden;
-}
-
-/* input/output area */
-div.nbinput.container div.input_area,
-div.nboutput.container div.output_area {
-    -webkit-flex: 1;
-    flex: 1;
-    overflow: auto;
-}
-@media (max-width: 540px) {
-    div.nbinput.container div.input_area,
-    div.nboutput.container div.output_area {
-        width: 100%;
-    }
-}
-
-/* input area */
-div.nbinput.container div.input_area {
-    border: 1px solid #e0e0e0;
-    border-radius: 2px;
-    background: #f5f5f5;
-}
-
-/* override MathJax center alignment in output cells */
-div.nboutput.container div[class*=MathJax] {
-    text-align: left !important;
-}
-
-/* override sphinx.ext.imgmath center alignment in output cells */
-div.nboutput.container div.math p {
-    text-align: left;
-}
-
-/* standard error */
-div.nboutput.container div.output_area.stderr {
-    background: #fdd;
-}
-
-/* ANSI colors */
-.ansi-black-fg { color: #3E424D; }
-.ansi-black-bg { background-color: #3E424D; }
-.ansi-black-intense-fg { color: #282C36; }
-.ansi-black-intense-bg { background-color: #282C36; }
-.ansi-red-fg { color: #E75C58; }
-.ansi-red-bg { background-color: #E75C58; }
-.ansi-red-intense-fg { color: #B22B31; }
-.ansi-red-intense-bg { background-color: #B22B31; }
-.ansi-green-fg { color: #00A250; }
-.ansi-green-bg { background-color: #00A250; }
-.ansi-green-intense-fg { color: #007427; }
-.ansi-green-intense-bg { background-color: #007427; }
-.ansi-yellow-fg { color: #DDB62B; }
-.ansi-yellow-bg { background-color: #DDB62B; }
-.ansi-yellow-intense-fg { color: #B27D12; }
-.ansi-yellow-intense-bg { background-color: #B27D12; }
-.ansi-blue-fg { color: #208FFB; }
-.ansi-blue-bg { background-color: #208FFB; }
-.ansi-blue-intense-fg { color: #0065CA; }
-.ansi-blue-intense-bg { background-color: #0065CA; }
-.ansi-magenta-fg { color: #D160C4; }
-.ansi-magenta-bg { background-color: #D160C4; }
-.ansi-magenta-intense-fg { color: #A03196; }
-.ansi-magenta-intense-bg { background-color: #A03196; }
-.ansi-cyan-fg { color: #60C6C8; }
-.ansi-cyan-bg { background-color: #60C6C8; }
-.ansi-cyan-intense-fg { color: #258F8F; }
-.ansi-cyan-intense-bg { background-color: #258F8F; }
-.ansi-white-fg { color: #C5C1B4; }
-.ansi-white-bg { background-color: #C5C1B4; }
-.ansi-white-intense-fg { color: #A1A6B2; }
-.ansi-white-intense-bg { background-color: #A1A6B2; }
-
-.ansi-default-inverse-fg { color: #FFFFFF; }
-.ansi-default-inverse-bg { background-color: #000000; }
-
-.ansi-bold { font-weight: bold; }
-.ansi-underline { text-decoration: underline; }
-
-
-div.nbinput.container div.input_area div[class*=highlight] > pre,
-div.nboutput.container div.output_area div[class*=highlight] > pre,
-div.nboutput.container div.output_area div[class*=highlight].math,
-div.nboutput.container div.output_area.rendered_html,
-div.nboutput.container div.output_area > div.output_javascript,
-div.nboutput.container div.output_area:not(.rendered_html) > img{
-    padding: 5px;
-}
-
-/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
-div.nbinput.container div.input_area > div[class^='highlight'],
-div.nboutput.container div.output_area > div[class^='highlight']{
-    overflow-y: hidden;
-}
-
-/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
-    display: none;
-}
-
-/* Some additional styling taken form the Jupyter notebook CSS */
-div.rendered_html table {
-  border: none;
-  border-collapse: collapse;
-  border-spacing: 0;
-  color: black;
-  font-size: 12px;
-  table-layout: fixed;
-}
-div.rendered_html thead {
-  border-bottom: 1px solid black;
-  vertical-align: bottom;
-}
-div.rendered_html tr,
-div.rendered_html th,
-div.rendered_html td {
-  text-align: right;
-  vertical-align: middle;
-  padding: 0.5em 0.5em;
-  line-height: normal;
-  white-space: normal;
-  max-width: none;
-  border: none;
-}
-div.rendered_html th {
-  font-weight: bold;
-}
-div.rendered_html tbody tr:nth-child(odd) {
-  background: #f5f5f5;
-}
-div.rendered_html tbody tr:hover {
-  background: rgba(66, 165, 245, 0.2);
-}
-</style>
-<div class="section" id="Time-to-Scale!">
+  <div class="section" id="Time-to-Scale!">
 <h1>Time to Scale!<a class="headerlink" href="#Time-to-Scale!" title="Permalink to this headline">¶</a></h1>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<p><strong>If you are not a Duke MIDS student:</strong> The following exercises are, I’m afraid, specially tailored to Duke students. You <em>can</em> do them if you’re not a Duke student, but you’ll have to pay 💰 to Azure. Sorry! My best guess is that this will cost &lt;30 USD per person, but if you take a couple hours to do it, it could be more.</p>
+<p>The plan for today is relatively simple: we’re gonna take what we did in our <a class="reference external" href="cloud_azure_arcos.ipynb">last exercise</a>, and scale it up!</p>
+<p>To make this work, I’ve added one member from each pair from last week to an Azure Resource Group tied to a Duke MIDS Azure subscription. In other words: we’re gonna actually pay for some compute today!</p>
+<p><strong>(1)</strong> To begin, go into Azure and create a new Machine Learning Workspace under the <code class="docutils literal notranslate"><span class="pre">practicalds2020rg</span></code> Resource Group (which should now be an option in the Resource Group dropdown menu.</p>
+<p><strong>(2)</strong> Now start a new Jupyter notebook and create a new Workspace object. Note that you will probably get an error saying you don’t have access – that’s because you need to re-authenticate your computer so that Python is connecting to your Duke resources, not the resources you had access to under your free student account / free new user account. You can review details of how to do <a class="reference external" href="https://www.practicaldatascience.org/html/cloud_dask.html#Starting-a-Dask-Cluster">this here</a>.</p>
+<p>Note you will need a Subscription ID, which I’ll provide in class. (if you’re not at Duke, this will be your paid account Subscription ID).</p>
+<p><strong>(3)</strong> Start up a new cluster just like in the last exercise, but this time instead of specifying <code class="docutils literal notranslate"><span class="pre">vm_size=&quot;Standard_DS11_v2</span></code> (small VMs with only 2 CPUs per node), set <code class="docutils literal notranslate"><span class="pre">vm_size=&quot;Standard_DS4_v2&quot;</span></code> (VMs with 8 CPUs per node), and set <code class="docutils literal notranslate"><span class="pre">initial_node_count=2</span></code> (don’t worry, we’ll scale that later).</p>
+<p><strong>(4)</strong> Today we’ll be working with the full 80GB 2008-2012 Washington Post Arcos dataset. To save time, I’ve already uploaded this data and made it public, so you can access it with the following specifications:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">storage_options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;account_name&#39;</span><span class="p">:</span> <span class="s1">&#39;practicalds2020sa&#39;</span><span class="p">}</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;az://practicalds2020arcos/arcos_*.tsv&#39;</span><span class="p">,</span>
+                 <span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
-</pre></div>
-</div>
-</div>
+<p><strong>Note that I’ve broken the CSV into lots of smaller files!</strong> When doing parallel work, it’s <em>much</em> faster to break up the input file so that its easier for dask to assign different files to different workers instead of trying to load all the data through one file.</p>
+<p>So take the code you used to answer Question 9 in the last exercises (calculating opioid shipment quantities per county per year) and update it to work here.</p>
+<p>(If you’re not at Duke, you can download <a class="reference external" href="https://www.washingtonpost.com/national/2019/07/18/how-download-use-dea-pain-pills-database/?arc404=true">this data here</a> and upload yourself! Remember to unzip before upload.)</p>
+<p><strong>AS ALWAYS</strong> start with a subset of the data (e.g. use <code class="docutils literal notranslate"><span class="pre">dd.read_csv(...).head(1000)</span></code>). Note that the one column you had before you won’t find here is <code class="docutils literal notranslate"><span class="pre">year</span></code>, so you’ll have to fix that.</p>
+<p><strong>(5)</strong> Now run that code on the full dataset and time it. Note you can time it using your watch / system clock, don’t worry about trying to use a Python timer. Was that faster than when you did it by hand at home?</p>
+<p><strong>(6)</strong> Now the extra fun part! When you created a cluster, you should have gotten back a little widget that looked like this:</p>
+<p><img alt="azure_cluster_widget.png" src="../_images/azure_cluster_widget1.png" /></p>
+<p>(if you didn’t, in a new cell just put the name of your cluster (e.g. <code class="docutils literal notranslate"><span class="pre">amlcluster</span></code>) and run the cell. If you get text not a widget, <a class="reference internal" href="../cloud_dask.html"><span class="doc">see directions near the top of this reading</span></a>.</p>
+<p>Open the “manual scaling” tab in that widget, and set it to 6. WOO!</p>
+<p>Now if you check your dask dashboard, you should slowly see more workers appear (click the workers tab to see progress). Note this will take 5-10 minutes – new computers are being setup for you!</p>
+<p><strong>(7)</strong> Once you have those workers, run your code again. How long did it take this time? Given we increased our the number of nodes we had from 2 to 6 (a 3x improvement), as the improvement more or less than you might have expected?</p>
 </div>
 
 
@@ -328,7 +110,8 @@ div.rendered_html tbody tr:hover {
 <li class="toctree-l1"><a class="reference internal" href="../cloud_what_is_it.html">What Is The Cloud?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cloud_azureml.html">Starting with AzureML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cloud_dask.html">Set Up Dask on AzureML</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cloud_mountingazure.html">More Storage Tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_authentication.html">Azure Authentication</a></li>
 </ul>
 <p class="caption"><span class="caption-text">SKILLS</span></p>
 <ul>

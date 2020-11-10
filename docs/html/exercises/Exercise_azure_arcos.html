@@ -50,6 +50,8 @@
 <div class="section" id="Setting-Up-Dask-on-AzureML">
 <h2>Setting Up Dask on AzureML<a class="headerlink" href="#Setting-Up-Dask-on-AzureML" title="Permalink to this headline">¶</a></h2>
 <p><strong>(4)</strong> While that’s happening, let’s get ready to start a <code class="docutils literal notranslate"><span class="pre">dask</span></code> cluster. First, let’s create a new Workspace! Again, you probably did this already, but let’s do it again anyway. :) Practice makes perfect. Again, <a class="reference external" href="https://www.practicaldatascience.org/html/cloud_azureml.html#Create-a-Workspace">directions are here if you’ve forgotten</a>.</p>
+<p>Since you’re using a free account, use <code class="docutils literal notranslate"><span class="pre">vm_size=&quot;Standard_DS11_v2&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">initial_node_count=3</span></code>. This will keep us to 6 total CPUs (this is not a lot, but it’s what we can do for free!)</p>
+<p>Note we’re using DS11 because <a class="reference external" href="https://docs.microsoft.com/en-us/azure/virtual-machines/dv2-dsv2-series">that model has 2 CPUs per node</a>, so we can stay under our 6 CPU quota for free accounts, and fast storage (the “S” in “DS11” is for Storage-optimized, and for data science, we almost always want fast storage access).</p>
 <p><strong>(5)</strong> Now, following the example <a class="reference internal" href="../cloud_dask.html"><span class="doc">from the readings</span></a>, create a new notebook and write your code to start a dask cluster and get it running!</p>
 </div>
 <div class="section" id="Actually-Analyzing-Data">
@@ -143,8 +145,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../cloud_what_is_it.html">What Is The Cloud?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cloud_azureml.html">Starting with AzureML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cloud_dask.html">Set Up Dask on AzureML</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cloud_azurestorage.html">Managing Azure Storage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cloud_mountingazure.html">More Storage Tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_authentication.html">Azure Authentication</a></li>
 </ul>
 <p class="caption"><span class="caption-text">SKILLS</span></p>
 <ul>
