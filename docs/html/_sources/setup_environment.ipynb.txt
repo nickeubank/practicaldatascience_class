@@ -18,9 +18,9 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## Installing Atom\n",
+    "## Installing VSCode\n",
     "\n",
-    "Before we install miniconda, I would first suggest everyone install a good text editor if you don't already have one. I recommend VSCode, installation and setup directions for which can be [found here](vscode_text_editor.ipynb)."
+    "Before we install miniconda, I would first suggest everyone install a good text editor if you don't already have one. I recommend VSCode, installation and setup directions for which can be [found here](vscode_text_editor.ipynb). (Note: I used to recommend Atom, which I loved, but since github (which developed Atom) was bought by Microsoft, it looks like a lot of the development energy has moved over to VSCode, so I think that's a better place to go now)."
    ]
   },
   {
@@ -35,7 +35,9 @@
     "\n",
     "### Installation Note for Windows Users\n",
     "\n",
-    "One of the checkboxes during the Windows installation is \"do you want to add Anaconda to your PATH?\". Although anaconda recommends against this, it is very helpful for using python using `Cmder`, so select yes. This is easy to change later if you ever feel the need.  \n",
+    "When asked whether you want to install for \"Just Me\" or \"All Users\", pick \"Just Me\".\n",
+    "\n",
+    "One of the checkboxes during the Windows installation is \"do you want to add Anaconda to your PATH?\". Select No. \n",
     "\n",
     "### If there's a Python 3.8, why is there also a Python 2.7 available?\n",
     "\n",
@@ -166,12 +168,32 @@
    "source": [
     "## Change the Default Channel\n",
     "\n",
-    "One of the main purposes of Anaconda is to help you install and manage Python packages. When installing and updated packages, the Anaconda software actually has the ability to pull packages from any number of sources. As of mid-2020, there's one group that provides the best source for packages: `conda-forge`. So to make that your system's default, open the command line (after installing Anaconda -- if it was open while installing this won't work) and type the following two commands:\n",
+    "One of the main purposes of miniconda is to help you install and manage Python packages. When installing and updated packages, the Anaconda software actually has the ability to pull packages from any number of sources. As of mid-2020, there's one group that provides the best source for packages: `conda-forge`. So to make that your system's default, open the command line (after installing Anaconda -- if it was open while installing this won't work) and type the following two commands:\n",
     "\n",
     "```\n",
     "conda config --add channels conda-forge\n",
     "conda config --set channel_priority strict\n",
     "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Setting Up Miniconda with Cmder\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "First, open a `Cmder` window and open settings (click the three little three horizon bars in bottom right, then click Settings). Then:\n",
+    "\n",
+    "1. Make sure the default is set to bash::bash as Admin: \n",
+    "\n",
+    "![cmder_default_to_bash](images/cmder_default_to_bash.png)\n",
+    "\n",
+    "2. "
    ]
   }
  ],

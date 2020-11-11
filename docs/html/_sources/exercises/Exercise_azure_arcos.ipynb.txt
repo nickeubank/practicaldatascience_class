@@ -15,7 +15,9 @@
     "\n",
     "For these exercises, you'll need an Azure account with available credits. The easiest way to do this is to set up a new account (either by signing up as a student, or just using a new gmail account to sign up as a new regular user). [You can find instructions for doing so here](../cloud_azureml.ipynb).\n",
     "\n",
-    "As with our last exercise using dask, to strike a balance between keeping the data big enough to be interesting and small enough you don't have to wait around too long, we'll be working with a thinned version that has only January and February from 2011 and 2012. This way the workflow you develop will be same the same workflow you'd use for the full dataset, of course, but we can move quickly, even on the limited resources you're allowed to use on a free account. "
+    "As with our last exercise using dask, to strike a balance between keeping the data big enough to be interesting and small enough you don't have to wait around too long, we'll be working with a thinned version that has only January and February from 2011 and 2012. This way the workflow you develop will be same the same workflow you'd use for the full dataset, of course, but we can move quickly, even on the limited resources you're allowed to use on a free account. \n",
+    "\n",
+    "**Before you start, make sure to review the package setup instructions for [dask here!](../cloud_dask.ipynb)**"
    ]
   },
   {

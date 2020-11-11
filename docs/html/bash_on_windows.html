@@ -6,8 +6,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Command Line on Windows / Installing Bash &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -34,7 +34,240 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="The-Command-Line-on-Windows-/-Installing-Bash">
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="The-Command-Line-on-Windows-/-Installing-Bash">
 <h1>The Command Line on Windows / Installing Bash<a class="headerlink" href="#The-Command-Line-on-Windows-/-Installing-Bash" title="Permalink to this headline">¶</a></h1>
 <p>As dicussed in <a class="reference internal" href="command_line_part1.html"><span class="doc">Command Line Basics</span></a>, there are actually several programs available that allow users to interact with their operating system via text commands instead of using their mouse to click on icons. On this site, we’ll focus on learning <code class="docutils literal notranslate"><span class="pre">bash</span></code>, because it’s so ubiquitous in the data science space. Why? Mostly because it is the default command line tool for Linux operating systems, and while you may not know it, <em>most</em> of the computers you interact with on a
 daily basis run Linux. Your personal computer may be a mac (which also uses <code class="docutils literal notranslate"><span class="pre">bash</span></code> by default) or a windows computer, but the computers that run nearly every website you visit, manage your email, run those ticket kiosk you see at the airport, etc. are almost all running on Linux. Moreover, if your data science career ever requires you to use computers in the cloud (amazon cloud services, or just an extra powerful server you company or university has for really serious computational work), it
@@ -44,35 +277,18 @@ will run Linux. So there’s a lot of good reasons to learn <code class="docutil
 <div class="section" id="Install-Cmder">
 <h2>Install Cmder<a class="headerlink" href="#Install-Cmder" title="Permalink to this headline">¶</a></h2>
 <p>To get a good bash interface in windows, we just need to <a class="reference external" href="https://cmder.net/">install Cmder!</a>. Make sure to select the <strong>Full Install</strong> (or you won’t get Bash). Note this will also install <code class="docutils literal notranslate"><span class="pre">git</span></code>, which we discuss <a class="reference internal" href="git_and_github.html"><span class="doc">elsewhere on this site</span></a>.</p>
+<p>I recommend unzipping the zipped Cmder file you download into your main User folder (so I unzipped into <code class="docutils literal notranslate"><span class="pre">C:\Users\Nick</span></code>). DON’T try and put it in ProgramFiles.</p>
 <p>Once installed, you’ll have a new program called <code class="docutils literal notranslate"><span class="pre">Cmder</span></code> available! By default, <code class="docutils literal notranslate"><span class="pre">Cmder</span></code> is a kinda of hybrid interface that lets you use most commands people use in <code class="docutils literal notranslate"><span class="pre">bash</span></code> <em>and</em> the commands people use when working with the default Windows command line tool (<code class="docutils literal notranslate"><span class="pre">CMD</span></code>). This is nice for people with some windows command line experience, but it does mean that <code class="docutils literal notranslate"><span class="pre">Cmder</span></code> doesn’t quite work like <code class="docutils literal notranslate"><span class="pre">bash</span></code>.</p>
-<p>With that in mind, for the moment I would suggest using <code class="docutils literal notranslate"><span class="pre">Cmder</span></code> in pure <code class="docutils literal notranslate"><span class="pre">bash</span></code> mode by clicking on Settings (the three horizontal bars on the bottom right), then changing the “startup task” to <code class="docutils literal notranslate"><span class="pre">{bash::bash}</span></code> (see pic below). You can always change this later once you’re comfortable with <code class="docutils literal notranslate"><span class="pre">bash</span></code>, or open a single window in <code class="docutils literal notranslate"><span class="pre">Cmder</span></code>’s default mode by clicking the <code class="docutils literal notranslate"><span class="pre">+</span></code> in the bottom right and selecting the <code class="docutils literal notranslate"><span class="pre">{cmd::Cmder}</span></code> option.</p>
-<p><img alt="selectbash" src="_images/change_cmder_default.png" /></p>
-</div>
-<div class="section" id="If-you-use-Anaconda-/-Miniconda-for-Python">
-<h2>If you use Anaconda / Miniconda for Python<a class="headerlink" href="#If-you-use-Anaconda-/-Miniconda-for-Python" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="Reinstalling">
-<h3>Reinstalling<a class="headerlink" href="#Reinstalling" title="Permalink to this headline">¶</a></h3>
-<p>The easiest way to get Anaconda to work well with Cmder is to delete your current installation, re-install anaconda, and <strong>select “Add to PATH variable” during installation</strong> (despite the warning it gives). If you have anything less than a super-developed complicated Anaconda installation with lots of environments (and if you don’t know what that means, you don’t!)), I would suggest you just delete and re-install Anaconda after you’ve installed Cmder.</p>
-</div>
-<div class="section" id="If-you-really-want-to-keep-your-Anaconda-install">
-<h3>If you really want to keep your Anaconda install<a class="headerlink" href="#If-you-really-want-to-keep-your-Anaconda-install" title="Permalink to this headline">¶</a></h3>
-<p>If you use Python and manage your installation using anaconda or miniconda (which you probably should be doing…), there is a small trick you have to do to make <code class="docutils literal notranslate"><span class="pre">conda</span></code> and <code class="docutils literal notranslate"><span class="pre">python</span></code> accessible from the <code class="docutils literal notranslate"><span class="pre">Cmder</span></code> terminal:</p>
-<p>Go to <code class="docutils literal notranslate"><span class="pre">Control</span> <span class="pre">Panel</span></code>, then <code class="docutils literal notranslate"><span class="pre">System</span> <span class="pre">and</span> <span class="pre">Security</span></code>, click <code class="docutils literal notranslate"><span class="pre">System</span></code>, then on the left click <code class="docutils literal notranslate"><span class="pre">Advanced</span> <span class="pre">System</span> <span class="pre">Settings</span></code>, then in the pop-up click the <code class="docutils literal notranslate"><span class="pre">Environment</span> <span class="pre">Variables...</span></code> button.</p>
-<p>Double click on the <code class="docutils literal notranslate"><span class="pre">PATH</span></code> variable line:</p>
-<p><img alt="path_var" src="_images/path_var.png" /></p>
-<p>Then add a set of new entries, all of which start with the path to YOUR anaconda or miniconda installation:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">path_to_your_conda_install_folder</span>\
-<span class="n">C</span><span class="p">:</span>\<span class="n">path_to_your_conda_install_folder</span>\<span class="n">Library</span>\<span class="n">mingw</span><span class="o">-</span><span class="n">w64</span>\<span class="nb">bin</span>
-<span class="n">C</span><span class="p">:</span>\<span class="n">path_to_your_conda_install_folder</span>\<span class="n">Library</span>\<span class="nb">bin</span>
-<span class="n">C</span><span class="p">:</span>\<span class="n">path_to_your_conda_install_folder</span>\<span class="n">Library</span>\<span class="n">usr</span>\<span class="nb">bin</span>
-<span class="n">C</span><span class="p">:</span>\<span class="n">path_to_your_conda_install_folder</span>\<span class="n">Scripts</span>
-<span class="n">C</span><span class="p">:</span>\<span class="n">path_to_your_conda_install_folder</span>\<span class="nb">bin</span>
-<span class="n">C</span><span class="p">:</span>\<span class="n">path_to_your_conda_install_folder</span>\<span class="n">condabin</span>
+<p>With that in mind, we want to set <code class="docutils literal notranslate"><span class="pre">Cmder</span></code> to default to pure <code class="docutils literal notranslate"><span class="pre">bash</span></code> mode by clicking on Settings (the three horizontal bars on the bottom right), then changing the “startup task” to <code class="docutils literal notranslate"><span class="pre">{bash::bash</span> <span class="pre">as</span> <span class="pre">Admin}</span></code> (see pic below).</p>
+<p><img alt="selectbash" src="_images/cmder_default_to_bash.png" /></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<p>Personally, I used miniconda, so the path to my installation is <code class="docutils literal notranslate"><span class="pre">C:\Users\Nick\Miniconda3</span></code>, and so after adding these files, my list looks like:</p>
-<p><img alt="additions" src="_images/additions.png" /></p>
-<p>After you’re done, if you open a new session of <code class="docutils literal notranslate"><span class="pre">Cmder</span></code> (you have to close any open windows and open new ones), you should be able to type <code class="docutils literal notranslate"><span class="pre">conda</span></code> and get your usual <code class="docutils literal notranslate"><span class="pre">conda</span></code> functionality, or type python and get your normal python functionality!</p>
+<div class="input_area highlight-bash notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -125,8 +341,8 @@ will run Linux. So there’s a lot of good reasons to learn <code class="docutil
 <li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_azureml.html">Starting with AzureML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Set Up Dask on AzureML</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_azurestorage.html">Managing Azure Storage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_mountingazure.html">More Storage Tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
 </ul>
 <p class="caption"><span class="caption-text">SKILLS</span></p>
 <ul>
@@ -139,6 +355,7 @@ will run Linux. So there’s a lot of good reasons to learn <code class="docutil
 <li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backwards_design.html">Backwards Design</a></li>
 </ul>
 <p class="caption"><span class="caption-text">OTHER</span></p>
 <ul>
@@ -179,7 +396,7 @@ will run Linux. So there’s a lot of good reasons to learn <code class="docutil
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

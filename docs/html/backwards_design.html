@@ -6,8 +6,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Backwards Design &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -18,6 +18,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Welcome non-Duke MIDS Students!" href="not_a_mids_student.html" />
+    <link rel="prev" title="Distributed Computing with dask" href="distributed_computing.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -212,11 +214,11 @@ course inherited all the biases of those humans. And so, OOPS!, when Amazon sudd
 <li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_azureml.html">Starting with AzureML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Set Up Dask on AzureML</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_azurestorage.html">Managing Azure Storage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_mountingazure.html">More Storage Tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
 </ul>
 <p class="caption"><span class="caption-text">SKILLS</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_help.html">Getting Help Online</a></li>
 <li class="toctree-l1"><a class="reference internal" href="defensive_programming.html">Defensive Programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow Management</a></li>
@@ -226,6 +228,17 @@ course inherited all the biases of those humans. And so, OOPS!, when Amazon sudd
 <li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Backwards Design</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#1)-Define-Your-Problem">1) Define Your Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#2)-Define-the-Question-You-Wish-to-Answer">2) Define the Question You Wish to Answer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#3)-Write-Down-What-An-Answer-Would-Look-Like">3) Write Down What An Answer Would Look Like</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#4)-What-Data-Do-You-Need?">4) What Data Do You Need?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#5)-Where-Can-You-Get-That-Data?">5) Where Can You Get That Data?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Wrapping-Up">Wrapping Up</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#A-Digression-on-Supervised-Machine-Learning">A Digression on Supervised Machine Learning</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">OTHER</span></p>
 <ul>
@@ -237,6 +250,8 @@ course inherited all the biases of those humans. And so, OOPS!, when Amazon sudd
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="distributed_computing.html" title="previous chapter">Distributed Computing with dask</a></li>
+      <li>Next: <a href="not_a_mids_student.html" title="next chapter">Welcome non-Duke MIDS Students!</a></li>
   </ul></li>
 </ul>
 </div>
@@ -266,7 +281,7 @@ course inherited all the biases of those humans. And so, OOPS!, when Amazon sudd
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

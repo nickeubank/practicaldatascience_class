@@ -6,8 +6,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Git and Github, Part 1 &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
@@ -43,7 +43,7 @@
 <p>By default, when git needs you to label a commit, it will open an editor called <a class="reference external" href="https://www.vim.org/">vim</a> that is very hard to work with (it’s not just weird – it’s even hard to get out of once it’s openned!)</p>
 <p>So before you do anything else, first change your default editor. You can do this with the command:</p>
 <p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span> <span class="pre">--global</span> <span class="pre">core.editor</span> <span class="pre">&quot;COMMANDTOLAUNCHYOUREDITOR&quot;</span></code></p>
-<p>If you have Atom installed <em>and the command line tool setup</em> (i.e. you set up Atom so that if you type <code class="docutils literal notranslate"><span class="pre">atom</span></code> in the command line, Atom opens, <a class="reference internal" href="../atom_text_editor.html"><span class="doc">as discussed here</span></a>), then I would do:</p>
+<p>If you have Atom installed <em>and the command line tool setup</em> (i.e. you set up Atom so that if you type <code class="docutils literal notranslate"><span class="pre">atom</span></code> in the command line, Atom opens, as discussed here), then I would do:</p>
 <p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span> <span class="pre">--global</span> <span class="pre">core.editor</span> <span class="pre">&quot;atom&quot;</span></code></p>
 <p>If not, then the best option is probably to use <code class="docutils literal notranslate"><span class="pre">nano</span></code>, which is an in-terminal editor we’ve discussed <a class="reference internal" href="../command_line_part2.html"><span class="doc">before</span></a> that’s much easier to use than vim, and which you should already have if you’re using a bash console:</p>
 <p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span> <span class="pre">--global</span> <span class="pre">core.editor</span> <span class="pre">&quot;nano&quot;</span></code></p>
@@ -168,8 +168,8 @@ be running the master branch), but it’s also often useful in data science (whe
 <li class="toctree-l1"><a class="reference internal" href="../cloud_what_is_it.html">What Is The Cloud?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cloud_azureml.html">Starting with AzureML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cloud_dask.html">Set Up Dask on AzureML</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cloud_azurestorage.html">Managing Azure Storage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cloud_mountingazure.html">More Storage Tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_authentication.html">Azure Authentication</a></li>
 </ul>
 <p class="caption"><span class="caption-text">SKILLS</span></p>
 <ul>
@@ -182,6 +182,7 @@ be running the master branch), but it’s also often useful in data science (whe
 <li class="toctree-l1"><a class="reference internal" href="../performance_solutions.html">Solving Performance Probs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../parallelism.html">Parallel Computing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../backwards_design.html">Backwards Design</a></li>
 </ul>
 <p class="caption"><span class="caption-text">OTHER</span></p>
 <ul>
@@ -222,7 +223,7 @@ be running the master branch), but it’s also often useful in data science (whe
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

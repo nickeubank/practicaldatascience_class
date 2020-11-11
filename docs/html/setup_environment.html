@@ -6,8 +6,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Installing Python, Conda, and VSCode &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -39,9 +39,9 @@
   <div class="section" id="Installing-Python,-Conda,-and-VSCode">
 <h1>Installing Python, Conda, and VSCode<a class="headerlink" href="#Installing-Python,-Conda,-and-VSCode" title="Permalink to this headline">¶</a></h1>
 <p>In this tutorial, we’ll go over how to set up all the tools you need to not only work effectively in Python, but also get going with the Jupyter ecosystem, which supports not only Python, but also R, Julia, and more.</p>
-<div class="section" id="Installing-Atom">
-<h2>Installing Atom<a class="headerlink" href="#Installing-Atom" title="Permalink to this headline">¶</a></h2>
-<p>Before we install miniconda, I would first suggest everyone install a good text editor if you don’t already have one. I recommend VSCode, installation and setup directions for which can be <a class="reference external" href="vscode_text_editor.ipynb">found here</a>.</p>
+<div class="section" id="Installing-VSCode">
+<h2>Installing VSCode<a class="headerlink" href="#Installing-VSCode" title="Permalink to this headline">¶</a></h2>
+<p>Before we install miniconda, I would first suggest everyone install a good text editor if you don’t already have one. I recommend VSCode, installation and setup directions for which can be <a class="reference internal" href="vscode_text_editor.html"><span class="doc">found here</span></a>. (Note: I used to recommend Atom, which I loved, but since github (which developed Atom) was bought by Microsoft, it looks like a lot of the development energy has moved over to VSCode, so I think that’s a better place to go now).</p>
 </div>
 <div class="section" id="Installing-miniconda">
 <h2>Installing miniconda<a class="headerlink" href="#Installing-miniconda" title="Permalink to this headline">¶</a></h2>
@@ -49,7 +49,8 @@
 <p>To install Python, go to the <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">miniconda Download page</a>, download and install the most recent Python 3.x version of miniconda (as of Oct 2020, this was Python 3.8). (On a Mac, the <code class="docutils literal notranslate"><span class="pre">Pkg</span></code> installer is easier to use).</p>
 <div class="section" id="Installation-Note-for-Windows-Users">
 <h3>Installation Note for Windows Users<a class="headerlink" href="#Installation-Note-for-Windows-Users" title="Permalink to this headline">¶</a></h3>
-<p>One of the checkboxes during the Windows installation is “do you want to add Anaconda to your PATH?”. Although anaconda recommends against this, it is very helpful for using python using <code class="docutils literal notranslate"><span class="pre">Cmder</span></code>, so select yes. This is easy to change later if you ever feel the need.</p>
+<p>When asked whether you want to install for “Just Me” or “All Users”, pick “Just Me”.</p>
+<p>One of the checkboxes during the Windows installation is “do you want to add Anaconda to your PATH?”. Select No.</p>
 </div>
 <div class="section" id="If-there’s-a-Python-3.8,-why-is-there-also-a-Python-2.7-available?">
 <h3>If there’s a Python 3.8, why is there also a Python 2.7 available?<a class="headerlink" href="#If-there’s-a-Python-3.8,-why-is-there-also-a-Python-2.7-available?" title="Permalink to this headline">¶</a></h3>
@@ -157,11 +158,22 @@ bash-3.2$
 </div>
 <div class="section" id="Change-the-Default-Channel">
 <h2>Change the Default Channel<a class="headerlink" href="#Change-the-Default-Channel" title="Permalink to this headline">¶</a></h2>
-<p>One of the main purposes of Anaconda is to help you install and manage Python packages. When installing and updated packages, the Anaconda software actually has the ability to pull packages from any number of sources. As of mid-2020, there’s one group that provides the best source for packages: <code class="docutils literal notranslate"><span class="pre">conda-forge</span></code>. So to make that your system’s default, open the command line (after installing Anaconda – if it was open while installing this won’t work) and type the following two commands:</p>
+<p>One of the main purposes of miniconda is to help you install and manage Python packages. When installing and updated packages, the Anaconda software actually has the ability to pull packages from any number of sources. As of mid-2020, there’s one group that provides the best source for packages: <code class="docutils literal notranslate"><span class="pre">conda-forge</span></code>. So to make that your system’s default, open the command line (after installing Anaconda – if it was open while installing this won’t work) and type the following two commands:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="n">add</span> <span class="n">channels</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span>
 <span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="nb">set</span> <span class="n">channel_priority</span> <span class="n">strict</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="Setting-Up-Miniconda-with-Cmder">
+<h2>Setting Up Miniconda with Cmder<a class="headerlink" href="#Setting-Up-Miniconda-with-Cmder" title="Permalink to this headline">¶</a></h2>
+<p>First, open a <code class="docutils literal notranslate"><span class="pre">Cmder</span></code> window and open settings (click the three little three horizon bars in bottom right, then click Settings). Then:</p>
+<ol class="arabic simple">
+<li><p>Make sure the default is set to bash::bash as Admin:</p></li>
+</ol>
+<p><img alt="cmder_default_to_bash" src="_images/cmder_default_to_bash.png" /></p>
+<ol class="arabic simple" start="2">
+<li></li>
+</ol>
 </div>
 </div>
 
@@ -188,10 +200,11 @@ bash-3.2$
 <p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Setting Up Python</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Installing-Atom">Installing Atom</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Installing-VSCode">Installing VSCode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Installing-miniconda">Installing miniconda</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Using-miniconda-with-Oh-My-Zsh-(Macs)">Using miniconda with Oh-My-Zsh (Macs)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Change-the-Default-Channel">Change the Default Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Setting-Up-Miniconda-with-Cmder">Setting Up Miniconda with Cmder</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="managing_python_packages.html">Managing Packages</a></li>
@@ -276,7 +289,7 @@ bash-3.2$
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

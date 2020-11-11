@@ -10,7 +10,14 @@
     "\n",
     "**Want to use Amazon AWS?** You can do that too! The package we use to launch our cluster below also supports AWS. We won't go through that here, but you can find [info on it here](https://cloudprovider.dask.org/en/stable/index.html).\n",
     "\n",
-    "If you want to follow along, just decompress the `ghcnd_daily.tar.gz` file and upload the resulting `.csv` into a Blob container using the web interface. Note this will take a little while. Will talk about more efficient methods of upload in our next tutorial.\n",
+    "If you want to follow along, just decompress the `ghcnd_daily.tar.gz` file and upload the resulting `.csv` into a Blob container using the web interface. Note this will take a little while. Will talk about more efficient methods of upload in our next tutorial."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Setup\n",
     "\n",
     "To run this code, in addition the `dask` and `pandas`, which you should already have installed, you'll need to install the following packages (`azureml-sdk` and `dask_cloudprovider`) with the following commands:\n",
     "\n",
@@ -27,13 +34,22 @@
     "pip install lz4\n",
     "pip install jupyterlab --upgrade\n",
     "pip install dask --upgrade\n",
+    "pip install distributed --upgrade\n",
     "```\n",
     "\n",
     "Note that `dask_cloudprovider` sometimes doesn't load the right version if you don't specify, and as of October 2020 the right version isn't even on `conda-forge`, so don't use `conda install`. You can also pip install `azure-storage-blob` if you prefer `pip` to `conda`.\n",
     "\n",
-    "**If you are using Jupyter Lab:** the dask_cloudprovider package makes use of IPython Widgets, which aren't installed in Jupyter Lab by default. So if you're using Jupyter Lab, please install the [IPython Widget extension](https://ipywidgets.readthedocs.io/en/stable/user_install.html) before you move forward! If, after you type `amlcluster` after creating it below, you see `VBox(children=`..., that means you didn't successfully install the widget.\n",
+    "**If you are using Jupyter Lab:** the dask_cloudprovider package makes use of IPython Widgets, which aren't installed in Jupyter Lab by default. So if you're using Jupyter Lab, please: \n",
     "\n",
-    "**If you get an `KeyError: 'workers'`:** You probably have an old version of dask. Make sure to run `pip install dask --upgrade` (I'm running 2.30)."
+    "- Run `conda install -c conda-forge nodejs`, \n",
+    "- Run `jupyter labextension install @jupyter-widgets/jupyterlab-manager` (from the command line)\n",
+    "- Open Jupyter Lab, click on the puzzle piece on the left hand side, and click the \"Enable\" button. \n",
+    "- Run `pip install ipywidgets`\n",
+    "- Run `jupyter nbextension enable --py widgetsnbextension`  (from the command line)\n",
+    "\n",
+    "If, after you type `amlcluster` after creating it below, you see `VBox(children=`..., that means you didn't successfully install the widget.\n",
+    "\n",
+    "**If you get a `KeyError: 'workers'` error when creating your cluster:** Your version of `distributed` is too old -- make sure it's version 2.30 or greater."
    ]
   },
   {
@@ -45,21 +61,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
+   "execution_count": 1,
    "metadata": {},
    "outputs": [
     {
-     "name": "stdout",
+     "name": "stderr",
      "output_type": "stream",
      "text": [
-      "The lab_black extension is already loaded. To reload it, use:\n",
-      "  %reload_ext lab_black\n"
+      "Failure while loading azureml_run_type_providers. Failed to load entrypoint automl = azureml.train.automl.run:AutoMLRun._from_run_dto with exception (pyarrow 2.0.0 (/Users/Nick/miniconda3/lib/python3.7/site-packages), Requirement.parse('pyarrow<2.0.0,>=0.17.0'), {'azureml-dataset-runtime'}).\n"
      ]
     }
    ],
    "source": [
     "%load_ext lab_black\n",
-    "from azureml.core import Workspace, Experiment\n",
+    "from azureml.core import Workspace\n",
     "from dask_cloudprovider import AzureMLCluster"
    ]
   },
@@ -94,8 +109,15 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "(Sorry, the cell count jumps from 2 to 4 here -- had to do the interactive thing noted below, but didn't want to leave in)"
+   ]
+  },
+  {
    "cell_type": "code",
-   "execution_count": 3,
+   "execution_count": 4,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -122,8 +144,7 @@
     "ws = Workspace(\n",
     "    subscription_id=account[\"subscription_id\"],\n",
     "    resource_group=account[\"resource_group\"],\n",
-    "    workspace_name=account[\"workspace_name\"],\n",
-    "    auth=auth\n",
+    "    workspace_name=account[\"workspace_name\"]\n",
     ")\n",
     "```\n",
     "\n",
@@ -152,22 +173,22 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
+   "execution_count": 5,
    "metadata": {},
    "outputs": [
     {
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "WARNING - If 'script' has been provided here and a script file name has been specified in 'run_config', 'script' provided in ScriptRunConfig initialization will take precedence.\n",
-      "WARNING - If 'arguments' has been provided here and arguments have been specified in 'run_config', 'arguments' provided in ScriptRunConfig initialization will take precedence.\n"
+      "WARNING:root:If 'script' has been provided here and a script file name has been specified in 'run_config', 'script' provided in ScriptRunConfig initialization will take precedence.\n",
+      "WARNING:root:If 'arguments' has been provided here and arguments have been specified in 'run_config', 'arguments' provided in ScriptRunConfig initialization will take precedence.\n"
      ]
     },
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "...........................................................................\n",
+      "..................................................................\n",
       "\n"
      ]
     },
@@ -175,7 +196,7 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "WARNING - If 'script' has been provided here and a script file name has been specified in 'run_config', 'script' provided in ScriptRunConfig initialization will take precedence.\n"
+      "WARNING:root:If 'script' has been provided here and a script file name has been specified in 'run_config', 'script' provided in ScriptRunConfig initialization will take precedence.\n"
      ]
     }
    ],
@@ -204,13 +225,13 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
+   "execution_count": 6,
    "metadata": {},
    "outputs": [
     {
      "data": {
       "application/vnd.jupyter.widget-view+json": {
-       "model_id": "98e6979e3e604b57a1fe0b943b9d586e",
+       "model_id": "990855775f96409696a16b7cad70cfdc",
        "version_major": 2,
        "version_minor": 0
       },
@@ -253,7 +274,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
+   "execution_count": 7,
    "metadata": {},
    "outputs": [
     {
@@ -265,7 +286,9 @@
       "+---------+---------------+---------------+---------------+\n",
       "| Package | client        | scheduler     | workers       |\n",
       "+---------+---------------+---------------+---------------+\n",
+      "| numpy   | 1.19.4        | 1.19.2        | 1.19.2        |\n",
       "| python  | 3.7.8.final.0 | 3.6.9.final.0 | 3.6.9.final.0 |\n",
+      "| tornado | 6.1           | 6.0.4         | 6.0.4         |\n",
       "+---------+---------------+---------------+---------------+\n",
       "  warnings.warn(version_module.VersionMismatchWarning(msg[0][\"warning\"]))\n"
      ]
@@ -308,7 +331,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": 8,
    "metadata": {},
    "outputs": [
     {
@@ -380,7 +403,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
+   "execution_count": 9,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -393,7 +416,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
+   "execution_count": 10,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -414,7 +437,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 12,
+   "execution_count": 11,
    "metadata": {},
    "outputs": [
     {
@@ -747,7 +770,7 @@
        "[10 rows x 128 columns]"
       ]
      },
-     "execution_count": 12,
+     "execution_count": 11,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -795,7 +818,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 13,
+   "execution_count": 12,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -811,7 +834,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 14,
+   "execution_count": 13,
    "metadata": {},
    "outputs": [
     {
@@ -1770,7 +1793,7 @@
        "Dask Name: getitem, 256 tasks"
       ]
      },
-     "execution_count": 14,
+     "execution_count": 13,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1790,7 +1813,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 15,
+   "execution_count": 14,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1808,7 +1831,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 16,
+   "execution_count": 15,
    "metadata": {},
    "outputs": [
     {
@@ -1828,7 +1851,7 @@
        "Name: value31, Length: 87, dtype: int64"
       ]
      },
-     "execution_count": 16,
+     "execution_count": 15,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1855,7 +1878,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 17,
+   "execution_count": 16,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1879,7 +1902,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 18,
+   "execution_count": 17,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1890,7 +1913,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 19,
+   "execution_count": 18,
    "metadata": {},
    "outputs": [
     {
@@ -1913,20 +1936,12 @@
     {
      "data": {
       "text/plain": [
-       "<ggplot: (8787636679641)>"
+       "<ggplot: (8789105353937)>"
       ]
      },
-     "execution_count": 19,
+     "execution_count": 18,
      "metadata": {},
      "output_type": "execute_result"
-    },
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "WARNING - Retrying (Retry(total=2, connect=2, read=3, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fe06d1a40d0>: Failed to establish a new connection: [Errno 60] Operation timed out')': /history/v1.0/subscriptions/bab5ec70-4531-48dc-9d25-2d73206d5741/resourceGroups/nce8rg/providers/Microsoft.MachineLearningServices/workspaces/nce8ws/experiments/dask-cloudprovider/runs/dask-cloudprovider_1605035025_604db21f\n",
-      "WARNING - Retrying (Retry(total=2, connect=2, read=3, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fe06d184490>: Failed to establish a new connection: [Errno 61] Connection refused')': /history/v1.0/subscriptions/bab5ec70-4531-48dc-9d25-2d73206d5741/resourceGroups/nce8rg/providers/Microsoft.MachineLearningServices/workspaces/nce8ws/experiments/dask-cloudprovider/runs/dask-cloudprovider_1605035025_604db21f\n"
-     ]
     }
    ],
    "source": [
@@ -1962,16 +1977,7 @@
    "cell_type": "code",
    "execution_count": null,
    "metadata": {},
-   "outputs": [
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "WARNING - Retrying (Retry(total=2, connect=2, read=3, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fe07e46b590>: Failed to establish a new connection: [Errno 61] Connection refused')': /history/v1.0/subscriptions/bab5ec70-4531-48dc-9d25-2d73206d5741/resourceGroups/nce8rg/providers/Microsoft.MachineLearningServices/workspaces/nce8ws/experiments/dask-cloudprovider/runs/dask-cloudprovider_1605035025_604db21f\n",
-      "WARNING - Retrying (Retry(total=2, connect=3, read=2, redirect=None, status=None)) after connection broken by 'ProtocolError('Connection aborted.', TimeoutError(60, 'Operation timed out'))': /history/v1.0/subscriptions/bab5ec70-4531-48dc-9d25-2d73206d5741/resourceGroups/nce8rg/providers/Microsoft.MachineLearningServices/workspaces/nce8ws/experiments/dask-cloudprovider/runs/dask-cloudprovider_1605035025_604db21f\n"
-     ]
-    }
-   ],
+   "outputs": [],
    "source": [
     "amlcluster.close()"
    ]

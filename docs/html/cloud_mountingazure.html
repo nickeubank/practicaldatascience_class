@@ -6,8 +6,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mount Your Container as a Drive with blobfuse &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -18,8 +18,6 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Getting Help Online" href="getting_help.html" />
-    <link rel="prev" title="Managing, Uploading and Downloading Data to Azure" href="cloud_azurestorage.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -115,16 +113,12 @@ real values (you shouldn’t have any angle brackets when you’re done!):</p>
 <li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
 </ul>
 <p class="caption"><span class="caption-text">CLOUD</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_azureml.html">Starting with AzureML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Set Up Dask on AzureML</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_azurestorage.html">Managing Azure Storage</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">More Storage Tricks</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#If-you’re-using-dask_cloudprovider">If you’re using dask_cloudprovider</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#If-you’re-managing-your-own-VM">If you’re managing your own VM</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
 </ul>
 <p class="caption"><span class="caption-text">SKILLS</span></p>
 <ul>
@@ -137,6 +131,7 @@ real values (you shouldn’t have any angle brackets when you’re done!):</p>
 <li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backwards_design.html">Backwards Design</a></li>
 </ul>
 <p class="caption"><span class="caption-text">OTHER</span></p>
 <ul>
@@ -148,8 +143,6 @@ real values (you shouldn’t have any angle brackets when you’re done!):</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="cloud_azurestorage.html" title="previous chapter">Managing, Uploading and Downloading Data to Azure</a></li>
-      <li>Next: <a href="getting_help.html" title="next chapter">Getting Help Online</a></li>
   </ul></li>
 </ul>
 </div>
@@ -179,7 +172,7 @@ real values (you shouldn’t have any angle brackets when you’re done!):</p>
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

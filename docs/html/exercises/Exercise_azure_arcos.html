@@ -6,8 +6,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Importing Opioid Shipment Data on Azure &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
@@ -39,6 +39,7 @@
 <p>Yup, it’s time to work with everyone’s favorite data: The DEA ARCOS opioid drug shipment database! But today we’re gonna work with this data not on our personal computers, but instead on a dask cluster running on Microsoft Azure.</p>
 <p>For these exercises, you’ll need an Azure account with available credits. The easiest way to do this is to set up a new account (either by signing up as a student, or just using a new gmail account to sign up as a new regular user). <a class="reference internal" href="../cloud_azureml.html"><span class="doc">You can find instructions for doing so here</span></a>.</p>
 <p>As with our last exercise using dask, to strike a balance between keeping the data big enough to be interesting and small enough you don’t have to wait around too long, we’ll be working with a thinned version that has only January and February from 2011 and 2012. This way the workflow you develop will be same the same workflow you’d use for the full dataset, of course, but we can move quickly, even on the limited resources you’re allowed to use on a free account.</p>
+<p><strong>Before you start, make sure to review the package setup instructions for</strong><a class="reference internal" href="../cloud_dask.html"><span class="doc">dask here!</span></a></p>
 <div class="section" id="Loading-Data-to-Azure">
 <h2>Loading Data to Azure<a class="headerlink" href="#Loading-Data-to-Azure" title="Permalink to this headline">¶</a></h2>
 <p><strong>(1)</strong> Download the thinned ARCOS data <a class="reference external" href="https://www.dropbox.com/s/mm0wwwho61pc6q7/arcos_jan_feb_2011_2012.tsv.zip?dl=0">from this link</a>. It should be about 250MB zipped, 2.31 GB unzipped.</p>
@@ -200,7 +201,7 @@
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

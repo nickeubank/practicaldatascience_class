@@ -6,8 +6,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AzureML &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -105,7 +105,7 @@ here</a>. The other ways to connect will become available when the machine is up
 <p>(Because we’re in AzureML, the VMs offered are all running the linux operating system and come with standard Data Science software installed. If you want a different kind of VM – say, a Windows machine, or a linux machine without software pre-installed – go back to your <a class="reference external" href="https://portal.azure.com/#home">Azure Portal page</a>, and select “Virtual Machines.” There you can completely control the configuration of your VM, and even set up a Remote Desktop Connection if you want to use a regular
 Windows experience with full graphical user interface.)</p>
 <p><strong>Now when you’re done playing with this VM, SHUT IT DOWN! As long as it’s running, you’re paying for it (it takes a way for the bill to show up in your expenditures). The clusters we’ll use later are able to turn themselves off if they’re idle, but for this dedicated VM, you have to turn it off yourself.</strong></p>
-<p>If you want to go the VM route, you may also be interested in how you can mount your Cloud storage just like another volumn on your computer instead of accessing it through fancy Python libraries. If so, be sure to check out the later lesson on <a class="reference internal" href="cloud_azurestorage.html"><span class="doc">Azure Storage configurations</span></a></p>
+<p>If you want to go the VM route, you may also be interested in how you can mount your Cloud storage just like another volumn on your computer instead of accessing it through fancy Python libraries. If so, be sure to check out the later lesson on Azure Storage configurations</p>
 </div>
 <div class="section" id="Setting-Up-A-Cluster">
 <h3>Setting Up A Cluster<a class="headerlink" href="#Setting-Up-A-Cluster" title="Permalink to this headline">¶</a></h3>
@@ -228,8 +228,8 @@ we’ll see later, there are also lots of Python libraries that can do the same 
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Set Up Dask on AzureML</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_azurestorage.html">Managing Azure Storage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_mountingazure.html">More Storage Tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
 </ul>
 <p class="caption"><span class="caption-text">SKILLS</span></p>
 <ul>
@@ -242,6 +242,7 @@ we’ll see later, there are also lots of Python libraries that can do the same 
 <li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backwards_design.html">Backwards Design</a></li>
 </ul>
 <p class="caption"><span class="caption-text">OTHER</span></p>
 <ul>
@@ -284,7 +285,7 @@ we’ll see later, there are also lots of Python libraries that can do the same 
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
