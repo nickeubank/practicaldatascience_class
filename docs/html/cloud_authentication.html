@@ -6,8 +6,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Authentication &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -18,6 +18,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Help Online" href="getting_help.html" />
+    <link rel="prev" title="Azure from the Command Line" href="cloud_azure_cli.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -68,7 +70,7 @@ that key! If you have a key that only controls access to a small Storage Account
 <h2>SSH Authentication<a class="headerlink" href="#SSH-Authentication" title="Permalink to this headline">¶</a></h2>
 <p>While <em>most</em> of the time we have the option of easily accessing Azure services using Azure AD, one exception is when you want to ssh into a virtual machine. (Azure has something for this, <a class="reference external" href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/key-vault-setup">Key Vault</a>, but not gonna lie: seems super complicated…)</p>
 <p><code class="docutils literal notranslate"><span class="pre">ssh</span></code>ing is when you connect to a virtual machine from the command line (e.g. your command line session becomes a command line session on the virtual machine) using the <strong>S</strong>ecure <strong>SH</strong>ell protocol. This is great both for working on a virtual machine, and also moving files back and forth (as both <a class="reference external" href="https://www.garron.me/en/articles/scp.html">scp</a> and <a class="reference external" href="https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories-on-a-vps">rsync</a> — the
-easiest tools for transfering data between computers from the command line — run on ssh.) If you don’t know much about ssh, here’s a <a class="reference external" href="%60https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys%60">probably-a-little-too-in-depth-but-good tutorial</a>.</p>
+easiest tools for transfering data between computers from the command line — run on ssh.) If you don’t know much about ssh, here’s a <a class="reference external" href="https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys">probably-a-little-too-in-depth-but-good tutorial</a>.</p>
 <p>There are a couple ways to connect two computers using ssh. The first is to just connect normally (type <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">&lt;username&gt;&#64;&lt;hostcomputeraddress&gt;</span></code>) then answer the password prompts. The problem with this strategy, however, is that Azure doesn’t support password prompts because user-created passwords tend to be wildly insecure.</p>
 <p>So the second option to use an RSA keypair, which is where you generate a pair of matching keys on your own computer (they get stored in <code class="docutils literal notranslate"><span class="pre">~/.ssh</span></code>), then give one to the VM you want to connect with at setup. From that point forward, whenever you type <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">&lt;username&gt;&#64;&lt;hostcomputeraddress&gt;</span></code> (or use <code class="docutils literal notranslate"><span class="pre">scp</span></code> to copy files), your computer will automatically check these codes and log you in automatically.</p>
 <p>You can find a tutorial on setting up ssh keypairs on <a class="reference external" href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys">Mac or Linux here</a>, and on <a class="reference external" href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/ssh-from-windows">Windows here</a>.</p>
@@ -124,11 +126,19 @@ easiest tools for transfering data between computers from the command line — r
 <li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
 </ul>
 <p class="caption"><span class="caption-text">CLOUD</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_azureml.html">Starting with AzureML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Set Up Dask on AzureML</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_mountingazure.html">More Storage Tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Azure Authentication</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Secret-Keys">Secret Keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Azure-Active-Directory-(Azure-AD)">Azure Active Directory (Azure AD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Why-Do-We-Have-Both-/-Which-Should-I-Use?">Why Do We Have Both / Which Should I Use?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#SSH-Authentication">SSH Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Conclusion">Conclusion</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">SKILLS</span></p>
 <ul>
@@ -153,6 +163,8 @@ easiest tools for transfering data between computers from the command line — r
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="cloud_azure_cli.html" title="previous chapter">Azure from the Command Line</a></li>
+      <li>Next: <a href="getting_help.html" title="next chapter">Getting Help Online</a></li>
   </ul></li>
 </ul>
 </div>
@@ -182,7 +194,7 @@ easiest tools for transfering data between computers from the command line — r
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
