@@ -384,8 +384,8 @@ configuration.</p></li>
 <li><p>To protect people from running up insane bills they can’t actually pay, Azure has some default limits on the number of CPUs you can have running at any time. You can see this quota by going to the <code class="docutils literal notranslate"><span class="pre">Compute</span> <span class="pre">Clusters</span></code> tab using the steps above and clicking the <code class="docutils literal notranslate"><span class="pre">View</span> <span class="pre">Quota</span></code>. (Note if you don’t have any clusters up you can’t see this number, ironically. So quickly create a cluster with the <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">New</span></code> button, then you’ll get the button you want). This will tell you the total number of cores you
 can be running at any one time <em>across all of Azure</em>. That means if you have a single VM up and running, that counts against the quota you might want to allocate to a cluster!</p>
 <ul>
-<li><p>For free student accounts, this quota is quite low: 6 CPUs. So the cluster we’ll create below is quite small. <strong>If your cluster allocation is above the quota, the code we run below will just hang, or you may get a time-out message.</strong> Sadly, you don’t get an informative error message.</p></li>
-<li><p>For a standard free account you got with credit card verification, the quota is 4 CPUs. So you have to reduce the number of nodes in the code below to 2 (2 nodes x 2 CPUs per node = 4).</p></li>
+<li><p>For free student accounts, this quota is quite low: 6 CPUs. So the cluster we’ll create below is quite small. <strong>If your cluster allocation is above the quota, the code we run below will just hang, or you may get a time-out message.</strong> Sadly, you don’t get an informative error message. We’ll discuss below how to deal with this problem.</p></li>
+<li><p>For a standard free account you got with credit card verification, the quota is 4 CPUs. <strong>So you have to reduce the number of nodes in the code below to 2 (2 nodes x 2 CPUs per node = 4).</strong></p></li>
 <li><p>If you have a paid account, you also have a quota, though likely a much higher one (my Duke account has a 300 CPU quota). If you’re running into quota limits <em>on a paid account</em>, <a class="reference external" href="https://docs.microsoft.com/en-us/azure/machine-learning/how-to-manage-quotas#request-quota-increases">you can ask that they be increased</a>.</p></li>
 </ul>
 </li>
@@ -459,6 +459,17 @@ WARNING:root:If &#39;script&#39; has been provided here and a script file name h
 <p>The tools that make this webside won’t render the IPython widget that should appear for you when you run <code class="docutils literal notranslate"><span class="pre">amlcluster</span></code>, but you should see this:</p>
 <p><img alt="azure_cluster_widget.png" src="_images/azure_cluster_widget.png" /></p>
 <p>Also, note that the function <code class="docutils literal notranslate"><span class="pre">AzureMLCluster</span></code> will “finish” as soon as there’s a single node in the cluster, but if you asked for more than one initial node, those will continue to spin up in the background.</p>
+</div>
+<div class="section" id="More-on-Quotas">
+<h2>More on Quotas<a class="headerlink" href="#More-on-Quotas" title="Permalink to this headline">¶</a></h2>
+<p>A common problem for learners experimenting with free accounts is quota limits. <strong>Remember that for a free account, Azure imposes a quota of only 6 CPUs for students and 4 CPUs for normal free accounts to use across all your activities on Azure.</strong> So we’re requesting a cluster with 4 or 6 CPUs (depending on what kind of account you have), if have a VM running <em>anywhere</em> on Azure, your AzureMLCluster command will just sit there processing forever (you don’t get an informative error message) until
+eventually you get a timeout error (with no reference to Quotas).</p>
+<p>To check the status of your cluster startup, login to Azure in your browser and navigate to your Machine Learning Workspace. Remember to navigate to the new version by clicking “Launch Studio” if you end up in the old interface (the new interface will have a URL that starts <code class="docutils literal notranslate"><span class="pre">ml.azure.com</span></code>). The click on <code class="docutils literal notranslate"><span class="pre">Compute</span></code> on the left menu towards the bottom and click on the <code class="docutils literal notranslate"><span class="pre">Compute</span> <span class="pre">Clusters</span></code> tab. There you should see the cluster your Python commands are trying to create. There you can see your
+quota status by clicking on the <code class="docutils literal notranslate"><span class="pre">View</span> <span class="pre">Quota</span></code> button, though this only appears if you have at least one cluster trying to start up (which is a little annoying):</p>
+<p><img alt="azure_quota_button" src="_images/azure_quota_button1.png" /></p>
+<p>Also, if you’re hitting your quote limit, you may also see a red circle next to the cluster that’s starting up. If you click on it, you’ll see:</p>
+<p><img alt="azure_quota_warning" src="_images/azure_quota_warning1.png" /></p>
+<p>If you’re having continued issues, make sure you don’t have any VMs up in your current workspace, and that you haven’t left any VMs open in other workspaces you may have created!</p>
 </div>
 <div class="section" id="Using-Your-Cluster">
 <h2>Using Your Cluster<a class="headerlink" href="#Using-Your-Cluster" title="Permalink to this headline">¶</a></h2>
@@ -2000,7 +2011,7 @@ Name: value31, Length: 87, dtype: int64
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/cloud_dask_38_1.png" src="_images/cloud_dask_38_1.png" />
+<img alt="_images/cloud_dask_39_1.png" src="_images/cloud_dask_39_1.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2017,14 +2028,34 @@ Name: value31, Length: 87, dtype: int64
 <div class="section" id="Done-with-your-cluster?">
 <h2>Done with your cluster?<a class="headerlink" href="#Done-with-your-cluster?" title="Permalink to this headline">¶</a></h2>
 <p>You have two options: you can shut it down manually with the method <code class="docutils literal notranslate"><span class="pre">.close()</span></code> on your cluster object. Thankfully, though, we also set a timeout condition when we created our cluster with the <code class="docutils literal notranslate"><span class="pre">scheduler_idle_timeout</span></code> keyword. We set it to 7200, so if your cluster is idle for two-hours, it will shut itself down (so you don’t go broke).</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">amlcluster</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+tornado.application - ERROR - Exception in callback &lt;bound method Client._heartbeat of &lt;Client: &#39;tcp://10.0.0.5:8786&#39; processes=3 threads=6, memory=44.05 GB&gt;&gt;
+Traceback (most recent call last):
+  File &#34;/Users/Nick/miniconda3/lib/python3.7/site-packages/tornado/ioloop.py&#34;, line 905, in _run
+    return self.callback()
+  File &#34;/Users/Nick/miniconda3/lib/python3.7/site-packages/distributed/client.py&#34;, line 1173, in _heartbeat
+    self.scheduler_comm.send({&#34;op&#34;: &#34;heartbeat-client&#34;})
+  File &#34;/Users/Nick/miniconda3/lib/python3.7/site-packages/distributed/batched.py&#34;, line 146, in send
+    raise CommClosedError
+distributed.comm.core.CommClosedError
+distributed.client - ERROR - Failed to reconnect to scheduler after 10.00 seconds, closing client
+ERROR:asyncio:_GatheringFuture exception was never retrieved
+future: &lt;_GatheringFuture finished exception=CancelledError()&gt;
+concurrent.futures._base.CancelledError
+</pre></div></div>
 </div>
 <p>(For some reason when I get this I get the error above, but I can confirm on the Azure cite my cluster has been deleted.)</p>
 </div>
@@ -2093,6 +2124,7 @@ founders about <a class="reference external" href="https://talkpython.fm/episode
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Set Up Dask on AzureML</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Setup">Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Starting-a-Dask-Cluster">Starting a Dask Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#More-on-Quotas">More on Quotas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Using-Your-Cluster">Using Your Cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Done-with-your-cluster?">Done with your cluster?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Extensions-and-Fun-Resources">Extensions and Fun Resources</a></li>
