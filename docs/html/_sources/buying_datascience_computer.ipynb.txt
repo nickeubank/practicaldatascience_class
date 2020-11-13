@@ -17,7 +17,7 @@
     "\n",
     "The \"how long\" question is important because if you expect to get a new laptop when you finish your Masters degree in a year and a half, you don’t need to buy a computer that has nearly as future proof. If you think it’s gonna have to last you three years, you definitely need better specs.\n",
     "\n",
-    "The \"do I actually need a new computer\" question will talk about in more detail below.\n",
+    "The \"do I actually need a new computer\" question we'll talk about in more detail below.\n",
     "\n",
     "## Key Specs\n",
     "\n",
@@ -64,6 +64,13 @@
     "\n",
     "And finally, if you're buying a mac, consider whether you can buy lower specs and upgrade yourself. Many used laptops only have 16GB ram because most people don't need more than that, but may be expandable; and if you can avoid paying Apple for RAM upgrades and do them yourself, you'll save money. "
    ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
   }
  ],
  "metadata": {
