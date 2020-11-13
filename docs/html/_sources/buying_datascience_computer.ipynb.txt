@@ -9,7 +9,7 @@
     "\n",
     "## Questions to Ask Yourself\n",
     "\n",
-    "When getting a new computer, the two questions you need to ask yourself are: \n",
+    "When thinking about getting a new computer, the three questions you need to ask yourself are: \n",
     "\n",
     "- how budget sensitive are you,  \n",
     "- how long does this need to be your main computer, and\n",
