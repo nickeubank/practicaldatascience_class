@@ -6,8 +6,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Azure from the Command Line &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -18,6 +18,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Authentication" href="cloud_authentication.html" />
+    <link rel="prev" title="Setting up a Dask Cluster on AzureML" href="cloud_dask.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -443,11 +445,16 @@ azcopy login --tenant-id <span class="s2">&quot;XXXXXX-XXXX-XXXX-XXXX-XXXXXXXX&q
 <li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
 </ul>
 <p class="caption"><span class="caption-text">CLOUD</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_azureml.html">Starting with AzureML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Set Up Dask on AzureML</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_mountingazure.html">More Storage Tricks</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Azure Command Line Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Managing-Storage-with-Azure-CLI">Managing Storage with Azure CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Moving-Lots-of-Data?">Moving Lots of Data?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
 </ul>
 <p class="caption"><span class="caption-text">SKILLS</span></p>
 <ul>
@@ -464,6 +471,7 @@ azcopy login --tenant-id <span class="s2">&quot;XXXXXX-XXXX-XXXX-XXXX-XXXXXXXX&q
 </ul>
 <p class="caption"><span class="caption-text">OTHER</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="buying_datascience_computer.html">Buying a Data Science Computer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="not_a_mids_student.html">Not a MIDS Student?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cheatsheets.html">Cheat Sheets</a></li>
 </ul>
@@ -472,6 +480,8 @@ azcopy login --tenant-id <span class="s2">&quot;XXXXXX-XXXX-XXXX-XXXX-XXXXXXXX&q
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="cloud_dask.html" title="previous chapter">Setting up a Dask Cluster on AzureML</a></li>
+      <li>Next: <a href="cloud_authentication.html" title="next chapter">Authentication</a></li>
   </ul></li>
 </ul>
 </div>
@@ -501,7 +511,7 @@ azcopy login --tenant-id <span class="s2">&quot;XXXXXX-XXXX-XXXX-XXXX-XXXXXXXX&q
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

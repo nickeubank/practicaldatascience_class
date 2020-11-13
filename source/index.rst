@@ -106,5 +106,6 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
    :hidden: 
    :caption: OTHER
    
+   Buying a Data Science Computer <buying_datascience_computer.ipynb>
    Not a MIDS Student? <not_a_mids_student>
    Cheat Sheets <cheatsheets>
