@@ -37,7 +37,7 @@
     "\n",
     "When asked whether you want to install for \"Just Me\" or \"All Users\", pick \"Just Me\".\n",
     "\n",
-    "One of the checkboxes during the Windows installation is \"do you want to add Anaconda to your PATH?\". Select No. \n",
+    "One of the checkboxes during the Windows installation is \"do you want to add Anaconda to your PATH?\". Select Yes. I know they discourage it, but it allows miniconda to work well with Cmder. \n",
     "\n",
     "### If there's a Python 3.8, why is there also a Python 2.7 available?\n",
     "\n",
