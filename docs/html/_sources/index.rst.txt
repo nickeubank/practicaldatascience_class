@@ -80,8 +80,10 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
    :caption: CLOUD
    
    What Is The Cloud? <cloud_what_is_it>
-   Starting with AzureML <cloud_azureml>
-   Set Up Dask on AzureML <cloud_dask>
+   Storage on Azure <cloud_storage_on_azure>
+   Setup a VM on Azure <cloud_vm_on_azure>
+   Setup a Cluster on Azure <cloud_cluster_on_azure>
+   Dask on Azure Example <cloud_dask>
    Azure Command Line Tools <cloud_azure_cli>
    Azure Authentication <cloud_authentication>
 

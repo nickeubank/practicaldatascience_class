@@ -6,8 +6,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Time to Scale! &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
@@ -55,7 +55,7 @@
 <p><strong>AS ALWAYS</strong> start with a subset of the data (e.g. use <code class="docutils literal notranslate"><span class="pre">dd.read_csv(...).head(1000)</span></code>). Note that the one column you had before you won’t find here is <code class="docutils literal notranslate"><span class="pre">year</span></code>, so you’ll have to fix that.</p>
 <p><strong>(5)</strong> Now run that code on the full dataset and time it. Note you can time it using your watch / system clock, don’t worry about trying to use a Python timer. Was that faster than when you did it by hand at home?</p>
 <p><strong>(6)</strong> Now the extra fun part! When you created a cluster, you should have gotten back a little widget that looked like this:</p>
-<p><img alt="azure_cluster_widget.png" src="../_images/azure_cluster_widget1.png" /></p>
+<p><img alt="azure_cluster_widget.png" src="../_images/azure_cluster_widget.png" /></p>
 <p>(if you didn’t, in a new cell just put the name of your cluster (e.g. <code class="docutils literal notranslate"><span class="pre">amlcluster</span></code>) and run the cell. If you get text not a widget, <a class="reference internal" href="../cloud_dask.html"><span class="doc">see directions near the top of this reading</span></a>.</p>
 <p>Open the “manual scaling” tab in that widget, and set it to 6. WOO!</p>
 <p>Now if you check your dask dashboard, you should slowly see more workers appear (click the workers tab to see progress). Note this will take 5-10 minutes – new computers are being setup for you!</p>
@@ -109,8 +109,10 @@
 <p class="caption"><span class="caption-text">CLOUD</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../cloud_what_is_it.html">What Is The Cloud?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cloud_azureml.html">Starting with AzureML</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cloud_dask.html">Set Up Dask on AzureML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_storage_on_azure.html">Storage on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_dask.html">Dask on Azure Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cloud_azure_cli.html">Azure Command Line Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cloud_authentication.html">Azure Authentication</a></li>
 </ul>
@@ -129,6 +131,7 @@
 </ul>
 <p class="caption"><span class="caption-text">OTHER</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../buying_datascience_computer.html">Buying a Data Science Computer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../not_a_mids_student.html">Not a MIDS Student?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cheatsheets.html">Cheat Sheets</a></li>
 </ul>
@@ -166,7 +169,7 @@
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

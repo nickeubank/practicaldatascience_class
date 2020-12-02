@@ -19,6 +19,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Azure from the Command Line" href="cloud_azure_cli.html" />
+    <link rel="prev" title="Setting Up a Cluster on Azure for Data Science" href="cloud_cluster_on_azure.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -315,7 +316,7 @@ can be running at any one time <em>across all of Azure</em>. That means if you h
     <span class="n">security_group</span><span class="o">=</span><span class="s2">&quot;nce8nsg&quot;</span><span class="p">,</span>
     <span class="n">n_workers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
     <span class="n">location</span><span class="o">=</span><span class="s2">&quot;eastus&quot;</span><span class="p">,</span>
-    <span class="n">vmsize</span><span class="o">=</span><span class="s2">&quot;Standard_DS11_v2&quot;</span>
+    <span class="n">vm_size</span><span class="o">=</span><span class="s2">&quot;Standard_DS11_v2&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -329,7 +330,7 @@ Creating scheduler instance
 Assigned public IP
 Network interface ready
 Creating VM
-Created VM dask-60041a20-scheduler
+Created VM dask-9283e987-scheduler
 Waiting for scheduler to run
 Scheduler is running
 Creating worker instance
@@ -351,7 +352,15 @@ Creating worker instance
 <div class="highlight"><pre>
 Network interface ready
 Creating VM
-Created VM dask-60041a20-worker-79893b15
+Created VM dask-9283e987-worker-f3bb5298
+Creating worker instance
+Network interface ready
+Creating VM
+Created VM dask-9283e987-worker-10038e07
+Creating worker instance
+Network interface ready
+Creating VM
+Created VM dask-9283e987-worker-ec20074c
 </pre></div></div>
 </div>
 <p>Note that we’re using the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/virtual-machines/dv2-dsv2-series">“Standard_DS11_v2” VM</a> because it only has 2 cores, but it does have high speed data connections (the “S” in “DS11” is for Storage-optimized). And for data science, we almost always want fast storage access.</p>
@@ -360,13 +369,13 @@ Created VM dask-60041a20-worker-79893b15
 <h2>Using Your Cluster<a class="headerlink" href="#Using-Your-Cluster" title="Permalink to this headline">¶</a></h2>
 <p>There are two ways to use your cluster: You can click on the link above to open a connection to JupyterLab running on one of the computers in your cluster, or connect from here with this command:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span>
 
-<span class="n">c</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">amlcluster</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -380,9 +389,9 @@ Created VM dask-60041a20-worker-79893b15
 +---------+---------------+---------------+---------------+
 | Package | client        | scheduler     | workers       |
 +---------+---------------+---------------+---------------+
-| numpy   | 1.19.4        | 1.19.2        | 1.19.2        |
-| python  | 3.7.8.final.0 | 3.6.9.final.0 | 3.6.9.final.0 |
-| tornado | 6.1           | 6.0.4         | 6.0.4         |
+| lz4     | 3.1.0         | 3.1.1         | 3.1.1         |
+| numpy   | 1.19.4        | 1.18.1        | 1.18.1        |
+| python  | 3.7.8.final.0 | 3.8.0.final.0 | 3.8.0.final.0 |
 +---------+---------------+---------------+---------------+
   warnings.warn(version_module.VersionMismatchWarning(msg[0][&#34;warning&#34;]))
 </pre></div></div>
@@ -401,6 +410,9 @@ Created VM dask-60041a20-worker-79893b15
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">numpy</span></code> and <code class="docutils literal notranslate"><span class="pre">python</span></code> issues don’t seem like to cause big problems (though if you have a mismatch and get problems down the road, consider changing your Python version!), but the fact that the schedulers and workers have one package I don’t (<code class="docutils literal notranslate"><span class="pre">lz4</span></code>) is a problem, so I installed it before moving forward. (<code class="docutils literal notranslate"><span class="pre">lz4</span></code> is a compression algorithm used to send data back and forth, so not having it is a big problem).</p>
+</div>
+<div class="section" id="Accessing-Storage">
+<h2>Accessing Storage<a class="headerlink" href="#Accessing-Storage" title="Permalink to this headline">¶</a></h2>
 <p>First, we’ll contect to the container where I put the climate data. As you saw in the last exercise, you can upload data using the Azure web interface, and I would do that if you want to do these exercises. However there are more efficient tools we’ll cover in the <a class="reference external" href="cloud_azurestorage.ipynb">next lesson</a>.</p>
 <p>As discussed previously, <a class="reference internal" href="cloud_storage_on_azure.html"><span class="doc">dask can access Azure storage</span></a> without the help of any other libraries – you just need to be able to pass it your Storage Account name and Access Key, which you can find by going to your Azure Portal, then your Storage Account, and then clicking on “Access Keys” on the left menu. The syntax is:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dask.dataframe</span> <span class="k">as</span> <span class="nn">dd</span>
@@ -413,7 +425,7 @@ Created VM dask-60041a20-worker-79893b15
 </div>
 <p>But since I don’t want you to see all my secret codes, I’m gonna load my information from a file. You can do this, but you can also put them in your code <em>if your code isn’t public!</em></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -426,7 +438,7 @@ Created VM dask-60041a20-worker-79893b15
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -447,7 +459,7 @@ Created VM dask-60041a20-worker-79893b15
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -456,296 +468,94 @@ Created VM dask-60041a20-worker-79893b15
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">KilledWorker</span>                              Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-6-e8b1118eea72&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>temps<span class="ansi-blue-fg">.</span>head<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">10</span><span class="ansi-blue-fg">)</span>
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/dask/dataframe/core.py</span> in <span class="ansi-cyan-fg">head</span><span class="ansi-blue-fg">(self, n, npartitions, compute)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1004</span>             Whether to compute the result<span class="ansi-blue-fg">,</span> default <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">True</span><span class="ansi-blue-fg">.</span>
+<span class="ansi-green-intense-fg ansi-bold">   1005</span>         &#34;&#34;&#34;
+<span class="ansi-green-fg">-&gt; 1006</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_head<span class="ansi-blue-fg">(</span>n<span class="ansi-blue-fg">=</span>n<span class="ansi-blue-fg">,</span> npartitions<span class="ansi-blue-fg">=</span>npartitions<span class="ansi-blue-fg">,</span> compute<span class="ansi-blue-fg">=</span>compute<span class="ansi-blue-fg">,</span> safe<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1007</span>
+<span class="ansi-green-intense-fg ansi-bold">   1008</span>     <span class="ansi-green-fg">def</span> _head<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> n<span class="ansi-blue-fg">,</span> npartitions<span class="ansi-blue-fg">,</span> compute<span class="ansi-blue-fg">,</span> safe<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
 
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>id</th>
-      <th>year</th>
-      <th>month</th>
-      <th>element</th>
-      <th>value1</th>
-      <th>mflag1</th>
-      <th>qflag1</th>
-      <th>sflag1</th>
-      <th>value2</th>
-      <th>mflag2</th>
-      <th>...</th>
-      <th>qflag29</th>
-      <th>sflag29</th>
-      <th>value30</th>
-      <th>mflag30</th>
-      <th>qflag30</th>
-      <th>sflag30</th>
-      <th>value31</th>
-      <th>mflag31</th>
-      <th>qflag31</th>
-      <th>sflag31</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>ACW00011604</td>
-      <td>1949</td>
-      <td>1</td>
-      <td>TMAX</td>
-      <td>289</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>289</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>272</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>272</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>X</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>ACW00011604</td>
-      <td>1949</td>
-      <td>2</td>
-      <td>TMAX</td>
-      <td>267</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>278</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>-9999</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>-9999</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>ACW00011604</td>
-      <td>1949</td>
-      <td>3</td>
-      <td>TMAX</td>
-      <td>272</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>289</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>278</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>267</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>X</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>ACW00011604</td>
-      <td>1949</td>
-      <td>4</td>
-      <td>TMAX</td>
-      <td>278</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>283</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>289</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>-9999</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>ACW00011604</td>
-      <td>1949</td>
-      <td>5</td>
-      <td>TMAX</td>
-      <td>283</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>283</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>294</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>300</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>X</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>ACW00011604</td>
-      <td>1949</td>
-      <td>6</td>
-      <td>TMAX</td>
-      <td>300</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>294</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>294</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>-9999</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>ACW00011604</td>
-      <td>1949</td>
-      <td>7</td>
-      <td>TMAX</td>
-      <td>300</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>300</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>306</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>294</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>X</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>ACW00011647</td>
-      <td>1961</td>
-      <td>10</td>
-      <td>TMAX</td>
-      <td>272</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>X</td>
-      <td>-9999</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>-9999</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>-9999</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>AE000041196</td>
-      <td>1944</td>
-      <td>3</td>
-      <td>TMAX</td>
-      <td>-9999</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>-9999</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>I</td>
-      <td>396</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>I</td>
-      <td>313</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>I</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>AE000041196</td>
-      <td>1944</td>
-      <td>4</td>
-      <td>TMAX</td>
-      <td>258</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>I</td>
-      <td>263</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>I</td>
-      <td>346</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>I</td>
-      <td>-9999</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-<p>10 rows × 128 columns</p>
-</div></div>
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/dask/dataframe/core.py</span> in <span class="ansi-cyan-fg">_head</span><span class="ansi-blue-fg">(self, n, npartitions, compute, safe)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1037</span>
+<span class="ansi-green-intense-fg ansi-bold">   1038</span>         <span class="ansi-green-fg">if</span> compute<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 1039</span><span class="ansi-red-fg">             </span>result <span class="ansi-blue-fg">=</span> result<span class="ansi-blue-fg">.</span>compute<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1040</span>         <span class="ansi-green-fg">return</span> result
+<span class="ansi-green-intense-fg ansi-bold">   1041</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/dask/base.py</span> in <span class="ansi-cyan-fg">compute</span><span class="ansi-blue-fg">(self, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    165</span>         dask<span class="ansi-blue-fg">.</span>base<span class="ansi-blue-fg">.</span>compute
+<span class="ansi-green-intense-fg ansi-bold">    166</span>         &#34;&#34;&#34;
+<span class="ansi-green-fg">--&gt; 167</span><span class="ansi-red-fg">         </span><span class="ansi-blue-fg">(</span>result<span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">=</span> compute<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> traverse<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    168</span>         <span class="ansi-green-fg">return</span> result
+<span class="ansi-green-intense-fg ansi-bold">    169</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/dask/base.py</span> in <span class="ansi-cyan-fg">compute</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    450</span>         postcomputes<span class="ansi-blue-fg">.</span>append<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">.</span>__dask_postcompute__<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    451</span>
+<span class="ansi-green-fg">--&gt; 452</span><span class="ansi-red-fg">     </span>results <span class="ansi-blue-fg">=</span> schedule<span class="ansi-blue-fg">(</span>dsk<span class="ansi-blue-fg">,</span> keys<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    453</span>     <span class="ansi-green-fg">return</span> repack<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">[</span>f<span class="ansi-blue-fg">(</span>r<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>a<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> r<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">(</span>f<span class="ansi-blue-fg">,</span> a<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">in</span> zip<span class="ansi-blue-fg">(</span>results<span class="ansi-blue-fg">,</span> postcomputes<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    454</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/distributed/client.py</span> in <span class="ansi-cyan-fg">get</span><span class="ansi-blue-fg">(self, dsk, keys, restrictions, loose_restrictions, resources, sync, asynchronous, direct, retries, priority, fifo_timeout, actors, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2723</span>                     should_rejoin <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">False</span>
+<span class="ansi-green-intense-fg ansi-bold">   2724</span>             <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 2725</span><span class="ansi-red-fg">                 </span>results <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>gather<span class="ansi-blue-fg">(</span>packed<span class="ansi-blue-fg">,</span> asynchronous<span class="ansi-blue-fg">=</span>asynchronous<span class="ansi-blue-fg">,</span> direct<span class="ansi-blue-fg">=</span>direct<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2726</span>             <span class="ansi-green-fg">finally</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   2727</span>                 <span class="ansi-green-fg">for</span> f <span class="ansi-green-fg">in</span> futures<span class="ansi-blue-fg">.</span>values<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/distributed/client.py</span> in <span class="ansi-cyan-fg">gather</span><span class="ansi-blue-fg">(self, futures, errors, direct, asynchronous)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1990</span>                 direct<span class="ansi-blue-fg">=</span>direct<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">   1991</span>                 local_worker<span class="ansi-blue-fg">=</span>local_worker<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-fg">-&gt; 1992</span><span class="ansi-red-fg">                 </span>asynchronous<span class="ansi-blue-fg">=</span>asynchronous<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">   1993</span>             )
+<span class="ansi-green-intense-fg ansi-bold">   1994</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/distributed/client.py</span> in <span class="ansi-cyan-fg">sync</span><span class="ansi-blue-fg">(self, func, asynchronous, callback_timeout, *args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    831</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    832</span>             return sync(
+<span class="ansi-green-fg">--&gt; 833</span><span class="ansi-red-fg">                 </span>self<span class="ansi-blue-fg">.</span>loop<span class="ansi-blue-fg">,</span> func<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> callback_timeout<span class="ansi-blue-fg">=</span>callback_timeout<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs
+<span class="ansi-green-intense-fg ansi-bold">    834</span>             )
+<span class="ansi-green-intense-fg ansi-bold">    835</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/distributed/utils.py</span> in <span class="ansi-cyan-fg">sync</span><span class="ansi-blue-fg">(loop, func, callback_timeout, *args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    338</span>     <span class="ansi-green-fg">if</span> error<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    339</span>         typ<span class="ansi-blue-fg">,</span> exc<span class="ansi-blue-fg">,</span> tb <span class="ansi-blue-fg">=</span> error<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-fg">--&gt; 340</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">raise</span> exc<span class="ansi-blue-fg">.</span>with_traceback<span class="ansi-blue-fg">(</span>tb<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    341</span>     <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    342</span>         <span class="ansi-green-fg">return</span> result<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/distributed/utils.py</span> in <span class="ansi-cyan-fg">f</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">    322</span>             <span class="ansi-green-fg">if</span> callback_timeout <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    323</span>                 future <span class="ansi-blue-fg">=</span> asyncio<span class="ansi-blue-fg">.</span>wait_for<span class="ansi-blue-fg">(</span>future<span class="ansi-blue-fg">,</span> callback_timeout<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 324</span><span class="ansi-red-fg">             </span>result<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">yield</span> future
+<span class="ansi-green-intense-fg ansi-bold">    325</span>         <span class="ansi-green-fg">except</span> Exception <span class="ansi-green-fg">as</span> exc<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    326</span>             error<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">=</span> sys<span class="ansi-blue-fg">.</span>exc_info<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/tornado/gen.py</span> in <span class="ansi-cyan-fg">run</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">    760</span>
+<span class="ansi-green-intense-fg ansi-bold">    761</span>                     <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 762</span><span class="ansi-red-fg">                         </span>value <span class="ansi-blue-fg">=</span> future<span class="ansi-blue-fg">.</span>result<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    763</span>                     <span class="ansi-green-fg">except</span> Exception<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    764</span>                         exc_info <span class="ansi-blue-fg">=</span> sys<span class="ansi-blue-fg">.</span>exc_info<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/distributed/client.py</span> in <span class="ansi-cyan-fg">_gather</span><span class="ansi-blue-fg">(self, futures, errors, direct, local_worker)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1849</span>                             exc <span class="ansi-blue-fg">=</span> CancelledError<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1850</span>                         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 1851</span><span class="ansi-red-fg">                             </span><span class="ansi-green-fg">raise</span> exception<span class="ansi-blue-fg">.</span>with_traceback<span class="ansi-blue-fg">(</span>traceback<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1852</span>                         <span class="ansi-green-fg">raise</span> exc
+<span class="ansi-green-intense-fg ansi-bold">   1853</span>                     <span class="ansi-green-fg">if</span> errors <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">&#34;skip&#34;</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-red-fg">KilledWorker</span>: (&#34;(&#39;read-csv-head-1-10-read-csv-3a29deea2d090d453bbd7546f1100890&#39;, 0)&#34;, &lt;Worker &#39;tcp://10.0.0.11:44995&#39;, name: dask-9283e987-worker-10038e07, memory: 0, processing: 1&gt;)
+</pre></div></div>
 </div>
 <p>You will see that I added some code to explicitly name the types of some columns (the flags). As you may recall from our other lesson, dask isn’t great at type inference, and will otherwise assume those are <code class="docutils literal notranslate"><span class="pre">float</span></code> columns instead of <code class="docutils literal notranslate"><span class="pre">objects</span></code>. Without that code, I get this error:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/azureml-envs/azureml_c6bd17107f471892400d23146f291775/lib/python3.6/site-packages/dask/dataframe/io/csv.py in coerce_dtypes()
@@ -772,7 +582,7 @@ ValueError: Mismatched dtypes found in `pd.read_csv`/`pd.read_table`.
 </div>
 <p>Let’s start by asking <code class="docutils literal notranslate"><span class="pre">dask</span></code> to go through this entire dataset and just pull out data for the station near my home in Colorado, and calculating the average daily max-temp for each month:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -781,8 +591,8 @@ ValueError: Mismatched dtypes found in `pd.read_csv`/`pd.read_table`.
 </div>
 </div>
 <p>Now as you may recall, <code class="docutils literal notranslate"><span class="pre">dask</span></code> hasn’t actually run the code above – it’s just making a plan and waiting till I run <code class="docutils literal notranslate"><span class="pre">.compute()</span></code> to actually execute, so if I check on <code class="docutils literal notranslate"><span class="pre">temps</span></code>, I’ll see:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -790,957 +600,11 @@ ValueError: Mismatched dtypes found in `pd.read_csv`/`pd.read_table`.
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div><strong>Dask DataFrame Structure:</strong></div>
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>id</th>
-      <th>year</th>
-      <th>month</th>
-      <th>element</th>
-      <th>value1</th>
-      <th>mflag1</th>
-      <th>qflag1</th>
-      <th>sflag1</th>
-      <th>value2</th>
-      <th>mflag2</th>
-      <th>qflag2</th>
-      <th>sflag2</th>
-      <th>value3</th>
-      <th>mflag3</th>
-      <th>qflag3</th>
-      <th>sflag3</th>
-      <th>value4</th>
-      <th>mflag4</th>
-      <th>qflag4</th>
-      <th>sflag4</th>
-      <th>value5</th>
-      <th>mflag5</th>
-      <th>qflag5</th>
-      <th>sflag5</th>
-      <th>value6</th>
-      <th>mflag6</th>
-      <th>qflag6</th>
-      <th>sflag6</th>
-      <th>value7</th>
-      <th>mflag7</th>
-      <th>qflag7</th>
-      <th>sflag7</th>
-      <th>value8</th>
-      <th>mflag8</th>
-      <th>qflag8</th>
-      <th>sflag8</th>
-      <th>value9</th>
-      <th>mflag9</th>
-      <th>qflag9</th>
-      <th>sflag9</th>
-      <th>value10</th>
-      <th>mflag10</th>
-      <th>qflag10</th>
-      <th>sflag10</th>
-      <th>value11</th>
-      <th>mflag11</th>
-      <th>qflag11</th>
-      <th>sflag11</th>
-      <th>value12</th>
-      <th>mflag12</th>
-      <th>qflag12</th>
-      <th>sflag12</th>
-      <th>value13</th>
-      <th>mflag13</th>
-      <th>qflag13</th>
-      <th>sflag13</th>
-      <th>value14</th>
-      <th>mflag14</th>
-      <th>qflag14</th>
-      <th>sflag14</th>
-      <th>value15</th>
-      <th>mflag15</th>
-      <th>qflag15</th>
-      <th>sflag15</th>
-      <th>value16</th>
-      <th>mflag16</th>
-      <th>qflag16</th>
-      <th>sflag16</th>
-      <th>value17</th>
-      <th>mflag17</th>
-      <th>qflag17</th>
-      <th>sflag17</th>
-      <th>value18</th>
-      <th>mflag18</th>
-      <th>qflag18</th>
-      <th>sflag18</th>
-      <th>value19</th>
-      <th>mflag19</th>
-      <th>qflag19</th>
-      <th>sflag19</th>
-      <th>value20</th>
-      <th>mflag20</th>
-      <th>qflag20</th>
-      <th>sflag20</th>
-      <th>value21</th>
-      <th>mflag21</th>
-      <th>qflag21</th>
-      <th>sflag21</th>
-      <th>value22</th>
-      <th>mflag22</th>
-      <th>qflag22</th>
-      <th>sflag22</th>
-      <th>value23</th>
-      <th>mflag23</th>
-      <th>qflag23</th>
-      <th>sflag23</th>
-      <th>value24</th>
-      <th>mflag24</th>
-      <th>qflag24</th>
-      <th>sflag24</th>
-      <th>value25</th>
-      <th>mflag25</th>
-      <th>qflag25</th>
-      <th>sflag25</th>
-      <th>value26</th>
-      <th>mflag26</th>
-      <th>qflag26</th>
-      <th>sflag26</th>
-      <th>value27</th>
-      <th>mflag27</th>
-      <th>qflag27</th>
-      <th>sflag27</th>
-      <th>value28</th>
-      <th>mflag28</th>
-      <th>qflag28</th>
-      <th>sflag28</th>
-      <th>value29</th>
-      <th>mflag29</th>
-      <th>qflag29</th>
-      <th>sflag29</th>
-      <th>value30</th>
-      <th>mflag30</th>
-      <th>qflag30</th>
-      <th>sflag30</th>
-      <th>value31</th>
-      <th>mflag31</th>
-      <th>qflag31</th>
-      <th>sflag31</th>
-    </tr>
-    <tr>
-      <th>npartitions=64</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th></th>
-      <td>object</td>
-      <td>int64</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-      <td>int64</td>
-      <td>object</td>
-      <td>object</td>
-      <td>object</td>
-    </tr>
-    <tr>
-      <th></th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th></th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th></th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<div>Dask Name: getitem, 256 tasks</div></div>
-</div>
 <p>Now since we’ll most want to work with this data from one station, we can cache this subset dataframe with <code class="docutils literal notranslate"><span class="pre">c.persist(temps)</span></code> so <code class="docutils literal notranslate"><span class="pre">dask</span></code> won’t have to re-load the original data next time we run <code class="docutils literal notranslate"><span class="pre">.compute()</span></code>. <a class="reference external" href="https://docs.dask.org/en/latest/dataframe-best-practices.html#persist-intelligently">More on caching here</a>, as well as other <a class="reference external" href="https://docs.dask.org/en/latest/dataframe-best-practices.html#best-practices">dask best practices</a>. Make sure to not just run <code class="docutils literal notranslate"><span class="pre">c.persists(temps)</span></code> but
 rather <code class="docutils literal notranslate"><span class="pre">temps</span> <span class="pre">=</span> <span class="pre">c.persist(temps)</span></code>.</p>
 <p>Finally, one other note: this dataset is actually pretty small for Cloud computing, and since most of what we’re doing is reading in data and filtering it, it involves a lot of moving data around. As a result it’d be much faster on a single really large VM (which doesn’t need to use network connections to pass around data). But I wanted an example I could run relatively quickly and easily. :)</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1751,8 +615,8 @@ rather <code class="docutils literal notranslate"><span class="pre">temps</span>
 <p>OK, now we have our subset, and we can calculate what we want. Note that in reality, the data for this one station is actually easily small enough to put on my own computer, so I could have just run <code class="docutils literal notranslate"><span class="pre">data_on_own_comp</span> <span class="pre">=</span> <span class="pre">temps.compute()</span></code> above and moved the final dataset to my personal computer. Indeed, as you may recall from our <a class="reference internal" href="parallelism.html"><span class="doc">previous lesson on parallelism</span></a>, if you don’t have to use distributed computing, you probably don’t want to! Even the authors of <code class="docutils literal notranslate"><span class="pre">dask</span></code> <a class="reference external" href="https://docs.dask.org/en/latest/dataframe-best-practices.html#use-pandas">are
 quick to remind users</a>: “For data that fits into RAM, Pandas can often be faster and easier to use than Dask DataFrame. While ‘Big Data’ tools can be exciting, they are almost always worse than normal data tools while those remain appropriate.”</p>
 <p>But let’s carry on with this on the cluster for practice.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1760,31 +624,11 @@ quick to remind users</a>: “For data that fits into RAM, Pandas can often be f
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
--9999    613
- 122      23
- 300      21
- 244      20
- 294      20
-        ...
--78        1
--67        1
--56        1
- 361       1
- 378       1
-Name: value31, Length: 87, dtype: int64
-</pre></div></div>
-</div>
 <p>Now the really cool thing: if we use the link for our dashboard (<code class="docutils literal notranslate"><span class="pre">cluster.dashboard_link</span></code>) we got when we created our dask cluster, we can see our cluster working (note the exact number of processes will vary depending on how you specified your cluster above. This pick comes from a 16 core cluster):</p>
 <p><img alt="azure_dask_scalingup" src="_images/azure_dask_scalingup.png" /></p>
 <p>So let’s replace those with missing, calculate averages across all the days in each month, and also convert from 1/10th of a degree Centigrade to Centigrade units:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1802,7 +646,7 @@ Name: value31, Length: 87, dtype: int64
 </div>
 <p>Now finally we can collect our results on our personal computer, create a “time” variable that uses years and months for plotting, and plot our temperatures!</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1812,8 +656,8 @@ Name: value31, Length: 87, dtype: int64
 </pre></div>
 </div>
 </div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1830,63 +674,19 @@ Name: value31, Length: 87, dtype: int64
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/Users/Nick/miniconda3/lib/python3.7/site-packages/plotnine/stats/smoothers.py:311: PlotnineWarning: Confidence intervals are not yet implementedfor lowess smoothings.
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="_images/cloud_dask_28_1.png" src="_images/cloud_dask_28_1.png" />
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-&lt;ggplot: (8789105353937)&gt;
-</pre></div></div>
-</div>
 <p>And that, my friends, is global warming.</p>
 </div>
 <div class="section" id="Done-with-your-cluster?">
 <h2>Done with your cluster?<a class="headerlink" href="#Done-with-your-cluster?" title="Permalink to this headline">¶</a></h2>
 <p>You have two options: you can shut it down manually with the method <code class="docutils literal notranslate"><span class="pre">.close()</span></code> on your cluster object.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">amlcluster</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-tornado.application - ERROR - Exception in callback &lt;bound method Client._heartbeat of &lt;Client: &#39;tcp://10.0.0.5:8786&#39; processes=3 threads=6, memory=44.05 GB&gt;&gt;
-Traceback (most recent call last):
-  File &#34;/Users/Nick/miniconda3/lib/python3.7/site-packages/tornado/ioloop.py&#34;, line 905, in _run
-    return self.callback()
-  File &#34;/Users/Nick/miniconda3/lib/python3.7/site-packages/distributed/client.py&#34;, line 1173, in _heartbeat
-    self.scheduler_comm.send({&#34;op&#34;: &#34;heartbeat-client&#34;})
-  File &#34;/Users/Nick/miniconda3/lib/python3.7/site-packages/distributed/batched.py&#34;, line 146, in send
-    raise CommClosedError
-distributed.comm.core.CommClosedError
-distributed.client - ERROR - Failed to reconnect to scheduler after 10.00 seconds, closing client
-ERROR:asyncio:_GatheringFuture exception was never retrieved
-future: &lt;_GatheringFuture finished exception=CancelledError()&gt;
-concurrent.futures._base.CancelledError
-</pre></div></div>
 </div>
 <p>(For some reason when I get this I get the error above, but I can confirm on the Azure cite my cluster has been deleted.)</p>
 </div>
@@ -1951,9 +751,13 @@ founders about <a class="reference external" href="https://talkpython.fm/episode
 <p class="caption"><span class="caption-text">CLOUD</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Set Up Dask on AzureML</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="cloud_storage_on_azure.html">Storage on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Dask on Azure Example</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Starting-a-Dask-Cluster">Starting a Dask Cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Using-Your-Cluster">Using Your Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Accessing-Storage">Accessing Storage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Done-with-your-cluster?">Done with your cluster?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Extensions-and-Fun-Resources">Extensions and Fun Resources</a></li>
 </ul>
@@ -1985,6 +789,7 @@ founders about <a class="reference external" href="https://talkpython.fm/episode
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="cloud_cluster_on_azure.html" title="previous chapter">Setting Up a Cluster on Azure for Data Science</a></li>
       <li>Next: <a href="cloud_azure_cli.html" title="next chapter">Azure from the Command Line</a></li>
   </ul></li>
 </ul>

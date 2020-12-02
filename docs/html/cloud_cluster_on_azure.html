@@ -18,6 +18,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Dask Cluster on Azure Example" href="cloud_dask.html" />
+    <link rel="prev" title="Renting a VM for Data Science on Azure" href="cloud_vm_on_azure.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -373,7 +375,7 @@ Creating scheduler instance
 Assigned public IP
 Network interface ready
 Creating VM
-Created VM dask-60041a20-scheduler
+Created VM dask-8eec3fa0-scheduler
 Waiting for scheduler to run
 Scheduler is running
 Creating worker instance
@@ -395,7 +397,7 @@ Creating worker instance
 <div class="highlight"><pre>
 Network interface ready
 Creating VM
-Created VM dask-60041a20-worker-79893b15
+Created VM dask-8eec3fa0-worker-29ac2137
 </pre></div></div>
 </div>
 </div>
@@ -423,7 +425,6 @@ Created VM dask-60041a20-worker-79893b15
 +---------+--------+-----------+---------+
 | Package | client | scheduler | workers |
 +---------+--------+-----------+---------+
-| blosc   | None   | 1.9.2     | None    |
 | lz4     | 3.1.0  | 3.1.1     | None    |
 +---------+--------+-----------+---------+
   warnings.warn(version_module.VersionMismatchWarning(msg[0][&#34;warning&#34;]))
@@ -431,7 +432,7 @@ Created VM dask-60041a20-worker-79893b15
 </div>
 <p>And that’s it! Now you have a running <code class="docutils literal notranslate"><span class="pre">dask</span></code> cluster you’re connected to from home! Now you just use it like any other dask session. Want to see your dask Dashboard to see how your cluster is running? Just run <code class="docutils literal notranslate"><span class="pre">cluster.dashboard_link</span></code> and click the link!</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -440,12 +441,12 @@ Created VM dask-60041a20-worker-79893b15
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&#39;http://40.88.229.198:8787/status&#39;
+&#39;http://52.151.219.69:8787/status&#39;
 </pre></div></div>
 </div>
 </div>
@@ -455,7 +456,7 @@ Created VM dask-60041a20-worker-79893b15
 honestly.</p>
 <p>To scale your cluster, use the <code class="docutils literal notranslate"><span class="pre">.scale()</span></code> method:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -485,8 +486,8 @@ Examples
 
 </pre></div></div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -495,13 +496,21 @@ Examples
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Creating worker instance
+</pre></div></div>
+</div>
 <p>Note that scaling is pretty fast, but not instant, so it may take a little time before you see your new works on your dask Dashboard.</p>
 </div>
 <div class="section" id="Closing-your-Cluster">
 <h2>Closing your Cluster<a class="headerlink" href="#Closing-your-Cluster" title="Permalink to this headline">¶</a></h2>
 <p>It’s <strong>super</strong> important that when you’re done you close your cluster! Otherwise Azure will just keep billing you for it running. (Reminder: its good practice to set up billing alerts! See the last section <a class="reference internal" href="cloud_vm_on_azure.html"><span class="doc">here</span></a> for details.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -509,49 +518,20 @@ Examples
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Terminated VM dask-60041a20-scheduler
-Removed disks for VM dask-60041a20-scheduler
-Deleted network interface
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-tornado.application - ERROR - Exception in callback &lt;bound method Client._heartbeat of &lt;Client: &#39;tcp://10.0.0.5:8786&#39; processes=0 threads=0, memory=0 B&gt;&gt;
-Traceback (most recent call last):
-  File &#34;/Users/Nick/miniconda3/lib/python3.7/site-packages/tornado/ioloop.py&#34;, line 905, in _run
-    return self.callback()
-  File &#34;/Users/Nick/miniconda3/lib/python3.7/site-packages/distributed/client.py&#34;, line 1173, in _heartbeat
-    self.scheduler_comm.send({&#34;op&#34;: &#34;heartbeat-client&#34;})
-  File &#34;/Users/Nick/miniconda3/lib/python3.7/site-packages/distributed/batched.py&#34;, line 146, in send
-    raise CommClosedError
-distributed.comm.core.CommClosedError
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Unassigned public IP
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
-distributed.client - ERROR - Failed to reconnect to scheduler after 10.00 seconds, closing client
-_GatheringFuture exception was never retrieved
-future: &lt;_GatheringFuture finished exception=CancelledError()&gt;
-concurrent.futures._base.CancelledError
+Network interface ready
+Creating VM
+Created VM dask-8eec3fa0-worker-99699f0c
+Terminated VM dask-8eec3fa0-worker-29ac2137
+Removed disks for VM dask-8eec3fa0-worker-29ac2137
+Deleted network interface
+Terminated VM dask-8eec3fa0-worker-99699f0c
+Removed disks for VM dask-8eec3fa0-worker-99699f0c
+Deleted network interface
 </pre></div></div>
 </div>
 </div>
@@ -601,9 +581,19 @@ concurrent.futures._base.CancelledError
 <li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
 </ul>
 <p class="caption"><span class="caption-text">CLOUD</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Set Up Dask on AzureML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_storage_on_azure.html">Storage on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setup a Cluster on Azure</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Start-your-cluster!">Start your cluster!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Connect-to-Your-Cluster">Connect to Your Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Scaling-Your-Cluster">Scaling Your Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Closing-your-Cluster">Closing your Cluster</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Dask on Azure Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
 </ul>
@@ -631,6 +621,8 @@ concurrent.futures._base.CancelledError
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="cloud_vm_on_azure.html" title="previous chapter">Renting a VM for Data Science on Azure</a></li>
+      <li>Next: <a href="cloud_dask.html" title="next chapter">Dask Cluster on Azure Example</a></li>
   </ul></li>
 </ul>
 </div>

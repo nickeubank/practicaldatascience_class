@@ -79,6 +79,7 @@
 - `Distributed Computing with dask <distributed_computing.ipynb>`_","`Link 1 <exercises/Exercise_dask.ipynb>`_
 `Link 2 <exercises/Exercise_dask_realdata.ipynb>`_"
 "Tues, Nov 10","Distributed Computing, Azure","- `What is The Cloud <cloud_what_is_it.ipynb>`_
+- `Storage on Azure <cloud_storage_on_azure.ipynb>`_
 - `Setup a VM on Azure <cloud_vm_on_azure.ipynb>`_
 - `Setup a Cluster on Azure <cloud_cluster_on_azure.ipynb>`_
 - `Dask on Azure <cloud_dask.ipynb>`_",`Link <exercises/Exercise_azure_arcos.ipynb>`_
