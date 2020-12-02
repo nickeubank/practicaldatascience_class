@@ -18,7 +18,6 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="AzureML" href="cloud_azureml.html" />
     <link rel="prev" title="Parquet" href="parquet.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -105,9 +104,9 @@ died back in the queue to ensure everything still gets done.</p>
 <p><strong>Storage Cost</strong></p>
 <p>So what’s storage cost? Here’s a <a class="reference external" href="https://azure.microsoft.com/en-us/pricing/details/storage/">full list of prices for Azure</a>, but for what you’re most likely to use (hot, locally redundant Blob storage), probably about <strong>20 dollars per TB per month.</strong> So not nothing, but not awful.</p>
 </div>
-<div class="section" id="Networking">
-<h3>Networking<a class="headerlink" href="#Networking" title="Permalink to this headline">¶</a></h3>
-<p>The last thing to note is if you want different computers / storage to be able to see one another, you sometimes have to make sure they’re all on the same “virtual network”. We’ll use tools that take care of that for us in these exercises, but be aware this is part of cloud computing: if you rent multiple computers, you also need something setup to ensure they can see one another to communicate!</p>
+<div class="section" id="Virtual-Networks">
+<h3>Virtual Networks<a class="headerlink" href="#Virtual-Networks" title="Permalink to this headline">¶</a></h3>
+<p>The last thing to be aware of is that if you decide to run a <em>cluster</em> (multiple computers networked together) or connect storage in certain ways, you may have to connect them all to a Virtual Network to make it easier for them to see one another.</p>
 </div>
 </div>
 <div class="section" id="A-Final-Note-on-Complexity">
@@ -120,7 +119,7 @@ cloud.</p>
 </div>
 <div class="section" id="Let’s-Get-Going!">
 <h2>Let’s Get Going!<a class="headerlink" href="#Let’s-Get-Going!" title="Permalink to this headline">¶</a></h2>
-<p>OK, enough abstract concepts – <a class="reference internal" href="cloud_azureml.html"><span class="doc">let’s get setup on Azure and start doing some data science</span></a>!</p>
+<p>OK, enough abstract concepts – <a class="reference external" href="cloud_azureml.ipynb">let’s get setup on Azure and start doing some data science</a>!</p>
 </div>
 </div>
 
@@ -177,7 +176,6 @@ cloud.</p>
 <li class="toctree-l2"><a class="reference internal" href="#Let’s-Get-Going!">Let’s Get Going!</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_azureml.html">Starting with AzureML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Set Up Dask on AzureML</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
@@ -207,7 +205,6 @@ cloud.</p>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="parquet.html" title="previous chapter">Parquet</a></li>
-      <li>Next: <a href="cloud_azureml.html" title="next chapter">AzureML</a></li>
   </ul></li>
 </ul>
 </div>

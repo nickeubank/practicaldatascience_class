@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AzureML &#8212; Practical Data Science</title>
+    <title>Data Science on Azure &#8212; Practical Data Science</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -36,10 +36,9 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="AzureML">
-<h1>AzureML<a class="headerlink" href="#AzureML" title="Permalink to this headline">¶</a></h1>
-<p>As we discussed in our previous reading, most of the cloud isn’t really designed for you, an applied data analyst. Thankfully, Microsoft has created a <em>really</em> impressive little world for applied data analysts we’ll be using called AzureML.</p>
-<p>But while this domain is called “machine learning”, and it is optimized for standard “fit, test, predict”-esque scikit-learn workflows, it is also the place to go for doing other forms of data analysis too.</p>
+  <div class="section" id="Data-Science-on-Azure">
+<h1>Data Science on Azure<a class="headerlink" href="#Data-Science-on-Azure" title="Permalink to this headline">¶</a></h1>
+<p>As we discussed in our previous reading, most of the cloud isn’t really designed for you, an applied data analyst. Thankfully, Microsoft and Azure have created a couple really useful tools for making the cloud easy and accessible for Data Science.</p>
 <p>So to get going, we’re going to set up an Azure account as if you have never seen Azure before.</p>
 <p>Note that this is gonna seem like an <em>insane</em> amount of steps. Don’t worry! Most of this you only have to do once per project, and you don’t have to memorize this – this site will always exist for reference! Just go through it, try and generally absorb what’s going on, but don’t obsess about the details.</p>
 <div class="section" id="Azure-Subscription">
@@ -54,6 +53,12 @@
 enjoy Microsoft’s free money, but also (and more importantly) so you feel like you have your own cloud account that isn’t dependent on someone else’s support. As we’ve discussed repeatedly, one goal of this class is to ensure that you don’t feel stranded when you leave this class (as sometimes happens when you learn on pre-configured VMs). The cloud is available to everyone, and by creating your own account, you now have access for yourself any time you want!</p>
 <p>Once you have an account, you should end up at the Azure Portal page. This is your home for Azure, and you’ll come back here all the time.</p>
 <p><img alt="azure_portal" src="_images/azure_portal.png" /></p>
+</div>
+<div class="section" id="Getting-A-Single-Virtual-Machine">
+<h2>Getting A Single Virtual Machine<a class="headerlink" href="#Getting-A-Single-Virtual-Machine" title="Permalink to this headline">¶</a></h2>
+<p><em>Most</em> of the time, if you want a big virtual machine (say, 64 cores and 120 GB of ram), you just want to work on a single Virtual Machine. This will allow you to work the same way you would on your laptop (without having to deal with cluster-management), and in general performance should be very good.</p>
+<p>There are two ways to do this on Azure: you can just set-up a naive Virtual Machine, or you can use the Azure Machine Learning (AzureML) environment to get a Virtual Machine that’s pre-configured for doing Data Science.</p>
+<p>Because as a data scientist you probably just want your VM to work, we’re gonna focus on setting up a <em>pre-configured</em> (meaning it already has R, Python, Jupyter, etc. installed and ready to use) VM through AzureML.</p>
 </div>
 <div class="section" id="Create-a-Workspace">
 <h2>Create a Workspace<a class="headerlink" href="#Create-a-Workspace" title="Permalink to this headline">¶</a></h2>
@@ -77,22 +82,11 @@ enjoy Microsoft’s free money, but also (and more importantly) so you feel like
 <p>In Azure, all the concrete things you want to use – a virtual machine, a distributed cluster, a network storage drive – are called <em>Resources</em>, and every resource has to live in a <em>Resource Group</em>. I <em>think</em> the goal of this is that if all the Resources for a project live in one Resource Group, then when you finish the project you can easily delete them all, and I think they’re useful for corporations to manage billing. Personally, I find it’s just kinda annoying. :)</p>
 <p>In this project, we’ll only have the one Resource Group you created when you made your Workspace. You can see that Resource Group (and play with its settings) if you to Azure Portal, type “Resource Groups” into the search bar across the top, and select Resource Groups. This is also where you can add more Resource Groups if you need them in the future, and as we’ll discuss below, where you can set spending alerts.</p>
 </div>
-</div>
-<div class="section" id="Compute-on-Azure">
-<h2>Compute on Azure<a class="headerlink" href="#Compute-on-Azure" title="Permalink to this headline">¶</a></h2>
-<p>In this class, we’ll talk about two types of computing resources you can get through AzureML:</p>
-<ol class="arabic simple">
-<li><p><strong>Rent a single Virtual Machine (VM)</strong>: The first option for compute resources on AzureML is to just rent a single computer with lots of ram and processors. The advantage of this is that it’s very easy to setup, you can interact with the VM using Jupyter, Jupyter Lab, or Rstudio’s full graphical user interfaces just as you would on your personal laptop, just with more power. The <em>downside</em> is that there’s a limit to how many resources you can get in a VM (at most, 128 cores or 4 V100 GPUs as
-of late 2020).</p></li>
-<li><p><strong>Rent a cluster</strong>: Here’s the real value of AzureML – it allows you to very easily setup a <em>scalable</em> cluster of as many computers as you want. Generally, you set up your cluster with simple individual computers (“nodes”) to manage cost, then you use them with a program like <code class="docutils literal notranslate"><span class="pre">dask</span></code> to do distributed work with large datasets.</p>
-<ul class="simple">
-<li><p>If you care, I’m 99% sure that what AzureML is setting up is a cluster of Docker containers (a way of creating fast Virtual Machines) managed through Kubernetes (a tool for managing and scaling clusters of Docker containers). If that means nothing to you, don’t worry about it.</p></li>
-</ul>
-</li>
-</ol>
 <div class="section" id="Renting-a-VM">
 <h3>Renting a VM<a class="headerlink" href="#Renting-a-VM" title="Permalink to this headline">¶</a></h3>
-<p>To setup compute resources, go into your ML workspace (URL starts with <code class="docutils literal notranslate"><span class="pre">ml.azure.com</span></code>) and click on <code class="docutils literal notranslate"><span class="pre">Compute</span></code> towards the bottom of the menu on the left.</p>
+<p>A Virtual Machine is an example of a “Compute Resource” – something you’re renting from Azure that actually does computations. Below we’ll talk about renting a cluster of lots of computers, but for now let’s start with a single VM.</p>
+<p>The idea is that we’re gonna get a single computer with lots of ram and processors. The advantage of this is that it’s very easy to setup, you can interact with the VM using Jupyter, Jupyter Lab, or Rstudio’s full graphical user interfaces just as you would on your personal laptop, just with more power. The <em>downside</em> is that there’s a limit to how many resources you can get in a VM (at most, 128 cores or 4 V100 GPUs as of late 2020).</p>
+<p>To setup your VM, go into your ML workspace (URL starts with <code class="docutils literal notranslate"><span class="pre">ml.azure.com</span></code>) and click on <code class="docutils literal notranslate"><span class="pre">Compute</span></code> towards the bottom of the menu on the left.</p>
 <p>The first option for adding compute is <code class="docutils literal notranslate"><span class="pre">Compute</span> <span class="pre">Instances</span></code> – this is a simple VM. So let’s set one up! Click <code class="docutils literal notranslate"><span class="pre">Create</span></code>, pick <code class="docutils literal notranslate"><span class="pre">CPU</span></code> as your virtual machine type for now (you can also pick a GPU-centric VM if you want!), then check out all the options for <code class="docutils literal notranslate"><span class="pre">Virtual</span> <span class="pre">machine</span> <span class="pre">sizes</span></code>. As you will see, you can get computers with up to 72 individual cores, or up to 256 gb RAM! These are <em>single machines</em> with all these resources! Amazing, right? Note some may be greyed out to prevent you from
 overspending – you can get those, just takes some extra permissions so Azure is sure you can afford it.</p>
 <p>The only catch to be aware of is the cost, which is also in that dropdown – if you do rent a single machine with 72 cores, it’ll cost you about 3 dollars an hour. If you just have a day of work you really need, this is a great deal; if you plan to be running simulations for a week… well, that’s pretty darn expensive (though still way less than buying your own dedicated computer!).</p>
@@ -107,12 +101,13 @@ Windows experience with full graphical user interface.)</p>
 <p><strong>Now when you’re done playing with this VM, SHUT IT DOWN! As long as it’s running, you’re paying for it (it takes a way for the bill to show up in your expenditures). The clusters we’ll use later are able to turn themselves off if they’re idle, but for this dedicated VM, you have to turn it off yourself.</strong></p>
 <p>If you want to go the VM route, you may also be interested in how you can mount your Cloud storage just like another volumn on your computer instead of accessing it through fancy Python libraries. If so, be sure to check out the later lesson on <a class="reference external" href="cloud_azurestorage.ipynb">Azure Storage configurations</a></p>
 </div>
-<div class="section" id="Setting-Up-A-Cluster">
-<h3>Setting Up A Cluster<a class="headerlink" href="#Setting-Up-A-Cluster" title="Permalink to this headline">¶</a></h3>
-<p>The other thing you can do is setup a full computer cluster, with is a collection of (generally smaller) computers that are all networked together to act as one.</p>
-<p>The great thing about AzureML is that you can create a cluster that starts with, say, two computers (nodes), but then scale it up to 100 nodes when you’ve debugged your code and are ready to run a bit of computationally intensive code. Then when you’re done, those nodes will automatically shut down after they’ve been idle for a set period of time, and you’ll be back to the two nodes. And that means you only have to pay for the 100 nodes <em>when you are using them!</em>. Pretty amazing, honestly.</p>
-<p>OK, but we’re not gonna set up a cluster here inthe browser because it’s actually <em>much</em> easier to set up a cluster from a Python session (especially if you want to use <code class="docutils literal notranslate"><span class="pre">dask</span></code>), so for now I’ll just point out that if you click on the <code class="docutils literal notranslate"><span class="pre">Compute</span> <span class="pre">clusters</span></code> tab of the <code class="docutils literal notranslate"><span class="pre">Compute</span></code> section of your workspace, you can see how you set up a cluster from here. It’s not hard, but it’s even easier from Python.</p>
 </div>
+<div class="section" id="Setting-Up-A-VM-Cluster">
+<h2>Setting Up A VM Cluster<a class="headerlink" href="#Setting-Up-A-VM-Cluster" title="Permalink to this headline">¶</a></h2>
+<p>Getting a single large VM is <em>by far</em> the easiest way to move your work to the cluster, and it’s what I would do 99% of the time. But sometimes no single computer is big enough to do all the compute you want to accomplish. When that happens, we turn to using Virtual Machine Cluster, and in particular we’re gonna figure out how to set one up with <code class="docutils literal notranslate"><span class="pre">dask</span></code>.</p>
+<p>The great thing about Azure VM Clusters is that you can create a cluster that starts with, say, two computers (nodes), but then scale it up to 100 nodes when you’ve debugged your code and are ready to run a bit of computationally intensive code. Then when you’re done, those nodes will automatically shut down after they’ve been idle for a set period of time, and you’ll be back to the two nodes. And that means you only have to pay for the 100 nodes <em>when you are using them!</em>. Pretty amazing,
+honestly.</p>
+<p>OK, but we’re not gonna set up a cluster here <em>on your own computer</em> because it’s actually <em>much</em> easier to set up a cluster from a Python session (especially if you want to use <code class="docutils literal notranslate"><span class="pre">dask</span></code>).</p>
 </div>
 <div class="section" id="Storage-on-Azure">
 <h2>Storage on Azure<a class="headerlink" href="#Storage-on-Azure" title="Permalink to this headline">¶</a></h2>
@@ -218,8 +213,9 @@ we’ll see later, there are also lots of Python libraries that can do the same 
 <li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Starting with AzureML</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Azure-Subscription">Azure Subscription</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Getting-A-Single-Virtual-Machine">Getting A Single Virtual Machine</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Create-a-Workspace">Create a Workspace</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Compute-on-Azure">Compute on Azure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Setting-Up-A-VM-Cluster">Setting Up A VM Cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Storage-on-Azure">Storage on Azure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Creating-A-New-Storage-Account">Creating A New Storage Account</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Bringing-It-Together">Bringing It Together</a></li>
