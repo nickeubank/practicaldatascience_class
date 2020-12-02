@@ -273,10 +273,13 @@ div.rendered_html tbody tr:hover {
 <h1>Azure from the Command Line<a class="headerlink" href="#Azure-from-the-Command-Line" title="Permalink to this headline">¶</a></h1>
 <p>In our past tutorials, we mostly manipulated our Azure resources using the Azure web interface, but once you get comfortable with Azure, you’ll likely find this a little clunky for some things.</p>
 <p>Thankfully, Azure <em>also</em> has a Command Line Interface (CLI)! In addition to letting you manage all your resources, it can also help you managing things like data uploads or downloads (so you don’t have to navigate to your Container in your browser).</p>
+<div class="section" id="Installing">
+<h2>Installing<a class="headerlink" href="#Installing" title="Permalink to this headline">¶</a></h2>
 <p>Azure CLI is easy to install using the directions for your operating system <a class="reference external" href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli">here</a>.</p>
 <p>Then all authorization is managed by just running <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">login</span></code> – that’ll open a login in your browser which will then authorize your session for whatever you want to do!</p>
 <p>The only catch is that if you want to login to a different “tenant” within your account (e.g. if you have an account with free student credits AND the ability to use resources billed to your company or school), you have to specify your tenant (e.g. <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">login</span> <span class="pre">--tenant</span> <span class="pre">&lt;tenant&gt;</span></code>). You can find your tenant ID by going to portal.azure.com, selecting “Azure Active Directory”, and looking at your Overview tab.</p>
 <p>Then you can basically do anything you can do through the web interface from the command line! <a class="reference external" href="https://docs.microsoft.com/en-us/cli/azure/get-started-with-azure-cli">You can find a great quickstart guide</a> for an overview of how it all works.</p>
+</div>
 <div class="section" id="Managing-Storage-with-Azure-CLI">
 <h2>Managing Storage with Azure CLI<a class="headerlink" href="#Managing-Storage-with-Azure-CLI" title="Permalink to this headline">¶</a></h2>
 <p>The one set of tools within the Azure CLI I <em>will</em> make sure to point out are tools for uploading and downloading data. There’s <a class="reference external" href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-cli">a tutorial here</a>, but the basic syntax is very simple:</p>
@@ -452,6 +455,7 @@ azcopy login --tenant-id <span class="s2">&quot;XXXXXX-XXXX-XXXX-XXXX-XXXXXXXX&q
 <li class="toctree-l1"><a class="reference internal" href="cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Dask on Azure Example</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Azure Command Line Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Installing">Installing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Managing-Storage-with-Azure-CLI">Managing Storage with Azure CLI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Moving-Lots-of-Data?">Moving Lots of Data?</a></li>
 </ul>
