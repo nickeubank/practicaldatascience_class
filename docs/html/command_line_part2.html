@@ -718,7 +718,7 @@ wc -l ~/files_in_folder.txt
 see and open it.</p>
 <p>If you installed <code class="docutils literal notranslate"><span class="pre">oh-my-zsh</span></code>, then the file will still be located in your home directory but will now be called <code class="docutils literal notranslate"><span class="pre">.zshrc</span></code>.</p>
 <p><strong>Configuration File on Windows</strong></p>
-<p>If you’re using Windows, you can change the PATH variable globally by going to <code class="docutils literal notranslate"><span class="pre">System</span> <span class="pre">Preferences</span> <span class="pre">&gt;</span> <span class="pre">Advanced</span> <span class="pre">&gt;</span> <span class="pre">Environment</span> <span class="pre">Variables</span></code>. But if you’re just using <code class="docutils literal notranslate"><span class="pre">bash</span></code> through <code class="docutils literal notranslate"><span class="pre">Cmder</span></code>, you should have a config file in your home Cmder home at <code class="docutils literal notranslate"><span class="pre">config/user_profile.sh</span></code>.</p>
+<p>If you’re using Windows, you should have created a file called <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> when you installed Cmder (instructions <a class="reference internal" href="bash_on_windows.html"><span class="doc">here</span></a>). That’s where you change your PATH variable for using Bash in Cmder.</p>
 <p><strong>Actually Changing your PATH Variable</strong></p>
 <p>When modifying your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> variable, you really don’t want to remove anything already in your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> variable (because who knows what program may need one of those obscure directories). Instead, the best practice is to just prefix the folders you want searched first. If you program isn’t on your PATH, this will add the program; if the wrong version of a program is being used, because you’re adding to the <em>front</em> of the PATH variable, the folder you add will have higher priority.</p>
 <p>So to add a folder to the front of your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> variable while keeping the old folders at the back, we type:</p>
@@ -800,7 +800,8 @@ see and open it.</p>
 <li class="toctree-l1"><a class="reference internal" href="cloud_storage_on_azure.html">Storage on Azure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Dask on Azure Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Dask Cluster on Azure Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_dask.html#NOTE:-DASK-CLOUDPROVIDER-IS-IN-A-STATE-OF-FLUX,-AND-SO-THE-CODE-BELOW-DOESN&quot;T-ACTUALLY-WORK-AT-THE-MOMENT…-CHECK-BACK-IN-A-FEW-WEEKS?---Nick,-Dec-2020.">NOTE: DASK-CLOUDPROVIDER IS IN A STATE OF FLUX, AND SO THE CODE BELOW DOESN”T ACTUALLY WORK AT THE MOMENT… CHECK BACK IN A FEW WEEKS? - Nick, Dec 2020.</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
 </ul>

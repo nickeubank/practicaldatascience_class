@@ -43,8 +43,8 @@
 <p>By default, when git needs you to label a commit, it will open an editor called <a class="reference external" href="https://www.vim.org/">vim</a> that is very hard to work with (it’s not just weird – it’s even hard to get out of once it’s openned!)</p>
 <p>So before you do anything else, first change your default editor. You can do this with the command:</p>
 <p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span> <span class="pre">--global</span> <span class="pre">core.editor</span> <span class="pre">&quot;COMMANDTOLAUNCHYOUREDITOR&quot;</span></code></p>
-<p>If you have Atom installed <em>and the command line tool setup</em> (i.e. you set up Atom so that if you type <code class="docutils literal notranslate"><span class="pre">atom</span></code> in the command line, Atom opens, <a class="reference external" href="../atom_text_editor.ipynb">as discussed here</a>), then I would do:</p>
-<p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span> <span class="pre">--global</span> <span class="pre">core.editor</span> <span class="pre">&quot;atom&quot;</span></code></p>
+<p>If you have Atom installed <em>and the command line tool setup</em> (i.e. you set up VS Code so that if you type <code class="docutils literal notranslate"><span class="pre">code</span></code> in the command line, VS Code opens, <a class="reference internal" href="../setup_environment.html"><span class="doc">as discussed here</span></a>), then I would do:</p>
+<p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span> <span class="pre">--global</span> <span class="pre">core.editor</span> <span class="pre">&quot;code&quot;</span></code></p>
 <p>If not, then the best option is probably to use <code class="docutils literal notranslate"><span class="pre">nano</span></code>, which is an in-terminal editor we’ve discussed <a class="reference internal" href="../command_line_part2.html"><span class="doc">before</span></a> that’s much easier to use than vim, and which you should already have if you’re using a bash console:</p>
 <p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span> <span class="pre">--global</span> <span class="pre">core.editor</span> <span class="pre">&quot;nano&quot;</span></code></p>
 </div>
@@ -169,7 +169,8 @@ be running the master branch), but it’s also often useful in data science (whe
 <li class="toctree-l1"><a class="reference internal" href="../cloud_storage_on_azure.html">Storage on Azure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cloud_dask.html">Dask on Azure Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_dask.html">Dask Cluster on Azure Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_dask.html#NOTE:-DASK-CLOUDPROVIDER-IS-IN-A-STATE-OF-FLUX,-AND-SO-THE-CODE-BELOW-DOESN&quot;T-ACTUALLY-WORK-AT-THE-MOMENT…-CHECK-BACK-IN-A-FEW-WEEKS?---Nick,-Dec-2020.">NOTE: DASK-CLOUDPROVIDER IS IN A STATE OF FLUX, AND SO THE CODE BELOW DOESN”T ACTUALLY WORK AT THE MOMENT… CHECK BACK IN A FEW WEEKS? - Nick, Dec 2020.</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cloud_azure_cli.html">Azure Command Line Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cloud_authentication.html">Azure Authentication</a></li>
 </ul>
