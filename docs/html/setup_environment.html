@@ -106,49 +106,25 @@ as long as you install packages from a specific provider in conda (something wil
 <li><p>Then open <code class="docutils literal notranslate"><span class="pre">.zshrc</span></code> (again, <code class="docutils literal notranslate"><span class="pre">code</span> <span class="pre">~/.zshrc</span></code>), scroll to the bottom of the file, and past the text you copied from <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> into <code class="docutils literal notranslate"><span class="pre">.zshrc</span></code>.</p></li>
 <li><p>Save that file, close your current session of Oh-My-Zsh, open it again, and test to see if you were successful by typing <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">-h</span></code>. If a conda helpfile gets printed out, you’re good!</p></li>
 </ol>
-<p><strong>Note:</strong> If you copy text from the nano editor (rather than open your file with <code class="docutils literal notranslate"><span class="pre">code</span></code>) and the nano editor window is narrow, the ends of lines will be truncated when you paste the output (and will end with dollar signs (<code class="docutils literal notranslate"><span class="pre">$</span></code>)).</p>
-<p>For example, if I highlight this text with my mouse and try to copy and paste it:</p>
-<p><img alt="bash_truncated" src="_images/bash_profile_truncated.png" /></p>
-<p>I will get:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># added by Miniconda3 4.7.10 installer
-# &gt;&gt;&gt; conda init &gt;&gt;&gt;
-# !! Contents within this block are managed by &#39;conda init&#39; !!
-__conda_setup=&quot;$(CONDA_REPORT_ERRORS=false &#39;/Users/Nick/miniconda$
-if [ $? -eq 0 ]; then
-    \eval &quot;$__conda_setup&quot;
-else
-    if [ -f &quot;/Users/Nick/miniconda3/etc/profile.d/conda.sh&quot; ]; th$
-        . &quot;/Users/Nick/miniconda3/etc/profile.d/conda.sh&quot;
-        CONDA_CHANGEPS1=false conda activate base
-    else
-        \export PATH=&quot;/Users/Nick/miniconda3/bin:$PATH&quot;
-    fi
-fi
-unset __conda_setup
-# &lt;&lt;&lt; conda init &lt;&lt;&lt;
+<p>The code you’re copying should look something like the following, starting with a <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">&gt;&gt;&gt;</span> <span class="pre">conda</span> <span class="pre">init</span> <span class="pre">&gt;&gt;&gt;</span></code> and ending with <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">&lt;&lt;&lt;</span> <span class="pre">conda</span> <span class="pre">init</span> <span class="pre">&lt;&lt;&lt;</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># added by Miniconda3 4.7.10 installer</span>
+<span class="c1"># &gt;&gt;&gt; conda init &gt;&gt;&gt;</span>
+<span class="c1"># !! Contents within this block are managed by &#39;conda init&#39; !!</span>
+<span class="nv">__conda_setup</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="nv">CONDA_REPORT_ERRORS</span><span class="o">=</span><span class="nb">false</span> <span class="s1">&#39;/Users/Nick/miniconda3/bin/conda&#39;</span> shell.bash hook <span class="m">2</span>&gt; /dev/null<span class="k">)</span><span class="s2">&quot;</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="se">\e</span>val <span class="s2">&quot;</span><span class="nv">$__conda_setup</span><span class="s2">&quot;</span>
+<span class="k">else</span>
+    <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&quot;/Users/Nick/miniconda3/etc/profile.d/conda.sh&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        . <span class="s2">&quot;/Users/Nick/miniconda3/etc/profile.d/conda.sh&quot;</span>
+        <span class="nv">CONDA_CHANGEPS1</span><span class="o">=</span><span class="nb">false</span> conda activate base
+    <span class="k">else</span>
+        <span class="se">\e</span>xport <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;/Users/Nick/miniconda3/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+    <span class="k">fi</span>
+<span class="k">fi</span>
+<span class="nb">unset</span> __conda_setup
+<span class="c1"># &lt;&lt;&lt; conda init &lt;&lt;&lt;</span>
 </pre></div>
 </div>
-<p>not</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># added by Miniconda3 4.7.10 installer
-# &gt;&gt;&gt; conda init &gt;&gt;&gt;
-# !! Contents within this block are managed by &#39;conda init&#39; !!
-__conda_setup=&quot;$(CONDA_REPORT_ERRORS=false &#39;/Users/Nick/miniconda3/bin/conda&#39; shell.bash hook 2&gt; /dev/null)&quot;
-if [ $? -eq 0 ]; then
-    \eval &quot;$__conda_setup&quot;
-else
-    if [ -f &quot;/Users/Nick/miniconda3/etc/profile.d/conda.sh&quot; ]; then
-        . &quot;/Users/Nick/miniconda3/etc/profile.d/conda.sh&quot;
-        CONDA_CHANGEPS1=false conda activate base
-    else
-        \export PATH=&quot;/Users/Nick/miniconda3/bin:$PATH&quot;
-    fi
-fi
-unset __conda_setup
-# &lt;&lt;&lt; conda init &lt;&lt;&lt;
-</pre></div>
-</div>
-<p>(See how several lines are truncated and end in dollar signs?)</p>
-<p>So if you’re using nano to open these files and edit, make sure the window is wide enough!</p>
 </div>
 <div class="section" id="Your-conda-works-if…">
 <h3>Your conda works if…<a class="headerlink" href="#Your-conda-works-if…" title="Permalink to this headline">¶</a></h3>
@@ -207,7 +183,7 @@ bash-3.2$
 <div class="section" id="5.-Install-some-packages!">
 <h2>5. Install some packages!<a class="headerlink" href="#5.-Install-some-packages!" title="Permalink to this headline">¶</a></h2>
 <p>As you go along in life, you’ll find you need packages from time to time, but here’s a good startup installation command for things you’ll want in this class:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install pandas jupyterlab black
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install pandas jupyterlab matplotlib black
 </pre></div>
 </div>
 </div>
