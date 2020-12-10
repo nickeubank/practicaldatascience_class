@@ -76,7 +76,7 @@ that line of code, then it would delete those changes to use 2015 instead of 201
 <ol class="arabic simple">
 <li><p>Pull from the repository (so that all the new edits to the master branch are stored in your master branch) with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code></p></li>
 <li><p>Make sure you’re currently on the branch <code class="docutils literal notranslate"><span class="pre">this_is_gonna_be_a_problem</span></code></p></li>
-<li><p>Run “git rebase master”.</p></li>
+<li><p>Run “git rebase master” (or “git rebase main” if your repo calls its primary branch “main”).</p></li>
 </ol>
 <p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">rebase</span></code> is a command to try and “move” the point from which your branch diverts from master by integrating all the changes that have happened since you first created your branch. It’s <em>basically</em> like merging your current branch with the (now updated) master branch, except that it does it in a way that re-organizes the branch history so it looks like all the changes you’ve made in your branch occurred <em>after</em> the most recent changes that have happened in the master branch. If you’re
 struggling with the idea of rebasing and want to learn more, <a class="reference external" href="https://www.youtube.com/watch?v=f1wnYdLEpgI">I recommend this video</a>.</p>
@@ -288,7 +288,7 @@ who wanted to clone your repository would have to download <em>every one of thos
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

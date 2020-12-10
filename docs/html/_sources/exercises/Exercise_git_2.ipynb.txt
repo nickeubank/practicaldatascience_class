@@ -82,7 +82,7 @@
     "\n",
     "1. Pull from the repository (so that all the new edits to the master branch are stored in your master branch) with `git pull`\n",
     "2. Make sure you're currently on the branch `this_is_gonna_be_a_problem`\n",
-    "3. Run \"git rebase master\".\n",
+    "3. Run \"git rebase master\" (or \"git rebase main\" if your repo calls its primary branch \"main\"). \n",
     "\n",
     "`git rebase` is a command to try and \"move\" the point from which your branch diverts from master by integrating all the changes that have happened since you first created your branch. It's *basically* like merging your current branch with the (now updated) master branch, except that it does it in a way that re-organizes the branch history so it looks like all the changes you've made in your branch occurred *after* the most recent changes that have happened in the master branch. If you're struggling with the idea of rebasing and want to learn more, [I recommend this video](https://www.youtube.com/watch?v=f1wnYdLEpgI). \n",
     "\n",
