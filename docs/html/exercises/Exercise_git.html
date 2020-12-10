@@ -71,7 +71,8 @@ be running the master branch), but it’s also often useful in data science (whe
 <li><p>We can type <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">&lt;new_branch_name&gt;</span></code> (to create the branch), then <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">&lt;new_branch_name&gt;</span></code> to switch to that branch, or</p></li>
 <li><p>We can type <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">&lt;new_branch_name&gt;</span></code> to <strong>both</strong> create a new branch and switch to that branch.</p></li>
 </ul>
-<p>“Switching” branches means that git (potentially) changes what files are visible to your computer and operating system. Because our new branch is, well… new, it still looks exactly the same as our master branch, so you won’t see any changes in your files. If you’re using Cmder on windows or Oh-My-Zsh on a Mac, though, you can see what branch your on by looking at your command line prompt. It should move from showing “master” to your new branch name (here: “my_new_branch”) when you switch:</p>
+<p>“Switching” branches means that git (potentially) changes what files are visible to your computer and operating system. Because our new branch is, well… new, it still looks exactly the same as our master branch, so you won’t see any changes in your files. If you’re using Cmder on windows or Oh-My-Zsh on a Mac, though, you can see what branch your on by looking at your command line prompt. It should move from showing either “master” or “main” to your new branch name (here: “my_new_branch”) when
+you switch (note: the primary branch USED to be called <code class="docutils literal notranslate"><span class="pre">master</span></code>, but as of late 2020 the default is not <code class="docutils literal notranslate"><span class="pre">main</span></code>, so you’ll likely see both for a while):</p>
 <p><img alt="branch_change_in_terminal" src="../_images/branch_change_in_terminal.png" /></p>
 <p>Now any changes you make and commit to the files in your repository will be <em>changes made to the active branch</em>, not to master.</p>
 <p><strong>(6)</strong> Still on Computer A, let’s start writing some analysis code! Before we start, though, an important note: Git is only really build for simple, plaintext files, so please don’t use Jupyter Notebooks (we’ll discuss that in more detail below). You can use text files you edit and work with in Jupyter Lab, but not notebooks. For a refresher on how to use text files in Jupyter Lab (in a manner analogous to RStudio) see <a class="reference internal" href="Exercise_jupyterlab.html"><span class="doc">JupyterLab Exercises</span></a>.</p>
@@ -169,8 +170,7 @@ be running the master branch), but it’s also often useful in data science (whe
 <li class="toctree-l1"><a class="reference internal" href="../cloud_storage_on_azure.html">Storage on Azure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cloud_dask.html">Dask Cluster on Azure Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cloud_dask.html#NOTE:-DASK-CLOUDPROVIDER-IS-IN-A-STATE-OF-FLUX,-AND-SO-THE-CODE-BELOW-DOESN&quot;T-ACTUALLY-WORK-AT-THE-MOMENT…-CHECK-BACK-IN-A-FEW-WEEKS?---Nick,-Dec-2020.">NOTE: DASK-CLOUDPROVIDER IS IN A STATE OF FLUX, AND SO THE CODE BELOW DOESN”T ACTUALLY WORK AT THE MOMENT… CHECK BACK IN A FEW WEEKS? - Nick, Dec 2020.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_dask.html">Dask on Azure Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cloud_azure_cli.html">Azure Command Line Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cloud_authentication.html">Azure Authentication</a></li>
 </ul>
@@ -227,7 +227,7 @@ be running the master branch), but it’s also often useful in data science (whe
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
