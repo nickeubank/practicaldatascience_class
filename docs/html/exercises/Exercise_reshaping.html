@@ -69,6 +69,11 @@ time, then each row should be a country!</p>
 <p><strong>(3)</strong> OK, that makes our data a lot more manageable, but it’s still pretty heinous.</p>
 <p>In our analysis, we know that we’ll want to have country-years as our units of observation, so let’s start reshaping. Come up with a strategy that gets our inequality variables as columns, and makes each of our future observations (i.e. each country-year) a row.</p>
 <p><em>Hint:</em> It can sometimes be helpful to drop useless columns before a reshape.</p>
+<p><em>Other hint:</em> Sometimes you get multi-level column names when reshaping, which you can’t just fix with <code class="docutils literal notranslate"><span class="pre">.reset_index()</span></code>. As with multi-indexes for rows, they’re a pain. The two easy ways to fix them are:</p>
+<ul class="simple">
+<li><p>Just drop a level: <code class="docutils literal notranslate"><span class="pre">df.columns.drop_level(0)</span></code> where 0 is which level you want to drop.</p></li>
+<li><p>Directly manipulate the column names by doing something to the <code class="docutils literal notranslate"><span class="pre">df.columns</span></code> object and re-assigning to <code class="docutils literal notranslate"><span class="pre">df.columns</span></code>. For example, you can just concatenate two columns levels with a dash between them with <code class="docutils literal notranslate"><span class="pre">df.columns</span> <span class="pre">=</span> <span class="pre">map(lambda</span> <span class="pre">x:</span> <span class="pre">str(x[0])</span> <span class="pre">+</span> <span class="pre">&quot;-&quot;</span> <span class="pre">+</span> <span class="pre">str(x[1]),</span> <span class="pre">df.columns)</span></code>.</p></li>
+</ul>
 <p><strong>(4)</strong> Now that you’ve done your reshapes, subset for observations since 1980.</p>
 <p><strong>(5)</strong> Subset for observations for which we have GINI index estimates.</p>
 <p><strong>(6)</strong> Plot the relationship between <strong>log</strong> GDP per capita and Gini scores for all country years and add a linear fit as well.</p>
@@ -187,7 +192,7 @@ time, then each row should be a country!</p>
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

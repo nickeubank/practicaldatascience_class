@@ -89,8 +89,7 @@
     "If you're on a mac, two other things to bear in mind:\n",
     "\n",
     "- if you move from Anaconda to miniconda (and thus change the name of your conda folder from `anaconda3` to `miniconda3`) or change where conda is installed, note that you'll also need to update the code snippet in your `.zshrc` file too as discussed in the next section.\n",
-    "- deleting anaconda won't delete Python altogether. macOS \n",
-    "\n"
+    "- deleting anaconda won't delete Python from your computer altogether. macOS actually has its own version of Python that the operating system relies on (something you don't really want to play with), so don't be surprised if the command `python` still works after you've deleted conda because it's referencing that other installation."
    ]
   },
   {
