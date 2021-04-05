@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maternal Smoking and Birth Weight &#8212; Practical Data Science</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="Maternal-Smoking-and-Birth-Weight">
+<h1>Maternal Smoking and Birth Weight<a class="headerlink" href="#Maternal-Smoking-and-Birth-Weight" title="Permalink to this headline">¶</a></h1>
+<p>For these exercises, we will borrow some data and exercises from another <a class="reference external" href="https://ids-702-f19.github.io/Course-Website/hw/hw-02.html">MIDS course on Statistical Modeling</a>:</p>
+<p>These days, it is widely understood that mothers who smoke during pregnancy risk exposing their babies to many health problems. This was not common knowledge fifty years ago. One of the first studies that addressed the issue of pregnancy and smoking was the Child Health and Development Studies, a comprehensive study of all babies born between 1960 and 1967 at the Kaiser Foundation Hospital in Oakland, CA. The original reference for the study is Yerushalmy (1964, American Journal of Obstetrics
+and Gynecology, pp. 505-518). The data and a summary of the study are in Nolan and Speed (2000, Stat Labs, Chapter 10) and can be found at <a class="reference external" href="https://www.stat.berkeley.edu/users/statlabs/">the book’s website.</a></p>
+<p>There were about 15,000 families in the study. We will only analyze a subset of the data, in particular 1236 male single births where the baby lived at least 28 days. The researchers interviewed mothers early in their pregnancy to collect information on socioeconomic and demographic characteristics, including an indicator of whether the mother smoked during pregnancy. The variables in the dataset are described in the <a class="reference external" href="https://ids-702-f19.github.io/Course-Website/hw/hw-02.html">code book
+here</a>. In this exercise, we will attempt to use this data to answer the following questions:</p>
+<ol class="arabic simple">
+<li><p>Do mothers who smoke tend to give birth to babies with lower weights than mothers who do not smoke?</p></li>
+<li><p>What is a likely range for the difference in birth weights for smokers and non-smokers?</p></li>
+<li><p>Is there any evidence that the association between smoking and birth weight differs by mother’s race? If so, characterize those differences.</p></li>
+<li><p>Are there other interesting associations with birth weight that are worth mentioning?</p></li>
+</ol>
+<p><strong>(1)</strong> Load the data “smoking.csv”, which includes information on both biometrics of infants at birth, and information on mothers (variables prefixed with the letter “m”), from <a class="reference external" href="https://github.com/nickeubank/MIDS_Data">this MIDS repo</a>. (Yup, I’m giving you CLEAN DATA! I think this is the only time I’ve done this in this course! Enjoy it. :)).</p>
+<p><strong>(2)</strong> Start by plotting the relationship between infant weight at birth and gestation (length of pregnancy (in days) at time of birth) for both children who smoke and those who do not. Limit attention to children who reach at least 225 days of gestation (there aren’t really any observations for parents who smoke for less than that, so we don’t get common support). Does it seem like birthweights tend to be lower for the children of parents who smoke at a given gestational period?</p>
+<div class="section" id="Linear-Regression">
+<h2>Linear Regression<a class="headerlink" href="#Linear-Regression" title="Permalink to this headline">¶</a></h2>
+<p><strong>(3)</strong> Now check this relationship using <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>. Regress birthweight on gestational period and whether the infant’s mother smoked.</p>
+<p>NOTE: you may hit a problem because of the name of one of your columns. You should probably be able to guess the problem given your experience with Python.</p>
+<p><strong>(4)</strong> Now let’s expand our model to also take into account mothers’ pregnancy weight and race (make sure to treat race as a categorical variable! If you’re rusty on categoricals and indicator variables, <a class="reference external" href="https://www.unifyingdatascience.org/html/interpreting_indicator_vars.html">here’s a little refresher</a>.).</p>
+<p><strong>(5)</strong> Now let’s test for whether there is an interaction between the mother’s race and the effect of smoking.</p>
+<p>Note that race is coded as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mrace    mother’s race or ethnicity
+         0-5= white
+         6  = mexican
+         7 = black
+         8 = asian
+         9 = mix
+         99 = unknown
+</pre></div>
+</div>
+<p>As most variation in this data is between “white” and other categories, first recode race to be an indicator for white and non-white for easier interpretation.</p>
+<p><strong>(6)</strong> Using <a class="reference external" href="https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.OLSResults.t_test.html">post-regression test syntax</a> (not by running a new regression on a subpopulation), recover the coefficient and t-statistic for whether smoking reduces birth weight for white mothers. How does this coefficient compare to that for non-white mothers?</p>
+<p>The reduction in birth weight associated with smoking for white mothers appears to be about 40% that of the penalty of black mothers.</p>
+<p><strong>(7)</strong> Now let’s use this model to predict some values. Let’s generate some hypothetical newborns:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">newborns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;smoke&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+                         <span class="s1">&#39;white&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+                         <span class="s1">&#39;gestation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">253</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">248</span><span class="p">,</span> <span class="mi">287</span><span class="p">],</span>
+                         <span class="s1">&#39;mpregwt&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">132</span><span class="p">,</span> <span class="mi">129</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">139</span><span class="p">]})</span>
+</pre></div>
+</div>
+<p>Using the model you ran above with gestation, smoke, mpregwt, white, and the interaction of white and smoke, predict birth weights for these newborns.</p>
+</div>
+<div class="section" id="statsmodels-versus-R">
+<h2>statsmodels versus R<a class="headerlink" href="#statsmodels-versus-R" title="Permalink to this headline">¶</a></h2>
+<p>A quick but important note: the tools that are made available in different packages is often a function of who uses those packages, and how they use them. By and large, nearly all statisticians use R, and so many stats tools (like automatic forward-model-selection or backwards-model-selection) have “convenience implementations” (single functions that do all the things you’d want to accomplish) in R, but aren’t available as convenience packages in <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>. That’s because <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>
+was mostly written by economists and social scientists who tend to feel model selection should be a function of theory not statistical performance (not taking sides: just reporting a difference that exists).</p>
+<p>To be clear, you can still implement things like forward model selection yourself in Python – just write a loop that tries different regressors and plots the resulting AICs! – but it will often take a little more work. (Indeed, you can find examples of people <a class="reference external" href="https://planspace.org/20150423-forward_selection_with_statsmodels/">writing these loops on the web</a>).</p>
+<p>This is one of the reasons that languages are sticky: once a group of people have invested in adding all the bells and whistles they like to a language, there are good reasons to not move to another language, even if the other language has some advantages. A statistician who likes the basic language organization of Python more than R, for example, may still stay with R because the packages already do everything a statistician wants to do, and so it’s not worth having to re-implement common tasks
+in a new language.</p>
+</div>
+<div class="section" id="Logistic-Regression">
+<h2>Logistic Regression<a class="headerlink" href="#Logistic-Regression" title="Permalink to this headline">¶</a></h2>
+<p><strong>(8)</strong> Now, using statsmodels, evaluate the impact of smoking on the likelihood a child is born prematurely (where “premature” is defined as gestation of less than 252 days).</p>
+</div>
+<div class="section" id="Weighting">
+<h2>Weighting<a class="headerlink" href="#Weighting" title="Permalink to this headline">¶</a></h2>
+<p>In our merging exercises, we ran a difference-in-difference analysis on crime in California counties to see if, following drug legalization, there was a larger decline in violent crime in counties that had previously also had high drug arrest rates (to test the idea that violence was being generated by the drug trade, and that legalization would decrease this violence).</p>
+<p>In those analyses, we treated counties as equally-weighted units of analysis. If we think that each county is a single “community”, and we think community is shaped at the level of communities (particularly when our community division is related to administrative boundaries that impact policing and government services, and is the case with counties), then this is reasonable. But one might think that crime is determined at the individual level, or maybe neighborhood level, and so big counties
+should “count more” in our analysis.</p>
+<p>Here, let’s use weighted least squares to weight observations based on population. This will allow bigger counties to influence our estimates more.</p>
+<p><strong>(1)</strong> To begin, download our data on California arrest rates and population from <a class="reference external" href="https://github.com/nickeubank/MIDS_Data/blob/master/arrest_rates_and_population.parquet">github</a>. You will see I’ve reshaped the data to long format for convenience.</p>
+<p><strong>(2)</strong> To run our difference-in-difference in a regression framework, we need both an indicator variable for observations that occur after legalization (i.e. year == 2018), and an indicator for the population we consider treated (those who had high drug arrest rates in 2009). Re-create those here.</p>
+<p><em>Note:</em> if you want, you can also use the 2009 drug arrest rates as a continuous variable. This is a kind of “generalized difference-in-difference”, in which we’re just doing the continuous analogue of the thing we do when we split the sample into “high” and “low” 2009 arrest rates.</p>
+<p><strong>(3)</strong> Now regression the violent arrest rate on your two indicators and their interaction. The coefficient on the interaction is your “difference-in-difference” estimate! If you go back to your old homeworks, you should find the coefficient is exactly what you calculated.</p>
+<p><strong>(4)</strong> Now let’s do the same analysis, but this time using county population as a weight in a Weighted Least Squares regression (<code class="docutils literal notranslate"><span class="pre">smf.wls</span></code>). Just pass the keyword argument <code class="docutils literal notranslate"><span class="pre">weights</span></code> a vector fo weights (in this case, <code class="docutils literal notranslate"><span class="pre">arrests['total_population']</span></code>). Note that the weights argument is outside of the formula, so you have to pass an actual vector of values, not just the name of a column.</p>
+</div>
+<div class="section" id="Absolutely-positively-need-the-solutions?">
+<h2>Absolutely positively need the solutions?<a class="headerlink" href="#Absolutely-positively-need-the-solutions?" title="Permalink to this headline">¶</a></h2>
+<p><em>Don’t use this link until you’ve really, really spent time struggling with your code!</em> Doing so only results in you cheating yourself.</p>
+<p><a class="reference internal" href="../solutions_warning.html"><span class="doc">Link</span></a></p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Practical DS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../class_schedule.html">CLASS SCHEDULE</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../setup_environment.html">Setting Up Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../managing_python_packages.html">Managing Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pandas_dataframes.html">Pandas 2: DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plotting_part2.html">Plotting, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cleaning_editingvalues.html">Cleaning: Editing Values</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../jupyter.html">Jupyter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git_and_github.html">Git and Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pr_review.html">Reviewing Code on Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parquet.html">Parquet Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CLOUD</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_what_is_it.html">What Is The Cloud?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_storage_on_azure.html">Storage on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_dask.html">Dask on Azure Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_authentication.html">Azure Authentication</a></li>
+</ul>
+<p class="caption"><span class="caption-text">SKILLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow.html">Workflow Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../what_is_big_data.html">What is Big Data?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../big_data_strategies.html">Working with Big Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance_solutions.html">Solving Performance Probs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../backwards_design.html">Backwards Design</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../buying_datascience_computer.html">Buying a Data Science Computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick Eubank.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/exercises/Exercise_statsmodels.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

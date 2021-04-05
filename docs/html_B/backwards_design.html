@@ -1,0 +1,316 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Backwards Design &#8212; Practical Data Science</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Advice on Buying Computers for Data Science Students" href="buying_datascience_computer.html" />
+    <link rel="prev" title="Distributed Computing with dask" href="distributed_computing.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="Backwards-Design">
+<h1>Backwards Design<a class="headerlink" href="#Backwards-Design" title="Permalink to this headline">¶</a></h1>
+<p>Backwards Design is a way of developing an efficient strategy for completing a new data science project, and in my view it is one of the most important skills of a professional data scientist.</p>
+<p>If you don’t have a lot of professional data science experience, it may not be obvious why this is an important skill, or even why I call it a “skill.” That’s because most data science students’ experience with project development comes from classroom exercises or sites like kaggle. These types of projects are excellent opportunities for learning, but it is usually the case that – unbeknownst to the student – these projects have been carefully tailored to have clearly defined goals, and they
+come with data sets that have been cleaned and filter to provide only relevant variables. This is usually done for good reasons – the instructors design these exercises in a way that focuses student attention on the skills that they are trying to develop (like model selection or model interpretation). But as a result, students often come away with the impression that most of what data scientists do is work with statistical models.</p>
+<p>In reality, however, often the most important thing that a data scientist does is (a) develop and articulate a concrete, feasible objective of a data science project, and (b) develop a strategy for achieving that objective efficiently. And Backwards Design is one of the best ways to go about accomplishing both of these goals.</p>
+<div class="section" id="Overview">
+<h2>Overview<a class="headerlink" href="#Overview" title="Permalink to this headline">¶</a></h2>
+<p>As the name implies, the idea Backwards Design is to <em>start</em> by clearly defining where you want to end up at the end of the project, and then working backwards to figure out exactly what you need to do to get there. Backwards Design is actually a common project management strategy and a range of different domains, and so you may already be familiar with the strategy and broad terms. In this class, however, we will focus on a five-step strategy for doing Backwards Design in data science:</p>
+<ol class="arabic simple">
+<li><p>Define the problem you want to solve.</p></li>
+<li><p>Define a <em>question</em> that you wish to answer to help you solve this problem.</p></li>
+<li><p>Articulate exactly what an answer to your question would look like.</p></li>
+<li><p>Determine the variables you would need in order to generate that answer.</p></li>
+<li><p>Identify data sets with those variables, and develop a strategy for bringing them together.</p></li>
+</ol>
+</div>
+<div class="section" id="1)-Define-Your-Problem">
+<h2>1) Define Your Problem<a class="headerlink" href="#1)-Define-Your-Problem" title="Permalink to this headline">¶</a></h2>
+<p>This first step should be the most straightforward, and yet you will be surprised at how often it is never actually explicitly addressed. People get so excited about the idea of data science that they will often come to you (the data scientist) with the data set and say “do some data science with this!” So the first thing you should always do when starting a data science project is make sure that you can clearly articulate the objective of the project. In addition, you should always make sure
+that <em>your stakeholder</em> agrees with that articulation of the problem you are trying to address! There’s nothing worse than spending weeks on a project and then discovering that it’s not actually a value to your stakeholder.</p>
+<p>Here are a few examples of defined problems:</p>
+<ul class="simple">
+<li><p>We don’t know how to reduce mass incarceration.</p></li>
+<li><p>My business can’t identify potential new customers.</p></li>
+<li><p>We don’t know who is going to develop Alzheimers, so we can’t test early interventions.</p></li>
+</ul>
+</div>
+<div class="section" id="2)-Define-the-Question-You-Wish-to-Answer">
+<h2>2) Define the Question You Wish to Answer<a class="headerlink" href="#2)-Define-the-Question-You-Wish-to-Answer" title="Permalink to this headline">¶</a></h2>
+<p>Although not everyone will agree with us, it is my view the data science is fundamentally the practice of using data to quantifiably answer questions about the world.</p>
+<p>For example, when we ran our regressions of birth weight on various demographic variables and whether the mother smoked during pregnancy, those models were answering the question “is maternal smoking associated with lower birth weight (at a statistically significant level after controlling for other confounds)?”</p>
+<p>If someone who runs a commerce website runs an A/B test where users visiting the site are randomly assigned to see two versions of a new landing page, and we then track their purchasing behavior, then when we analyze that data statistically what we’re doing is answering the question “Which of these designs is more effective at getting customers to buy things?”</p>
+<p>And finally we can think of supervised machine learning algorithms as answering two types of question: there’s the broad question that you answer by building a model and evaluating it (“can we identify cancer from patient x-rays, and if so, how well?”), and then the narrow question the is answered each time the model is run (“given this x-ray, how likely is this patient to have cancer?”). (There’s a small digression on supervised machine learning and this “data science is about answering
+questions” conceptual framework at the end of this if you’re interested).</p>
+<p>So the next step in backwards design is to ask yourself: what question, if answered, would help you solve the problem that motivates you?</p>
+<div class="section" id="Defining-a-Good-Question">
+<h3>Defining a Good Question<a class="headerlink" href="#Defining-a-Good-Question" title="Permalink to this headline">¶</a></h3>
+<p>A key feature of a good question is one that it is <em>concrete</em>, <em>tractable</em> and <em>answerable</em> by a data science project. Your question meets these criteria if it <strong>directly implies how you should approach the data science project, and that approach seems feasible.</strong> If your question is so vague that you don’t immediately start thinking about the data you want to collect, it’s not a good motivating question.</p>
+<p>To illustrate, here are a set of <em>bad</em> questions to the three problems described above:</p>
+<ul class="simple">
+<li><p>What policies reduce mass incarceration?</p></li>
+<li><p>Can machine learning help me identify potential customers.</p></li>
+<li><p>What indicates Alzheimers?</p></li>
+</ul>
+<p>By contrast, here’s a set of concrete, tractable, and answerable questions:</p>
+<ul class="simple">
+<li><p>Does the availability of grand juries result in longer sentences? (Grand juries are a pool of citizens prosecutors can ask for guidance on sentencing. In theory they’re supposed to hold prosecutors accountable, but in reality its often said that prosectors can shape the information grand juries get so they reach the recommendations that prosecutors wanted to begin with).</p></li>
+<li><p>What attributes are common to the customers who buy the most from my business?</p></li>
+<li><p>Are there lab results common in patients who later develop Alzheimers (diagnosed post-mortem) that we don’t see in patients who don’t go on to develop Alzheimers?</p></li>
+</ul>
+<p>For the first set, we’ve asked questions, but they’re so vague that it’s not clear how you should approach answering the question. In the second set, by contrast, likely first steps are very clear. For example, the first good question clearly implies we need to find data on sentencing from places with and without grand juries. For the second question, its clear we need data on our current customers, and data from the general population for comparison. And for the last question we clearly want
+lab data from patients with and without diagnosed Alzheimers!</p>
+<p>Moreover, for these answerable questions, you can imagine what the answer to the question will look like: for the first, you could have a regression that regresses sentences on grand jury availability controlling for crime committed; and for the second, you could imagine a table that compares various demographic characteristics of customers to non-customers.</p>
+</div>
+<div class="section" id="Why-is-Having-a-Good-Question-Important?">
+<h3>Why is Having a Good Question Important?<a class="headerlink" href="#Why-is-Having-a-Good-Question-Important?" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>It will save you from getting lost in your data, since it helps you focus you energy.</p></li>
+<li><p>Being able to articulate the question you wish to answer allows you to make sure that answering that question will actually help address your motivating problem (/make sure that your stateholder agrees that answering your question will help them). There’s <em>nothing</em> worse than getting excited, diving into your data, doing lots of work, and then getting a result that doesn’t actually help address the problem that motivated you (but it happens <em>all the time</em>).</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="3)-Write-Down-What-An-Answer-Would-Look-Like">
+<h2>3) Write Down What An Answer Would Look Like<a class="headerlink" href="#3)-Write-Down-What-An-Answer-Would-Look-Like" title="Permalink to this headline">¶</a></h2>
+<p>Seriously. Do it. Not abstractly: I mean draw the graph, figure, table, dataset with columns of predicted values and predictors, or set of model diagnostics you want to generate as a way of answering your question. Literally draw the graph, label the axes, etc.</p>
+<p>Why?</p>
+<ul class="simple">
+<li><p>If you can’t, then it turns out your question wasn’t sufficiently concrete.</p></li>
+<li><p>You can then show this to your stakeholder to ensure they think this constitutes an answer that would help them solve their problem (and avoid later being told your work doesn’t actually help them)</p></li>
+<li><p>It makes it even clearer what steps you need to do next to generate this result.</p></li>
+</ul>
+<div class="section" id="Falsifiability">
+<h3>Falsifiability<a class="headerlink" href="#Falsifiability" title="Permalink to this headline">¶</a></h3>
+<p>OK. So now you’re written down what an answer to your question looks like. But there’s one other key feature of a good question that we didn’t get into above: it should be <em>falsifiable</em>, which means that (a) you should be able to articulate a hypothesis about the answer to your question <em>and</em> (b) know what a result to your question would look like.</p>
+<p>So when writing down what your answer should look like, do the following:</p>
+<ol class="arabic simple">
+<li><p>State a hypothesis about what you think the answer to your question is likely to be.</p></li>
+<li><p>Draw what an answer to your question would look like <em>if your hypothesis is true</em>.</p></li>
+<li><p>Draw what an answer to your question would look like <em>if your hypothesis is false</em>.</p></li>
+</ol>
+<p>For example, consider our question about grand juries and sentecing. My hypothesis might be that grand juries result in longer sentences because they insulate prosectors from accountability.</p>
+<p>My result, as described above, could be a regression table where I regress sentences on whether a county has a grand jury along with controls for crime committed.</p>
+<p>The answer if my hypothesis is true is that we’d have a positive coefficient on the presence of grand juries.</p>
+<p>The answer if my hypothesis is false is that we’d have a zero or negative coefficient on the presence of grand juries.</p>
+<p>Why do all this? Because it helps ensure that the way we’re planning to answer our question will actually answer it by generating different results in different states of the world.</p>
+</div>
+</div>
+<div class="section" id="4)-What-Data-Do-You-Need?">
+<h2>4) What Data Do You Need?<a class="headerlink" href="#4)-What-Data-Do-You-Need?" title="Permalink to this headline">¶</a></h2>
+<p>Congratulations! You’ve now completed the really hard part of a data science project: defining your goals. Now we turn to the easy stuff.</p>
+<p>First, now you know your goal – the result described above – we turn to how we will actually answer our question. So ask yourself:</p>
+<ul class="simple">
+<li><p>What variables do I need to make the result I described above,</p></li>
+<li><p>What population do I need represented in that data</p></li>
+</ul>
+<p>So let’s think about our business trying to find new customers. Clearly, we need data on (a) customer spending, and (b) the demographics of those same customers.</p>
+<p>We also need data on <em>both</em> people who spend a lot, and people who don’t spend a lot so we can compare these two populations. We could do this either by getting data on all our customers and comparing big spenders from people who don’t buy much (if there’s a lot of variation in the data on level of spending), or we could compare current customers to the general public (most of whom aren’t customers).</p>
+</div>
+<div class="section" id="5)-Where-Can-You-Get-That-Data?">
+<h2>5) Where Can You Get That Data?<a class="headerlink" href="#5)-Where-Can-You-Get-That-Data?" title="Permalink to this headline">¶</a></h2>
+<p>OK, now you know the variables you need measured and the populations for whom you need those variables. Now let’s figure out:</p>
+<ul class="simple">
+<li><p>Where can I get that data, and</p></li>
+<li><p>If the data will come from different datasets, how will I combine them?</p></li>
+</ul>
+<p>In the customer example above, for example, we can start by looking for the data the company already has on its current customers. What’s in that data?</p>
+<p>We can also look for similar demographic data for non-customers using a resource like the American Community Survey (the annual survey run by the US Census bureau).</p>
+<p>If we use government data for our comparison group, we’ll then have to make sure we get comparable samples, so we’ll want to make sure we can match our observations on things like age, gender, and where people live, so we’ll need to make sure we have those variables in both datasets.</p>
+</div>
+<div class="section" id="Wrapping-Up">
+<h2>Wrapping Up<a class="headerlink" href="#Wrapping-Up" title="Permalink to this headline">¶</a></h2>
+<p>Congratulations!</p>
+<p>By the time you’ve done these 5 steps, you’ve managed to develop a concrete plan for exactly where you’ll focus your time, and you’ve nearly guaranteed that the result you’re working to generate will actually be useful in solving the problem that motivates you or your stakeholder. There’s still a lot of data wrangling, model selection, etc. ahead, but at least you won’t get lost in your data, or do lots of work that ends up no helping anyone!</p>
+<p><strong>Want a template for this?</strong> Great news! <a class="reference external" href="https://github.com/nickeubank/practicaldatascience/raw/master/handouts/PracticalDataScience_BackwardsDesignTemplate.pdf">You can download one here!</a></p>
+</div>
+<div class="section" id="A-Digression-on-Supervised-Machine-Learning">
+<h2>A Digression on Supervised Machine Learning<a class="headerlink" href="#A-Digression-on-Supervised-Machine-Learning" title="Permalink to this headline">¶</a></h2>
+<p>As noted above, we can think of superived machine learning as a tool that answers two types of questions: the first is the broad question of “can we predict [outcome of interest] using [variables we have] and the training set we have access to?”, and the second is the more narrow prediction question “for a given set of predictors, what value of [outcome of interest] would the model predict for a given observation”?</p>
+<p>The first, I think, is pretty straightforward. But there’s a nuance to the second question that’s super important to understand: when we ask a supervised machine learning it’s prediction for a given observation, what we’re fundamentally asking your model is: <strong>“how do you think the entity who labeled the data in your training data set would label this new observation?”</strong></p>
+<p>Because that’s all that supervised machine learning does: it develops models that are designed to replicate the behavior that gave rise to the data set due used for training your model. For example, if you train a supervised machine learning algorithm to label pictures with the name of the animal in the picture by feeding it a bunch of pictures that have been labeled by undergraduates at an American university, than what you are training that machine learning algorithm to do is answer the
+question “how would an American undergraduate label this photo” every time it sees an unlabeled photograph.</p>
+<p>Obviously different supervised machine learning algorithms go about trying to answer this question in different ways, and some will be more successful than others depending on the context (which is why we spend so much time studying model selection in machine learning courses), but answering this question is <em>always</em> the goal to which they aspire.</p>
+<p>This is a bit of a digression, but I think it’s an important one: recognizing that this is all supervised machine learning algorithms do is important because it helps you, the data scientist, understand the limitations of supervised machine learning algorithms. For a surprisingly long time, people thought that machine learning algorithms were incapable of harboring racial or sexist prejudices. They are, after all, just built of math, and math can’t be racist, can it? And so companies like amazon
+tried to build supervised machine learning algorithms to help them decide who to hire. The problem, though, is that they trained them using data on which people human employees had decided to hire in the past, and data from subjective employee evaluations that had been made by human supervisors. And because this gave rise to an algorithm that looked at people’s resumes and asked itself “what would Amazon’s (very human) hiring staff and supervisors have thought of this person?,” the algorithm of
+course inherited all the biases of those humans. And so, OOPS!, when Amazon suddenly realized that “their new recruiting engine didn’t like women,” <a class="reference external" href="https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G">they had to abandon the project</a>.</p>
+<p>OK, digression on bias in data science complete. For now. :)</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Practical DS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_schedule.html">CLASS SCHEDULE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning_track.html">LEARNING TOPICS</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup_environment.html">Setting Up Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_python_packages.html">Managing Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_dataframes.html">Pandas 2: DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part2.html">Plotting, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cleaning_editingvalues.html">Cleaning: Editing Values</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyter.html">Jupyter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_and_github.html">Git and Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pr_review.html">Reviewing Code on Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CLOUD</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_storage_on_azure.html">Storage on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Dask on Azure Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
+</ul>
+<p class="caption"><span class="caption-text">SKILLS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_big_data.html">What is Big Data?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="big_data_strategies.html">Working with Big Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Backwards Design</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#1)-Define-Your-Problem">1) Define Your Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#2)-Define-the-Question-You-Wish-to-Answer">2) Define the Question You Wish to Answer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#3)-Write-Down-What-An-Answer-Would-Look-Like">3) Write Down What An Answer Would Look Like</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#4)-What-Data-Do-You-Need?">4) What Data Do You Need?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#5)-Where-Can-You-Get-That-Data?">5) Where Can You Get That Data?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Wrapping-Up">Wrapping Up</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#A-Digression-on-Supervised-Machine-Learning">A Digression on Supervised Machine Learning</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="buying_datascience_computer.html">Buying a Data Science Computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="distributed_computing.html" title="previous chapter">Distributed Computing with dask</a></li>
+      <li>Next: <a href="buying_datascience_computer.html" title="next chapter">Advice on Buying Computers for Data Science Students</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick Eubank.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/backwards_design.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

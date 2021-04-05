@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Your Own Linear Regression Model &#8212; Practical Data Science</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="Coding-Your-Own-Linear-Regression-Model">
+<h1>Coding Your Own Linear Regression Model<a class="headerlink" href="#Coding-Your-Own-Linear-Regression-Model" title="Permalink to this headline">¶</a></h1>
+<p>One task that you will almost certainly be required to do other data science courses (especially if you are a MIDS student) is to write up some of your statistical / machine learning models from scratch. This can be a very valuable exercise, as it ensures that you understand what is actually going on behind the scenes of the models you use ever day, and that you don’t just think of them as “black boxes”.</p>
+<p>To get a little practice doing this, today you will be coding up your own linear regression model!</p>
+<p>(If you are using this site but aren’t actually in this class, you are welcome to skip this exercise if you’d like – this is more about practicing Python in anticipation of the requirements of other courses than developing your applied data science skills.)</p>
+<p>There are, broadly speaking, two approaches you can take to coding up your own model:</p>
+<ol class="arabic simple">
+<li><p>you can write the model by defining a new function, or</p></li>
+<li><p>you can write the model by defining a new class with associated methods (making a model that works the way a model works in <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>).</p></li>
+</ol>
+<p>Whether you do 1 or 2 is very much a matter of choice and style. Approach one, for example, is more consistent with what is called a <em>functional</em> style of programming, while approach two is more consistent with an <em>object-oriented</em> style of programming. Python can readily support both approaches, so either would work fine.</p>
+<p>In these exercises, however, I will ask you to use approach number 2 as this <em>tends</em> to be the more difficult approach, and so practicing approach 2 will be extra useful in preparing you for other classes (HA! Pun…). In particular, our goal is to implement a linear regression model that has the same “initialize-fit-predict-score” API (application programming interface – a fancy name for the methods a class supports) as <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> models. That means your model should be able to do all of
+the following:</p>
+<ol class="arabic simple">
+<li><p><strong>Initialize</strong> a new model.</p></li>
+<li><p><strong>Fit</strong> a linear model when given a numpy vector (<code class="docutils literal notranslate"><span class="pre">y</span></code>) and a numpy matrix (<code class="docutils literal notranslate"><span class="pre">X</span></code>) with the syntax <code class="docutils literal notranslate"><span class="pre">my_model.fit(X,</span> <span class="pre">y)</span></code>.</p></li>
+<li><p><strong>Predict</strong> values when given a new <code class="docutils literal notranslate"><span class="pre">numpy</span></code> matrix (<code class="docutils literal notranslate"><span class="pre">X_test</span></code>) with the syntax <code class="docutils literal notranslate"><span class="pre">my_model.predict(X_test)</span></code>.</p></li>
+<li><p>Return the <strong>model coefficients</strong> through the property <code class="docutils literal notranslate"><span class="pre">my_model.coefficients</span></code> (not quite what is used in <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>, but let’s use that interface).</p></li>
+</ol>
+<p>Also, bear in mind that throughout these exercises, we’ll be working in <code class="docutils literal notranslate"><span class="pre">numpy</span></code> instead of <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, just as we do in <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>. So assume that before using your model, your user has already converted their data from <code class="docutils literal notranslate"><span class="pre">pandas</span></code> into <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays.</p>
+<p><strong>(1)</strong> Define a new Class called <code class="docutils literal notranslate"><span class="pre">MyLinearModel</span></code> with methods for <code class="docutils literal notranslate"><span class="pre">__init__</span></code>, <code class="docutils literal notranslate"><span class="pre">fit</span></code>, <code class="docutils literal notranslate"><span class="pre">predict</span></code>, and an attribute for <code class="docutils literal notranslate"><span class="pre">coefficients</span></code>. For now, we don’t need any initialization <em>arguments</em>, just an <code class="docutils literal notranslate"><span class="pre">__init__</span></code> function.</p>
+<p>As you get your code outline going, start by just having each method <code class="docutils literal notranslate"><span class="pre">pass</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>This will allow your methods to run without errors (they just don’t do anything). Then we can double back to each method to get them working one by one.</p>
+<p><strong>(2)</strong> Now define your <code class="docutils literal notranslate"><span class="pre">fit</span></code> method. This is the method that should actually run your linear regression. In case you’ve forgotten your linear algebra, remember that for linear regressions, <span class="math notranslate nohighlight">\(\beta = (X'X)^{-1}X'Y\)</span>, a fact you can see explained in detail on page four <a class="reference external" href="https://www.stat.purdue.edu/~boli/stat512/lectures/topic3.pdf">here</a>.</p>
+<p>Note that once you have written the code to do a linear regression, you’ll need to put your outputs (your coefficents) somewhere. I recommend making an attribute for your class where you can store your coefficients.</p>
+<p>(As a reminder: the normal multiply operator (<code class="docutils literal notranslate"><span class="pre">*</span></code>) in <code class="docutils literal notranslate"><span class="pre">numpy</span></code> implies scalar multiplication. Use <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> for matrix multiplication).</p>
+<p><strong>HINT:</strong> Remember that linear regressions usually include a constant term. As in most packages, you should assume that users want this included, even if there isn’t a vector of 1s in their <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+<p><strong>(3)</strong> As you write code, it is good to test your code as you work. With that in mind, let’s create some toy data. First, create a 100 x 2 matrix where each column is normally distributed. Then create a vector <code class="docutils literal notranslate"><span class="pre">y</span></code> that is a linear combination of those two columns plus a vector of normally distributed noise.</p>
+<p>In other words, we want to create data where we <em>know</em> exactly what coefficients we should see so when we test our regression, we know if the results are accurate!</p>
+<p><strong>(4)</strong> Now test whether you <code class="docutils literal notranslate"><span class="pre">fit</span></code> method generates the correct coefficients.</p>
+<p><strong>(5)</strong> Now let’s make the statisticians proud, and in addition to storing the coefficients, let’s store the standard errors for our estimated coefficients as another attribute. Recall that the simplest method of calculating the variance covariance matrix for <span class="math notranslate nohighlight">\(\beta\)</span> is using the formula <span class="math notranslate nohighlight">\(\sigma^2 (X'X)^{-1}\)</span>, where <span class="math notranslate nohighlight">\(\sigma^2\)</span> is the variance of the error terms of your regression. See page six <a class="reference external" href="https://www.stat.purdue.edu/~boli/stat512/lectures/topic3.pdf">here</a> for a full
+derivation.</p>
+<p><strong>(6)</strong> Now let’s also add an R-squarded attribute to the model.</p>
+<p><strong>(7)</strong> Now we’ll go ahead and cheat a little. Use <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> to see if your standard errors and r-squared are correct!</p>
+<p><strong>(8)</strong> Now implement <code class="docutils literal notranslate"><span class="pre">predict</span></code>! Then test it against your original <code class="docutils literal notranslate"><span class="pre">X</span></code> data – do you get back something very close to your true <code class="docutils literal notranslate"><span class="pre">y</span></code>?</p>
+<p><strong>(9)</strong> Finally, create the <em>option</em> of fitting the model with or without a constant term. As in <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>, make this an option you set during initialization.</p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Practical DS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../class_schedule.html">CLASS SCHEDULE</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../setup_environment.html">Setting Up Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../managing_python_packages.html">Managing Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pandas_dataframes.html">Pandas 2: DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plotting_part2.html">Plotting, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cleaning_editingvalues.html">Cleaning: Editing Values</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../jupyter.html">Jupyter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git_and_github.html">Git and Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pr_review.html">Reviewing Code on Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parquet.html">Parquet Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CLOUD</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_what_is_it.html">What Is The Cloud?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_storage_on_azure.html">Storage on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_dask.html">Dask on Azure Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_authentication.html">Azure Authentication</a></li>
+</ul>
+<p class="caption"><span class="caption-text">SKILLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow.html">Workflow Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../what_is_big_data.html">What is Big Data?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../big_data_strategies.html">Working with Big Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance_solutions.html">Solving Performance Probs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../backwards_design.html">Backwards Design</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../buying_datascience_computer.html">Buying a Data Science Computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick Eubank.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/exercises/Exercise_codeyourownlinearregression.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

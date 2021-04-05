@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Setting Up Data Storage on Azure &#8212; Practical Data Science</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Renting a VM for Data Science on Azure" href="cloud_vm_on_azure.html" />
+    <link rel="prev" title="The Cloud" href="cloud_what_is_it.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="Setting-Up-Data-Storage-on-Azure">
+<h1>Setting Up Data Storage on Azure<a class="headerlink" href="#Setting-Up-Data-Storage-on-Azure" title="Permalink to this headline">¶</a></h1>
+<p>No matter what kind of data science you’re doing on Azure, you’re probably gonna want a place to put and access… data. :) So let’s start our introduction to Azure by setting up storage!</p>
+<p>As we discussed in our <a class="reference internal" href="cloud_what_is_it.html"><span class="doc">Cloud Overview</span></a>, when working on the cloud your “compute” resources and your “storage” resources are sold (mostly) separately. This isn’t entirely true – your VM has some harddrive space – but that memory is tied to that compute, and so when you shut down your compute, anything saved on those harddrives goes away. So normally we need to get some persistent storage for our data and results. Here we’ll set up storage in 3 easy steps (one of which
+is getting an azure account, so many of you may only have 2 steps!).</p>
+<div class="section" id="1.-Get-an-Azure-Subscription">
+<h2>1. Get an Azure Subscription<a class="headerlink" href="#1.-Get-an-Azure-Subscription" title="Permalink to this headline">¶</a></h2>
+<p>Unsurprisingly, we have to start by signing up with Azure. There are two ways to do this that will get you free credits:</p>
+<ul class="simple">
+<li><p>If you are a student, you can <a class="reference external" href="https://azure.microsoft.com/en-us/free/students/">go here</a> and sign up for a free student account. It’ll only get you 100 dollars, and it doesn’t require a credit card. It also has fewer restrictions than the next option, so its better even if there’s less mony.</p></li>
+<li><p>Create a new regular account (with 200 dollars free credit to use in your first 30 days!) by creating a standard new account <a class="reference external" href="https://azure.microsoft.com/en-us/">here</a>. Note you will need a credit card to verify your account if you go this route.</p></li>
+</ul>
+<p>Note that if you have already gotten an account and used your free credits… try and make a new account with a new email address? For example, most universities give you a short-hand email, but you can also get a “vanity” long name (e.g. my email is both <a class="reference external" href="mailto:nce8&#37;&#52;&#48;duke&#46;edu">nce8<span>&#64;</span>duke<span>&#46;</span>edu</a> and <a class="reference external" href="mailto:nick&#46;eubank&#37;&#52;&#48;duke&#46;edu">nick<span>&#46;</span>eubank<span>&#64;</span>duke<span>&#46;</span>edu</a>). And gmail address are easy to make.</p>
+<p>If you do so, your Azure account will also be associated with a free-money <em>Subscription</em>. A Subscription is the name Azure has for the person responsible for paying the bills, and everything you do will have to be under a subscription. If you start using Azure for a company or other large organization (like Duke), your account will get connected to the institution’s subscription so your bills go to them. But for now, I think it makes more sense for you to set up your own account, both you can
+enjoy Microsoft’s free money, but also (and more importantly) so you feel like you have your own cloud account that isn’t dependent on someone else’s support. As we’ve discussed repeatedly, one goal of this class is to ensure that you don’t feel stranded when you leave this class (as sometimes happens when you learn on pre-configured VMs). The cloud is available to everyone, and by creating your own account, you now have access for yourself any time you want!</p>
+<p>Once you have an account, you should end up at the Azure Portal page. This is your home for Azure, and you’ll come back here all the time.</p>
+<p><img alt="azure_portal" src="_images/azure_portal.png" /></p>
+</div>
+<div class="section" id="2.-Create-a-Resource-Group">
+<h2>2. Create a Resource Group<a class="headerlink" href="#2.-Create-a-Resource-Group" title="Permalink to this headline">¶</a></h2>
+<p>In Azure, all the concrete things you want to use – a virtual machine, a distributed cluster, a network storage drive – are called <em>Resources</em>, and every resource has to live in a <em>Resource Group</em>. I <em>think</em> the goal of this is that if all the Resources for a project live in one Resource Group, then when you finish the project you can easily delete them all, and I think they’re useful for corporations to manage billing. Personally, I find it’s just kinda annoying. :)</p>
+<p>So to create a Storage Account (a Resource), we first need to create a Resource Group. Well, actually, that’s not quite true – you can create one <em>in the process</em> of creating a Storage Account – but let’s be explicit and create one ourselves first. Go to your Portal, search for Resource Group, and create a new one.</p>
+<p>Note you’re gonna have to name a LOT of stuff, so I recommend a common name for your project (I’ll use my Duke id here: <code class="docutils literal notranslate"><span class="pre">nce8</span></code>) followed by a shorthand for the specific thing you’re creating. So for my Resource Group, I call it <code class="docutils literal notranslate"><span class="pre">nce8rg</span></code>.</p>
+</div>
+<div class="section" id="3.-Create-A-Storage-Account">
+<h2>3. Create A Storage Account<a class="headerlink" href="#3.-Create-A-Storage-Account" title="Permalink to this headline">¶</a></h2>
+<p>To store data, we first need to create a Storage Account! To do so, go to your “Storage Accounts” page (you can go back to your Portal and search for it if you need to).</p>
+<p>Then on the top right, click on the <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">Add</span></code> button:</p>
+<p><img alt="azure_addstorageaccount" src="_images/azure_addstorageaccount.png" /></p>
+<p>Then put it in the Resource Group you already have, give it a good name (I used <code class="docutils literal notranslate"><span class="pre">nce8sa</span></code>), and just accept the defaults. Congratulations! You have a Storage Account!</p>
+<div class="section" id="Containers">
+<h3>Containers<a class="headerlink" href="#Containers" title="Permalink to this headline">¶</a></h3>
+<p>While you might <em>think</em> that Storage Accounts are where we put our data, though, that’s not quite right. Storage Accounts can hold 4 different kinds of things: Blob Containers, File Shares, Tables, and Queues. UGH.</p>
+<p>The good news is that, at this point in your life, you only need to worry about Blob Containers. As we mentioned in our “What is the Cloud” tutorial, Cloud storage comes in different flavors, and Blob is the most flexible, as it can hold anything (BLOB standands for <strong>B</strong>inary <strong>L</strong>arge <strong>OB</strong>ject storage). So unless you have reason to do otherwise, just use Blob Containers.</p>
+<p>Other types on Azure, just so you know them, are:</p>
+<ul class="simple">
+<li><p><strong>File storage</strong>: similar to Blob. File storage supports certain file sharing protocols that people may have been using before they came to the cloud, so makes life easy for people moving to the cloud. But fewer features than BLOB, so almost surely not for you. <em>Sounds</em> like the storage that’d be most familiar to a normal computer user, but it’s a trick. Use BLOB.</p></li>
+<li><p><strong>Queue storage</strong>: specialized storage for messaging services.</p></li>
+<li><p><strong>Table storage</strong>: What’s known as a NoSQL database system.</p></li>
+</ul>
+<p>And lest this whole “Storage Account” / Blob Containers / Files thing is getting confusing (I <em>know</em>, so many nested groups!!!), it looks something like this:</p>
+<p><img alt="azure_blob_containers" src="_images/azure_blob_containers.png" /></p>
+</div>
+</div>
+<div class="section" id="4.-Create-Container-and-Add-Data">
+<h2>4. Create Container and Add Data<a class="headerlink" href="#4.-Create-Container-and-Add-Data" title="Permalink to this headline">¶</a></h2>
+<p>So let’s add some data! Navigate to your Storage Accounts page, and click on the Storage Account you just created. Then on the left menu, and click on <code class="docutils literal notranslate"><span class="pre">Containers</span></code> under Blob Services.</p>
+<p>But now we can create a new Container for our data! So click the <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">Container</span></code> button, pick a name, and click <code class="docutils literal notranslate"><span class="pre">Create</span></code>. Congrats! You have a blob!</p>
+<p>We’ll talk more about managing data using Python or the command line later, but for the moment, let’s just upload an easy file. Click on your new Container, click <code class="docutils literal notranslate"><span class="pre">Upload</span></code> in the top left, and upload a file!</p>
+<div class="section" id="More-Efficient-Data-Uploading">
+<h3>More Efficient Data Uploading<a class="headerlink" href="#More-Efficient-Data-Uploading" title="Permalink to this headline">¶</a></h3>
+<p>For this, we just used the web browser to upload data to get started, but there are also command line tools we’ll learn about later that are more efficient. If you want to jump ahead, <a class="reference internal" href="cloud_azure_cli.html"><span class="doc">you can read about them here</span></a>.</p>
+</div>
+</div>
+<div class="section" id="5.-Bringing-It-Together">
+<h2>5. Bringing It Together<a class="headerlink" href="#5.-Bringing-It-Together" title="Permalink to this headline">¶</a></h2>
+<p>I know that’s been a LOT of different things you’ve been creating, so here’s an overview of what all we’ve created. Note that if you were a giant corportation, each of these would have more forks (your subscription would have lots of Resource Groups, etc.), but this accurately shows how these different organizational structures are nested within one another.</p>
+<p><img alt="azure_structure.png" src="_images/azure_structure.png" /></p>
+<p>Note that your Workspace isn’t in this picture! That’s because it doesn’t fit into this organizational hierarchy – it’s off to the side, a way of taggint certain Resource Groups and Resource as being related to a single project. But you can use the same Resource Group in multiple Workspaces, and Resources from multiple Resource Groups in a single Workspace.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Practical DS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_schedule.html">CLASS SCHEDULE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning_track.html">LEARNING TOPICS</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup_environment.html">Setting Up Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_python_packages.html">Managing Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_dataframes.html">Pandas 2: DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part2.html">Plotting, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cleaning_editingvalues.html">Cleaning: Editing Values</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyter.html">Jupyter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_and_github.html">Git and Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pr_review.html">Reviewing Code on Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CLOUD</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Storage on Azure</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#1.-Get-an-Azure-Subscription">1. Get an Azure Subscription</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#2.-Create-a-Resource-Group">2. Create a Resource Group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#3.-Create-A-Storage-Account">3. Create A Storage Account</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#4.-Create-Container-and-Add-Data">4. Create Container and Add Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#5.-Bringing-It-Together">5. Bringing It Together</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Dask on Azure Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
+</ul>
+<p class="caption"><span class="caption-text">SKILLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_big_data.html">What is Big Data?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="big_data_strategies.html">Working with Big Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backwards_design.html">Backwards Design</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="buying_datascience_computer.html">Buying a Data Science Computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="cloud_what_is_it.html" title="previous chapter">The Cloud</a></li>
+      <li>Next: <a href="cloud_vm_on_azure.html" title="next chapter">Renting a VM for Data Science on Azure</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick Eubank.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/cloud_storage_on_azure.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

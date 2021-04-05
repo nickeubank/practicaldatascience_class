@@ -1,0 +1,856 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dask Cluster on Azure Example &#8212; Practical Data Science</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Azure from the Command Line" href="cloud_azure_cli.html" />
+    <link rel="prev" title="Setting Up a Cluster on Azure for Data Science" href="cloud_cluster_on_azure.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Dask-Cluster-on-Azure-Example">
+<h1>Dask Cluster on Azure Example<a class="headerlink" href="#Dask-Cluster-on-Azure-Example" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="NOTE:-DASK-CLOUDPROVIDER-IS-IN-A-STATE-OF-FLUX,-AND-SO-THE-CODE-BELOW-DOESN&quot;T-ACTUALLY-WORK-AT-THE-MOMENT…-CHECK-BACK-IN-A-FEW-WEEKS?---Nick,-Dec-2020.">
+<h2>NOTE: DASK-CLOUDPROVIDER IS IN A STATE OF FLUX, AND SO THE CODE BELOW DOESN”T ACTUALLY WORK AT THE MOMENT… CHECK BACK IN A FEW WEEKS? - Nick, Dec 2020.<a class="headerlink" href="#NOTE:-DASK-CLOUDPROVIDER-IS-IN-A-STATE-OF-FLUX,-AND-SO-THE-CODE-BELOW-DOESN"T-ACTUALLY-WORK-AT-THE-MOMENT…-CHECK-BACK-IN-A-FEW-WEEKS?---Nick,-Dec-2020." title="Permalink to this headline">¶</a></h2>
+<p>In this lesson, we’ll be using a dask cluster to replicate the <a class="reference internal" href="exercises/Exercise_bigdata.html"><span class="doc">exercise we did in the Big Data section</span></a> where we loaded global temperature data to measure global warming at a number of locations. You can get the data we’re using for this <a class="reference external" href="https://www.dropbox.com/s/oq36w90hm9ltgvc/global_climate_data.zip?dl=0">exercise here</a>).</p>
+<p>I’m also assuming you already have a Azure account and have already read through <a class="reference internal" href="cloud_storage_on_azure.html"><span class="doc">Azure Storage</span></a> and <a class="reference internal" href="cloud_cluster_on_azure.html"><span class="doc">Setting Up a Cluster on Azure</span></a></p>
+<p><strong>Want to use Amazon AWS?</strong> You can do that too! The package we use to launch our cluster below also supports AWS. We won’t go through that here, but you can find <a class="reference external" href="https://cloudprovider.dask.org/en/stable/index.html">info on it here</a>.</p>
+<p>If you want to follow along, just decompress the <code class="docutils literal notranslate"><span class="pre">ghcnd_daily.tar.gz</span></code> file and upload the resulting <code class="docutils literal notranslate"><span class="pre">.csv</span></code> into a Blob container using the web interface. Note this will take a little while. Will talk about more efficient methods of upload in our next tutorial.</p>
+</div>
+<div class="section" id="Starting-a-Dask-Cluster">
+<h2>Starting a Dask Cluster<a class="headerlink" href="#Starting-a-Dask-Cluster" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">load_ext</span> lab_black
+<span class="kn">from</span> <span class="nn">dask_cloudprovider.azure</span> <span class="kn">import</span> <span class="n">AzureVMCluster</span>
+</pre></div>
+</div>
+</div>
+<p>In the next step we’ll spin up a new cluster. Before we do so, though, it’s worth covering a few things:</p>
+<ul class="simple">
+<li><p>This will spin up a <em>new</em> compute cluster that’s completely independent of any compute you currently have running.</p></li>
+<li><p>This cluster also has a time-out setting, so if nothing happens in the cluster for the specified time (here, 7200 seconds), the cluster will shut down so you aren’t paying for anything.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vm_size</span></code> dictates the size of <em>each node</em> in your new cluster. There are a couple ways to see the range of VM specifications available. You can find a general summary <a class="reference external" href="https://docs.microsoft.com/en-us/azure/virtual-machines/sizes">here</a>, but you may also find it help to navigate to your workspace in your broswer, click <code class="docutils literal notranslate"><span class="pre">Compute</span></code>, click the <code class="docutils literal notranslate"><span class="pre">Compute</span> <span class="pre">Clusters</span></code> tab, hit <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">New</span></code>, then look at the “Virtual machine size” dropdown to see more options and the exact names assigned to each
+configuration.</p></li>
+<li><p>To protect people from running up insane bills they can’t actually pay, Azure has some default limits on the number of CPUs you can have running at any time. You can see this quota by going to the <code class="docutils literal notranslate"><span class="pre">Compute</span> <span class="pre">Clusters</span></code> tab using the steps above and clicking the <code class="docutils literal notranslate"><span class="pre">View</span> <span class="pre">Quota</span></code>. (Note if you don’t have any clusters up you can’t see this number, ironically. So quickly create a cluster with the <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">New</span></code> button, then you’ll get the button you want). This will tell you the total number of cores you
+can be running at any one time <em>across all of Azure</em>. That means if you have a single VM up and running, that counts against the quota you might want to allocate to a cluster!</p>
+<ul>
+<li><p>For free student accounts, this quota is quite low: 6 CPUs. So the cluster we’ll create below is quite small. <strong>If your cluster allocation is above the quota, the code we run below will just hang, or you may get a time-out message.</strong> Sadly, you don’t get an informative error message. We’ll discuss below how to deal with this problem.</p></li>
+<li><p>For a standard free account you got with credit card verification, the quota is 4 CPUs. <strong>So you have to reduce the number of nodes in the code below to 2 (2 nodes x 2 CPUs per node = 4).</strong></p></li>
+<li><p>If you have a paid account, you also have a quota, though likely a much higher one (my Duke account has a 300 CPU quota). If you’re running into quota limits <em>on a paid account</em>, <a class="reference external" href="https://docs.microsoft.com/en-us/azure/machine-learning/how-to-manage-quotas#request-quota-increases">you can ask that they be increased</a>.</p></li>
+</ul>
+</li>
+<li><p>These clusters are scalable, so the <code class="docutils literal notranslate"><span class="pre">n_workers</span></code> is your <em>initial</em> node count. So it often makes sense to start a little slow then scale up using the widget that appears below when you’re sure you’re done debugging.</p></li>
+</ul>
+<p><strong>The next cell should take between 5 and 15 minutes to run!</strong></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Start cluster</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">AzureVMCluster</span><span class="p">(</span>
+    <span class="n">resource_group</span><span class="o">=</span><span class="s2">&quot;nce8rg&quot;</span><span class="p">,</span>
+    <span class="n">vnet</span><span class="o">=</span><span class="s2">&quot;nce8vn&quot;</span><span class="p">,</span>
+    <span class="n">security_group</span><span class="o">=</span><span class="s2">&quot;nce8nsg&quot;</span><span class="p">,</span>
+    <span class="n">n_workers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">location</span><span class="o">=</span><span class="s2">&quot;eastus&quot;</span><span class="p">,</span>
+    <span class="n">vm_size</span><span class="o">=</span><span class="s2">&quot;Standard_DS11_v2&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Creating scheduler instance
+Assigned public IP
+Network interface ready
+Creating VM
+Created VM dask-9283e987-scheduler
+Waiting for scheduler to run
+Scheduler is running
+Creating worker instance
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/Nick/miniconda3/lib/python3.7/contextlib.py:119: UserWarning: Creating your cluster is taking a surprisingly long time. This is likely due to pending resources. Hang tight!
+  next(self.gen)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Network interface ready
+Creating VM
+Created VM dask-9283e987-worker-f3bb5298
+Creating worker instance
+Network interface ready
+Creating VM
+Created VM dask-9283e987-worker-10038e07
+Creating worker instance
+Network interface ready
+Creating VM
+Created VM dask-9283e987-worker-ec20074c
+</pre></div></div>
+</div>
+<p>Note that we’re using the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/virtual-machines/dv2-dsv2-series">“Standard_DS11_v2” VM</a> because it only has 2 cores, but it does have high speed data connections (the “S” in “DS11” is for Storage-optimized). And for data science, we almost always want fast storage access.</p>
+</div>
+<div class="section" id="Using-Your-Cluster">
+<h2>Using Your Cluster<a class="headerlink" href="#Using-Your-Cluster" title="Permalink to this headline">¶</a></h2>
+<p>There are two ways to use your cluster: You can click on the link above to open a connection to JupyterLab running on one of the computers in your cluster, or connect from here with this command:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/Nick/miniconda3/lib/python3.7/site-packages/distributed/client.py:1129: VersionMismatchWarning: Mismatched versions found
+
++---------+---------------+---------------+---------------+
+| Package | client        | scheduler     | workers       |
++---------+---------------+---------------+---------------+
+| lz4     | 3.1.0         | 3.1.1         | 3.1.1         |
+| numpy   | 1.19.4        | 1.18.1        | 1.18.1        |
+| python  | 3.7.8.final.0 | 3.8.0.final.0 | 3.8.0.final.0 |
++---------+---------------+---------------+---------------+
+  warnings.warn(version_module.VersionMismatchWarning(msg[0][&#34;warning&#34;]))
+</pre></div></div>
+</div>
+<p>And you’re off to the races! One note though – if you decide to work from your own computer, you may get a warning about version differences between <code class="docutils literal notranslate"><span class="pre">dask</span></code> on the cloud on and on your own computer. I initially got:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">Nick</span><span class="o">/</span><span class="n">miniconda3</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">7</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">distributed</span><span class="o">/</span><span class="n">client</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">1130</span><span class="p">:</span> <span class="n">VersionMismatchWarning</span><span class="p">:</span> <span class="n">Mismatched</span> <span class="n">versions</span> <span class="n">found</span>
+
+<span class="o">+---------+---------------+---------------+---------------+</span>
+<span class="o">|</span> <span class="n">Package</span> <span class="o">|</span> <span class="n">client</span>        <span class="o">|</span> <span class="n">scheduler</span>     <span class="o">|</span> <span class="n">workers</span>       <span class="o">|</span>
+<span class="o">+---------+---------------+---------------+---------------+</span>
+<span class="o">|</span> <span class="n">lz4</span>     <span class="o">|</span> <span class="kc">None</span>          <span class="o">|</span> <span class="mf">3.1</span><span class="o">.</span><span class="mi">0</span>         <span class="o">|</span> <span class="mf">3.1</span><span class="o">.</span><span class="mi">0</span>         <span class="o">|</span>
+<span class="o">|</span> <span class="n">numpy</span>   <span class="o">|</span> <span class="mf">1.19</span><span class="o">.</span><span class="mi">1</span>        <span class="o">|</span> <span class="mf">1.19</span><span class="o">.</span><span class="mi">2</span>        <span class="o">|</span> <span class="mf">1.19</span><span class="o">.</span><span class="mi">2</span>        <span class="o">|</span>
+<span class="o">|</span> <span class="n">python</span>  <span class="o">|</span> <span class="mf">3.7</span><span class="o">.</span><span class="mf">8.</span><span class="n">final</span><span class="o">.</span><span class="mi">0</span> <span class="o">|</span> <span class="mf">3.6</span><span class="o">.</span><span class="mf">9.</span><span class="n">final</span><span class="o">.</span><span class="mi">0</span> <span class="o">|</span> <span class="mf">3.6</span><span class="o">.</span><span class="mf">9.</span><span class="n">final</span><span class="o">.</span><span class="mi">0</span> <span class="o">|</span>
+<span class="o">+---------+---------------+---------------+---------------+</span>
+  <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">version_module</span><span class="o">.</span><span class="n">VersionMismatchWarning</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;warning&quot;</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">numpy</span></code> and <code class="docutils literal notranslate"><span class="pre">python</span></code> issues don’t seem like to cause big problems (though if you have a mismatch and get problems down the road, consider changing your Python version!), but the fact that the schedulers and workers have one package I don’t (<code class="docutils literal notranslate"><span class="pre">lz4</span></code>) is a problem, so I installed it before moving forward. (<code class="docutils literal notranslate"><span class="pre">lz4</span></code> is a compression algorithm used to send data back and forth, so not having it is a big problem).</p>
+</div>
+<div class="section" id="Accessing-Storage">
+<h2>Accessing Storage<a class="headerlink" href="#Accessing-Storage" title="Permalink to this headline">¶</a></h2>
+<p>First, we’ll contect to the container where I put the climate data. As you saw in the last exercise, you can upload data using the Azure web interface, and I would do that if you want to do these exercises. However there are more efficient tools we’ll cover in the <a class="reference external" href="cloud_azurestorage.ipynb">next lesson</a>.</p>
+<p>As discussed previously, <a class="reference internal" href="cloud_storage_on_azure.html"><span class="doc">dask can access Azure storage</span></a> without the help of any other libraries – you just need to be able to pass it your Storage Account name and Access Key, which you can find by going to your Azure Portal, then your Storage Account, and then clicking on “Access Keys” on the left menu. The syntax is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dask.dataframe</span> <span class="k">as</span> <span class="nn">dd</span>
+
+<span class="n">storage_options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;account_name&#39;</span><span class="p">:</span> <span class="n">ACCOUNT_NAME</span><span class="p">,</span> <span class="s1">&#39;account_key&#39;</span><span class="p">:</span> <span class="n">ACCOUNT_KEY</span><span class="p">}</span>
+
+<span class="n">ddf</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;az://</span><span class="si">{CONTAINER}</span><span class="s1">/</span><span class="si">{FOLDER}</span><span class="s1">/*.csv&#39;</span><span class="p">,</span> <span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span><span class="p">)</span>
+<span class="n">ddf</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s1">&#39;az://</span><span class="si">{CONTAINER}</span><span class="s1">/folder.parquet&#39;</span><span class="p">,</span> <span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>But since I don’t want you to see all my secret codes, I’m gonna load my information from a file. You can do this, but you can also put them in your code <em>if your code isn’t public!</em></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Dask connects with a protocl</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/users/nick/azure_secrets/azure_sa_name_and_key.json&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">storage_options</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">dask.dataframe</span> <span class="k">as</span> <span class="nn">dd</span>
+
+<span class="c1"># dask things the flag columns are floats, when really objects.</span>
+<span class="n">flag_dict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">]:</span>
+        <span class="n">flag_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">flag</span><span class="si">}</span><span class="s2">flag</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">})</span>
+
+<span class="n">temps</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s2">&quot;az://globaltemps/ghcnd_daily.csv&quot;</span><span class="p">,</span>
+    <span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="o">=</span><span class="n">flag_dict</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">temps</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">KilledWorker</span>                              Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-6-e8b1118eea72&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>temps<span class="ansi-blue-fg">.</span>head<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">10</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/dask/dataframe/core.py</span> in <span class="ansi-cyan-fg">head</span><span class="ansi-blue-fg">(self, n, npartitions, compute)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1004</span>             Whether to compute the result<span class="ansi-blue-fg">,</span> default <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">True</span><span class="ansi-blue-fg">.</span>
+<span class="ansi-green-intense-fg ansi-bold">   1005</span>         &#34;&#34;&#34;
+<span class="ansi-green-fg">-&gt; 1006</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_head<span class="ansi-blue-fg">(</span>n<span class="ansi-blue-fg">=</span>n<span class="ansi-blue-fg">,</span> npartitions<span class="ansi-blue-fg">=</span>npartitions<span class="ansi-blue-fg">,</span> compute<span class="ansi-blue-fg">=</span>compute<span class="ansi-blue-fg">,</span> safe<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1007</span>
+<span class="ansi-green-intense-fg ansi-bold">   1008</span>     <span class="ansi-green-fg">def</span> _head<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> n<span class="ansi-blue-fg">,</span> npartitions<span class="ansi-blue-fg">,</span> compute<span class="ansi-blue-fg">,</span> safe<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/dask/dataframe/core.py</span> in <span class="ansi-cyan-fg">_head</span><span class="ansi-blue-fg">(self, n, npartitions, compute, safe)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1037</span>
+<span class="ansi-green-intense-fg ansi-bold">   1038</span>         <span class="ansi-green-fg">if</span> compute<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 1039</span><span class="ansi-red-fg">             </span>result <span class="ansi-blue-fg">=</span> result<span class="ansi-blue-fg">.</span>compute<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1040</span>         <span class="ansi-green-fg">return</span> result
+<span class="ansi-green-intense-fg ansi-bold">   1041</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/dask/base.py</span> in <span class="ansi-cyan-fg">compute</span><span class="ansi-blue-fg">(self, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    165</span>         dask<span class="ansi-blue-fg">.</span>base<span class="ansi-blue-fg">.</span>compute
+<span class="ansi-green-intense-fg ansi-bold">    166</span>         &#34;&#34;&#34;
+<span class="ansi-green-fg">--&gt; 167</span><span class="ansi-red-fg">         </span><span class="ansi-blue-fg">(</span>result<span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">=</span> compute<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> traverse<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    168</span>         <span class="ansi-green-fg">return</span> result
+<span class="ansi-green-intense-fg ansi-bold">    169</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/dask/base.py</span> in <span class="ansi-cyan-fg">compute</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    450</span>         postcomputes<span class="ansi-blue-fg">.</span>append<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">.</span>__dask_postcompute__<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    451</span>
+<span class="ansi-green-fg">--&gt; 452</span><span class="ansi-red-fg">     </span>results <span class="ansi-blue-fg">=</span> schedule<span class="ansi-blue-fg">(</span>dsk<span class="ansi-blue-fg">,</span> keys<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    453</span>     <span class="ansi-green-fg">return</span> repack<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">[</span>f<span class="ansi-blue-fg">(</span>r<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>a<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> r<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">(</span>f<span class="ansi-blue-fg">,</span> a<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">in</span> zip<span class="ansi-blue-fg">(</span>results<span class="ansi-blue-fg">,</span> postcomputes<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    454</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/distributed/client.py</span> in <span class="ansi-cyan-fg">get</span><span class="ansi-blue-fg">(self, dsk, keys, restrictions, loose_restrictions, resources, sync, asynchronous, direct, retries, priority, fifo_timeout, actors, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2723</span>                     should_rejoin <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">False</span>
+<span class="ansi-green-intense-fg ansi-bold">   2724</span>             <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 2725</span><span class="ansi-red-fg">                 </span>results <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>gather<span class="ansi-blue-fg">(</span>packed<span class="ansi-blue-fg">,</span> asynchronous<span class="ansi-blue-fg">=</span>asynchronous<span class="ansi-blue-fg">,</span> direct<span class="ansi-blue-fg">=</span>direct<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2726</span>             <span class="ansi-green-fg">finally</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   2727</span>                 <span class="ansi-green-fg">for</span> f <span class="ansi-green-fg">in</span> futures<span class="ansi-blue-fg">.</span>values<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/distributed/client.py</span> in <span class="ansi-cyan-fg">gather</span><span class="ansi-blue-fg">(self, futures, errors, direct, asynchronous)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1990</span>                 direct<span class="ansi-blue-fg">=</span>direct<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">   1991</span>                 local_worker<span class="ansi-blue-fg">=</span>local_worker<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-fg">-&gt; 1992</span><span class="ansi-red-fg">                 </span>asynchronous<span class="ansi-blue-fg">=</span>asynchronous<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">   1993</span>             )
+<span class="ansi-green-intense-fg ansi-bold">   1994</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/distributed/client.py</span> in <span class="ansi-cyan-fg">sync</span><span class="ansi-blue-fg">(self, func, asynchronous, callback_timeout, *args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    831</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    832</span>             return sync(
+<span class="ansi-green-fg">--&gt; 833</span><span class="ansi-red-fg">                 </span>self<span class="ansi-blue-fg">.</span>loop<span class="ansi-blue-fg">,</span> func<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> callback_timeout<span class="ansi-blue-fg">=</span>callback_timeout<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs
+<span class="ansi-green-intense-fg ansi-bold">    834</span>             )
+<span class="ansi-green-intense-fg ansi-bold">    835</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/distributed/utils.py</span> in <span class="ansi-cyan-fg">sync</span><span class="ansi-blue-fg">(loop, func, callback_timeout, *args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    338</span>     <span class="ansi-green-fg">if</span> error<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    339</span>         typ<span class="ansi-blue-fg">,</span> exc<span class="ansi-blue-fg">,</span> tb <span class="ansi-blue-fg">=</span> error<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-fg">--&gt; 340</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">raise</span> exc<span class="ansi-blue-fg">.</span>with_traceback<span class="ansi-blue-fg">(</span>tb<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    341</span>     <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    342</span>         <span class="ansi-green-fg">return</span> result<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/distributed/utils.py</span> in <span class="ansi-cyan-fg">f</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">    322</span>             <span class="ansi-green-fg">if</span> callback_timeout <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    323</span>                 future <span class="ansi-blue-fg">=</span> asyncio<span class="ansi-blue-fg">.</span>wait_for<span class="ansi-blue-fg">(</span>future<span class="ansi-blue-fg">,</span> callback_timeout<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 324</span><span class="ansi-red-fg">             </span>result<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">yield</span> future
+<span class="ansi-green-intense-fg ansi-bold">    325</span>         <span class="ansi-green-fg">except</span> Exception <span class="ansi-green-fg">as</span> exc<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    326</span>             error<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">=</span> sys<span class="ansi-blue-fg">.</span>exc_info<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/tornado/gen.py</span> in <span class="ansi-cyan-fg">run</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">    760</span>
+<span class="ansi-green-intense-fg ansi-bold">    761</span>                     <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 762</span><span class="ansi-red-fg">                         </span>value <span class="ansi-blue-fg">=</span> future<span class="ansi-blue-fg">.</span>result<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    763</span>                     <span class="ansi-green-fg">except</span> Exception<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    764</span>                         exc_info <span class="ansi-blue-fg">=</span> sys<span class="ansi-blue-fg">.</span>exc_info<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/distributed/client.py</span> in <span class="ansi-cyan-fg">_gather</span><span class="ansi-blue-fg">(self, futures, errors, direct, local_worker)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1849</span>                             exc <span class="ansi-blue-fg">=</span> CancelledError<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1850</span>                         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 1851</span><span class="ansi-red-fg">                             </span><span class="ansi-green-fg">raise</span> exception<span class="ansi-blue-fg">.</span>with_traceback<span class="ansi-blue-fg">(</span>traceback<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1852</span>                         <span class="ansi-green-fg">raise</span> exc
+<span class="ansi-green-intense-fg ansi-bold">   1853</span>                     <span class="ansi-green-fg">if</span> errors <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">&#34;skip&#34;</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-red-fg">KilledWorker</span>: (&#34;(&#39;read-csv-head-1-10-read-csv-3a29deea2d090d453bbd7546f1100890&#39;, 0)&#34;, &lt;Worker &#39;tcp://10.0.0.11:44995&#39;, name: dask-9283e987-worker-10038e07, memory: 0, processing: 1&gt;)
+</pre></div></div>
+</div>
+<p>You will see that I added some code to explicitly name the types of some columns (the flags). As you may recall from our other lesson, dask isn’t great at type inference, and will otherwise assume those are <code class="docutils literal notranslate"><span class="pre">float</span></code> columns instead of <code class="docutils literal notranslate"><span class="pre">objects</span></code>. Without that code, I get this error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/azureml-envs/azureml_c6bd17107f471892400d23146f291775/lib/python3.6/site-packages/dask/dataframe/io/csv.py in coerce_dtypes()
+
+ValueError: Mismatched dtypes found in `pd.read_csv`/`pd.read_table`.
+
++---------+--------+----------+
+| Column  | Found  | Expected |
++---------+--------+----------+
+| qflag1  | object | float64  |
+| qflag10 | object | float64  |
+| qflag11 | object | float64  |
+| qflag12 | object | float64  |
+| qflag13 | object | float64  |
+| qflag14 | object | float64  |
+| qflag15 | object | float64  |
+| qflag16 | object | float64  |
+| qflag17 | object | float64  |
+| qflag18 | object | float64  |
+| qflag19 | object | float64  |
+| qflag2  | object | float64  |
+| qflag20 | object | float64  |
+</pre></div>
+</div>
+<p>Let’s start by asking <code class="docutils literal notranslate"><span class="pre">dask</span></code> to go through this entire dataset and just pull out data for the station near my home in Colorado, and calculating the average daily max-temp for each month:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">temps</span> <span class="o">=</span> <span class="n">temps</span><span class="p">[</span><span class="n">temps</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;USC00050848&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>Now as you may recall, <code class="docutils literal notranslate"><span class="pre">dask</span></code> hasn’t actually run the code above – it’s just making a plan and waiting till I run <code class="docutils literal notranslate"><span class="pre">.compute()</span></code> to actually execute, so if I check on <code class="docutils literal notranslate"><span class="pre">temps</span></code>, I’ll see:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">temps</span>
+</pre></div>
+</div>
+</div>
+<p>Now since we’ll most want to work with this data from one station, we can cache this subset dataframe with <code class="docutils literal notranslate"><span class="pre">c.persist(temps)</span></code> so <code class="docutils literal notranslate"><span class="pre">dask</span></code> won’t have to re-load the original data next time we run <code class="docutils literal notranslate"><span class="pre">.compute()</span></code>. <a class="reference external" href="https://docs.dask.org/en/latest/dataframe-best-practices.html#persist-intelligently">More on caching here</a>, as well as other <a class="reference external" href="https://docs.dask.org/en/latest/dataframe-best-practices.html#best-practices">dask best practices</a>. Make sure to not just run <code class="docutils literal notranslate"><span class="pre">c.persists(temps)</span></code> but
+rather <code class="docutils literal notranslate"><span class="pre">temps</span> <span class="pre">=</span> <span class="pre">c.persist(temps)</span></code>.</p>
+<p>Finally, one other note: this dataset is actually pretty small for Cloud computing, and since most of what we’re doing is reading in data and filtering it, it involves a lot of moving data around. As a result it’d be much faster on a single really large VM (which doesn’t need to use network connections to pass around data). But I wanted an example I could run relatively quickly and easily. :)</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">temps</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">persist</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>OK, now we have our subset, and we can calculate what we want. Note that in reality, the data for this one station is actually easily small enough to put on my own computer, so I could have just run <code class="docutils literal notranslate"><span class="pre">data_on_own_comp</span> <span class="pre">=</span> <span class="pre">temps.compute()</span></code> above and moved the final dataset to my personal computer. Indeed, as you may recall from our <a class="reference internal" href="parallelism.html"><span class="doc">previous lesson on parallelism</span></a>, if you don’t have to use distributed computing, you probably don’t want to! Even the authors of <code class="docutils literal notranslate"><span class="pre">dask</span></code> <a class="reference external" href="https://docs.dask.org/en/latest/dataframe-best-practices.html#use-pandas">are
+quick to remind users</a>: “For data that fits into RAM, Pandas can often be faster and easier to use than Dask DataFrame. While ‘Big Data’ tools can be exciting, they are almost always worse than normal data tools while those remain appropriate.”</p>
+<p>But let’s carry on with this on the cluster for practice.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">temps</span><span class="p">[</span><span class="s2">&quot;value31&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Now the really cool thing: if we use the link for our dashboard (<code class="docutils literal notranslate"><span class="pre">cluster.dashboard_link</span></code>) we got when we created our dask cluster, we can see our cluster working (note the exact number of processes will vary depending on how you specified your cluster above. This pick comes from a 16 core cluster):</p>
+<p><img alt="azure_dask_scalingup" src="_images/azure_dask_scalingup.png" /></p>
+<p>So let’s replace those with missing, calculate averages across all the days in each month, and also convert from 1/10th of a degree Centigrade to Centigrade units:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">):</span>
+    <span class="n">temps</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;value</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temps</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;value</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">-</span><span class="mi">9999</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+
+<span class="n">value_columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">temps</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;value.*&quot;</span><span class="p">,</span> <span class="s2">&quot;value.*&quot;</span><span class="p">)]</span>
+<span class="n">temps</span><span class="p">[</span><span class="s2">&quot;avg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temps</span><span class="p">[</span><span class="n">value_columns</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
+<span class="n">temps</span><span class="p">[</span><span class="s2">&quot;avg_C&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temps</span><span class="p">[</span><span class="s2">&quot;avg&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">10</span>
+</pre></div>
+</div>
+</div>
+<p>Now finally we can collect our results on our personal computer, create a “time” variable that uses years and months for plotting, and plot our temperatures!</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">temps</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temps</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">temps</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">12</span>
+<span class="n">temps</span> <span class="o">=</span> <span class="n">temps</span><span class="p">[[</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;avg_C&quot;</span><span class="p">]]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">temps</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">plotnine</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="p">(</span>
+    <span class="n">ggplot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;avg_C&quot;</span><span class="p">))</span>
+    <span class="o">+</span> <span class="n">geom_line</span><span class="p">()</span>
+    <span class="o">+</span> <span class="n">geom_smooth</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;lowess&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+    <span class="o">+</span> <span class="n">ylab</span><span class="p">(</span><span class="s2">&quot;Monthly Average of Daily Highs (C)&quot;</span><span class="p">)</span>
+    <span class="o">+</span> <span class="n">xlab</span><span class="p">(</span><span class="s2">&quot;Year&quot;</span><span class="p">)</span>
+    <span class="o">+</span> <span class="n">ggtitle</span><span class="p">(</span><span class="s2">&quot;Temperatures in Boulder, CO&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>And that, my friends, is global warming.</p>
+</div>
+<div class="section" id="Done-with-your-cluster?">
+<h2>Done with your cluster?<a class="headerlink" href="#Done-with-your-cluster?" title="Permalink to this headline">¶</a></h2>
+<p>You have two options: you can shut it down manually with the method <code class="docutils literal notranslate"><span class="pre">.close()</span></code> on your cluster object.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">amlcluster</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>(For some reason when I get this I get the error above, but I can confirm on the Azure cite my cluster has been deleted.)</p>
+</div>
+<div class="section" id="Extensions-and-Fun-Resources">
+<h2>Extensions and Fun Resources<a class="headerlink" href="#Extensions-and-Fun-Resources" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dask-ml</span></code>: As a reminder, if you now want to do some machine learning, you can <a class="reference external" href="https://ml.dask.org/">use dask-ml on this system</a>, which does the same thing for <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> that regular <code class="docutils literal notranslate"><span class="pre">dask</span></code> does for <code class="docutils literal notranslate"><span class="pre">pandas</span></code>.</p></li>
+<li><p>Parallelize your own code with <code class="docutils literal notranslate"><span class="pre">delayed</span></code>: Just a reminder that while we’ve been using <code class="docutils literal notranslate"><span class="pre">dask</span></code> to emulate pandas in a distributed setting, it’s also a framework you can use for distributing your own code! <cite>Check out the ``delayed`</cite> &lt;<a class="reference external" href="https://docs.dask.org/en/latest/delayed.html">https://docs.dask.org/en/latest/delayed.html</a>&gt;`__ method to see how <code class="docutils literal notranslate"><span class="pre">dask</span></code> can manage your distributed workload.</p></li>
+<li><p>Curious how <code class="docutils literal notranslate"><span class="pre">dask</span></code> compares to other tools for distributed computing? Here’s a <a class="reference external" href="https://docs.dask.org/en/latest/spark.html">conceptual comparison to Spark</a>, and here’s a <a class="reference external" href="https://arxiv.org/abs/1907.13030">case study comparison of performance</a>. Comparisons will usually depend a lot on the specifics of the work being done, but at least in this case, <code class="docutils literal notranslate"><span class="pre">dask</span></code> was a little faster than Spark. In the interview noted below, they also cite an example of <code class="docutils literal notranslate"><span class="pre">dask</span></code> beating Spark by 40x in a
+project they worked on. And here’s <a class="reference external" href="https://www.saturncloud.io/s/random-forest-on-gpus-2000x-faster-than-apache-spark/">one report of a 2000x speed up doing random forests</a> moving from Spark to dask. As they say, mileage may vary, but I think it’s safe to say you aren’t giving anything up performance wise by using <code class="docutils literal notranslate"><span class="pre">dask</span></code> and its familiar syntax instead of Spark.</p></li>
+<li><p>Interested in using <code class="docutils literal notranslate"><span class="pre">dask</span></code> in your company and want help? There’s a great new company created by the founders of <code class="docutils literal notranslate"><span class="pre">dask</span></code> to provide enterprise support for <code class="docutils literal notranslate"><span class="pre">dask</span></code> <a class="reference external" href="https://coiled.io/">called coiled</a> (No, I have no affiliation with them, I just think these companies that try to offer paid support services to businesses to help them move from closed source software to open source are a great way to help make open source software better). You can also hear a fun interview with the
+founders about <a class="reference external" href="https://talkpython.fm/episodes/show/285/dask-as-a-platform-service-with-coiled">both dask and coiled here</a>.</p></li>
+<li><p>The folks from coiled have also compiled a <a class="reference external" href="https://coiled.io/videos/">great collection of videos and tutorials about dask and Python at scale here</a></p></li>
+<li><p>Working with GPUs? There’s a project to offer the kind of CPU parallelization we get from <code class="docutils literal notranslate"><span class="pre">dask</span></code> for GPUs called <a class="reference external" href="https://docs.rapids.ai/api/cudf/stable/dask-cudf.html">dask-cudf</a> (part of the <a class="reference external" href="https://rapids.ai/index.html">RAPIDS project</a>. The project is young but growing quickly. My guess, though, is that those libraries will become the infrastructure for updates to tools like <code class="docutils literal notranslate"><span class="pre">dask-ml</span></code> rather than something most applied people need to play with. But putting it here as an FYI!</p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Practical DS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_schedule.html">CLASS SCHEDULE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning_track.html">LEARNING TOPICS</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup_environment.html">Setting Up Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_python_packages.html">Managing Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_dataframes.html">Pandas 2: DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part2.html">Plotting, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cleaning_editingvalues.html">Cleaning: Editing Values</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyter.html">Jupyter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_and_github.html">Git and Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pr_review.html">Reviewing Code on Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CLOUD</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_storage_on_azure.html">Storage on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Dask on Azure Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#NOTE:-DASK-CLOUDPROVIDER-IS-IN-A-STATE-OF-FLUX,-AND-SO-THE-CODE-BELOW-DOESN&quot;T-ACTUALLY-WORK-AT-THE-MOMENT…-CHECK-BACK-IN-A-FEW-WEEKS?---Nick,-Dec-2020.">NOTE: DASK-CLOUDPROVIDER IS IN A STATE OF FLUX, AND SO THE CODE BELOW DOESN”T ACTUALLY WORK AT THE MOMENT… CHECK BACK IN A FEW WEEKS? - Nick, Dec 2020.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Starting-a-Dask-Cluster">Starting a Dask Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Using-Your-Cluster">Using Your Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Accessing-Storage">Accessing Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Done-with-your-cluster?">Done with your cluster?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Extensions-and-Fun-Resources">Extensions and Fun Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
+</ul>
+<p class="caption"><span class="caption-text">SKILLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_big_data.html">What is Big Data?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="big_data_strategies.html">Working with Big Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backwards_design.html">Backwards Design</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="buying_datascience_computer.html">Buying a Data Science Computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="cloud_cluster_on_azure.html" title="previous chapter">Setting Up a Cluster on Azure for Data Science</a></li>
+      <li>Next: <a href="cloud_azure_cli.html" title="next chapter">Azure from the Command Line</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick Eubank.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/cloud_dask.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>
