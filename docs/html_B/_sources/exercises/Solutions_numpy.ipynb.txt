@@ -1,0 +1,1019 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Numpy Exercises\n",
+    "\n",
+    "**Note:** Most students taking this class are Duke MIDS students who have worked with `numpy` previously. As a result, these exercises are very light on basic pandas Series and DataFrame manipulations. If you are new to `numpy`, I would advise looking into some addition practice opportunities with `numpy`, as discussed in the [Advice for Non-MIDS Students](../not_a_mids_student.ipynb) page. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Exercise 1\n",
+    "\n",
+    "First, lets make a common array to work with. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[ 80842, 333008, 202553, 140037,  81969],\n",
+       "       [ 63857,  42105, 261540, 481981, 176739],\n",
+       "       [489984, 326386, 110795, 394863,  25024],\n",
+       "       [ 38317,  49982, 408830, 485118,  16119],\n",
+       "       [407675, 231729, 265455, 109413, 103399],\n",
+       "       [174677, 343356, 301717, 224120, 401101],\n",
+       "       [140473, 254634, 112262,  25063, 108262],\n",
+       "       [375059, 406983, 208947, 115641, 296685],\n",
+       "       [444899, 129585, 171318, 313094, 425041],\n",
+       "       [188411, 335140, 141681,  59641, 211420],\n",
+       "       [287650,   8973, 477425, 382803, 465168],\n",
+       "       [  3975,  32213, 160603, 275485, 388234],\n",
+       "       [246225,  56174, 244097,   9350, 496966],\n",
+       "       [225516, 273338,  73335, 283013, 212813],\n",
+       "       [ 38175, 282399, 318413, 337639, 379802],\n",
+       "       [198049, 101115, 419547, 260219, 325793],\n",
+       "       [148593, 425024, 348570, 117968, 107007],\n",
+       "       [ 52547, 180346, 178760, 305186, 262153],\n",
+       "       [ 11835, 449971, 494184, 472031, 353049],\n",
+       "       [476442,  35455, 191553, 384154,  29917]])"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import numpy as np\n",
+    "np.random.seed(21) # This guarantees the code will generate the same set of random numbers whenever executed\n",
+    "random_integers = np.random.randint(1,high=500000, size=(20, 5))\n",
+    "random_integers"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Exercise 2 \n",
+    "\n",
+    "What is the average value of the second column (to two decimal places)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "214895.8"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# The right answer:\n",
+    "avg = np.mean(random_integers[:, 1])\n",
+    "round(avg, ndigits=2)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "254579.25"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# But many people will forget about zero indexing and get:\n",
+    "avg = np.mean(random_integers[:, 2])\n",
+    "round(avg, ndigits=2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Exercise 3 \n",
+    "\n",
+    "What is the average value of the first 5 rows of the third and fourth columns?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "286058.5"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "avg = np.mean(random_integers[0:5, 2:4])\n",
+    "round(avg, ndigits=2)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "367843.75"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# But again, an unsurpriging answer would be:\n",
+    "avg = np.mean(random_integers[1:5, 3:4])\n",
+    "round(avg, ndigits=2)\n",
+    "\n",
+    "# Which you get if you forget about zero indexing\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Exercise 4\n",
+    "\n",
+    "**Close Python**. On a piece of paper, write down the final result of the following code:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[[1 2 3]\n",
+      " [4 5 6]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "first_matrix = np.array([[1, 2, 3], [4, 5, 6]])\n",
+    "print(first_matrix)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[1 2 3]\n"
+     ]
+    }
+   ],
+   "source": [
+    "second_matrix = np.array([1, 2, 3])\n",
+    "print(second_matrix)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "```python\n",
+    "first_matrix + second_matrix\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[2, 4, 6],\n",
+       "       [5, 7, 9]])"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "first_matrix + second_matrix"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Execise 5\n",
+    "\n",
+    "**Keep Python Closed!** Write down the final result of the following code: "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([2, 4, 6])"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_vector = np.array([1, 2, 3, 4, 5, 6])\n",
+    "selection = my_vector % 2 == 0\n",
+    "my_vector[selection]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Exercise 6\n",
+    "\n",
+    "Now open python and check your answers to Exercises 4 and 5. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Working with Views\n",
+    "\n",
+    "One of the nuances of `numpy` can can easily lead to problems is that when one takes a slice of an array, one does not actually get a new array; rather, one is given a \"view\" on the original array, meaning they are sharing the same underlying data.\n",
+    "\n",
+    "This is similar to the idea that variables are just pointers, and that different variables may point to the same object (discussed in the [Python v. R / Variables as Pointers tutorial]( [../python_v_r.ipynb]).) But it is slightly different in that if two variables both point to the same `set`, where the two variables behave the same way. But one variable points to an array, and a second variable is a *slice* of that array, they are both accessing the same data in the same array, but they present it differently. For example: "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([1, 2, 3, 4])"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import numpy as np\n",
+    "my_array = np.array([1, 2, 3, 4])\n",
+    "my_array"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([2, 3])"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_slice = my_array[1:3]\n",
+    "my_slice"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Since `my_array` and `my_slice` are both pointing to the same array, changes to one will propagate to the other. For example, if I modify the `2` entry in `my_slice`, it will appear in `my_array`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([-1,  3])"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_slice[0] = -1\n",
+    "my_slice"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([ 1, -1,  3,  4])"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_array"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "But while `my_array` and `my_slice` are accessing the same underlying data, they are indexed differently. We changed the first item (index `0` in `my_slice`, but that change impacted the entry in the second position of `my_array` (index `1`):"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "-1"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_array[1]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "It is also worth emphasizing at this point that while slices will get you a view of an array, **if you slice a Python list, you get a new object.** This behavior is entirely limited to `numpy`. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['a change', 2]"
+      ]
+     },
+     "execution_count": 15,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "x = [1, 2, 3]\n",
+    "y = x[0:2]\n",
+    "y[0] = \"a change\"\n",
+    "y"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[1, 2, 3]"
+      ]
+     },
+     "execution_count": 16,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "x"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## When do you get a view, and when do you get a copy?\n",
+    "\n",
+    "OK, now the *really* annoying thing: when do I get a view, and when do I get a copy?\n",
+    "\n",
+    "Generally speaking: \n",
+    "\n",
+    "- **you get a view if you do a plain, basic slice of an array,** and \n",
+    "- **the view remains a view if you edit it by modifying it using basic indexing (i.e. you use `[]` on the left side of the assignment operator).** \n",
+    "\n",
+    "Outside of those two behaviors, you will usually get a copy. \n",
+    "\n",
+    "So, for example, this slice will get you a view:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([ 1, -1,  3])"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_array = np.array([1, 2, 3])\n",
+    "my_slice = my_array[1:3]\n",
+    "my_slice[0] = -1\n",
+    "my_array"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "But if you use \"fancy indexing\" (where you pass a list when making your slice), you will NOT get a view:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([1, 2, 3])"
+      ]
+     },
+     "execution_count": 18,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_array = np.array([1, 2, 3])\n",
+    "my_slice = my_array[[1,2]]\n",
+    "my_slice[0] = -1\n",
+    "my_array"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Similarly, if you edit using basic indexing (like we did above), those edits will propogate from the slice back to the originally array (or the other way around). But if you modify a slice without using basic indexing, you get a copy, so changes won't propagate:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([4, 6])"
+      ]
+     },
+     "execution_count": 19,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_array = np.array([1, 2, 3])\n",
+    "my_slice = my_array[1:3]\n",
+    "my_slice = my_slice * 2\n",
+    "my_slice"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([1, 2, 3])"
+      ]
+     },
+     "execution_count": 20,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_array"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "(If you want to do a full-array manipulation and preserve your view, always use square brackets on the left side of the assignment operator (`=`):"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([4, 6])"
+      ]
+     },
+     "execution_count": 21,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_array = np.array([1, 2, 3])\n",
+    "my_slice = my_array[1:3]\n",
+    "my_slice[:] = my_slice * 2\n",
+    "my_slice"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([1, 4, 6])"
+      ]
+     },
+     "execution_count": 22,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_array"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## How to Manage Views In Your Work"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Views exist because they are more memory efficient (a view doesn't require making a new copy of data) and faster (again, no copying required). And if you're doing super-computer simulations where every milisecond counts, or working with truely huge datasets, this is important. But for most data scientists, I tend to see it as a a trap waiting to get you in trouble. \n",
+    "\n",
+    "This is especially since there's no reliable way to check if two arrays are views of one another except by modifying one and seeing if the other changes. (You may find people saying otherwise; [don't trust them!](Exercise_numpy.ipynb#Note:-Don't-trust-my_array.base)). The way we use `is` in regular Python to see if two variables point at the same object doesn't work for numpy arrays. Thus its on you to remember the rules. \n",
+    "\n",
+    "**My advice on copies:** UNLESS YOU REALLY NEED A VIEW AND ARE BEING SUPER CAREFUL: don't use views for anything but *looking* at data. If you ever want to *modify* or *work with* a sub-array, just make a copy to be safe. Computers are fast enough and ram is plentiful enough that for most applications, it's almost never a problem. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Exercise 7\n",
+    "\n",
+    "**Close your computer / laptop**. Let's try and work out a few problems in our heads to test our understanding of `numpy` views. Let's start with the following array:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[[1 2 3]\n",
+      " [4 5 6]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "my_array = np.array([[1, 2, 3], [4, 5, 6]])\n",
+    "print(my_array)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now, on a piece of paper write down the value of `my_slice = my_array[:, 1:3]`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[[2 3]\n",
+      " [5 6]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "my_slice = my_array[:, 1:3]\n",
+    "print(my_slice)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Exercise 8\n",
+    "\n",
+    "Now suppose we run the code `my_array[:, :] = my_array * 2`. Now what does `my_slice` look like?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[ 4,  6],\n",
+       "       [10, 12]])"
+      ]
+     },
+     "execution_count": 25,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_array[:, :] = my_array * 2\n",
+    "my_slice"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Exercise 9 \n",
+    "\n",
+    "Now suppose we run `my_array = my_array * 2`. What does `my_slice` look like?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[ 4,  6],\n",
+       "       [10, 12]])"
+      ]
+     },
+     "execution_count": 26,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_array = my_array * 2\n",
+    "my_slice"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Exercise 10\n",
+    "\n",
+    "Stop, open Python, and try running these examples. Were your predictions correct? If not, why not?"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Exercise 11\n",
+    "\n",
+    "OK, let's close Python again and go back to pen and paper. Let's also reset `my_array` and start over with the following code:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[[1 2 3]\n",
+      " [4 5 6]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "my_array = np.array([[1, 2, 3], [4, 5, 6]])\n",
+    "print(my_array)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[[2 3]\n",
+      " [5 6]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "my_slice = my_array[:, 1:3].copy()\n",
+    "print(my_slice)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now suppose we run the following code: `my_array[:, :] = my_array * 2`. What does `my_slice` look like?"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Note: Don't trust my_array.base\n",
+    "\n",
+    "You will find some tutorials online that suggest you can test if one array is a view of another with the code `my_slice.base is my_array`. The problem is... this doesn't always work. It does sometimes: "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 29,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_array = np.array([1, 2, 3])\n",
+    "my_slice = my_array[1:3]\n",
+    "my_slice.base is my_array"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "But not always. Here's an example where `my_array` and `my_slice` point to the same data, but `my_slice.base is my_array` returns false. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "False"
+      ]
+     },
+     "execution_count": 30,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_array = np.array([1, 2, 3])\n",
+    "my_array = my_array[1:4]\n",
+    "my_slice = my_array[1:3]\n",
+    "my_slice.base is my_array"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 31,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([3])"
+      ]
+     },
+     "execution_count": 31,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_slice"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 32,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([2, 3])"
+      ]
+     },
+     "execution_count": 32,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_array"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 33,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([ 2, -1])"
+      ]
+     },
+     "execution_count": 33,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# But a change to `my_slice` still impacts `my_array`.\n",
+    "my_slice[0] = -1\n",
+    "my_array"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "(The reason is that the `.base` property can be defined recursively. In this case, the slicing of `my_array` made `my_array` a view on data you can no longer access, so they actually do both point to the same data, but that data is not `my_array`, it's `my_array.base`. So:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 34,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 34,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_slice.base is my_array.base"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "In practice, you can get infinite chains of `.base.base...`. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "And yes, if this is making your head hurt, that's because you're doing it right. :)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

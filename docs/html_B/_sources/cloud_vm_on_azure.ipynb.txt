@@ -1,0 +1,602 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Renting a VM for Data Science on Azure"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "*Most* of the time you turn to the cloud for data science, you'll want to rent a **single (giant) virtual machine** rather than try to setup a cluster. Single virtual machines can have as many 128 cores or 4 V100 GPUs as of late 2020, and hundreds of GB of RAM. Moreover, unlike a cluster, the way you write code to work on a big virtual machines is basically the same as how you'd write code on your personal computer. So while we'll talk about clusters below (because *sometimes* you need them), remember: YOUR LIFE WILL ALMOST ALWYS BE EASIER IF YOU JUST GET ONE VIRTUAL MACHINE!\n",
+    "\n",
+    "There are two ways to do this on Azure: \n",
+    "\n",
+    "- you can just set-up a basic Virtual Machine, or \n",
+    "- you can use the Azure Machine Learning (AzureML) environment to get a Virtual Machine that's pre-configured for doing Data Science. \n",
+    "\n",
+    "Because as a data scientist you probably just want your VM to work, we're gonna focus on setting up a *pre-configured* VM through AzureML. These machines come with R, Python, and Jupyter installed, and you can even open remote RStudio, Jupyter Notebook, or Jupyter Lab sessions with a single click. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 1. Create a Machine Learning Workspace\n",
+    "\n",
+    "All work within the AzureML ecosystem happens in a *Workspace*, which you can think of as being like a github repo for your project, able to keep everything associated with a project in one place. \n",
+    "\n",
+    "So setup a Workspace using the [directions here](https://docs.microsoft.com/en-us/azure/machine-learning/how-to-manage-workspace), with a few added notes from me:\n",
+    "\n",
+    "- You're gonna have to name a LOT of things. Like a crazy number. It's insane how many groups within groups within groups exist in Azure. So for everything I just recommend [your initials][name of thing you're naming]. I use my Duke ID (`nce8`), so I've named my Workspace `nce8ws`. Then when I name a resource group, I'd call it `nce8rg`. Later when you're comfortable with Azure, you can get fancy, but for now this will keep you sane. \n",
+    "    - Note that some services allow underscores, some allow dashes, and some don't allow either, so... if you can avoid them, you'll be able to keep a more consistent naming scheme. \n",
+    "- At the stage it says \"pick a Resource Group if you have one or create a new name\", you don't have one, so make a new name. See the note above. \n",
+    "\n",
+    "Once you create a Workspace, you'll be brought to a Workspace page. As of October 2020, Microsoft is in the process of migrating from one interface to another, so if you see this in the middle of your landing page:\n",
+    "\n",
+    "![azure_new_mlstudio](images/azure_new_mlstudio.png)\n",
+    "\n",
+    "Select \"Launch Now\", and you should end up on a page whose URL starts with `ml.azure.com`, and which looks like this:\n",
+    "\n",
+    "![azure_ml_studio](images/azure_ml_studio.png)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 2. Rent Your VM\n",
+    "\n",
+    "A Virtual Machine is an example of a \"Compute Resource\"  -- something you're renting from Azure that actually does computations. Below we'll talk about renting a cluster of lots of computers, but for now let's start with a single VM. \n",
+    "\n",
+    "To setup your VM, go into your ML workspace (URL starts with `ml.azure.com`) and click on `Compute` towards the bottom of the menu on the left. \n",
+    "\n",
+    "The first option for adding compute is `Compute Instances` -- this is a simple VM. So let's set one up! Click `Create`, pick `CPU` as your virtual machine type for now (you can also pick a GPU-centric VM if you want!), then check out all the options for `Virtual machine sizes`. As you will see, you can get computers with up to 72 individual cores, or up to 256 gb RAM! These are *single machines* with all these resources! Amazing, right? Note some may be greyed out to prevent you from overspending -- you can get those, just takes some extra permissions so Azure is sure you can afford it. \n",
+    "\n",
+    "The only catch to be aware of is the cost, which is also in that dropdown -- if you do rent a single machine with 72 cores, it'll cost you about 3 dollars an hour. If you just have a day of work you really need, this is a great deal; if you plan to be running simulations for a week... well, that's pretty darn expensive (though still way less than buying your own dedicated computer!). \n",
+    "\n",
+    "To try things out, let's get a basic model -- I'm gonna start a `Standard_D11_v2` for 18 cents an hour.\n",
+    "\n",
+    "Now once you have a VM, you can connect in two ways: you can use JupyterLab, RStudio, or Jupyter; or you can connect via the commandline by enabling SSH (which you will see is an option here). Enabling SSH requires sharing the public key from your personal computer, which takes a little work, so lets skip it for now and just leave that turned off. If/when you want that option, you can find directions for setting up [SSH keys here](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys#provide-an-ssh-public-key-when-deploying-a-vm). The other ways to connect will become available when the machine is up andr unning. Click `Create`, and go grab a cup of coffee while your machine gets setup! (You'll have to wait about 5-7 minutes for it to get going). \n",
+    "\n",
+    "Once it's running, click on the name of your VM in your list of compute resources, and then click on the `Run` tab. There, on the right side, you'll see a series of links to Jupyter, JupyterLab, RSTudio, and (if you enabled it) ssh:\n",
+    "\n",
+    "![azure_vm_services](images/azure_vm_services.png)\n",
+    "\n",
+    "Just click on those links and the service you requested for the VM will pop up! TA-DA! You're running Jupyter on the cloud!\n",
+    "\n",
+    "(Because we're in AzureML, the VMs offered are all running the linux operating system and come with standard Data Science software installed. If you want a different kind of VM -- say, a Windows machine, or a linux machine without software pre-installed -- go back to your [Azure Portal page](https://portal.azure.com/#home), and select \"Virtual Machines.\" There you can completely control the configuration of your VM, and even set up a Remote Desktop Connection if you want to use a regular Windows experience with full graphical user interface.)\n",
+    "\n",
+    "**Now when you're done playing with this VM, *SHUT IT DOWN!* As long as it's running, you're paying for it (it takes a way for the bill to show up in your expenditures). The clusters we'll use later are able to turn themselves off if they're idle, but for this dedicated VM, you have to turn it off yourself.**\n",
+    "\n",
+    "If you want to go the VM route, you may also be interested in how you can mount your Cloud storage just like another volume on your computer instead of accessing it through fancy Python libraries. If so, be sure to check out the later lesson on [Azure Storage configurations](cloud_azurestorage.ipynb)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 3. Connect Your Storage\n",
+    "\n",
+    "Congratulations -- you're almost there! You have a computer that should feel extremely familiar but is SUPER powerful, and if you did the [previous exercise](cloud_storage_on_azure.ipynb), you have a place to get and put data! The only thing left to do is figure out how to move data back and forth from storage.\n",
+    "\n",
+    "There are basically two ways to do this: you can do it through `dask` (recommended if you plan to use `dask` anyway), or in a more direct way with `azure-storage-blob`."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### With Dask"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "To access tabular data on Azure storage with `dask`, start by running:\n",
+    "\n",
+    "- `pip install \"dask_cloudprovider[all]==0.4.1\"`\n",
+    "- `pip install adlfs`\n",
+    "- `pip install distributed --upgrade`\n",
+    "\n",
+    "Then you just need your Storage Account name and Access Key, which you can get by going to your Azure Portal, then your Storage Account, and then clicking on \"Access Keys\" on the left menu. \n",
+    "\n",
+    "**NOTE YOUR STORAGE ACCOUNT NAME AND KEY GIVES ANYONE ACCESS TO YOUR STORAGE** so don't put the string directly in your code and then commit it to github!!! Instead, save it to a plaintext file somewhere and then in your code read that string, like I do below. \n",
+    "\n",
+    "The syntax is:\n",
+    "\n",
+    "```\n",
+    "import dask.dataframe as dd\n",
+    "\n",
+    "storage_options={'account_name': ACCOUNT_NAME, 'account_key': ACCOUNT_KEY}\n",
+    "\n",
+    "ddf = dd.read_csv('az://{CONTAINER}/{FOLDER}/*.csv', storage_options=storage_options)\n",
+    "ddf = dd.read_parquet('az://{CONTAINER}/folder.parquet', storage_options=storage_options)\n",
+    "```\n",
+    "\n",
+    "But since I don't want you to see all my secret codes, I'm gonna load my information from a file. You can do this, but you can also put them in your code *if your code isn't public!*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "application/javascript": [
+       "\n",
+       "            setTimeout(function() {\n",
+       "                var nbb_cell_id = 1;\n",
+       "                var nbb_unformatted_code = \"%load_ext nb_black\\n\\n# Dask connects with a protocl\\nimport json\\n\\nwith open(\\\"/users/nick/azure_secrets/azure_sa_name_and_key.json\\\") as f:\\n    storage_options = json.load(f)\";\n",
+       "                var nbb_formatted_code = \"%load_ext nb_black\\n\\n# Dask connects with a protocl\\nimport json\\n\\nwith open(\\\"/users/nick/azure_secrets/azure_sa_name_and_key.json\\\") as f:\\n    storage_options = json.load(f)\";\n",
+       "                var nbb_cells = Jupyter.notebook.get_cells();\n",
+       "                for (var i = 0; i < nbb_cells.length; ++i) {\n",
+       "                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {\n",
+       "                        if (nbb_cells[i].get_text() == nbb_unformatted_code) {\n",
+       "                             nbb_cells[i].set_text(nbb_formatted_code);\n",
+       "                        }\n",
+       "                        break;\n",
+       "                    }\n",
+       "                }\n",
+       "            }, 500);\n",
+       "            "
+      ],
+      "text/plain": [
+       "<IPython.core.display.Javascript object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "%load_ext nb_black\n",
+    "\n",
+    "# Dask connects with a protocl\n",
+    "import json\n",
+    "\n",
+    "with open(\"/users/nick/azure_secrets/azure_sa_name_and_key.json\") as f:\n",
+    "    storage_options = json.load(f)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>id</th>\n",
+       "      <th>year</th>\n",
+       "      <th>month</th>\n",
+       "      <th>element</th>\n",
+       "      <th>value1</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>ACW00011604</td>\n",
+       "      <td>1949</td>\n",
+       "      <td>1</td>\n",
+       "      <td>TMAX</td>\n",
+       "      <td>289</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>ACW00011604</td>\n",
+       "      <td>1949</td>\n",
+       "      <td>2</td>\n",
+       "      <td>TMAX</td>\n",
+       "      <td>267</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>ACW00011604</td>\n",
+       "      <td>1949</td>\n",
+       "      <td>3</td>\n",
+       "      <td>TMAX</td>\n",
+       "      <td>272</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>ACW00011604</td>\n",
+       "      <td>1949</td>\n",
+       "      <td>4</td>\n",
+       "      <td>TMAX</td>\n",
+       "      <td>278</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>ACW00011604</td>\n",
+       "      <td>1949</td>\n",
+       "      <td>5</td>\n",
+       "      <td>TMAX</td>\n",
+       "      <td>283</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "            id  year  month element  value1\n",
+       "0  ACW00011604  1949      1    TMAX     289\n",
+       "1  ACW00011604  1949      2    TMAX     267\n",
+       "2  ACW00011604  1949      3    TMAX     272\n",
+       "3  ACW00011604  1949      4    TMAX     278\n",
+       "4  ACW00011604  1949      5    TMAX     283"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    },
+    {
+     "data": {
+      "application/javascript": [
+       "\n",
+       "            setTimeout(function() {\n",
+       "                var nbb_cell_id = 2;\n",
+       "                var nbb_unformatted_code = \"import dask.dataframe as dd\\n\\ntemps = dd.read_csv(\\n    \\\"az://globaltemps/ghcnd_daily.csv\\\",\\n    storage_options=storage_options,\\n    usecols=['id', 'year', 'month', 'element', 'value1']\\n).head(100)\\ntemps.head()\";\n",
+       "                var nbb_formatted_code = \"import dask.dataframe as dd\\n\\ntemps = dd.read_csv(\\n    \\\"az://globaltemps/ghcnd_daily.csv\\\",\\n    storage_options=storage_options,\\n    usecols=[\\\"id\\\", \\\"year\\\", \\\"month\\\", \\\"element\\\", \\\"value1\\\"],\\n).head(100)\\ntemps.head()\";\n",
+       "                var nbb_cells = Jupyter.notebook.get_cells();\n",
+       "                for (var i = 0; i < nbb_cells.length; ++i) {\n",
+       "                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {\n",
+       "                        if (nbb_cells[i].get_text() == nbb_unformatted_code) {\n",
+       "                             nbb_cells[i].set_text(nbb_formatted_code);\n",
+       "                        }\n",
+       "                        break;\n",
+       "                    }\n",
+       "                }\n",
+       "            }, 500);\n",
+       "            "
+      ],
+      "text/plain": [
+       "<IPython.core.display.Javascript object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "import dask.dataframe as dd\n",
+    "\n",
+    "temps = dd.read_csv(\n",
+    "    \"az://globaltemps/ghcnd_daily.csv\",\n",
+    "    storage_options=storage_options,\n",
+    "    usecols=['id', 'year', 'month', 'element', 'value1']\n",
+    ").head(100)\n",
+    "temps.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/Users/Nick/miniconda3/lib/python3.7/site-packages/dask/dataframe/io/csv.py:807: UserWarning: Appending data to a network storage system may not work.\n",
+      "  warn(\"Appending data to a network storage system may not work.\")\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "['globaltemps/top_few_lines_of_temps.csv']"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    },
+    {
+     "data": {
+      "application/javascript": [
+       "\n",
+       "            setTimeout(function() {\n",
+       "                var nbb_cell_id = 3;\n",
+       "                var nbb_unformatted_code = \"# Now save to new blob. Note need to move back into a Dask dataframe first. \\ndask_temps = dd.from_pandas(temps, npartitions=1,)\\ndask_temps.to_csv(\\\"az://globaltemps/top_few_lines_of_temps.csv\\\",\\n             storage_options=storage_options,\\n                 single_file=True)\";\n",
+       "                var nbb_formatted_code = \"# Now save to new blob. Note need to move back into a Dask dataframe first.\\ndask_temps = dd.from_pandas(\\n    temps,\\n    npartitions=1,\\n)\\ndask_temps.to_csv(\\n    \\\"az://globaltemps/top_few_lines_of_temps.csv\\\",\\n    storage_options=storage_options,\\n    single_file=True,\\n)\";\n",
+       "                var nbb_cells = Jupyter.notebook.get_cells();\n",
+       "                for (var i = 0; i < nbb_cells.length; ++i) {\n",
+       "                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {\n",
+       "                        if (nbb_cells[i].get_text() == nbb_unformatted_code) {\n",
+       "                             nbb_cells[i].set_text(nbb_formatted_code);\n",
+       "                        }\n",
+       "                        break;\n",
+       "                    }\n",
+       "                }\n",
+       "            }, 500);\n",
+       "            "
+      ],
+      "text/plain": [
+       "<IPython.core.display.Javascript object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "# Now save to new blob. Note need to move back into a Dask dataframe first. \n",
+    "dask_temps = dd.from_pandas(temps, npartitions=1,)\n",
+    "dask_temps.to_csv(\"az://globaltemps/top_few_lines_of_temps.csv\",\n",
+    "             storage_options=storage_options,\n",
+    "                 single_file=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### With Azure Storage Library Library\n",
+    "\n",
+    "Azure publishes a storage-management library that, in addition to reading and writing data, can also create new blobs, new containers, list contents, etc. So it's a little uglier, but more flexible. You can read all about [it here](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-python), but below we'll just read a table into pandas. Note it uses the \"Connection String\" rather than your Storage Account name and Key (it's just a concatenation of the two). \n",
+    "\n",
+    "In general I'd use dask for any tabular data as it can chunk streams from Azure easily, but if you have other data on Azure (e.g. a binary file, images, etc.), the code flow below results in the Azure file being treated like a file on disk. \n",
+    "\n",
+    "1. Running `pip install azure-storage-blob`. \n",
+    "2. Navigate to the Storage Account where you put data in your last exercise in your browser. On the left hand menu, under `Settings`, select `Access Keys` and copy the first `Connection String`. This is the secret code for accessing your storage. \n",
+    "    - Again, **THIS GIVES ANYONE WITH THE STRING ACCESS TO YOUR STORAGE** so don't put the string directly in your code and then commit it to github!!! Instead, save it to a plaintext file somewhere and then in your code read that string, like I do below. \n",
+    "3. Then in Python, just import the BlobClient and you can read your data!"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "application/javascript": [
+       "\n",
+       "            setTimeout(function() {\n",
+       "                var nbb_cell_id = 4;\n",
+       "                var nbb_unformatted_code = \"from azure.storage.blob import BlobClient\\nimport pandas as pd\\n\\n# Load connection string so y'all can't see it!\\nwith open(\\\"/users/nick/azure_secrets/azure_sa_connection_string.txt\\\") as f:\\n    connection_string = f.read()\\n\\n# Connect to storage account\\nb = BlobClient.from_connection_string(connection_string, \\n                                      container_name=\\\"globaltemps\\\", \\n                                      blob_name=\\\"ghcnd_daily.csv\\\")\";\n",
+       "                var nbb_formatted_code = \"from azure.storage.blob import BlobClient\\nimport pandas as pd\\n\\n# Load connection string so y'all can't see it!\\nwith open(\\\"/users/nick/azure_secrets/azure_sa_connection_string.txt\\\") as f:\\n    connection_string = f.read()\\n\\n# Connect to storage account\\nb = BlobClient.from_connection_string(\\n    connection_string, container_name=\\\"globaltemps\\\", blob_name=\\\"ghcnd_daily.csv\\\"\\n)\";\n",
+       "                var nbb_cells = Jupyter.notebook.get_cells();\n",
+       "                for (var i = 0; i < nbb_cells.length; ++i) {\n",
+       "                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {\n",
+       "                        if (nbb_cells[i].get_text() == nbb_unformatted_code) {\n",
+       "                             nbb_cells[i].set_text(nbb_formatted_code);\n",
+       "                        }\n",
+       "                        break;\n",
+       "                    }\n",
+       "                }\n",
+       "            }, 500);\n",
+       "            "
+      ],
+      "text/plain": [
+       "<IPython.core.display.Javascript object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "from azure.storage.blob import BlobClient\n",
+    "import pandas as pd\n",
+    "\n",
+    "# Load connection string so y'all can't see it!\n",
+    "with open(\"/users/nick/azure_secrets/azure_sa_connection_string.txt\") as f:\n",
+    "    connection_string = f.read()\n",
+    "\n",
+    "# Connect to storage account\n",
+    "b = BlobClient.from_connection_string(connection_string, \n",
+    "                                      container_name=\"globaltemps\", \n",
+    "                                      blob_name=\"ghcnd_daily.csv\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>id</th>\n",
+       "      <th>year</th>\n",
+       "      <th>month</th>\n",
+       "      <th>element</th>\n",
+       "      <th>value1</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>ACW00011604</td>\n",
+       "      <td>1949</td>\n",
+       "      <td>1</td>\n",
+       "      <td>TMAX</td>\n",
+       "      <td>289</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>ACW00011604</td>\n",
+       "      <td>1949</td>\n",
+       "      <td>2</td>\n",
+       "      <td>TMAX</td>\n",
+       "      <td>267</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>ACW00011604</td>\n",
+       "      <td>1949</td>\n",
+       "      <td>3</td>\n",
+       "      <td>TMAX</td>\n",
+       "      <td>272</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>ACW00011604</td>\n",
+       "      <td>1949</td>\n",
+       "      <td>4</td>\n",
+       "      <td>TMAX</td>\n",
+       "      <td>278</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>ACW00011604</td>\n",
+       "      <td>1949</td>\n",
+       "      <td>5</td>\n",
+       "      <td>TMAX</td>\n",
+       "      <td>283</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "            id  year  month element  value1\n",
+       "0  ACW00011604  1949      1    TMAX     289\n",
+       "1  ACW00011604  1949      2    TMAX     267\n",
+       "2  ACW00011604  1949      3    TMAX     272\n",
+       "3  ACW00011604  1949      4    TMAX     278\n",
+       "4  ACW00011604  1949      5    TMAX     283"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    },
+    {
+     "data": {
+      "application/javascript": [
+       "\n",
+       "            setTimeout(function() {\n",
+       "                var nbb_cell_id = 5;\n",
+       "                var nbb_unformatted_code = \"from io import StringIO\\nstream = b.download_blob().content_as_text()\\ndf = pd.read_csv(StringIO(stream), \\n                 usecols=['id', 'year', 'month', 'element', 'value1'], nrows=100\\n)\\ndf.head()\";\n",
+       "                var nbb_formatted_code = \"from io import StringIO\\n\\nstream = b.download_blob().content_as_text()\\ndf = pd.read_csv(\\n    StringIO(stream), usecols=[\\\"id\\\", \\\"year\\\", \\\"month\\\", \\\"element\\\", \\\"value1\\\"], nrows=100\\n)\\ndf.head()\";\n",
+       "                var nbb_cells = Jupyter.notebook.get_cells();\n",
+       "                for (var i = 0; i < nbb_cells.length; ++i) {\n",
+       "                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {\n",
+       "                        if (nbb_cells[i].get_text() == nbb_unformatted_code) {\n",
+       "                             nbb_cells[i].set_text(nbb_formatted_code);\n",
+       "                        }\n",
+       "                        break;\n",
+       "                    }\n",
+       "                }\n",
+       "            }, 500);\n",
+       "            "
+      ],
+      "text/plain": [
+       "<IPython.core.display.Javascript object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "from io import StringIO\n",
+    "stream = b.download_blob().content_as_text()\n",
+    "df = pd.read_csv(StringIO(stream), \n",
+    "                 usecols=['id', 'year', 'month', 'element', 'value1'], nrows=100\n",
+    ")\n",
+    "df.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 5. Monitor Your Spending\n",
+    "\n",
+    "*Note: As of October 2020, this service is in preview for paid accounts, but likely won't work if you're just using a free demo account, sorry! I'm leaving it here for reference, however, since should be everywhere soon!*\n",
+    "\n",
+    "One last little safeguard: Azure doesn't let you set spending caps, but you can set up alerts. To do so, go back to Azure Portal and select the Subscriptions (search in the top bar if the key icon isn't already up). Click on it, then click \"Cost alerts\" on the left hand side.\n",
+    "\n",
+    "Then click `+ Add`, set a budget and hit `Next`. Then put in your email first (or it gets grumpy), then set some alerts for, say, 25%, 50%, 75% and 100% of your budget. Trust me -- we'll try hard to only set things up so that if you forget about them they'll shut themselves down, but the worst thing in the world is forgetting you left a VM running and coming back a week later to find a bill of hundreds of dollars! So add these alerts!\n",
+    "\n",
+    "Note you can also set alerts *by Resource Group*, but if you do, there's always a risk you'll create a new Resource Group at some point and forget to add alerts, then do something silly, so I just tag them to my subscription so it covers everything. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Doing It from the Command Line\n",
+    "\n",
+    "One last note: if you find all this pointing and clicking tedious, there are tools to manage all this kind of stuff from the command line, but because you need to know what you're looking for to know what commands to use, I think seeing the Azure websites with all their menus is a better way to start off. But if you do want to get into command line tools, you can read about the [Azure Command Line Interface (CLI)](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) here, and as we'll see later, there are also lots of Python libraries that can do the same from within a Python session."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Setting Up a Cluster\n",
+    "\n",
+    "OK, so... you're *sure* a single giant VM isn't enough for you? OK then! [On to clusters...](cloud_cluster_on_azure.ipynb). "
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

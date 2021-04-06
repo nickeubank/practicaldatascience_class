@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index alignment &#8212; Practical Data Science</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="Index-alignment">
+<h1>Index alignment<a class="headerlink" href="#Index-alignment" title="Permalink to this headline">¶</a></h1>
+<p>To illustrate how index alignment can sometimes lead to problems, let’s consider the following example: suppose we’re throwing a party, and we plan to give people prizes based on the order in which they arrive. The first person to arrive at the party will get 20 dollars, the second will get 10 dollars, and the third person doesn’t get anything.</p>
+<p>To keep track of how many prizes everyone gets, we build a DataFrame with all the party attendees, their arrival order, and a column for keeping track of how much they’ve received in prizes.</p>
+<p>The we can also build a Series with the prize amounts we plan to give people.</p>
+<div class="section" id="Exercise-1">
+<h2>Exercise 1<a class="headerlink" href="#Exercise-1" title="Permalink to this headline">¶</a></h2>
+<p>Use the code below to get started:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">attendees</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;names&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Jill&quot;</span><span class="p">,</span> <span class="s2">&quot;Kumar&quot;</span><span class="p">,</span> <span class="s2">&quot;Zaira&quot;</span><span class="p">],</span>
+                          <span class="s1">&#39;prizes&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                          <span class="s1">&#39;arrival_order&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]})</span>
+<span class="n">arrival_prizes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Exercise-2">
+<h2>Exercise 2<a class="headerlink" href="#Exercise-2" title="Permalink to this headline">¶</a></h2>
+<p>Now let’s sort our <code class="docutils literal notranslate"><span class="pre">attendees</span></code> list by <code class="docutils literal notranslate"><span class="pre">arrival_order</span></code> so that the first row is the person who arrived first, the second is the person who arrived second, etc. to match how we’ve organized <code class="docutils literal notranslate"><span class="pre">arrival_prizes</span></code>.</p>
+</div>
+<div class="section" id="Exercise-3">
+<h2>Exercise 3<a class="headerlink" href="#Exercise-3" title="Permalink to this headline">¶</a></h2>
+<p>Now let’s “give” everyone their arrival prizes by adding arrival prizes to people’s prize column:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">attendees</span><span class="p">[</span><span class="s1">&#39;prizes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attendees</span><span class="p">[</span><span class="s1">&#39;prizes&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">arrival_prizes</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Exercise-4">
+<h2>Exercise 4<a class="headerlink" href="#Exercise-4" title="Permalink to this headline">¶</a></h2>
+<p>Now let’s look at the result. Does it look like what you expected? Do you know what went wrong?</p>
+<p>After you’ve formulated your thoughts, continue to <a class="reference internal" href="Exercise_indices_discussion.html"><span class="doc">Discussion</span></a>.</p>
+<div class="section" id="Exercise-5">
+<h3>Exercise 5<a class="headerlink" href="#Exercise-5" title="Permalink to this headline">¶</a></h3>
+<p>If you ever <em>want</em> to get alignment on row numbers, the easiest way to achieve that is to reset the indices on both objects you want to merge. When one re-sets indices without specifying a column to become the new index, the new index will just be row-numbers.</p>
+<p>So reset prizes to 0, do what you need to do to get the order right, reset the index, and try again.</p>
+<p><strong>Note:</strong> When you reset the index on a Series, the Series is converted to a DataFrame, and the old index is added as a column. To avoid this behavior and just drop the old index when re-setting indices (in either a Series or a DataFrame), use the <code class="docutils literal notranslate"><span class="pre">drop=True</span></code> argument when resetting the index.</p>
+</div>
+<div class="section" id="Exercise-6">
+<h3>Exercise 6<a class="headerlink" href="#Exercise-6" title="Permalink to this headline">¶</a></h3>
+<p>OK, so besides doing automatic alignment, is there a reason to use indices?</p>
+<p>Let’s find out. Create the following fake dataset of social security numbers and some “names” (random strings). Warning: this will take a little time to run.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy.random</span> <span class="k">as</span> <span class="nn">npr</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="n">npr</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">size</span><span class="o">=</span><span class="mi">1000000</span> <span class="c1"># 1,000,000</span>
+<span class="n">people</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;social_security_numbers&#39;</span><span class="p">:</span> <span class="n">npr</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">10000000</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">99999999</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">),</span>
+                       <span class="s1">&#39;names&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+                                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">)]})</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Exercise-7">
+<h3>Exercise 7<a class="headerlink" href="#Exercise-7" title="Permalink to this headline">¶</a></h3>
+<p>Now subset your data to get the social security number associated with the name of “TPKSMSLREI”. (Yes, there are ways to get real random names, but they take a while to run because they query websites that generate fake names, so we’re just doing this!).</p>
+</div>
+<div class="section" id="Exercise-8">
+<h3>Exercise 8<a class="headerlink" href="#Exercise-8" title="Permalink to this headline">¶</a></h3>
+<p>Now time your operation using the <code class="docutils literal notranslate"><span class="pre">%timeit</span></code> ipython magic function.</p>
+</div>
+<div class="section" id="Exercise-9">
+<h3>Exercise 9<a class="headerlink" href="#Exercise-9" title="Permalink to this headline">¶</a></h3>
+<p>Now make <code class="docutils literal notranslate"><span class="pre">names</span></code> your index for this data. Then try subsetting using <code class="docutils literal notranslate"><span class="pre">loc[]</span></code> to get all the observations with the name of “TPKSMSLREI” and time the operation.</p>
+</div>
+<div class="section" id="Take-away">
+<h3>Take-away<a class="headerlink" href="#Take-away" title="Permalink to this headline">¶</a></h3>
+<p>So in short: indices can be nice in that they do automatic alignment, provided you’re expecting it. Moreover, if you want to pull random rows out of your dataset, it is often much faster than a regular query!</p>
+</div>
+<div class="section" id="Absolutely-positively-need-the-solutions?">
+<h3>Absolutely positively need the solutions?<a class="headerlink" href="#Absolutely-positively-need-the-solutions?" title="Permalink to this headline">¶</a></h3>
+<p><em>Don’t use this link until you’ve really, really spent time struggling with your code!</em> Doing so only results in you cheating yourself.</p>
+<p><a class="reference internal" href="../solutions_warning.html"><span class="doc">Link</span></a></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Practical DS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../class_schedule.html">CLASS SCHEDULE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../learning_track.html">LEARNING TOPICS</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../setup_environment.html">Setting Up Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../managing_python_packages.html">Managing Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pandas_dataframes.html">Pandas 2: DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plotting_part2.html">Plotting, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cleaning_editingvalues.html">Cleaning: Editing Values</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../jupyter.html">Jupyter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../git_and_github.html">Git and Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pr_review.html">Reviewing Code on Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parquet.html">Parquet Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CLOUD</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_what_is_it.html">What Is The Cloud?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_storage_on_azure.html">Storage on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_dask.html">Dask on Azure Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cloud_authentication.html">Azure Authentication</a></li>
+</ul>
+<p class="caption"><span class="caption-text">SKILLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow.html">Workflow Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../what_is_big_data.html">What is Big Data?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../big_data_strategies.html">Working with Big Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance_solutions.html">Solving Performance Probs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../backwards_design.html">Backwards Design</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../buying_datascience_computer.html">Buying a Data Science Computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick Eubank.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/exercises/Exercise_indices.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

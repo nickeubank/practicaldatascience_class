@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reviewing Code on Github &#8212; Practical Data Science</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Parquet" href="parquet.html" />
+    <link rel="prev" title="Git and Github" href="git_and_github.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="Reviewing-Code-on-Github">
+<h1>Reviewing Code on Github<a class="headerlink" href="#Reviewing-Code-on-Github" title="Permalink to this headline">¶</a></h1>
+<p>When you are responsible for reviewing code that someone has submitted in a Pull Request (commonly just called a “PR”) on github, your job isn’t as simple as responding “looks good!”. The goal of the Pull Request process is to ensure all merged code reflects the common wisdom of the team, so its your job to actually read the code you’re reviewing and to ask questions and provide detailed comments. This may be the last time anyone looks at this code before the rest of your team builds your
+analysis on its output, so take your reviewer role seriously!</p>
+<p>Seem like there’s nothing to do in your review / everything looks great? Even when people write perfect code (which is rare!), there’s almost always some room for improvement in terms of providing better comments, using variable names that are easy to understand, or just being explicit about what assumptions one is making. In a real project, of course, you don’t want to be pedantic, but for our class exercises, be sure to find <em>something</em> you can engage with constructively for practice.</p>
+<p>It’s also important to emphasize that a good PR review is an <em>interative</em> process, with the reviewer asking questions and the code writer responding and, usually, updating their code.</p>
+<p>To illustrate, here’s an exceptional PR review from last year by Vanessa, our 2020 TA, along with some great clarifying responses from Fang Feng. I would like to have seen more of Vanessa’s suggestions integrated into the code before committing (some were in commits below the discussion, but not all), but this is a great starting example.</p>
+<p>Note that much of the exchange took place through individual comments added to specific lines of code (to do this, click on the “Files changed” tab, then click on the <code class="docutils literal notranslate"><span class="pre">+</span></code> icon that comes up when you mouse over the line numbers next to the code you want to comment on). <strong>This only works if you submit your python code in a plain text file (.py)</strong>. Jupyter notebooks will make a mess of this kind of review!</p>
+<p><img alt="prreview_2" src="_images/prreview_2.png" /> <img alt="prreview_3" src="_images/prreview_3.png" /> <img alt="prreview_4" src="_images/prreview_4.png" /> <img alt="prreview_5" src="_images/prreview_5.png" /> <img alt="prreview_6" src="_images/prreview_6.png" /> <img alt="prreview_7" src="_images/prreview_7.png" /></p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Practical DS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_schedule.html">CLASS SCHEDULE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning_track.html">LEARNING TOPICS</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup_environment.html">Setting Up Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_python_packages.html">Managing Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_dataframes.html">Pandas 2: DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part2.html">Plotting, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cleaning_editingvalues.html">Cleaning: Editing Values</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyter.html">Jupyter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_and_github.html">Git and Github</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Reviewing Code on Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CLOUD</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_storage_on_azure.html">Storage on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Dask on Azure Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
+</ul>
+<p class="caption"><span class="caption-text">SKILLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_big_data.html">What is Big Data?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="big_data_strategies.html">Working with Big Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backwards_design.html">Backwards Design</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="buying_datascience_computer.html">Buying a Data Science Computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="git_and_github.html" title="previous chapter">Git and Github</a></li>
+      <li>Next: <a href="parquet.html" title="next chapter">Parquet</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick Eubank.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/pr_review.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

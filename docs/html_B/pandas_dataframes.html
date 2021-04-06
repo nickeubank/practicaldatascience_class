@@ -1,0 +1,3124 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pandas Lesson 2: Dataframes &#8212; Practical Data Science</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Plotting with plotnine" href="plotting_part1.html" />
+    <link rel="prev" title="Pandas Lesson 1: Series" href="pandas_series.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Pandas-Lesson-2:-Dataframes">
+<h1>Pandas Lesson 2: Dataframes<a class="headerlink" href="#Pandas-Lesson-2:-Dataframes" title="Permalink to this headline">¶</a></h1>
+<p>In Pandas Lesson 1, we learned about Series: an ordered collection of observations, analogous to a <code class="docutils literal notranslate"><span class="pre">numpy</span></code> vector but with super-powers.</p>
+<p>In this tutorial, we’ll learn about DataFrames, a method of holding <em>tabular</em> data in which each row is an observation, and each column is a variable. (OK, there are some different forms of tabular data, but that’s the most common format you’ll encounter).</p>
+<p>To illustrate, here’s a small <code class="docutils literal notranslate"><span class="pre">pandas</span></code> dataframe (created by importing data from a spreadsheet you can find <a class="reference external" href="https://github.com/nickeubank/practicaldatascience/blob/master/Example_Data/world-very-small.csv">here</a>):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">smallworld</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/nickeubank/practicaldatascience/master/Example_Data/world-very-small.csv&#39;</span><span class="p">)</span>
+<span class="n">smallworld</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>region</th>
+      <th>gdppcap08</th>
+      <th>polityIV</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Brazil</td>
+      <td>S. America</td>
+      <td>10296</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Germany</td>
+      <td>W. Europe</td>
+      <td>35613</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Mexico</td>
+      <td>N. America</td>
+      <td>14495</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Mozambique</td>
+      <td>Africa</td>
+      <td>855</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Russia</td>
+      <td>C&amp;E Europe</td>
+      <td>16139</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Ukraine</td>
+      <td>C&amp;E Europe</td>
+      <td>7271</td>
+      <td>16</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>As you can see, each of the 6 rows in the DataFrame <code class="docutils literal notranslate"><span class="pre">world</span></code> is a different country, and each column contains different information about that country (the country’s name, its region, it’s income level (GDP per Capita in 2008), and how close it was to an idealized liberal democracy in 2008 (it’s polity IV score).</p>
+<div class="section" id="1.-What-is-a-DataFrame">
+<h2>1. What is a DataFrame<a class="headerlink" href="#1.-What-is-a-DataFrame" title="Permalink to this headline">¶</a></h2>
+<p>Where a Series was a one-dimensional collection of data, a DataFrame is fundementally two dimensional. As a result, it has many of the same types of features as a Series, but generalized to two dimension.</p>
+<div class="section" id="Index-and-Columns">
+<h3>Index and Columns<a class="headerlink" href="#Index-and-Columns" title="Permalink to this headline">¶</a></h3>
+<p>For example, like a Series, a DataFrame has an index that labels every row: in this case, it’s the usual default index that labels each row with its initial row number. Unlike a Series, however, DataFrames have a second set of labels: column names!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Here are the row labels</span>
+<span class="c1"># (Note that a &quot;range index&quot; is just</span>
+<span class="c1"># another way of labeling each row with its row number)</span>
+<span class="n">smallworld</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+RangeIndex(start=0, stop=6, step=1)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># And here is our column index.</span>
+<span class="c1"># Note that while we don&#39;t call it &quot;index&quot;,</span>
+<span class="c1"># the column names are of type Index.</span>
+<span class="c1"># They really are the same as row indices,</span>
+<span class="c1"># just for columns</span>
+
+<span class="n">smallworld</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Index([&#39;country&#39;, &#39;region&#39;, &#39;gdppcap08&#39;, &#39;polityIV&#39;], dtype=&#39;object&#39;)
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Constructing-DataFrames">
+<h3>Constructing DataFrames<a class="headerlink" href="#Constructing-DataFrames" title="Permalink to this headline">¶</a></h3>
+<p>As with Series, there are many ways to construct a DataFrame. Honestly, by far the most common is that you’ll read in a dataset from a file. Pandas offers lots of tools for doing this depending on the format of the data you’re importing. We’ll discuss this more in future lessons, but here are just a few methods to know about:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pd.read_csv</span></code>: Read in comma-seperated-value spreadsheets</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pd.read_excel</span></code>: Read in excel (<code class="docutils literal notranslate"><span class="pre">.xls</span></code> and <code class="docutils literal notranslate"><span class="pre">.xlsx</span></code>) spreadsheets</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pd.read_stata</span></code>: Read stata (<code class="docutils literal notranslate"><span class="pre">.dta</span></code>) datasets</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pd.read_hdf</span></code>: Read HDF (<code class="docutils literal notranslate"><span class="pre">.hdf</span></code>) datasets</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pd.read_sql</span></code>: Read from SQL database</p></li>
+</ul>
+<p>You can find a full list of <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html">IO methods here</a>!</p>
+<p>But you can also construct DataFrames by hand. The easiest (and most common) way is by passing in a Dictionary, where the keys will become column names and the values are column values:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;animals&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;dog&#39;</span><span class="p">,</span> <span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;bird&#39;</span><span class="p">,</span> <span class="s1">&#39;fish&#39;</span><span class="p">],</span>
+                   <span class="s1">&#39;can_swim&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span>
+                   <span class="s1">&#39;has_fur&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">]})</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>animals</th>
+      <th>can_swim</th>
+      <th>has_fur</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>dog</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>cat</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>bird</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>fish</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+</div>
+<div class="section" id="2.-Getting-To-Know-Your-DataFrame">
+<h2>2. Getting To Know Your DataFrame<a class="headerlink" href="#2.-Getting-To-Know-Your-DataFrame" title="Permalink to this headline">¶</a></h2>
+<p>While our toy <code class="docutils literal notranslate"><span class="pre">smallworld</span></code> dataset is small enough to easy print out and visualize, most datasets worth working with are too big to just look at. In those situations, we need tools to summarize the contents of our DataFrame.</p>
+<p>Let’s load up a version of the <code class="docutils literal notranslate"><span class="pre">smallworld</span></code> dataset we looked at above that actually has all the countries in the world (instead of just 6). You can find the original dataset <a class="reference external" href="https://github.com/nickeubank/practicaldatascience/blob/master/Example_Data/world-small.csv">here</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">world</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/nickeubank/practicaldatascience/master/Example_Data/world-small.csv&#39;</span><span class="p">)</span>
+<span class="n">world</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>region</th>
+      <th>gdppcap08</th>
+      <th>polityIV</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Albania</td>
+      <td>C&amp;E Europe</td>
+      <td>7715</td>
+      <td>17.800000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Algeria</td>
+      <td>Africa</td>
+      <td>8033</td>
+      <td>10.000000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Angola</td>
+      <td>Africa</td>
+      <td>5899</td>
+      <td>8.000000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Argentina</td>
+      <td>S. America</td>
+      <td>14333</td>
+      <td>18.000000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Armenia</td>
+      <td>C&amp;E Europe</td>
+      <td>6070</td>
+      <td>15.000000</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Australia</td>
+      <td>Asia-Pacific</td>
+      <td>35677</td>
+      <td>20.000000</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Austria</td>
+      <td>W. Europe</td>
+      <td>38152</td>
+      <td>20.000000</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Azerbaijan</td>
+      <td>C&amp;E Europe</td>
+      <td>8765</td>
+      <td>3.000000</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Bahrain</td>
+      <td>Middle East</td>
+      <td>34605</td>
+      <td>3.000000</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Bangladesh</td>
+      <td>Asia-Pacific</td>
+      <td>1334</td>
+      <td>16.000000</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Belarus</td>
+      <td>C&amp;E Europe</td>
+      <td>12261</td>
+      <td>3.000000</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Belgium</td>
+      <td>W. Europe</td>
+      <td>34493</td>
+      <td>20.000000</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Benin</td>
+      <td>Africa</td>
+      <td>1468</td>
+      <td>16.200000</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Bhutan</td>
+      <td>Asia-Pacific</td>
+      <td>4755</td>
+      <td>2.000000</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Bolivia</td>
+      <td>S. America</td>
+      <td>4278</td>
+      <td>18.200000</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Botswana</td>
+      <td>Africa</td>
+      <td>13392</td>
+      <td>19.000000</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Brazil</td>
+      <td>S. America</td>
+      <td>10296</td>
+      <td>18.000000</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Bulgaria</td>
+      <td>C&amp;E Europe</td>
+      <td>12393</td>
+      <td>19.000000</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Burkina Faso</td>
+      <td>Africa</td>
+      <td>1161</td>
+      <td>10.000000</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Cambodia</td>
+      <td>Asia-Pacific</td>
+      <td>1905</td>
+      <td>12.000000</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Cameroon</td>
+      <td>Africa</td>
+      <td>2215</td>
+      <td>6.000000</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Canada</td>
+      <td>N. America</td>
+      <td>36444</td>
+      <td>20.000000</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Central African Republic</td>
+      <td>Africa</td>
+      <td>736</td>
+      <td>10.200000</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Chad</td>
+      <td>Africa</td>
+      <td>1455</td>
+      <td>8.000000</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Chile</td>
+      <td>S. America</td>
+      <td>14465</td>
+      <td>19.200000</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>China</td>
+      <td>Asia-Pacific</td>
+      <td>5962</td>
+      <td>3.000000</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Colombia</td>
+      <td>S. America</td>
+      <td>8885</td>
+      <td>17.000000</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Comoros</td>
+      <td>Africa</td>
+      <td>1169</td>
+      <td>15.800000</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Congo Brazzaville</td>
+      <td>Africa</td>
+      <td>3946</td>
+      <td>6.000000</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Congo Kinshasa</td>
+      <td>Africa</td>
+      <td>321</td>
+      <td>15.000000</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>115</th>
+      <td>Slovakia</td>
+      <td>C&amp;E Europe</td>
+      <td>22081</td>
+      <td>19.000000</td>
+    </tr>
+    <tr>
+      <th>116</th>
+      <td>Slovenia</td>
+      <td>C&amp;E Europe</td>
+      <td>27605</td>
+      <td>20.000000</td>
+    </tr>
+    <tr>
+      <th>117</th>
+      <td>Solomon Islands</td>
+      <td>Asia-Pacific</td>
+      <td>2610</td>
+      <td>18.000000</td>
+    </tr>
+    <tr>
+      <th>118</th>
+      <td>South Africa</td>
+      <td>Africa</td>
+      <td>10109</td>
+      <td>19.000000</td>
+    </tr>
+    <tr>
+      <th>119</th>
+      <td>Spain</td>
+      <td>W. Europe</td>
+      <td>31954</td>
+      <td>20.000000</td>
+    </tr>
+    <tr>
+      <th>120</th>
+      <td>Sri Lanka</td>
+      <td>Asia-Pacific</td>
+      <td>4560</td>
+      <td>15.333333</td>
+    </tr>
+    <tr>
+      <th>121</th>
+      <td>Sudan</td>
+      <td>Africa</td>
+      <td>2153</td>
+      <td>4.000000</td>
+    </tr>
+    <tr>
+      <th>122</th>
+      <td>Swaziland</td>
+      <td>Africa</td>
+      <td>4928</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>123</th>
+      <td>Sweden</td>
+      <td>Scandinavia</td>
+      <td>37383</td>
+      <td>20.000000</td>
+    </tr>
+    <tr>
+      <th>124</th>
+      <td>Switzerland</td>
+      <td>W. Europe</td>
+      <td>42536</td>
+      <td>20.000000</td>
+    </tr>
+    <tr>
+      <th>125</th>
+      <td>Taiwan</td>
+      <td>Asia-Pacific</td>
+      <td>30881</td>
+      <td>19.333333</td>
+    </tr>
+    <tr>
+      <th>126</th>
+      <td>Tajikistan</td>
+      <td>C&amp;E Europe</td>
+      <td>1906</td>
+      <td>7.666667</td>
+    </tr>
+    <tr>
+      <th>127</th>
+      <td>Tanzania</td>
+      <td>Africa</td>
+      <td>1263</td>
+      <td>11.000000</td>
+    </tr>
+    <tr>
+      <th>128</th>
+      <td>Thailand</td>
+      <td>Asia-Pacific</td>
+      <td>7703</td>
+      <td>19.000000</td>
+    </tr>
+    <tr>
+      <th>129</th>
+      <td>Togo</td>
+      <td>Africa</td>
+      <td>829</td>
+      <td>8.000000</td>
+    </tr>
+    <tr>
+      <th>130</th>
+      <td>Tunisia</td>
+      <td>Middle East</td>
+      <td>7996</td>
+      <td>6.000000</td>
+    </tr>
+    <tr>
+      <th>131</th>
+      <td>Turkey</td>
+      <td>Middle East</td>
+      <td>13920</td>
+      <td>17.000000</td>
+    </tr>
+    <tr>
+      <th>132</th>
+      <td>Turkmenistan</td>
+      <td>C&amp;E Europe</td>
+      <td>6641</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>133</th>
+      <td>UAE</td>
+      <td>Middle East</td>
+      <td>38830</td>
+      <td>2.000000</td>
+    </tr>
+    <tr>
+      <th>134</th>
+      <td>Uganda</td>
+      <td>Africa</td>
+      <td>1165</td>
+      <td>6.000000</td>
+    </tr>
+    <tr>
+      <th>135</th>
+      <td>Ukraine</td>
+      <td>C&amp;E Europe</td>
+      <td>7271</td>
+      <td>16.000000</td>
+    </tr>
+    <tr>
+      <th>136</th>
+      <td>United Kingdom</td>
+      <td>W. Europe</td>
+      <td>35445</td>
+      <td>20.000000</td>
+    </tr>
+    <tr>
+      <th>137</th>
+      <td>United States</td>
+      <td>N. America</td>
+      <td>46716</td>
+      <td>20.000000</td>
+    </tr>
+    <tr>
+      <th>138</th>
+      <td>Uruguay</td>
+      <td>S. America</td>
+      <td>12734</td>
+      <td>20.000000</td>
+    </tr>
+    <tr>
+      <th>139</th>
+      <td>Uzbekistan</td>
+      <td>C&amp;E Europe</td>
+      <td>2656</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>140</th>
+      <td>Venezuela</td>
+      <td>S. America</td>
+      <td>12804</td>
+      <td>16.000000</td>
+    </tr>
+    <tr>
+      <th>141</th>
+      <td>Vietnam</td>
+      <td>Asia-Pacific</td>
+      <td>2785</td>
+      <td>3.000000</td>
+    </tr>
+    <tr>
+      <th>142</th>
+      <td>Yemen</td>
+      <td>Middle East</td>
+      <td>2400</td>
+      <td>8.000000</td>
+    </tr>
+    <tr>
+      <th>143</th>
+      <td>Zambia</td>
+      <td>Africa</td>
+      <td>1356</td>
+      <td>15.000000</td>
+    </tr>
+    <tr>
+      <th>144</th>
+      <td>Zimbabwe</td>
+      <td>Africa</td>
+      <td>188</td>
+      <td>6.000000</td>
+    </tr>
+  </tbody>
+</table>
+<p>145 rows × 4 columns</p>
+</div></div>
+</div>
+<p>As you can see, <code class="docutils literal notranslate"><span class="pre">pandas</span></code> prints out a bunch of the rows, but not all the rows (note the <code class="docutils literal notranslate"><span class="pre">...</span></code> in the middle) in an effort to not take over your computer. This DataFrame could theoretically be printed out in its entirety (as noted at the bottom of the output, it only has 145 rows), but in the real world we often work with datasets with hundreds of thousands or millions of rows where printing just isn’t possible. So here are some methods for “getting to know your data”:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Just see first 5 rows:</span>
+<span class="n">world</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>region</th>
+      <th>gdppcap08</th>
+      <th>polityIV</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Albania</td>
+      <td>C&amp;E Europe</td>
+      <td>7715</td>
+      <td>17.8</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Algeria</td>
+      <td>Africa</td>
+      <td>8033</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Angola</td>
+      <td>Africa</td>
+      <td>5899</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Argentina</td>
+      <td>S. America</td>
+      <td>14333</td>
+      <td>18.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Armenia</td>
+      <td>C&amp;E Europe</td>
+      <td>6070</td>
+      <td>15.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># See a random subset of rows (here, 5)</span>
+<span class="c1"># (the first rows of a dataset aren&#39;t always representative!)</span>
+<span class="n">world</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>region</th>
+      <th>gdppcap08</th>
+      <th>polityIV</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>134</th>
+      <td>Uganda</td>
+      <td>Africa</td>
+      <td>1165</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Bangladesh</td>
+      <td>Asia-Pacific</td>
+      <td>1334</td>
+      <td>16.0</td>
+    </tr>
+    <tr>
+      <th>83</th>
+      <td>Mali</td>
+      <td>Africa</td>
+      <td>1128</td>
+      <td>16.0</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>Guyana</td>
+      <td>S. America</td>
+      <td>2542</td>
+      <td>16.0</td>
+    </tr>
+    <tr>
+      <th>104</th>
+      <td>Philippines</td>
+      <td>Asia-Pacific</td>
+      <td>3510</td>
+      <td>18.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Get Number of Rows:</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">world</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+145
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Get number of columns:</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">world</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+4
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Learn the datatype of each column:</span>
+<span class="n">world</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+country       object
+region        object
+gdppcap08      int64
+polityIV     float64
+dtype: object
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Get summary statistics for each numeric column (objects are ignored):</span>
+<span class="n">world</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gdppcap08</th>
+      <th>polityIV</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>145.000000</td>
+      <td>145.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>13251.993103</td>
+      <td>13.407816</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>14802.581676</td>
+      <td>6.587626</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>188.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>2153.000000</td>
+      <td>7.666667</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>7271.000000</td>
+      <td>16.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>19330.000000</td>
+      <td>19.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>85868.000000</td>
+      <td>20.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># List out all the columns (if there are a lot, you can&#39;t just see them in the table,</span>
+<span class="c1"># and if you just do `world.columns`, often pandas will compress that too. This will show you</span>
+<span class="c1"># all columns:</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">world</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+country
+region
+gdppcap08
+polityIV
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="3.-Subsetting-a-DataFrame">
+<h2>3. Subsetting a DataFrame<a class="headerlink" href="#3.-Subsetting-a-DataFrame" title="Permalink to this headline">¶</a></h2>
+<p>As with Series, one of the most important skills for working with DataFrames is knowing how to subset them. Thankfully, DataFrames works kind of like a two-dimensional generalization of Series when it comes to the use of <code class="docutils literal notranslate"><span class="pre">iloc</span></code> and <code class="docutils literal notranslate"><span class="pre">loc</span></code>.</p>
+<div class="section" id="iloc">
+<h3>iloc<a class="headerlink" href="#iloc" title="Permalink to this headline">¶</a></h3>
+<p>To subset a DataFrame using <code class="docutils literal notranslate"><span class="pre">iloc</span></code>, we now have to pass two arguments into <code class="docutils literal notranslate"><span class="pre">iloc</span></code> seperated by a comma. For example, if we wanted the entry in the fourth row of the first column, we would use:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">world</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;Argentina&#39;
+</pre></div></div>
+</div>
+<p>Similarly, <code class="docutils literal notranslate"><span class="pre">iloc</span></code> still supports slices. Here are the first two rows of the first three columns:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">world</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>region</th>
+      <th>gdppcap08</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Albania</td>
+      <td>C&amp;E Europe</td>
+      <td>7715</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Algeria</td>
+      <td>Africa</td>
+      <td>8033</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>If you want to get a subset on one dimension, but <em>all</em> the entries on the other, just pass a <code class="docutils literal notranslate"><span class="pre">:</span></code> for the dimension on which you want all the data (just like in numpy). Here are the first two rows and all the columns:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">world</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>region</th>
+      <th>gdppcap08</th>
+      <th>polityIV</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Albania</td>
+      <td>C&amp;E Europe</td>
+      <td>7715</td>
+      <td>17.8</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Algeria</td>
+      <td>Africa</td>
+      <td>8033</td>
+      <td>10.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>If you ONLY pass one set of arguments, though, those will be applied to the first dimension (rows), just like in <code class="docutils literal notranslate"><span class="pre">numpy</span></code>. Thus <code class="docutils literal notranslate"><span class="pre">.iloc[0:2]</span></code> is the same as <code class="docutils literal notranslate"><span class="pre">.iloc[0:2,</span> <span class="pre">:]</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">world</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>region</th>
+      <th>gdppcap08</th>
+      <th>polityIV</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Albania</td>
+      <td>C&amp;E Europe</td>
+      <td>7715</td>
+      <td>17.8</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Algeria</td>
+      <td>Africa</td>
+      <td>8033</td>
+      <td>10.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="loc">
+<h3>loc<a class="headerlink" href="#loc" title="Permalink to this headline">¶</a></h3>
+<p>The generalization of <code class="docutils literal notranslate"><span class="pre">.loc</span></code> from Series to DataFrames works the same as <code class="docutils literal notranslate"><span class="pre">iloc</span></code>. If you pass two arguments, the first will subset rows (though for <code class="docutils literal notranslate"><span class="pre">.loc</span></code>, the subsetting is on index values, not row numbers), and the second will subset columns (again, on column names, not column order).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Index value 1, column country</span>
+<span class="n">world</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;country&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;Algeria&#39;
+</pre></div></div>
+</div>
+<p>And just like in Series, if you pass a range to <code class="docutils literal notranslate"><span class="pre">.loc</span></code>, the end points will be included (unlike with most Python functions)</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">world</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;country&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0    Albania
+1    Algeria
+Name: country, dtype: object
+</pre></div></div>
+</div>
+<p>Finally, as with <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>, if you pass a single argument to <code class="docutils literal notranslate"><span class="pre">.loc</span></code>, it will subset on the first dimension (rows):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">world</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>region</th>
+      <th>gdppcap08</th>
+      <th>polityIV</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Albania</td>
+      <td>C&amp;E Europe</td>
+      <td>7715</td>
+      <td>17.8</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Algeria</td>
+      <td>Africa</td>
+      <td>8033</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Angola</td>
+      <td>Africa</td>
+      <td>5899</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Argentina</td>
+      <td>S. America</td>
+      <td>14333</td>
+      <td>18.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Logical-Tests">
+<h3>Logical Tests<a class="headerlink" href="#Logical-Tests" title="Permalink to this headline">¶</a></h3>
+<p>Subsetting with logical tests also works in a familiar manner for DataFrames:</p>
+<ul class="simple">
+<li><p>If you pass a single boolean array to <code class="docutils literal notranslate"><span class="pre">.loc</span></code>, it will subset on rows.</p></li>
+<li><p>If the boolean array has an Index (i.e. if it’s a Series), then alignment will take place on index values</p></li>
+<li><p>If the boolean array does NOT have an idex (i.e. it’s a list of booleans), then alignment will take place on row order.</p></li>
+<li><p>To subset columns based on a test, you have to use <code class="docutils literal notranslate"><span class="pre">.loc[:,</span> <span class="pre">YOUR_TEST_HERE]</span></code>.</p></li>
+</ul>
+<p>To illustrate, let’s start by shuffling our DataFrame so that index values and row numbers aren’t the same:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;gdppcap08&#39;</span><span class="p">)</span>
+<span class="n">world</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>region</th>
+      <th>gdppcap08</th>
+      <th>polityIV</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>144</th>
+      <td>Zimbabwe</td>
+      <td>Africa</td>
+      <td>188</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Congo Kinshasa</td>
+      <td>Africa</td>
+      <td>321</td>
+      <td>15.0</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>Liberia</td>
+      <td>Africa</td>
+      <td>388</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>Guinea-Bissau</td>
+      <td>Africa</td>
+      <td>538</td>
+      <td>11.0</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>Eritrea</td>
+      <td>Africa</td>
+      <td>632</td>
+      <td>3.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Test with an index -&gt; subset rows, align on index</span>
+<span class="n">relatively_democratic</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;polityIV&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">]</span>
+<span class="n">relatively_democratic</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>region</th>
+      <th>gdppcap08</th>
+      <th>polityIV</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>29</th>
+      <td>Congo Kinshasa</td>
+      <td>Africa</td>
+      <td>321</td>
+      <td>15.000000</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>Guinea-Bissau</td>
+      <td>Africa</td>
+      <td>538</td>
+      <td>11.000000</td>
+    </tr>
+    <tr>
+      <th>96</th>
+      <td>Niger</td>
+      <td>Africa</td>
+      <td>684</td>
+      <td>15.333333</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Central African Republic</td>
+      <td>Africa</td>
+      <td>736</td>
+      <td>10.200000</td>
+    </tr>
+    <tr>
+      <th>113</th>
+      <td>Sierra Leone</td>
+      <td>Africa</td>
+      <td>766</td>
+      <td>15.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Subset using list of booleans. Note that</span>
+<span class="c1"># if the boolean list or boolean array passed to `.loc`</span>
+<span class="c1"># is not as long as the dataset, you get an exception.</span>
+
+<span class="c1"># This is different than how R</span>
+<span class="c1"># cycles a boolean over the data.</span>
+
+<span class="c1"># Note: This behavior *just* changed in the latest pandas release.</span>
+
+<span class="n">relatively_democratic</span> <span class="o">=</span> <span class="n">relatively_democratic</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">]]</span>
+<span class="n">relatively_democratic</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">IndexError</span>                                Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-22-fed8763de0a1&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      8</span> <span class="ansi-red-fg"># Note: This behavior *just* changed in the latest pandas release.</span>
+<span class="ansi-green-intense-fg ansi-bold">      9</span>
+<span class="ansi-green-fg">---&gt; 10</span><span class="ansi-red-fg"> </span>relatively_democratic <span class="ansi-blue-fg">=</span> relatively_democratic<span class="ansi-blue-fg">.</span>loc<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">[</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span> <span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span> <span class="ansi-green-fg">True</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-intense-fg ansi-bold">     11</span> relatively_democratic
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/pandas/core/indexing.py</span> in <span class="ansi-cyan-fg">__getitem__</span><span class="ansi-blue-fg">(self, key)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1408</span>
+<span class="ansi-green-intense-fg ansi-bold">   1409</span>             maybe_callable <span class="ansi-blue-fg">=</span> com<span class="ansi-blue-fg">.</span>apply_if_callable<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>obj<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">-&gt; 1410</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_getitem_axis<span class="ansi-blue-fg">(</span>maybe_callable<span class="ansi-blue-fg">,</span> axis<span class="ansi-blue-fg">=</span>axis<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1411</span>
+<span class="ansi-green-intense-fg ansi-bold">   1412</span>     <span class="ansi-green-fg">def</span> _is_scalar_access<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> key<span class="ansi-blue-fg">:</span> Tuple<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/pandas/core/indexing.py</span> in <span class="ansi-cyan-fg">_getitem_axis</span><span class="ansi-blue-fg">(self, key, axis)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1772</span>             <span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_get_slice_axis<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">,</span> axis<span class="ansi-blue-fg">=</span>axis<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1773</span>         <span class="ansi-green-fg">elif</span> com<span class="ansi-blue-fg">.</span>is_bool_indexer<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 1774</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_getbool_axis<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">,</span> axis<span class="ansi-blue-fg">=</span>axis<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1775</span>         <span class="ansi-green-fg">elif</span> is_list_like_indexer<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   1776</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/pandas/core/indexing.py</span> in <span class="ansi-cyan-fg">_getbool_axis</span><span class="ansi-blue-fg">(self, key, axis)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1422</span>         <span class="ansi-red-fg"># caller is responsible for ensuring non-None axis</span>
+<span class="ansi-green-intense-fg ansi-bold">   1423</span>         labels <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>obj<span class="ansi-blue-fg">.</span>_get_axis<span class="ansi-blue-fg">(</span>axis<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">-&gt; 1424</span><span class="ansi-red-fg">         </span>key <span class="ansi-blue-fg">=</span> check_bool_indexer<span class="ansi-blue-fg">(</span>labels<span class="ansi-blue-fg">,</span> key<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1425</span>         inds<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">=</span> key<span class="ansi-blue-fg">.</span>nonzero<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1426</span>         <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/pandas/core/indexing.py</span> in <span class="ansi-cyan-fg">check_bool_indexer</span><span class="ansi-blue-fg">(index, key)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2397</span>         <span class="ansi-green-fg">if</span> len<span class="ansi-blue-fg">(</span>result<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">!=</span> len<span class="ansi-blue-fg">(</span>index<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   2398</span>             raise IndexError(
+<span class="ansi-green-fg">-&gt; 2399</span><span class="ansi-red-fg">                 </span><span class="ansi-blue-fg">&#34;Item wrong length {} instead of {}.&#34;</span><span class="ansi-blue-fg">.</span>format<span class="ansi-blue-fg">(</span>len<span class="ansi-blue-fg">(</span>result<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> len<span class="ansi-blue-fg">(</span>index<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2400</span>             )
+<span class="ansi-green-intense-fg ansi-bold">   2401</span>
+
+<span class="ansi-red-fg">IndexError</span>: Item wrong length 3 instead of 96.
+</pre></div></div>
+</div>
+<p>And if we want to subset columns on a boolean (admittedly a silly example, but you get the idea):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">relatively_democratic</span> <span class="o">=</span> <span class="n">relatively_democratic</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">(</span><span class="n">world</span><span class="o">.</span><span class="n">columns</span> <span class="o">==</span> <span class="s1">&#39;country&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">world</span><span class="o">.</span><span class="n">columns</span> <span class="o">==</span> <span class="s1">&#39;gdppcap08&#39;</span><span class="p">)]</span>
+<span class="n">relatively_democratic</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>gdppcap08</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>29</th>
+      <td>Congo Kinshasa</td>
+      <td>321</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>Guinea-Bissau</td>
+      <td>538</td>
+    </tr>
+    <tr>
+      <th>96</th>
+      <td>Niger</td>
+      <td>684</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Central African Republic</td>
+      <td>736</td>
+    </tr>
+    <tr>
+      <th>113</th>
+      <td>Sierra Leone</td>
+      <td>766</td>
+    </tr>
+    <tr>
+      <th>81</th>
+      <td>Malawi</td>
+      <td>837</td>
+    </tr>
+    <tr>
+      <th>90</th>
+      <td>Mozambique</td>
+      <td>855</td>
+    </tr>
+    <tr>
+      <th>80</th>
+      <td>Madagascar</td>
+      <td>1049</td>
+    </tr>
+    <tr>
+      <th>83</th>
+      <td>Mali</td>
+      <td>1128</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Comoros</td>
+      <td>1169</td>
+    </tr>
+    <tr>
+      <th>127</th>
+      <td>Tanzania</td>
+      <td>1263</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Bangladesh</td>
+      <td>1334</td>
+    </tr>
+    <tr>
+      <th>143</th>
+      <td>Zambia</td>
+      <td>1356</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>Ghana</td>
+      <td>1452</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Benin</td>
+      <td>1468</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>Lesotho</td>
+      <td>1588</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>Kenya</td>
+      <td>1590</td>
+    </tr>
+    <tr>
+      <th>112</th>
+      <td>Senegal</td>
+      <td>1772</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Cambodia</td>
+      <td>1905</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>Nigeria</td>
+      <td>2082</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>Djibouti</td>
+      <td>2140</td>
+    </tr>
+    <tr>
+      <th>101</th>
+      <td>Papua New Guinea</td>
+      <td>2208</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>Guyana</td>
+      <td>2542</td>
+    </tr>
+    <tr>
+      <th>117</th>
+      <td>Solomon Islands</td>
+      <td>2610</td>
+    </tr>
+    <tr>
+      <th>95</th>
+      <td>Nicaragua</td>
+      <td>2682</td>
+    </tr>
+    <tr>
+      <th>87</th>
+      <td>Moldova</td>
+      <td>2925</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>India</td>
+      <td>2972</td>
+    </tr>
+    <tr>
+      <th>104</th>
+      <td>Philippines</td>
+      <td>3510</td>
+    </tr>
+    <tr>
+      <th>88</th>
+      <td>Mongolia</td>
+      <td>3566</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>Honduras</td>
+      <td>3965</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Croatia</td>
+      <td>19084</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>Hungary</td>
+      <td>19330</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>Estonia</td>
+      <td>20662</td>
+    </tr>
+    <tr>
+      <th>115</th>
+      <td>Slovakia</td>
+      <td>22081</td>
+    </tr>
+    <tr>
+      <th>106</th>
+      <td>Portugal</td>
+      <td>23074</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>Czech Republic</td>
+      <td>24712</td>
+    </tr>
+    <tr>
+      <th>94</th>
+      <td>New Zealand</td>
+      <td>27029</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>Israel</td>
+      <td>27548</td>
+    </tr>
+    <tr>
+      <th>116</th>
+      <td>Slovenia</td>
+      <td>27605</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>Korea South</td>
+      <td>27939</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>Greece</td>
+      <td>29361</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>Italy</td>
+      <td>30756</td>
+    </tr>
+    <tr>
+      <th>125</th>
+      <td>Taiwan</td>
+      <td>30881</td>
+    </tr>
+    <tr>
+      <th>119</th>
+      <td>Spain</td>
+      <td>31954</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>France</td>
+      <td>34045</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>Japan</td>
+      <td>34099</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Belgium</td>
+      <td>34493</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>Finland</td>
+      <td>35427</td>
+    </tr>
+    <tr>
+      <th>136</th>
+      <td>United Kingdom</td>
+      <td>35445</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>Germany</td>
+      <td>35613</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Australia</td>
+      <td>35677</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Canada</td>
+      <td>36444</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>Denmark</td>
+      <td>36607</td>
+    </tr>
+    <tr>
+      <th>123</th>
+      <td>Sweden</td>
+      <td>37383</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Austria</td>
+      <td>38152</td>
+    </tr>
+    <tr>
+      <th>93</th>
+      <td>Netherlands</td>
+      <td>40849</td>
+    </tr>
+    <tr>
+      <th>124</th>
+      <td>Switzerland</td>
+      <td>42536</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>Ireland</td>
+      <td>44200</td>
+    </tr>
+    <tr>
+      <th>137</th>
+      <td>United States</td>
+      <td>46716</td>
+    </tr>
+    <tr>
+      <th>98</th>
+      <td>Norway</td>
+      <td>58138</td>
+    </tr>
+  </tbody>
+</table>
+<p>96 rows × 2 columns</p>
+</div></div>
+</div>
+</div>
+<div class="section" id="[]-Square-brackets">
+<h3><code class="docutils literal notranslate"><span class="pre">[]</span></code> Square brackets<a class="headerlink" href="#[]-Square-brackets" title="Permalink to this headline">¶</a></h3>
+<p>As with Series, single square brackets in <code class="docutils literal notranslate"><span class="pre">pandas</span></code> change their behavior depending on the values you pass them. Again, it is worth emphasizing that there is <em>nothing</em> that one can do with square brackets that you can’t do with <code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>, so if they seem to strange, you don’t have to use them.</p>
+<p>With that said, as summarized below, <code class="docutils literal notranslate"><span class="pre">[]</span></code> is actually much safer on DataFrames than on Series.</p>
+<p>The rules of <code class="docutils literal notranslate"><span class="pre">[]</span></code> in DataFrames are:</p>
+<ul class="simple">
+<li><p>If your entry is a <em>single</em> column name, or a list of column names, it will return those columns.</p></li>
+<li><p>If your entry is a slice, it will work like <code class="docutils literal notranslate"><span class="pre">iloc</span></code> and select rows based on row order.</p></li>
+<li><p>If your entry is a boolean array, <em>and</em> of exactly the same length as the number of rows in your data, it will subset rows.</p>
+<ul>
+<li><p>Note this means that <code class="docutils literal notranslate"><span class="pre">[]</span></code> does not do the same thing we saw <code class="docutils literal notranslate"><span class="pre">.loc</span></code> do above where, if passed a short boolean array, it will assume any row without an entry in the boolean array should be dropped.</p></li>
+</ul>
+</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Select one column</span>
+<span class="n">world</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+144          Zimbabwe
+29     Congo Kinshasa
+76            Liberia
+53      Guinea-Bissau
+40            Eritrea
+Name: country, dtype: object
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Select multiple columns</span>
+<span class="n">world</span><span class="p">[[</span><span class="s1">&#39;country&#39;</span><span class="p">,</span> <span class="s1">&#39;gdppcap08&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>gdppcap08</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>144</th>
+      <td>Zimbabwe</td>
+      <td>188</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Congo Kinshasa</td>
+      <td>321</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>Liberia</td>
+      <td>388</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>Guinea-Bissau</td>
+      <td>538</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>Eritrea</td>
+      <td>632</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Boolean test</span>
+<span class="n">world</span><span class="p">[</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;gdppcap08&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">10000</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>region</th>
+      <th>gdppcap08</th>
+      <th>polityIV</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>79</th>
+      <td>Macedonia</td>
+      <td>C&amp;E Europe</td>
+      <td>10041</td>
+      <td>19.0</td>
+    </tr>
+    <tr>
+      <th>118</th>
+      <td>South Africa</td>
+      <td>Africa</td>
+      <td>10109</td>
+      <td>19.0</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Brazil</td>
+      <td>S. America</td>
+      <td>10296</td>
+      <td>18.0</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Costa Rica</td>
+      <td>S. America</td>
+      <td>11241</td>
+      <td>20.0</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>Kazakhstan</td>
+      <td>C&amp;E Europe</td>
+      <td>11315</td>
+      <td>4.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Slice of rows</span>
+<span class="n">world</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>region</th>
+      <th>gdppcap08</th>
+      <th>polityIV</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>144</th>
+      <td>Zimbabwe</td>
+      <td>Africa</td>
+      <td>188</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Congo Kinshasa</td>
+      <td>Africa</td>
+      <td>321</td>
+      <td>15.0</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>Liberia</td>
+      <td>Africa</td>
+      <td>388</td>
+      <td>10.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p><strong>My advice on using ``[]`` on DataFrames:</strong> in short, <code class="docutils literal notranslate"><span class="pre">[]</span></code> is much safer on DataFrames because the situation where <code class="docutils literal notranslate"><span class="pre">[]</span></code> <em>might</em> subset on index labels (if your index labels are integers) or it <em>might</em> subset on row order (if your index labels are not integers) doesn’t exist. Moreover, selecting a single column is <em>extremely</em> common, and this is a case where I use single square brackets all the time.</p>
+<p>In a Series, if I pass <code class="docutils literal notranslate"><span class="pre">0</span></code>, it’s always unclear whether that’s going to get me the first row (row-order-based) or the row with index value 0 (if I have integer index-values). On a DataFrame, a single entry or list of entries will <em>only</em> attempt to match columns based on index values, and if that fails, it throws an exception rather than defaulting to acting like <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">world</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">KeyError</span>                                  Traceback (most recent call last)
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py</span> in <span class="ansi-cyan-fg">get_loc</span><span class="ansi-blue-fg">(self, key, method, tolerance)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2889</span>             <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 2890</span><span class="ansi-red-fg">                 </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_engine<span class="ansi-blue-fg">.</span>get_loc<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2891</span>             <span class="ansi-green-fg">except</span> KeyError<span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">pandas/_libs/index.pyx</span> in <span class="ansi-cyan-fg">pandas._libs.index.IndexEngine.get_loc</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-green-fg">pandas/_libs/index.pyx</span> in <span class="ansi-cyan-fg">pandas._libs.index.IndexEngine.get_loc</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-green-fg">pandas/_libs/hashtable_class_helper.pxi</span> in <span class="ansi-cyan-fg">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-green-fg">pandas/_libs/hashtable_class_helper.pxi</span> in <span class="ansi-cyan-fg">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-red-fg">KeyError</span>: 0
+
+During handling of the above exception, another exception occurred:
+
+<span class="ansi-red-fg">KeyError</span>                                  Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-28-4b0f3501794b&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>world<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/pandas/core/frame.py</span> in <span class="ansi-cyan-fg">__getitem__</span><span class="ansi-blue-fg">(self, key)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2973</span>             <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>columns<span class="ansi-blue-fg">.</span>nlevels <span class="ansi-blue-fg">&gt;</span> <span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   2974</span>                 <span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_getitem_multilevel<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">-&gt; 2975</span><span class="ansi-red-fg">             </span>indexer <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>columns<span class="ansi-blue-fg">.</span>get_loc<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2976</span>             <span class="ansi-green-fg">if</span> is_integer<span class="ansi-blue-fg">(</span>indexer<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   2977</span>                 indexer <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span>indexer<span class="ansi-blue-fg">]</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py</span> in <span class="ansi-cyan-fg">get_loc</span><span class="ansi-blue-fg">(self, key, method, tolerance)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2890</span>                 <span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_engine<span class="ansi-blue-fg">.</span>get_loc<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2891</span>             <span class="ansi-green-fg">except</span> KeyError<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 2892</span><span class="ansi-red-fg">                 </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_engine<span class="ansi-blue-fg">.</span>get_loc<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>_maybe_cast_indexer<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2893</span>         indexer <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>get_indexer<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">[</span>key<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span> method<span class="ansi-blue-fg">=</span>method<span class="ansi-blue-fg">,</span> tolerance<span class="ansi-blue-fg">=</span>tolerance<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2894</span>         <span class="ansi-green-fg">if</span> indexer<span class="ansi-blue-fg">.</span>ndim <span class="ansi-blue-fg">&gt;</span> <span class="ansi-cyan-fg">1</span> <span class="ansi-green-fg">or</span> indexer<span class="ansi-blue-fg">.</span>size <span class="ansi-blue-fg">&gt;</span> <span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">pandas/_libs/index.pyx</span> in <span class="ansi-cyan-fg">pandas._libs.index.IndexEngine.get_loc</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-green-fg">pandas/_libs/index.pyx</span> in <span class="ansi-cyan-fg">pandas._libs.index.IndexEngine.get_loc</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-green-fg">pandas/_libs/hashtable_class_helper.pxi</span> in <span class="ansi-cyan-fg">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-green-fg">pandas/_libs/hashtable_class_helper.pxi</span> in <span class="ansi-cyan-fg">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-red-fg">KeyError</span>: 0
+</pre></div></div>
+</div>
+<p>Similarly, boolean subsetting always acts like you’re using <code class="docutils literal notranslate"><span class="pre">.loc</span></code> (aligning on index values where it can, row order if it can’t), and slices in <code class="docutils literal notranslate"><span class="pre">[]</span></code> <em>always</em> get behavior like <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>, making behavior much more predictable.</p>
+</div>
+</div>
+<div class="section" id="4.-Getting-Columns-with-Dot-Notation">
+<h2>4. Getting Columns with Dot-Notation<a class="headerlink" href="#4.-Getting-Columns-with-Dot-Notation" title="Permalink to this headline">¶</a></h2>
+<p>In addition to passing the name of a column into <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or to <code class="docutils literal notranslate"><span class="pre">[]</span></code>, columns can also <em>sometimes</em> be access using dot-notation:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">world</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+144          Zimbabwe
+29     Congo Kinshasa
+76            Liberia
+53      Guinea-Bissau
+40            Eritrea
+Name: country, dtype: object
+</pre></div></div>
+</div>
+<p>This method of getting columns is very easy and intuitive (given how often we use dot-notation in Python more broadly), but it has a couple significant pit-falls:</p>
+<ul class="simple">
+<li><p>Only works for column names without spaces or punctuation</p></li>
+<li><p>You can’t pass a variable to dot-notation, you have to write out the column explicity (so you can’t write generalized code).</p></li>
+<li><p>Only works if the column name isn’t the same as an existing method (i.e. df.count will call the <code class="docutils literal notranslate"><span class="pre">count</span></code> method, even if you have a column named “count”)</p></li>
+<li><p>Causes big problems if you try to put it on the left side of the equals sign.</p></li>
+</ul>
+<p>Of these, the reasons for the first and second aren’t complicated, but the third and fourth concerns bear exploring.</p>
+<p>Suppose we added a column to our data called <code class="docutils literal notranslate"><span class="pre">rank</span></code> that gave each country’s GDP rank (this code is a little convoluted because there is an easier way to do this, but this works):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;gdppcap08&#39;</span><span class="p">)</span>
+<span class="n">world</span><span class="p">[</span><span class="s1">&#39;rank&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">world</span><span class="p">))</span>
+<span class="n">world</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>region</th>
+      <th>gdppcap08</th>
+      <th>polityIV</th>
+      <th>rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>144</th>
+      <td>Zimbabwe</td>
+      <td>Africa</td>
+      <td>188</td>
+      <td>6.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Congo Kinshasa</td>
+      <td>Africa</td>
+      <td>321</td>
+      <td>15.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>Liberia</td>
+      <td>Africa</td>
+      <td>388</td>
+      <td>10.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>Guinea-Bissau</td>
+      <td>Africa</td>
+      <td>538</td>
+      <td>11.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>Eritrea</td>
+      <td>Africa</td>
+      <td>632</td>
+      <td>3.0</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>But if we try and access the rack column with dot-notation, we don’t get that column, we get the method <code class="docutils literal notranslate"><span class="pre">rank</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">world</span><span class="o">.</span><span class="n">rank</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;bound method NDFrame.rank of             country        region  gdppcap08  polityIV  rank
+144        Zimbabwe        Africa        188       6.0     0
+29   Congo Kinshasa        Africa        321      15.0     1
+76          Liberia        Africa        388      10.0     2
+53    Guinea-Bissau        Africa        538      11.0     3
+40          Eritrea        Africa        632       3.0     4
+..              ...           ...        ...       ...   ...
+62          Ireland     W. Europe      44200      20.0   140
+137   United States    N. America      46716      20.0   141
+114       Singapore  Asia-Pacific      49284       8.0   142
+98           Norway   Scandinavia      58138      20.0   143
+107           Qatar   Middle East      85868       0.0   144
+
+[145 rows x 5 columns]&gt;
+</pre></div></div>
+</div>
+<p>Now if you hit this problem on the right side an assignment operator, you’ll get an exception and will know you have a problem. Suppose you want to move up everyone’s rank by 1:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">world</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="n">world</span><span class="p">[</span><span class="s1">&#39;rank&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">world</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>region</th>
+      <th>gdppcap08</th>
+      <th>polityIV</th>
+      <th>rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>144</th>
+      <td>Zimbabwe</td>
+      <td>Africa</td>
+      <td>188</td>
+      <td>6.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Congo Kinshasa</td>
+      <td>Africa</td>
+      <td>321</td>
+      <td>15.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>Liberia</td>
+      <td>Africa</td>
+      <td>388</td>
+      <td>10.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>Guinea-Bissau</td>
+      <td>Africa</td>
+      <td>538</td>
+      <td>11.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>Eritrea</td>
+      <td>Africa</td>
+      <td>632</td>
+      <td>3.0</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>It fails silently because what you’ve actually done is over-written the <em>method</em> rank with the column <code class="docutils literal notranslate"><span class="pre">rank</span></code> plus 1. Now now only has your <code class="docutils literal notranslate"><span class="pre">rank</span></code> column not changed (see it still starts with 0), but now you’ve broken the <code class="docutils literal notranslate"><span class="pre">rank</span></code> method:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">world</span><span class="o">.</span><span class="n">rank</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-34-685de3d339fd&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>world<span class="ansi-blue-fg">.</span>rank<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">TypeError</span>: &#39;Series&#39; object is not callable
+</pre></div></div>
+</div>
+<p>When you try to assign values using dot-notation, you also get into trouble if you try to create a <em>new</em> column. For example:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">world</span><span class="o">.</span><span class="n">rank_doubled</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">world</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">world</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/Nick/miniconda3/lib/python3.7/site-packages/ipykernel_launcher.py:1: UserWarning: Pandas doesn&#39;t allow columns to be created via a new attribute name - see https://pandas.pydata.org/pandas-docs/stable/indexing.html#attribute-access
+  &#34;&#34;&#34;Entry point for launching an IPython kernel.
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>region</th>
+      <th>gdppcap08</th>
+      <th>polityIV</th>
+      <th>rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>144</th>
+      <td>Zimbabwe</td>
+      <td>Africa</td>
+      <td>188</td>
+      <td>6.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Congo Kinshasa</td>
+      <td>Africa</td>
+      <td>321</td>
+      <td>15.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>Liberia</td>
+      <td>Africa</td>
+      <td>388</td>
+      <td>10.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>Guinea-Bissau</td>
+      <td>Africa</td>
+      <td>538</td>
+      <td>11.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>Eritrea</td>
+      <td>Africa</td>
+      <td>632</td>
+      <td>3.0</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>See now <code class="docutils literal notranslate"><span class="pre">rank_doubled</span></code> wasn’t added to your DataFrame? It just disappears. <code class="docutils literal notranslate"><span class="pre">pandas</span></code> does now raise a warning, but warnings don’t stop your code from running, so if you don’t see it, you can corrupt your data.</p>
+<p><strong>My advice on dot-notation:</strong></p>
+<ul class="simple">
+<li><p>Never, just <em>never</em> use dot-notation on the left-side of the assignment operator. It’s just begging for trouble.</p></li>
+<li><p>Try not to use it on the right side of the assignment operator. It’s safer than using it on the left side of the assignment operator, but none of us will ever memorize all the names of methods in <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, and if your column happens to have the same name as a method, you may not notice the error.</p></li>
+</ul>
+</div>
+<div class="section" id="5.-DataFrames:-Collection-of-Series">
+<h2>5. DataFrames: Collection of Series<a class="headerlink" href="#5.-DataFrames:-Collection-of-Series" title="Permalink to this headline">¶</a></h2>
+<p>While it is natural to think of a DataFrame as a single table (like a numpy matrix), in reality <strong>a DataFrame is just a collection of Series</strong>.</p>
+<p>To see this, let’s pull out individual columns using square bracket notation, and check it’s type:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">type</span><span class="p">(</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+pandas.core.series.Series
+</pre></div></div>
+</div>
+<p>Tada!</p>
+<p>And that means that you can always pull out a column from a DataFrame and manipulate it using the tools you’ve already learned from the Series tutorial. And because you know how to extract the <code class="docutils literal notranslate"><span class="pre">numpy</span></code> array that underlies a Series, that means you also always know how to move from DataFrames to <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays if you need to.</p>
+<div class="section" id="Selecting-Series-versus-Selecting-DataFrames">
+<h3>Selecting Series versus Selecting DataFrames<a class="headerlink" href="#Selecting-Series-versus-Selecting-DataFrames" title="Permalink to this headline">¶</a></h3>
+<p>There is one point of nuance worth exploring: when you extract a single column from a DataFrame, you have the choice of either extracting a Series, or extracting a DataFrame with a single column. What determines this is whether you use one pair of square brackets, or two.</p>
+<p>If you use a single set of square brackets (or pass just the name of a column to <code class="docutils literal notranslate"><span class="pre">loc</span></code>, you get back a Series. But if you pass a <em>list</em> with the column name, you get back a DataFrame:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">type</span><span class="p">(</span><span class="n">world</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+pandas.core.series.Series
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">type</span><span class="p">(</span><span class="n">world</span><span class="p">[[</span><span class="s1">&#39;country&#39;</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+pandas.core.frame.DataFrame
+</pre></div></div>
+</div>
+<p>Note <strong>that this is the opposite behavior of R</strong>, where double brackets get you a Vector, and single brackets get you a <code class="docutils literal notranslate"><span class="pre">data.frame</span></code>!</p>
+<p>This also holds for rows, by the way. If you ask for a single row, you will actually get back a (newly construted) Series:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">type</span><span class="p">(</span><span class="n">world</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+pandas.core.series.Series
+</pre></div></div>
+</div>
+<p>(Obviously, if you ask for more than one row, or more than one column, you will always get back a DataFrame, since the object you’re requesting is intrinsically 2-dimensional and can’t be represented as a Series. )</p>
+</div>
+</div>
+<div class="section" id="6.-Exercises!">
+<h2>6. Exercises!<a class="headerlink" href="#6.-Exercises!" title="Permalink to this headline">¶</a></h2>
+<p><em>If you are enrolled in Practical Data Science at Duke, don’t do these exercises on your own – we’ll do them in class!</em></p>
+<p><a class="reference internal" href="exercises/Exercise_dataframe.html"><span class="doc">DataFrame Exercises</span></a></p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Practical DS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_schedule.html">CLASS SCHEDULE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning_track.html">LEARNING TOPICS</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="setup_environment.html">Setting Up Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_python_packages.html">Managing Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Pandas 2: DataFrames</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#1.-What-is-a-DataFrame">1. What is a DataFrame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#2.-Getting-To-Know-Your-DataFrame">2. Getting To Know Your DataFrame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#3.-Subsetting-a-DataFrame">3. Subsetting a DataFrame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#4.-Getting-Columns-with-Dot-Notation">4. Getting Columns with Dot-Notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#5.-DataFrames:-Collection-of-Series">5. DataFrames: Collection of Series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#6.-Exercises!">6. Exercises!</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part2.html">Plotting, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cleaning_editingvalues.html">Cleaning: Editing Values</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyter.html">Jupyter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_and_github.html">Git and Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pr_review.html">Reviewing Code on Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CLOUD</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_storage_on_azure.html">Storage on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Dask on Azure Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
+</ul>
+<p class="caption"><span class="caption-text">SKILLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_big_data.html">What is Big Data?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="big_data_strategies.html">Working with Big Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backwards_design.html">Backwards Design</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="buying_datascience_computer.html">Buying a Data Science Computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="pandas_series.html" title="previous chapter">Pandas Lesson 1: Series</a></li>
+      <li>Next: <a href="plotting_part1.html" title="next chapter">Plotting with <code class="docutils literal notranslate"><span class="pre">plotnine</span></code></a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick Eubank.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/pandas_dataframes.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

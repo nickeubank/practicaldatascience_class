@@ -1,0 +1,208 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Maternal Smoking and Birth Weight\n",
+    "\n",
+    "\n",
+    "For these exercises, we will borrow some data and exercises from another [MIDS course on Statistical Modeling](https://ids-702-f19.github.io/Course-Website/hw/hw-02.html):\n",
+    "\n",
+    "These days, it is widely understood that mothers who smoke during pregnancy risk exposing their babies to many health problems. This was not common knowledge fifty years ago. One of the first studies that addressed the issue of pregnancy and smoking was the Child Health and Development Studies, a comprehensive study of all babies born between 1960 and 1967 at the Kaiser Foundation Hospital in Oakland, CA. The original reference for the study is Yerushalmy (1964, American Journal of Obstetrics and Gynecology, pp. 505-518). The data and a summary of the study are in Nolan and Speed (2000, Stat Labs, Chapter 10) and can be found at [the book’s website.](https://www.stat.berkeley.edu/users/statlabs/)\n",
+    "\n",
+    "There were about 15,000 families in the study. We will only analyze a subset of the data, in particular 1236 male single births where the baby lived at least 28 days. The researchers interviewed mothers early in their pregnancy to collect information on socioeconomic and demographic characteristics, including an indicator of whether the mother smoked during pregnancy. The variables in the dataset are described in the [code book here](https://ids-702-f19.github.io/Course-Website/hw/hw-02.html). In this exercise, we will attempt to use this data to answer the following questions:\n",
+    "\n",
+    "1. Do mothers who smoke tend to give birth to babies with lower weights than mothers who do not smoke?\n",
+    "2. What is a likely range for the difference in birth weights for smokers and non-smokers?\n",
+    "3. Is there any evidence that the association between smoking and birth weight differs by mother’s race? If so, characterize those differences.\n",
+    "4. Are there other interesting associations with birth weight that are worth mentioning?\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(1)** Load the data \"smoking.csv\", which includes information on both biometrics of infants at birth, and information on mothers (variables prefixed with the letter \"m\"), from [this MIDS repo](https://github.com/nickeubank/MIDS_Data). (Yup, I'm giving you CLEAN DATA! I think this is the only time I've done this in this course! Enjoy it. :))."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(2)** Start by plotting the relationship between infant weight at birth and gestation (length of pregnancy (in days) at time of birth) for both children who smoke and those who do not. Limit attention to children who reach at least 225 days of gestation (there aren't really any observations for parents who smoke for less than that, so we don't get common support). Does it seem like birthweights tend to be lower for the children of parents who smoke at a given gestational period?"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Linear Regression"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(3)** Now check this relationship using `statsmodels`. Regress birthweight on gestational period and whether the infant's mother smoked. \n",
+    "\n",
+    "NOTE: you may hit a problem because of the name of one of your columns. You should probably be able to guess the problem given your experience with Python. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(4)** Now let's expand our model to also take into account mothers' pregnancy weight and race (make sure to treat race as a categorical variable! If you're rusty on categoricals and indicator variables, [here's a little refresher](https://www.unifyingdatascience.org/html/interpreting_indicator_vars.html).)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(5)** Now let's test for whether there is an interaction between the mother's race and the effect of smoking. \n",
+    "\n",
+    "Note that race is coded as follows:\n",
+    "\n",
+    "```\n",
+    "mrace    mother’s race or ethnicity\n",
+    "         0-5= white\n",
+    "         6  = mexican\n",
+    "         7 = black\n",
+    "         8 = asian\n",
+    "         9 = mix\n",
+    "         99 = unknown\n",
+    "```\n",
+    "\n",
+    "As most variation in this data is between \"white\" and other categories, first recode race to be an indicator for white and non-white for easier interpretation. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(6)** Using [post-regression test syntax](https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.OLSResults.t_test.html) (not by running a new regression on a subpopulation), recover the coefficient and t-statistic for whether smoking reduces birth weight for white mothers. How does this coefficient compare to that for non-white mothers?"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The reduction in birth weight associated with smoking for white mothers appears to be about 40% that of the penalty of black mothers."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(7)** Now let's use this model to predict some values. Let's generate some hypothetical newborns:\n",
+    "\n",
+    "```python\n",
+    "newborns = pd.DataFrame({'smoke': [True, True, False, False], \n",
+    "                         'white': [True, False, True, False],\n",
+    "                         'gestation': [253, 300, 248, 287],\n",
+    "                         'mpregwt': [132, 129, 140, 139]})\n",
+    "```\n",
+    "\n",
+    "Using the model you ran above with gestation, smoke, mpregwt, white, and the interaction of white and smoke, predict birth weights for these newborns. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## statsmodels versus R\n",
+    "\n",
+    "A quick but important note: the tools that are made available in different packages is often a function of who uses those packages, and how they use them. By and large, nearly all statisticians use R, and so many stats tools (like automatic forward-model-selection or backwards-model-selection) have \"convenience implementations\" (single functions that do all the things you'd want to accomplish) in R, but aren't available as convenience packages in `statsmodels`. That's because `statsmodels` was mostly written by economists and social scientists who tend to feel model selection should be a function of theory not statistical performance (not taking sides: just reporting a difference that exists). \n",
+    "\n",
+    "To be clear, you can still implement things like forward model selection yourself in Python -- just write a loop that tries different regressors and plots the resulting AICs! -- but it will often take a little more work. (Indeed, you can find examples of people [writing these loops on the web](https://planspace.org/20150423-forward_selection_with_statsmodels/)). \n",
+    "\n",
+    "This is one of the reasons that languages are sticky: once a group of people have invested in adding all the bells and whistles they like to a language, there are good reasons to not move to another language, even if the other language has some advantages. A statistician who likes the basic language organization of Python more than R, for example, may still stay with R because the packages already do everything a statistician wants to do, and so it's not worth having to re-implement common tasks in a new language. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Logistic Regression"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(8)** Now, using statsmodels, evaluate the impact of smoking on the likelihood a child is born prematurely (where \"premature\" is defined as gestation of less than 252 days)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Weighting\n",
+    "\n",
+    "In our merging exercises, we ran a difference-in-difference analysis on crime in California counties to see if, following drug legalization, there was a larger decline in violent crime in counties that had previously also had high drug arrest rates (to test the idea that violence was being generated by the drug trade, and that legalization would decrease this violence). \n",
+    "\n",
+    "In those analyses, we treated counties as equally-weighted units of analysis. If we think that each county is a single \"community\", and we think community is shaped at the level of communities (particularly when our community division is related to administrative boundaries that impact policing and government services, and is the case with counties), then this is reasonable. But one might think that crime is determined at the individual level, or maybe neighborhood level, and so big counties should \"count more\" in our analysis.  \n",
+    "\n",
+    "Here, let's use weighted least squares to weight observations based on population. This will allow bigger counties to influence our estimates more. \n",
+    "\n",
+    "**(1)** To begin, download our data on California arrest rates and population from [github](https://github.com/nickeubank/MIDS_Data/blob/master/arrest_rates_and_population.parquet). You will see I've reshaped the data to long format for convenience. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(2)** To run our difference-in-difference in a regression framework, we need both an indicator variable for observations that occur after legalization (i.e. year == 2018), and an indicator for the population we consider treated (those who had high drug arrest rates in 2009). Re-create those here. \n",
+    "\n",
+    "*Note:* if you want, you can also use the 2009 drug arrest rates as a continuous variable. This is a kind of \"generalized difference-in-difference\", in which we're just doing the continuous analogue of the thing we do when we split the sample into \"high\" and \"low\" 2009 arrest rates. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(3)** Now regression the violent arrest rate on your two indicators and their interaction. The coefficient on the interaction is your \"difference-in-difference\" estimate! If you go back to your old homeworks, you should find the coefficient is exactly what you calculated. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(4)** Now let's do the same analysis, but this time using county population as a weight in a Weighted Least Squares regression (`smf.wls`). Just pass the keyword argument `weights` a vector fo weights (in this case, `arrests['total_population']`). Note that the weights argument is outside of the formula, so you have to pass an actual vector of values, not just the name of a column. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Absolutely positively need the solutions?\n",
+    "\n",
+    "*Don't use this link until you've really, really spent time struggling with your code!* Doing so only results in you cheating yourself. \n",
+    "\n",
+    "[Link](../solutions_warning.ipynb)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

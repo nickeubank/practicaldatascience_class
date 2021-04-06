@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Debugging &#8212; Practical Data Science</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="Debugging">
+<h1>Debugging<a class="headerlink" href="#Debugging" title="Permalink to this headline">¶</a></h1>
+<p>Few activities are as hated by most programmers as debugging. You always end up having to do it at the <em>worst</em> possible moment, and its easy to go insane doing it.</p>
+<p>But there are important strategies that can make debugging much less painful, and once you learn a few of them, debugging <em>can</em> actually be kind of fun (at least when you’re not facing a deadline). Think of it as a detective game where you are trying to follow the clues to track down an insidious criminal!</p>
+<div class="section" id="Debugging-is-an-active-pursuit">
+<h2>Debugging is an <em>active</em> pursuit<a class="headerlink" href="#Debugging-is-an-active-pursuit" title="Permalink to this headline">¶</a></h2>
+<p>The most valuable advice I ever got about programming was: “Programming is an <em>active</em> pursuit. If you could just stare at your code and see your problem, you probably won’t have made an error in the first place.” (Thank you <a class="reference external" href="https://research.pomona.edu/tahir-andrabi/">Tahir</a>!) Instead, the key to effective debugging is to <em>actively play with your code</em> to (a) locate the source of your bug, and then (b) figure out what’s going wrong.</p>
+</div>
+<div class="section" id="Types-of-Bugs">
+<h2>Types of Bugs<a class="headerlink" href="#Types-of-Bugs" title="Permalink to this headline">¶</a></h2>
+<p>There are, broadly speaking, two types of errors in a problem: <strong>syntax errors and logic errors.</strong></p>
+<p>Syntax errors are the errors that arise when write code that won’t run. In many ways, this actually makes syntax errors easier, because by definition, they cause Python to raise and raise an Exception (the fancy name for an error), often making them much easier to diagnose.</p>
+</div>
+<div class="section" id="Finding-your-problem">
+<h2>Finding your problem<a class="headerlink" href="#Finding-your-problem" title="Permalink to this headline">¶</a></h2>
+<p>The first thing you should do when you hit a problem is to figure out the <em>exact location</em> of the problem.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Practical DS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_schedule.html">CLASS SCHEDULE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning_track.html">LEARNING TOPICS</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup_environment.html">Setting Up Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_python_packages.html">Managing Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_dataframes.html">Pandas 2: DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part2.html">Plotting, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cleaning_editingvalues.html">Cleaning: Editing Values</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyter.html">Jupyter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_and_github.html">Git and Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pr_review.html">Reviewing Code on Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CLOUD</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_storage_on_azure.html">Storage on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Dask on Azure Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
+</ul>
+<p class="caption"><span class="caption-text">SKILLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_big_data.html">What is Big Data?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="big_data_strategies.html">Working with Big Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backwards_design.html">Backwards Design</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="buying_datascience_computer.html">Buying a Data Science Computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick Eubank.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/debugging.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>
