@@ -1,0 +1,766 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-133829453-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plotting with plotnine, Part 2 &#8212; Practical Data Science</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Views and Copies in pandas" href="views_and_copies_in_pandas.html" />
+    <link rel="prev" title="Plotting with plotnine" href="plotting_part1.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Plotting-with-plotnine,-Part-2">
+<h1>Plotting with <code class="docutils literal notranslate"><span class="pre">plotnine</span></code>, Part 2<a class="headerlink" href="#Plotting-with-plotnine,-Part-2" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Tutorial-Attribution">
+<h2>Tutorial Attribution<a class="headerlink" href="#Tutorial-Attribution" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">plotnine</span></code> tutorial below is derived (with generous permission) from a <a class="reference external" href="http://www.rebeccabarter.com/blog/2017-11-17-ggplot2_tutorial/">truely excellent tutorial for ggplot2</a> (written for R) by Rebecca Barter, who <a class="reference external" href="http://www.rebeccabarter.com/">hosts an excellent data science in R blog</a>. It is very close to her original materials, with changes made primarily to convert R <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code> code into <code class="docutils literal notranslate"><span class="pre">plotnine</span></code> code (which is remakrably easy.</p>
+</div>
+<div class="section" id="Scales">
+<h2>Scales<a class="headerlink" href="#Scales" title="Permalink to this headline">¶</a></h2>
+<p>We are going to return to our original scatterplot example to discuss scales, legend and positioning.</p>
+<p>To remind you, this scatterplot showed GDP per capita against life expectancy for each country colored by continent and sized by population.</p>
+<p>To keep things simple, let’s filter to a single year.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">gapminder_2007</span> <span class="o">=</span> <span class="n">gapminder</span><span class="p">[</span><span class="n">gapminder</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="mi">2007</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="n">ggplot</span><span class="p">(</span><span class="n">gapminder_2007</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span><span class="s1">&#39;gdpPercap&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s1">&#39;pop&#39;</span><span class="p">))</span> <span class="o">+</span>
+        <span class="n">geom_point</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/plotting_part2_5_0.png" src="_images/plotting_part2_5_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;ggplot: (-9223372029312629956)&gt;
+</pre></div></div>
+</div>
+<p>The scale of a plot describes the features of the space in which it is plotted. Arguably, it would be better to show <code class="docutils literal notranslate"><span class="pre">gdpPercap</span></code> on a logarithmic scale, rather than in its raw form. Fortunately, this is easy to do using a <code class="docutils literal notranslate"><span class="pre">scale</span></code> function, which can be considered another layer that transforms our plot.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="n">ggplot</span><span class="p">(</span><span class="n">gapminder_2007</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;gdpPercap&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s1">&#39;pop&#39;</span><span class="p">))</span> <span class="o">+</span>
+        <span class="n">geom_point</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span>
+        <span class="n">scale_x_log10</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/plotting_part2_7_0.png" src="_images/plotting_part2_7_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;ggplot: (-9223372029312645660)&gt;
+</pre></div></div>
+</div>
+<p>The default x- (and y-) axes scales are <code class="docutils literal notranslate"><span class="pre">scale_x_continuous</span></code> and <code class="docutils literal notranslate"><span class="pre">scale_y_continuous</span></code>, but other options include <code class="docutils literal notranslate"><span class="pre">scale_x_sqrt</span></code> and <code class="docutils literal notranslate"><span class="pre">scale_x_reverse</span></code>.</p>
+<p>Each of these scale functions has many options including changing the limits, the breaks, etc. For example in the plot below, we manipulate the x-axis by providing arguments to our <code class="docutils literal notranslate"><span class="pre">scale</span></code> function of choice.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="n">ggplot</span><span class="p">(</span><span class="n">gapminder_2007</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;gdpPercap&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s1">&#39;pop&#39;</span><span class="p">))</span> <span class="o">+</span>
+        <span class="n">geom_point</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span>
+        <span class="c1"># clean the x-axis breaks</span>
+        <span class="n">scale_x_log10</span><span class="p">(</span><span class="n">breaks</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">],</span>
+                      <span class="n">limits</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">120000</span><span class="p">])</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/plotting_part2_9_0.png" src="_images/plotting_part2_9_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;ggplot: (-9223372029312645800)&gt;
+</pre></div></div>
+</div>
+<p>We could also manipulate the scale of the size variable. Below, we expand the range of sizes and clean up the variable name. Since the variable we provided for size is a continuous variable (<code class="docutils literal notranslate"><span class="pre">pop</span></code>) we use the <code class="docutils literal notranslate"><span class="pre">scale_size_continuous</span></code> argument.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="n">ggplot</span><span class="p">(</span><span class="n">gapminder_2007</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;gdpPercap&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s1">&#39;pop&#39;</span><span class="p">))</span> <span class="o">+</span>
+        <span class="c1"># add scatter points</span>
+        <span class="n">geom_point</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span>
+        <span class="c1"># log-scale the x-axis</span>
+        <span class="n">scale_x_log10</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;GDP Per Capita&#39;</span><span class="p">)</span> <span class="o">+</span>
+        <span class="c1"># change the size scale</span>
+        <span class="n">scale_size</span><span class="p">(</span><span class="nb">range</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+                   <span class="n">breaks</span> <span class="o">=</span>  <span class="p">[</span><span class="mi">250000000</span><span class="p">,</span> <span class="mi">500000000</span><span class="p">,</span> <span class="mi">750000000</span><span class="p">,</span> <span class="mi">1000000000</span><span class="p">,</span> <span class="mi">1250000000</span><span class="p">],</span>
+                   <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;250&quot;</span><span class="p">,</span> <span class="s2">&quot;500&quot;</span><span class="p">,</span> <span class="s2">&quot;750&quot;</span><span class="p">,</span> <span class="s2">&quot;1000&quot;</span><span class="p">,</span> <span class="s2">&quot;1250&quot;</span><span class="p">])</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/plotting_part2_11_0.png" src="_images/plotting_part2_11_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;ggplot: (7542991659)&gt;
+</pre></div></div>
+</div>
+<p>Scales also exist for other aesthetic featuers such as <code class="docutils literal notranslate"><span class="pre">fill</span></code>, <code class="docutils literal notranslate"><span class="pre">color</span></code>, <code class="docutils literal notranslate"><span class="pre">alpha</span></code>, etc.</p>
+</div>
+<div class="section" id="Changing-Labels">
+<h2>Changing Labels<a class="headerlink" href="#Changing-Labels" title="Permalink to this headline">¶</a></h2>
+<p>Notice that in the last plot, we changed the name of the x-axis using the <code class="docutils literal notranslate"><span class="pre">name</span></code> argument in <code class="docutils literal notranslate"><span class="pre">scale_x_log10()</span></code>. If you want to play with all your labels in one place, though, we can use the <code class="docutils literal notranslate"><span class="pre">labs</span></code> option. As an example, below we add a title and change the name of the y-axis and legends using the <code class="docutils literal notranslate"><span class="pre">labs</span></code> function.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="n">ggplot</span><span class="p">(</span><span class="n">gapminder_2007</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;gdpPercap&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s1">&#39;pop&#39;</span><span class="p">))</span> <span class="o">+</span>
+        <span class="c1"># add scatter points</span>
+        <span class="n">geom_point</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span>
+        <span class="c1"># log-scale the x-axis</span>
+        <span class="n">scale_x_log10</span><span class="p">()</span> <span class="o">+</span>
+        <span class="c1"># change labels</span>
+        <span class="n">labs</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;GDP versus life expectancy in 2007&quot;</span><span class="p">,</span>
+             <span class="n">x</span><span class="o">=</span><span class="s2">&quot;GDP per capita (log scale)&quot;</span><span class="p">,</span>
+             <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Life expectancy&quot;</span><span class="p">,</span>
+             <span class="n">size</span><span class="o">=</span><span class="s2">&quot;Popoulation&quot;</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Continent&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/plotting_part2_14_0.png" src="_images/plotting_part2_14_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;ggplot: (-9223372029312856274)&gt;
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Faceting">
+<h2>Faceting<a class="headerlink" href="#Faceting" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes we want to be able to make multiple plots of the same thing across different categories. This can be achieved with minimal repetition using faceting.</p>
+<p>In the example below, we will remake the plot above individually for each continent.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="n">ggplot</span><span class="p">(</span><span class="n">gapminder_2007</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;gdpPercap&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s1">&#39;pop&#39;</span><span class="p">))</span> <span class="o">+</span>
+        <span class="c1"># add scatter points</span>
+        <span class="n">geom_point</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span>
+        <span class="c1"># log-scale the x-axis</span>
+        <span class="n">scale_x_log10</span><span class="p">()</span> <span class="o">+</span>
+        <span class="c1"># change labels</span>
+        <span class="n">labs</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;GDP versus life expectancy in 2007&quot;</span><span class="p">,</span>
+             <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;GDP per capita (log scale)&quot;</span><span class="p">,</span>
+             <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;Life expectancy&quot;</span><span class="p">,</span>
+             <span class="n">size</span> <span class="o">=</span> <span class="s2">&quot;Popoulation (millions)&quot;</span><span class="p">,</span>
+             <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;Continent&quot;</span><span class="p">)</span> <span class="o">+</span>
+        <span class="c1"># change the size scale</span>
+        <span class="n">scale_size</span><span class="p">(</span><span class="nb">range</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+                   <span class="n">breaks</span> <span class="o">=</span>  <span class="p">[</span><span class="mi">250000000</span><span class="p">,</span> <span class="mi">500000000</span><span class="p">,</span> <span class="mi">750000000</span><span class="p">,</span> <span class="mi">1000000000</span><span class="p">,</span> <span class="mi">1250000000</span><span class="p">],</span>
+                   <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;250&quot;</span><span class="p">,</span> <span class="s2">&quot;500&quot;</span><span class="p">,</span> <span class="s2">&quot;750&quot;</span><span class="p">,</span> <span class="s2">&quot;1000&quot;</span><span class="p">,</span> <span class="s2">&quot;1250&quot;</span><span class="p">])</span> <span class="o">+</span>
+        <span class="n">facet_wrap</span><span class="p">(</span><span class="s1">&#39;continent&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/plotting_part2_17_0.png" src="_images/plotting_part2_17_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;ggplot: (-9223372029312635420)&gt;
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Themes:-making-even-more-beautiful-figures-with-plotnine">
+<h2>Themes: making even more beautiful figures with plotnine<a class="headerlink" href="#Themes:-making-even-more-beautiful-figures-with-plotnine" title="Permalink to this headline">¶</a></h2>
+<p>One of the first things I usually do when I make a ggplot is edit the default theme. I actually really don’t like the grey background, nor do I like having a grid unless it really helps with the plot interpretation.</p>
+<p>One of the simplest themes is <code class="docutils literal notranslate"><span class="pre">theme_classic</span></code>, however there are several other themes to choose from. The <code class="docutils literal notranslate"><span class="pre">ggthemes</span></code> package offers many additional themes, but you could also make your own using the <code class="docutils literal notranslate"><span class="pre">theme()</span></code> function.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="n">ggplot</span><span class="p">(</span><span class="n">gapminder_2007</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;gdpPercap&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s1">&#39;pop&#39;</span><span class="p">))</span> <span class="o">+</span>
+        <span class="c1"># add scatter points</span>
+        <span class="n">geom_point</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span>
+        <span class="c1"># log-scale the x-axis</span>
+        <span class="n">scale_x_log10</span><span class="p">()</span> <span class="o">+</span>
+        <span class="c1"># change labels</span>
+        <span class="n">labs</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;GDP versus life expectancy in 2007&quot;</span><span class="p">,</span>
+             <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;GDP per capita (log scale)&quot;</span><span class="p">,</span>
+             <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;Life expectancy&quot;</span><span class="p">,</span>
+             <span class="n">size</span> <span class="o">=</span> <span class="s2">&quot;Popoulation (millions)&quot;</span><span class="p">,</span>
+             <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;Continent&quot;</span><span class="p">)</span> <span class="o">+</span>
+        <span class="c1"># change the size scale</span>
+        <span class="n">scale_size</span><span class="p">(</span><span class="nb">range</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+                   <span class="n">breaks</span> <span class="o">=</span>  <span class="p">[</span><span class="mi">250000000</span><span class="p">,</span> <span class="mi">500000000</span><span class="p">,</span> <span class="mi">750000000</span><span class="p">,</span> <span class="mi">1000000000</span><span class="p">,</span> <span class="mi">1250000000</span><span class="p">],</span>
+                   <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;250&quot;</span><span class="p">,</span> <span class="s2">&quot;500&quot;</span><span class="p">,</span> <span class="s2">&quot;750&quot;</span><span class="p">,</span> <span class="s2">&quot;1000&quot;</span><span class="p">,</span> <span class="s2">&quot;1250&quot;</span><span class="p">])</span> <span class="o">+</span>
+        <span class="c1"># add a nicer theme</span>
+        <span class="n">theme_classic</span><span class="p">(</span><span class="n">base_family</span> <span class="o">=</span> <span class="s2">&quot;Helvetica&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/plotting_part2_20_0.png" src="_images/plotting_part2_20_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;ggplot: (7542991743)&gt;
+</pre></div></div>
+</div>
+<p>As an example of further customization of the ggplot theme, below we do the following:</p>
+<ul class="simple">
+<li><p>grey the axes lines (set <code class="docutils literal notranslate"><span class="pre">axis.line</span> <span class="pre">=</span> <span class="pre">element_blank()</span></code> in <code class="docutils literal notranslate"><span class="pre">theme()</span></code>)</p></li>
+<li><p>add some text annotations (add <code class="docutils literal notranslate"><span class="pre">geom_text</span></code> layer)</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="n">ggplot</span><span class="p">(</span><span class="n">gapminder_2007</span><span class="p">)</span> <span class="o">+</span>
+        <span class="c1"># add scatter points</span>
+        <span class="n">geom_point</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;gdpPercap&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s1">&#39;pop&#39;</span><span class="p">),</span>
+                   <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">+</span>
+        <span class="c1"># add some text annotations for the very large countries</span>
+        <span class="n">geom_text</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;gdpPercap&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;country&#39;</span><span class="p">),</span>
+                  <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span>
+                  <span class="n">data</span><span class="o">=</span><span class="n">gapminder_2007</span><span class="p">[(</span><span class="n">gapminder_2007</span><span class="p">[</span><span class="s1">&#39;pop&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1000000000</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">gapminder_2007</span><span class="o">.</span><span class="n">country</span> <span class="o">==</span> <span class="s2">&quot;Nigeria&quot;</span><span class="p">)</span> <span class="o">|</span>  <span class="p">(</span><span class="n">gapminder_2007</span><span class="o">.</span><span class="n">country</span> <span class="o">==</span> <span class="s2">&quot;United States&quot;</span><span class="p">)])</span> <span class="o">+</span>
+        <span class="c1"># clean the axes names and breaks</span>
+        <span class="n">scale_x_log10</span><span class="p">(</span><span class="n">limits</span> <span class="o">=</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">60000</span><span class="p">])</span> <span class="o">+</span>
+        <span class="c1"># change labels</span>
+        <span class="n">labs</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;GDP versus life expectancy in 2007&quot;</span><span class="p">,</span>
+             <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;GDP per capita (log scale)&quot;</span><span class="p">,</span>
+             <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;Life expectancy&quot;</span><span class="p">,</span>
+             <span class="n">size</span> <span class="o">=</span> <span class="s2">&quot;Popoulation&quot;</span><span class="p">,</span>
+             <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;Continent&quot;</span><span class="p">)</span> <span class="o">+</span>
+        <span class="c1"># change the size scale</span>
+        <span class="n">scale_size</span><span class="p">(</span><span class="nb">range</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span> <span class="o">+</span>
+        <span class="c1"># add a nicer theme</span>
+        <span class="n">theme_classic</span><span class="p">()</span> <span class="o">+</span>
+        <span class="c1"># place legend at top and grey axis lines</span>
+        <span class="n">theme</span><span class="p">(</span><span class="n">axis_line</span><span class="o">=</span><span class="n">element_line</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">),</span>
+              <span class="n">axis_ticks</span><span class="o">=</span><span class="n">element_line</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;grey&quot;</span><span class="p">))</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/plotting_part2_22_0.png" src="_images/plotting_part2_22_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;ggplot: (7543731818)&gt;
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Exercises!">
+<h2>Exercises!<a class="headerlink" href="#Exercises!" title="Permalink to this headline">¶</a></h2>
+<p><em>If you are enrolled in Practical Data Science at Duke, don’t do these exercises on your own – we’ll do them in class!</em></p>
+<p><a class="reference internal" href="exercises/Exercise_plotting_part2.html"><span class="doc">Plotting Exercises, Part 2</span></a></p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Practical DS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_schedule.html">CLASS SCHEDULE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning_track.html">LEARNING TOPICS</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="setup_environment.html">Setting Up Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_python_packages.html">Managing Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_dataframes.html">Pandas 2: DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Plotting, Advanced</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Tutorial-Attribution">Tutorial Attribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Scales">Scales</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Changing-Labels">Changing Labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Faceting">Faceting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Themes:-making-even-more-beautiful-figures-with-plotnine">Themes: making even more beautiful figures with plotnine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Exercises!">Exercises!</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cleaning_editingvalues.html">Cleaning: Editing Values</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyter.html">Jupyter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_and_github.html">Git and Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pr_review.html">Reviewing Code on Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CLOUD</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_storage_on_azure.html">Storage on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Dask on Azure Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
+</ul>
+<p class="caption"><span class="caption-text">SKILLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_big_data.html">What is Big Data?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="big_data_strategies.html">Working with Big Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backwards_design.html">Backwards Design</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="buying_datascience_computer.html">Buying a Data Science Computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="plotting_part1.html" title="previous chapter">Plotting with <code class="docutils literal notranslate"><span class="pre">plotnine</span></code></a></li>
+      <li>Next: <a href="views_and_copies_in_pandas.html" title="next chapter">Views and Copies in <code class="docutils literal notranslate"><span class="pre">pandas</span></code></a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick Eubank.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/plotting_part2.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <!-- <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script> -->
+    
+  </body>
+</html>

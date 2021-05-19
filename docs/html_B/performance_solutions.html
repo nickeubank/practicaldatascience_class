@@ -1,0 +1,944 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-133829453-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Solving Performance Issues &#8212; Practical Data Science</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Parallel Computing" href="parallelism.html" />
+    <link rel="prev" title="Speed in Python" href="performance_understanding.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Solving-Performance-Issues">
+<h1>Solving Performance Issues<a class="headerlink" href="#Solving-Performance-Issues" title="Permalink to this headline">¶</a></h1>
+<p>So: you’ve done all the things suggested in the last page on <a class="reference internal" href="performance_understanding.html"><span class="doc">Performance basics</span></a> that you can do within the constraints of your project, and you still have a performance problem. Now what?</p>
+<div class="section" id="Do-you-need-to-optimize?">
+<h2>Do you <em>need</em> to optimize?<a class="headerlink" href="#Do-you-need-to-optimize?" title="Permalink to this headline">¶</a></h2>
+<p>So, before you start investing in optimizing your code, ask yourself whether you really <em>need</em> to optimize your code.</p>
+<p>In programming, there is often a trade-off between developer’s time (i.e. the time you spend actively playing with your code) and hardware time (the amount of computer time you code occupies when running). If you have a block of code you need to run every day, then investing <em>your</em> time in making it fast may really help make you more productive, and so may be worth the investment.</p>
+<p>If you have a block of code you only plan to run once or a couple times (say, the initial ingest of a big dataset), then it probably isn’t worth investing days making it 10x faster if the running time is less than insane (i.e. if you can just let it run overnight and it’ll be done by morning).</p>
+<p>So when deciding whether to optimize something, ask first “Will investing my time in optimizing this code really pay off in future productivity?”</p>
+</div>
+<div class="section" id="Profiling-Code">
+<h2>Profiling Code<a class="headerlink" href="#Profiling-Code" title="Permalink to this headline">¶</a></h2>
+<p><strong>If you take nothing else away from this page, please read and remember this section!</strong></p>
+<p>There’s no reason to tune a line of code that is only responsible for 1/100 of your running time, so before you invest in speeding up your code, figure out <em>exactly</em> what in your code is causing it to be slow – a process known as “profiling”.</p>
+<p>Thankfully, because this is so important, there are lots of tools (called profilers) for measuring exactly how long your computer is spending doing each step in a block of code. Here are a couple, with some demonstrations below:</p>
+<ul class="simple">
+<li><p>Profiling in R: the two packages I’ve seen used most are <a class="reference external" href="http://www.stat.berkeley.edu/~nolan/stat133/Fall05/lectures/profilingEx.html">Rprof</a> and <a class="reference external" href="http://adv-r.had.co.nz/Profiling.html#measure-perf">lineprof</a>.</p></li>
+<li><p>Profiling in Python: if you use Jupyter Notebooks or Jupyter Labs, you can use the <a class="reference external" href="http://pynash.org/2013/03/06/timing-and-profiling.html">prun tool</a>. If for some reason you’re not using Jupyter, here’s a <a class="reference external" href="https://zapier.com/engineering/profiling-python-boss/">guide to a few other tools</a>.</p></li>
+</ul>
+<div class="section" id="Profiling-Example">
+<h3>Profiling Example<a class="headerlink" href="#Profiling-Example" title="Permalink to this headline">¶</a></h3>
+<p>To illustrate, let’s write a function (called <code class="docutils literal notranslate"><span class="pre">my_analysis</span></code>) which we can pretend is a big analysis that’s causing me problems. Within this analysis we’ll place several functions, most of which are fast, but one of which is slow. To make it <em>really</em> easy to see what is fast and what is slow, these functions will just call the <code class="docutils literal notranslate"><span class="pre">time.sleep()</span></code> function, which literally just tells the computer to pause for a given number of seconds (i.e. <code class="docutils literal notranslate"><span class="pre">time.sleep(10)</span></code> makes execution pause for 10 seconds).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">a_slow_function</span><span class="p">():</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">1</span>
+
+<span class="k">def</span> <span class="nf">a_medium_function</span><span class="p">():</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">1</span>
+
+<span class="k">def</span> <span class="nf">a_fast_function</span><span class="p">():</span>
+    <span class="k">return</span> <span class="mi">1</span>
+
+<span class="k">def</span> <span class="nf">my_analysis</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">a_slow_function</span><span class="p">()</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">a_medium_function</span><span class="p">()</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">a_fast_function</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;the result of my analysis is: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">my_analysis</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the result of my analysis is: 3
+</pre></div></div>
+</div>
+<p>Now we can profile this code with the IPython magic <code class="docutils literal notranslate"><span class="pre">%prun</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">prun</span> my_analysis()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+the result of my analysis is: 3
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+         44 function calls in 6.007 seconds
+
+   Ordered by: internal time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        2    6.007    3.003    6.007    3.003 {built-in method time.sleep}
+        3    0.000    0.000    0.000    0.000 socket.py:337(send)
+        1    0.000    0.000    6.007    6.007 &lt;ipython-input-1-2718bcdb1d57&gt;:14(my_analysis)
+        3    0.000    0.000    0.000    0.000 iostream.py:197(schedule)
+        2    0.000    0.000    0.000    0.000 iostream.py:384(write)
+        1    0.000    0.000    6.007    6.007 {built-in method builtins.exec}
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.print}
+        3    0.000    0.000    0.000    0.000 threading.py:1080(is_alive)
+        1    0.000    0.000    1.002    1.002 &lt;ipython-input-1-2718bcdb1d57&gt;:7(a_medium_function)
+        3    0.000    0.000    0.000    0.000 threading.py:1038(_wait_for_tstate_lock)
+        1    0.000    0.000    5.005    5.005 &lt;ipython-input-1-2718bcdb1d57&gt;:3(a_slow_function)
+        2    0.000    0.000    0.000    0.000 iostream.py:309(_is_master_process)
+        3    0.000    0.000    0.000    0.000 {method &#39;acquire&#39; of &#39;_thread.lock&#39; objects}
+        3    0.000    0.000    0.000    0.000 iostream.py:93(_event_pipe)
+        2    0.000    0.000    0.000    0.000 iostream.py:322(_schedule_flush)
+        2    0.000    0.000    0.000    0.000 {built-in method builtins.isinstance}
+        2    0.000    0.000    0.000    0.000 {built-in method posix.getpid}
+        3    0.000    0.000    0.000    0.000 threading.py:507(is_set)
+        1    0.000    0.000    6.007    6.007 &lt;string&gt;:1(&lt;module&gt;)
+        1    0.000    0.000    0.000    0.000 {method &#39;disable&#39; of &#39;_lsprof.Profiler&#39; objects}
+        1    0.000    0.000    0.000    0.000 &lt;ipython-input-1-2718bcdb1d57&gt;:11(a_fast_function)
+        3    0.000    0.000    0.000    0.000 {method &#39;append&#39; of &#39;collections.deque&#39; objects}
+</pre></div></div>
+</div>
+<p>The output shows a number of things, but the most important are <code class="docutils literal notranslate"><span class="pre">tottime</span></code> and <code class="docutils literal notranslate"><span class="pre">cumtime</span></code>.</p>
+<p>From <code class="docutils literal notranslate"><span class="pre">tottime</span></code> we can see that 6 seconds was dedicated to running <code class="docutils literal notranslate"><span class="pre">time.sleep()</span></code>.</p>
+<p>From <code class="docutils literal notranslate"><span class="pre">cumtime</span></code>, you can also see <em>in which functions</em> <code class="docutils literal notranslate"><span class="pre">time.sleep()</span></code> took the most time. As you can see, <code class="docutils literal notranslate"><span class="pre">cumtime</span></code> is not equal to the total time the function took to run – rather, it’s all the time spent within each function. <code class="docutils literal notranslate"><span class="pre">time.sleep()</span></code> has a <code class="docutils literal notranslate"><span class="pre">cumtime</span></code> of 6.009 because a total of 6 seconds was spend while that function ran, but it is <em>also</em> the case that <code class="docutils literal notranslate"><span class="pre">a_slow_function</span></code> (listed as <code class="docutils literal notranslate"><span class="pre">&lt;ipython-input-2-2718bcdb1d57&gt;:3(a_slow_function)</span></code>) has a <code class="docutils literal notranslate"><span class="pre">cumtime</span></code> of 5 seconds (because
+that function was in the process of executing when <code class="docutils literal notranslate"><span class="pre">time.sleep()</span></code> paused for 5 seconds).</p>
+<p>From this, we can deduce that <code class="docutils literal notranslate"><span class="pre">time.sleep()</span></code> was slowing down our code, and that the occurance of <code class="docutils literal notranslate"><span class="pre">time.sleep()</span></code> that slowed down our code the most was in <code class="docutils literal notranslate"><span class="pre">a_slow_function</span></code>.</p>
+</div>
+</div>
+<div class="section" id="Speeding-Code-with-Cython">
+<h2>Speeding Code with Cython<a class="headerlink" href="#Speeding-Code-with-Cython" title="Permalink to this headline">¶</a></h2>
+<p>There are two libraries designed to allow you to massively speed up Python code. The first is called <code class="docutils literal notranslate"><span class="pre">Cython</span></code>, and it is a way of writing code that is basically Python with type declarations. For example, if you wanted to add up all the numbers to a million in Python, you could write something like the following (obviously not the most concise way to do it, but you get the idea):</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">avg_numbers_up_to</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">adding_total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">adding_total</span> <span class="o">=</span> <span class="n">adding_total</span> <span class="o">+</span> <span class="n">i</span>
+
+    <span class="n">avg</span> <span class="o">=</span> <span class="n">adding_total</span> <span class="o">/</span> <span class="n">N</span>
+
+    <span class="k">return</span> <span class="n">avg</span>
+</pre></div>
+</div>
+</div>
+<p>But in Cython, you would write:</p>
+<div class="highlight-cython notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">avg_numbers_up_to</span><span class="p">(</span><span class="nb">int</span> <span class="n">N</span><span class="p">):</span>
+    <span class="k">cdef</span> <span class="kt">int</span> <span class="nf">adding_total</span>
+
+    <span class="n">adding_total</span> <span class="o">=</span> <span class="mf">0</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">adding_total</span> <span class="o">=</span> <span class="n">adding_total</span> <span class="o">+</span> <span class="n">i</span>
+
+    <span class="k">return</span> <span class="n">adding_total</span>
+</pre></div>
+</div>
+<p>Then to integrate this into your Python code, you would save this function definition into a new file (with the suffix <code class="docutils literal notranslate"><span class="pre">.pyx</span></code> (say, <code class="docutils literal notranslate"><span class="pre">avg_numbers.pyx</span></code>), and put this code at the top of your Python script:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">distutils.core</span> <span class="kn">import</span> <span class="n">setup</span>
+<span class="kn">from</span> <span class="nn">Cython.Build</span> <span class="kn">import</span> <span class="n">cythonize</span>
+
+<span class="n">setup</span><span class="p">(</span><span class="n">ext_modules</span><span class="o">=</span><span class="n">cythonize</span><span class="p">(</span><span class="s1">&#39;avg_numbers.pyx&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Then you can call your Cythonized function (<code class="docutils literal notranslate"><span class="pre">avg_number_up_to</span></code>) in your normal Python script, but you’ll now find it runs ~10x - 100x faster! (Note that this speedup is only likely when compared to <em>pure python</em> code. If you’re comparing Cython to a library function that was already written in C, youre Cythonized Python is unlikely be any faster (and may be slower) than that library function.</p>
+<p>Also, note that <strong>in Cythonized code, loops are just as fast as vectorized code!</strong></p>
+<p>To illustrate, we can actually compile Cython code directly in Jupyter Notebooks with the %%cythonize magic. This is good for teaching, but is not how you should plan on using Cython yourself – it’s just not robust to rely on jupyter magics for core functionality in your programs (and you should only cythonize something if it’s a core part of your code!).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">load_ext</span> Cython
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-cython notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="n">cython</span>
+
+<span class="k">def</span> <span class="nf">cython_avg_numbers_up_to</span><span class="p">(</span><span class="nb">long</span> <span class="n">N</span><span class="p">):</span>
+    <span class="k">cdef</span> <span class="kt">long</span> <span class="nf">adding_total</span>
+    <span class="n">adding_total</span> <span class="o">=</span> <span class="mf">0</span>
+
+    <span class="k">cdef</span> <span class="kt">long</span> <span class="nf">i</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">adding_total</span> <span class="o">+=</span> <span class="n">i</span>
+
+    <span class="k">return</span> <span class="n">adding_total</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">timeit</span> avg_numbers_up_to(1000000000)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+45.4 s ± 1.4 s per loop (mean ± std. dev. of 7 runs, 1 loop each)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">timeit</span> cython_avg_numbers_up_to(1000000000)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+46.1 ns ± 0.751 ns per loop (mean ± std. dev. of 7 runs, 10000000 loops each)
+</pre></div></div>
+</div>
+<p>But while Cython is nice, it does have lots of limitations!</p>
+<p>The biggest is that can get integer overflows in Cython! Moreover, be aware that <code class="docutils literal notranslate"><span class="pre">int</span></code> is a C integer (32 bit, which overflows at about 2 billion), so super prone to overflowing. <code class="docutils literal notranslate"><span class="pre">long</span></code> is what you need to use to get a 64 bit integer! So if I made the accumulator an <code class="docutils literal notranslate"><span class="pre">int</span></code> rather than a <code class="docutils literal notranslate"><span class="pre">long</span></code>…</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-cython notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="n">cython</span>
+
+<span class="k">def</span> <span class="nf">cython_w_overflow_avg_numbers_up_to</span><span class="p">(</span><span class="nb">long</span> <span class="n">N</span><span class="p">):</span>
+    <span class="k">cdef</span> <span class="kt">int</span> <span class="nf">adding_total</span>
+    <span class="n">adding_total</span> <span class="o">=</span> <span class="mf">0</span>
+
+    <span class="k">cdef</span> <span class="kt">long</span> <span class="nf">i</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">adding_total</span> <span class="o">+=</span> <span class="n">i</span>
+
+    <span class="k">return</span> <span class="n">adding_total</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cython_w_overflow_avg_numbers_up_to</span><span class="p">(</span><span class="mi">1000000000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+-1243309312
+</pre></div></div>
+</div>
+<p>Yup… we reached the limit of the 32-bit integer, then keep adding things, making it go negative!</p>
+<div class="section" id="Cython-limitations">
+<h3>Cython limitations<a class="headerlink" href="#Cython-limitations" title="Permalink to this headline">¶</a></h3>
+<p>There are a few limitations to be aware of, however:</p>
+<ul class="simple">
+<li><p>Cython is it’s own language. It’s very similar to Python, but you’ll have to invest a little in learning it’s quirks.</p></li>
+<li><p>You can get integer overflows in Cython! Moreover, be aware that <code class="docutils literal notranslate"><span class="pre">int</span></code> is a C integer (32 bit, which overflows at about 2 billion), so super prone to overflowing. <code class="docutils literal notranslate"><span class="pre">long</span></code> is what you need to use to get a 64 bit integer!</p></li>
+<li><p>Cython only really works with (a) native Python and (b) NumPy (<a class="reference external" href="https://cython.readthedocs.io/en/latest/src/userguide/numpy_tutorial.html#numpy-tutorial">numpy instructions here</a>). <em>Some</em> other Python libraries are / can be supported, but it’s not nearly as straightfoward as the example above. So if your code uses other libraries, all bets are off.</p>
+<ul>
+<li><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/enhancingperf.html">Here’s a guide to use with pandas.</a></p></li>
+</ul>
+</li>
+<li><p>The function you write will <em>not</em> be dynamically typed, so if you said the function would accept integers, you can only give it integers.</p></li>
+<li><p>Distributing code you write with Cython can be tricky…</p></li>
+</ul>
+</div>
+<div class="section" id="Cython-Advantages">
+<h3>Cython Advantages<a class="headerlink" href="#Cython-Advantages" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Can make C libraries directly accessable from Python (if you know how to work with C libraries)</p></li>
+<li><p>It is a very mature tool, so well supported and documented. Indeed, a lot of both pandas and libraries like scikit-learn are built on Cython to ensure performance!</p></li>
+<li><p>Definitely easier to write one function in Cython than move all your code to C!</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="Speeding-Code-with-Numba">
+<h2>Speeding Code with Numba<a class="headerlink" href="#Speeding-Code-with-Numba" title="Permalink to this headline">¶</a></h2>
+<p>Another tool you can use is <code class="docutils literal notranslate"><span class="pre">numba</span></code>. Numba is a program that, when it works, is <em>super easy</em> and kinda magic, but can also be rather finicky.</p>
+<p>The idea of <code class="docutils literal notranslate"><span class="pre">numba</span></code> is that it treats each function like it’s own little program, and tries to compile it to make it faster.</p>
+<p>It can operate in two modes. In the first (“python mode”), it achieves it’s speed-up by saving the machine code that was used the first time a function is run. The speed benefits of this aren’t huge – Python still has to do all the work of doing type checking and de-referencing, but it only has to actually convert what it’s doing to machine code once, so if you plan on using a function over and over, it can be beneficial.</p>
+<p>The second mode (“nopython mode”) is blazing fast. In nopython mode, <code class="docutils literal notranslate"><span class="pre">numba</span></code> analyzes your function, and then makes inferences about the types of variables that it will encounter. For example, if you gave the following code to Python:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_big_loop</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">accumulator</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">accumulator</span> <span class="o">=</span> <span class="n">accumulator</span> <span class="o">+</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="n">accumulator</span>
+</pre></div>
+</div>
+<p>And then you ran that code with <code class="docutils literal notranslate"><span class="pre">N=1000000</span></code>, then <code class="docutils literal notranslate"><span class="pre">numba</span></code> would look at the function and think to itself “ok, so <code class="docutils literal notranslate"><span class="pre">N</span></code> is an integer. And <code class="docutils literal notranslate"><span class="pre">accumulator</span></code> starts as an integer. And if I add integers, they will always stay integers. So <code class="docutils literal notranslate"><span class="pre">accumulator</span> <span class="pre">+</span> <span class="pre">i</span></code> will always be integer addition. So I don’t have to think about types at every stop of this loop!</p>
+<p>The only catch is that <code class="docutils literal notranslate"><span class="pre">numba</span></code> can’t always compile code in <code class="docutils literal notranslate"><span class="pre">nopython</span></code> mode. For example, <code class="docutils literal notranslate"><span class="pre">numba</span></code> isn’t compatible with <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, so if you put <code class="docutils literal notranslate"><span class="pre">pandas</span></code> code in a function you pass to <code class="docutils literal notranslate"><span class="pre">numba</span></code>, it can’t work in <code class="docutils literal notranslate"><span class="pre">nopython</span></code> mode.</p>
+<p>But when it does work, it’s magic, because instead of making a new file that has to be compiled seperately and which won’t “just work” on other computers, to make <code class="docutils literal notranslate"><span class="pre">numba</span></code> work you just add a “decorator” to the function you want to speed up. For example:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Without numba</span>
+<span class="k">def</span> <span class="nf">my_big_loop</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">accumulator</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">accumulator</span> <span class="o">=</span> <span class="n">accumulator</span> <span class="o">+</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="n">accumulator</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">timeit</span> my_big_loop(1000000)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+45.3 ms ± 598 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># With numba</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">jit</span>
+
+<span class="c1"># We just add this &quot;decorator&quot; (A line that starts with @ just above a function)</span>
+<span class="c1"># The &quot;nopython=True&quot; option says to jit &quot;tell me if you can&#39;t work in nopython more,</span>
+<span class="c1"># dont&#39; just silently revert to Python mode.&quot;</span>
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">my_big_loop</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">accumulator</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">accumulator</span> <span class="o">=</span> <span class="n">accumulator</span> <span class="o">+</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="n">accumulator</span>
+
+<span class="o">%</span><span class="k">timeit</span> my_big_loop(1000000)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+114 ns ± 0.883 ns per loop (mean ± std. dev. of 7 runs, 10000000 loops each)
+</pre></div></div>
+</div>
+<p>Not bad, huh? Add one line of code, and this speeds up by 600x!</p>
+<p>But as I said, it doesn’t work with everything – not even all regular Python datatypes (e.g. if you define your own class, you’re apparently out of luck with Numba). Here’s an <a class="reference external" href="http://numba.pydata.org/numba-doc/latest/user/5minguide.html">intro to numba</a>, and here’s a <a class="reference external" href="https://numba.pydata.org/numba-doc/dev/reference/numpysupported.html">full list of things it can handle in nopython mode, and things it can’t.</a>.</p>
+<p>Also, as with Cython, note that <strong>in nopython Numba functions, loops are just as fast as vectorized code!</strong></p>
+<div class="section" id="Type-Stability">
+<h3>Type Stability<a class="headerlink" href="#Type-Stability" title="Permalink to this headline">¶</a></h3>
+<p>If you want <code class="docutils literal notranslate"><span class="pre">numba</span></code> to work well, there is one overriding rule: your code must be “type-stable”. Type stability means that <em>conditional on the types of the input arguments</em>, the types of all variables in your code must be fully predictable.</p>
+<p>For example, consider the following code:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">my_doubler</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">y</span>
+</pre></div>
+</div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">x</span></code> is an integer, than we know that doubling it will also generate an integer, so the type of <code class="docutils literal notranslate"><span class="pre">y</span></code> will always be “integer”.</p>
+<p>Similarly, if <code class="docutils literal notranslate"><span class="pre">x</span></code> is a float, then we know that doubling it will also generate a float, sot he type of <code class="docutils literal notranslate"><span class="pre">y</span></code> will always be “float”.</p>
+<p>In other words, <em>conditional on the type of the input arguments</em>, this function is type stable.</p>
+<p>But now consider the following code:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">is_this_even</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;not even, sorry!&#39;</span>
+    <span class="k">return</span> <span class="n">y</span>
+</pre></div>
+</div>
+</div>
+<p>This code is <strong>not</strong> type stable because the fact that <code class="docutils literal notranslate"><span class="pre">x</span></code> is an integer does not guarantee the type of <code class="docutils literal notranslate"><span class="pre">y</span></code>’. If <code class="docutils literal notranslate"><span class="pre">x</span></code> is an even integer, than <code class="docutils literal notranslate"><span class="pre">y</span></code> will also be an integer; and if <code class="docutils literal notranslate"><span class="pre">x</span></code> is an odd integer, then <code class="docutils literal notranslate"><span class="pre">y</span></code> will be a string. As a result, <code class="docutils literal notranslate"><span class="pre">numba</span></code> can’t predict the type of <code class="docutils literal notranslate"><span class="pre">y</span></code> in advance of running the code, and so can’t be as efficient.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">is_this_even</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;not even, sorry!&#39;</span>
+    <span class="k">return</span> <span class="n">y</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">is_this_even</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypingError</span>                               Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-16-d6ab8c8f87e7&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>is_this_even<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">3</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/numba/dispatcher.py</span> in <span class="ansi-cyan-fg">_compile_for_args</span><span class="ansi-blue-fg">(self, *args, **kws)</span>
+<span class="ansi-green-intense-fg ansi-bold">    374</span>                 e<span class="ansi-blue-fg">.</span>patch_message<span class="ansi-blue-fg">(</span>msg<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    375</span>
+<span class="ansi-green-fg">--&gt; 376</span><span class="ansi-red-fg">             </span>error_rewrite<span class="ansi-blue-fg">(</span>e<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;typing&#39;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    377</span>         <span class="ansi-green-fg">except</span> errors<span class="ansi-blue-fg">.</span>UnsupportedError <span class="ansi-green-fg">as</span> e<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    378</span>             <span class="ansi-red-fg"># Something unsupported is present in the user code, add help info</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/numba/dispatcher.py</span> in <span class="ansi-cyan-fg">error_rewrite</span><span class="ansi-blue-fg">(e, issue_type)</span>
+<span class="ansi-green-intense-fg ansi-bold">    341</span>                 <span class="ansi-green-fg">raise</span> e
+<span class="ansi-green-intense-fg ansi-bold">    342</span>             <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 343</span><span class="ansi-red-fg">                 </span>reraise<span class="ansi-blue-fg">(</span>type<span class="ansi-blue-fg">(</span>e<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> e<span class="ansi-blue-fg">,</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    344</span>
+<span class="ansi-green-intense-fg ansi-bold">    345</span>         argtypes <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">]</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.7/site-packages/numba/six.py</span> in <span class="ansi-cyan-fg">reraise</span><span class="ansi-blue-fg">(tp, value, tb)</span>
+<span class="ansi-green-intense-fg ansi-bold">    656</span>             value <span class="ansi-blue-fg">=</span> tp<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    657</span>         <span class="ansi-green-fg">if</span> value<span class="ansi-blue-fg">.</span>__traceback__ <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> tb<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 658</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">raise</span> value<span class="ansi-blue-fg">.</span>with_traceback<span class="ansi-blue-fg">(</span>tb<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    659</span>         <span class="ansi-green-fg">raise</span> value
+<span class="ansi-green-intense-fg ansi-bold">    660</span>
+
+<span class="ansi-red-fg">TypingError</span>: Failed in nopython mode pipeline (step: nopython frontend)
+Cannot unify int64 and Literal[str](not even, sorry!) for &#39;y&#39;, defined at &lt;ipython-input-15-9cd2f2682352&gt; (4)
+
+File &#34;&lt;ipython-input-15-9cd2f2682352&gt;&#34;, line 4:
+def is_this_even(x):
+    &lt;source elided&gt;
+    if x % 2 == 0:
+        y = x
+        ^
+
+[1] During: typing of assignment at &lt;ipython-input-15-9cd2f2682352&gt; (6)
+
+File &#34;&lt;ipython-input-15-9cd2f2682352&gt;&#34;, line 6:
+def is_this_even(x):
+    &lt;source elided&gt;
+    else:
+        y = &#39;not even, sorry!&#39;
+        ^
+
+This is not usually a problem with Numba itself but instead often caused by
+the use of unsupported features or an issue in resolving types.
+
+To see Python/NumPy features supported by the latest release of Numba visit:
+http://numba.pydata.org/numba-doc/latest/reference/pysupported.html
+and
+http://numba.pydata.org/numba-doc/latest/reference/numpysupported.html
+
+For more information about typing errors and how to debug them visit:
+http://numba.pydata.org/numba-doc/latest/user/troubleshoot.html#my-code-doesn-t-compile
+
+If you think your code should work with Numba, please report the error message
+and traceback, along with a minimal reproducer at:
+https://github.com/numba/numba/issues/new
+
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Use-Julia">
+<h2>Use Julia<a class="headerlink" href="#Use-Julia" title="Permalink to this headline">¶</a></h2>
+<p>I would be remiss at this point to not mention one other option for getting more speed: use the programming language <a class="reference external" href="https://julialang.org/">Julia</a>. Julia is a very new language that has syntax that is <em>very</em> similar to Python, but which <a class="reference external" href="https://julialang.org/benchmarks/">runs tens or hundreds of times faster out of the box</a>. Basically, it’s kinda like an entire language built around the technology also used by <code class="docutils literal notranslate"><span class="pre">numba</span></code>, but where <code class="docutils literal notranslate"><span class="pre">numba</span></code> is kind of finiky because it’s been tacked on
+to a language that was never built for speed, Julia was designed from the ground up for speed.</p>
+<p>If you want to know why I love Julia, <a class="reference external" href="https://www.youtube.com/watch?v=C4dMYHzW-SY">you can find a talk I gave on it here</a>. It’s a little old (I refer to Julia 1.0 not being out yet, but Julia’s up to 1.2 now), but the core arguments all still apply.</p>
+<p>To be clear, I wouldn’t recommend jumping languages if you just have one function you need to speed up, but if you’re doing work that causes you to have performance issues regularly, consider Julia.</p>
+<p>(Note: Julia also reaches peak speed when code is type stable, but is also super fast even if your code isn’t type stable.)</p>
+</div>
+<div class="section" id="PyPy">
+<h2>PyPy<a class="headerlink" href="#PyPy" title="Permalink to this headline">¶</a></h2>
+<p>A quick note about something you may come across in the future: pypy!</p>
+<p>So while you might not realize it, there are actually several different back-end engines for running Python. Python itself is just a set of rules that dictate that code written in a certain way should behave in a certain way. BUt you can write different back-end engines that <em>implement</em> these rules in different ways.</p>
+<p><em>By far</em> the dominant backend (and, honestly, the only one you should use because it’s the most mature and most commonly used) is CPython, an implementation of Python written in C. But there are a number of other back-ends, like JPython (written in Java), IronPython (written in the .NET framework), etc.</p>
+<p>One of these is PyPy, an implementation of Python that is designed for speed. <em>When it works</em> PyPy is about 5x faster than CPython. That means that <em>the same code</em> run in CPython (what you’re using) will run about 5x slower (on average) than when run in PyPy.</p>
+<p>BUT: PyPy has coverage problems. It works well with vanilla Python code, but it does not support core data science libraries like <code class="docutils literal notranslate"><span class="pre">numpy</span></code>. So… yes, it does provide speedups for free, but only if you aren’t using things like <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, which themselves offer much more than 5x speed ups. So it’s unlikely to ever be a solution for you as a data scientist.</p>
+</div>
+<div class="section" id="Parallelization">
+<h2>Parallelization<a class="headerlink" href="#Parallelization" title="Permalink to this headline">¶</a></h2>
+<p>If you’ve done all this and your code is <em>still</em> too slow, it’s time to look into <a class="reference internal" href="parallelism.html"><span class="doc">parallelization, which we’ll be doing soon!</span></a></p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Practical DS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_schedule.html">CLASS SCHEDULE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning_track.html">LEARNING TOPICS</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup_environment.html">Setting Up Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_python_packages.html">Managing Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_dataframes.html">Pandas 2: DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part2.html">Plotting, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cleaning_editingvalues.html">Cleaning: Editing Values</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyter.html">Jupyter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_and_github.html">Git and Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pr_review.html">Reviewing Code on Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CLOUD</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_storage_on_azure.html">Storage on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Dask on Azure Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
+</ul>
+<p class="caption"><span class="caption-text">SKILLS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_big_data.html">What is Big Data?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="big_data_strategies.html">Working with Big Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Solving Performance Probs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Do-you-need-to-optimize?">Do you <em>need</em> to optimize?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Profiling-Code">Profiling Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Speeding-Code-with-Cython">Speeding Code with Cython</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Speeding-Code-with-Numba">Speeding Code with Numba</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Use-Julia">Use Julia</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#PyPy">PyPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Parallelization">Parallelization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backwards_design.html">Backwards Design</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="buying_datascience_computer.html">Buying a Data Science Computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="performance_understanding.html" title="previous chapter">Speed in Python</a></li>
+      <li>Next: <a href="parallelism.html" title="next chapter">Parallel Computing</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick Eubank.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/performance_solutions.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <!-- <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script> -->
+    
+  </body>
+</html>

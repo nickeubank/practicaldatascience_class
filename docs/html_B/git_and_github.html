@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-133829453-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Git and Github &#8212; Practical Data Science</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Reviewing Code on Github" href="pr_review.html" />
+    <link rel="prev" title="The Jupyter Project" href="jupyter.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="Git-and-Github">
+<h1>Git and Github<a class="headerlink" href="#Git-and-Github" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="What-Is-Git(hub)-&amp;-Why-Should-I-Learn-It?">
+<h2>What Is Git(hub) &amp; Why Should I Learn It?<a class="headerlink" href="#What-Is-Git(hub)-&-Why-Should-I-Learn-It?" title="Permalink to this headline">¶</a></h2>
+<p>Git and github are a set of tools designed to facilitate collaboration on code. They make it possible for multiple people (in some cases, dozens or even hundreds of people) to work on code at the same time without getting in one another’s way. (Note: as we’ll discuss below, git and github are technically two different things, but you’ll almost certainly use them together, so I’m just going to call them “git” for now).</p>
+<p>It is no exaggeration to say that git (and other forms of <em>version control</em> software) underlie the entire world of open source software, and are central to the operation of nearly every tech company on the planet. Git is just a central part of how software is developed today.</p>
+<p>Git is less commonly used in Data Science, however, where people are often working in groups that are small enough they feel comfortable just keeping their code on Dropbox and trying to make sure that collaborators never work on the same file at the same time (in the hopes of never creating a dreaded <code class="docutils literal notranslate"><span class="pre">Conflicted</span> <span class="pre">Copy</span></code> file). But git and github have much to offer the modern data scientist, even if they only work on small teams and don’t want to contribute to larger software projects. In
+particular, here are the main benefits I see for git and github in order of likelihood of relevance for an applied data scientist (the sort who answers ad hoc questions like an academic researcher, rather than writes data analysis routines into widely distributed software):</p>
+<ol class="arabic simple">
+<li><p><strong>Keep an archive of every version of your project:</strong> Git works by logging the work you do on your project into a series of discrete sets of changes called “commits”. Crucially, it remembers <em>all</em> of your commits, making it possible to easily go back to a previous version of the project any time you want. Suddenly discover that your co-author deleted the code for your favorite graph weeks ago and you didn’t notice till now? No problem! You can easily recover the version of that file that
+existed before your co-author’s mistake.</p></li>
+<li><p><strong>All you and your co-authors to work at the same time:</strong> Git is <em>much</em> more forgiving when it comes to allowing people to edit the same document at the same time. Git treats each line in a text document separately, so if your co-author is editing the introduction of your paper (assuming it’s in a text format like <span class="math notranslate nohighlight">\(\LaTeX\)</span>) while you’re editing the conclusion, git can easily integrate your simultaneous edits. Moreover, if you <em>do</em> both edit the same line of code or text, then git will
+help you resolve those conflicting edits in a very efficient manner instead of what dropbox does: create a <code class="docutils literal notranslate"><span class="pre">Confliced</span> <span class="pre">Copy</span></code>, and leave you to figure out what changes conflicted and how to integrate both authors’ changes.</p></li>
+<li><p><strong>You can easily see what changes you’re co-author has made:</strong> Because git is organized around keeping track of <em>changes</em> (again, called commits), when your co-author makes changes to a document, git allows you to easily see <em>just the changes</em> your co-author has made. This makes it much easier for colleagues to be aware of how their project is changing to watch out of problems (e.g. you can easily see if your co-author recoded a variable in a way that is problematic for code you wrote later).
+For example, here’s an example of a github report on changes a co-author made in a shared project, where the (red) text on the left is what the code used to say, while the (green) text on the right is what it now says. And github even allows you to comment directly on changes if you want:</p></li>
+</ol>
+<p><img alt="git_diff_example" src="_images/git_example1.png" /></p>
+<p>Much more helpful than a Drobox “[Name] made changes to [File]” notification. :)</p>
+<ol class="arabic simple" start="4">
+<li><p><strong>Allows you to contribute to open source projects:</strong> This may not be something you’re planning to jump into, but learning git will make this an option. If you find that a package you use doesn’t have a feature you need, the ability to use git will make it possible for you to add that feature to the package, not only allowing you to do what you want to do, but also making that fix available to the broader community.</p></li>
+<li><p><strong>Allows you to make your project open source so others can contribute to your project:</strong> The time may come when you want to write a software package and share it with the world. If you know git, you can also share that code in a way that makes it easy for other people to contribute code and improve that package. Open source isn’t just for big things like Python programming language – it’s also used for lots of little projects, like packages for <a class="reference external" href="https://github.com/mggg/GerryChain">simulating electoral boundaries to study
+gerrymandering</a>, or tools to make it easy to <a class="reference external" href="https://github.com/fecgov/openFEC">access campaign finance data</a> (sorry, I’m a political scientist, so I’m doing poli sci examples, but you get the idea). And you’ll be amazed how many people contribute to these kinds of projects. Indeed, even these tutorials have a <a class="reference external" href="https://github.com/nickeubank/programming4ds">github repositoriy where people can submit improvements!</a></p></li>
+</ol>
+<p>OK, now the bad news: there’s a reason I put so much energy into discussing the value of git before getting into how it works: learning git kinda sucks. I mean, it’s not painful like <a class="reference external" href="https://en.wikipedia.org/wiki/Leonid_Rogozov">performing an appendectomy on yourself without anesthesia</a>, and it’s not hard like quantum mechanics or geometric topology; it’s definitely something anyone can learn. But there’s no pretending that git is user friendly, and you’re sure to have a couple of moments
+when you’ll find yourself thinking (rightly) “why on Earth did they do it like that?”. So before you dive in, it’s good to have the expectation that there’s a initial uphill slog to learning git before it becomes really useful. But I promise: it pays off <em>big time</em>.</p>
+<div class="section" id="Git-versus-Github">
+<h3>Git versus Github<a class="headerlink" href="#Git-versus-Github" title="Permalink to this headline">¶</a></h3>
+<p>As I eluded to earlier, though they’re almost always used together, git and github are actually two different things:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span></code> is the program that keeps track of changes in your code and helps you manage multiple people working on code at the same time.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">github</span></code> is a service that hosts a copy of your project in the cloud so you and your co-authors can easily share project changes. In addition, <code class="docutils literal notranslate"><span class="pre">github</span></code> also has a great interface for reviewing changes to a project in a user friendly manner, and it has an “issue tracker” system for hosting conversations about things that need to be done in a project.</p></li>
+</ul>
+<p>And when it comes to what is user-friendly and what is not, <code class="docutils literal notranslate"><span class="pre">git</span></code> is the kinda awful thing to learn, and <code class="docutils literal notranslate"><span class="pre">github</span></code> is magical.</p>
+</div>
+</div>
+<div class="section" id="Learning-Git">
+<h2>Learning Git<a class="headerlink" href="#Learning-Git" title="Permalink to this headline">¶</a></h2>
+<p>Because it’s such a central tool in software development, there are <em>lots</em> of tutorials online for learning git, and it would be silly for me to try and write my own. However, I think most do a so-so job of offering users a general sense of what working with git is like. With that in mind, below is a simple overview of working with git, after which is a link to what I think is probably the best git and github tutorials I’ve found. Once you’ve completed the tutorials, please come back here to
+learn a little bit more about data-science-specific git issues (like how to put datasets into a git repository) in the last section below.</p>
+<div class="section" id="An-Overview-of-Working-with-Git">
+<h3>An Overview of Working with Git<a class="headerlink" href="#An-Overview-of-Working-with-Git" title="Permalink to this headline">¶</a></h3>
+<p><strong>Assignment 1: Please</strong><a class="reference external" href="https://guides.github.com/introduction/git-handbook/">read this handbook page</a><strong>to give you a sense of the general reason we’re interested in git and github, as well as give you an overview of normal workflows.</strong></p>
+</div>
+<div class="section" id="Practicing-Working-with-Git-and-Github">
+<h3>Practicing Working with Git and Github<a class="headerlink" href="#Practicing-Working-with-Git-and-Github" title="Permalink to this headline">¶</a></h3>
+<p><strong>Assignment 2: After that, please complete the</strong><a class="reference external" href="https://github.com/jlord/git-it-electron">git-it</a><strong>tutorial.</strong></p>
+<p>Unlike many other tutorials git, it asks you to do things on your own computer, not an unrealistically easy to use terminal in the web-browswer, which gives a more authentic experience. Just follow <a class="reference external" href="https://github.com/jlord/git-it-electron">the directions here</a> to get started.</p>
+<p>Note that the only downside to this tutorial is that it is a little <em>too</em> detailed in the directions for each step, so there’s a naturally tendency to power through without thinking too hard. Please fight that urge – we’ll use the lessons from this tutorial in exercises, and if you rushed through you’ll be in trouble.</p>
+<p><strong>Note:</strong> Students who are using <code class="docutils literal notranslate"><span class="pre">bash</span></code> in Cmder should have git installed, so you don’t have to use “Git Shell” as the tutorial suggests.</p>
+<p><strong>Note 2:</strong> MIDS students have been exposed to git before, and so should know the basics. If you’re entirely new to git, then I would recommend one of the following:</p>
+<ul class="simple">
+<li><p>do Parts 1 and 2 of the DataCamp <a class="reference external" href="https://www.datacamp.com/courses/introduction-to-git-for-data-science">Intro to Git for Data Science</a> course,</p></li>
+<li><p>following the four linkes under the “Explore more Git commands” of the <a class="reference external" href="https://guides.github.com/introduction/git-handbook/#basic-git">Github Handbook tutorial</a> you read above, or</p></li>
+<li><p>reading the full <a class="reference external" href="https://git-scm.com/book/en/v1/Git-Basics">Git Basics</a> tutorial chapter.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="git-lfs">
+<h2>git-lfs<a class="headerlink" href="#git-lfs" title="Permalink to this headline">¶</a></h2>
+<p>On thing that’s unique to using git for data science is that we often want to put datasets into our git repositories. Unfortunately, <code class="docutils literal notranslate"><span class="pre">git</span></code> by itself can’t really handle datasets efficiently. To solve this problem, we use <code class="docutils literal notranslate"><span class="pre">git-lfs</span></code> (git Large File System). You can learn all about it <a class="reference external" href="https://www.youtube.com/watch?v=uLR1RNqJ1Mw">here in this 2 minute video</a>!</p>
+</div>
+<div class="section" id="An-Aside-on-Graphical-User-Interfaces">
+<h2>An Aside on Graphical User Interfaces<a class="headerlink" href="#An-Aside-on-Graphical-User-Interfaces" title="Permalink to this headline">¶</a></h2>
+<p>Git is most commonly used from the command line: the text-based interface for your operating system. There are graphical user interfaces for git, but most don’t quite implement all of gits features, so most tutorials teach git as a command line tool.</p>
+<p>If you have any comfort with the command line, learning git from the command line is probably the best way to start. You can later move to a graphical user interface, but knowing how to use the command line version means you can always do anything git can do, and online help will be easier to find.</p>
+<p>If you aren’t comfortable with the command line, you have two choices:</p>
+<ul class="simple">
+<li><p>Learn the basics of command lines. I recommend first doing <a class="reference external" href="command_line_page1.ipynb">the command line basics page of this site</a> including completing the <a class="reference external" href="https://www.datacamp.com/courses/introduction-to-shell-for-data-science">first section of this tutorial: Introduction to Shell for Data Science</a> (the first section is just called “Manipulating Files and Directories”. Don’t go past that section).</p></li>
+<li><p>Try to find a good graphical user interface-based tutorial (and if you find one, let me know? I haven’t found one.. :( ).</p></li>
+</ul>
+<p>If you do eventually want a GUI, I recommend either <a class="reference external" href="https://desktop.github.com/">Github Desktop</a> (very clean and easy, but can’t do everything git can do) or <a class="reference external" href="https://www.sourcetreeapp.com/">Sourcetree</a> (busy, but more powerful and flexible.</p>
+</div>
+<div class="section" id="Getting-Help">
+<h2>Getting Help<a class="headerlink" href="#Getting-Help" title="Permalink to this headline">¶</a></h2>
+<p>A final word on git: there is <em>no way</em> you will internalize the syntax and approaches required to do all the things you might some day need to do. There are just too many things that can happen. But because git is <em>so</em> widely used, there are <em>lots</em> of tutorials out there, and you shouldn’t hesistate to use them. Here are a few great resources for specific topics:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.atlassian.com/git/tutorials/atlassian-git-cheatsheet">Git command cheatsheet</a>. (Also available from <a class="reference internal" href="cheatsheets.html"><span class="doc">cheatsheet page here</span></a>.</p></li>
+<li><p><a class="reference external" href="https://git-scm.com/book/en/v1/Git-Basics-Undoing-Things">Undoing mistakes</a></p></li>
+<li><p><a class="reference external" href="https://git-scm.com/book/en/v1/Git-Branching-Basic-Branching-and-Merging">Dealing with Branches</a></p></li>
+<li><p>Merge conflicts: <a class="reference external" href="https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts">here</a> and <a class="reference external" href="https://git-scm.com/book/en/v1/Git-Branching-Basic-Branching-and-Merging#Basic-Merge-Conflicts">here</a></p></li>
+</ul>
+</div>
+<div class="section" id="Exercises">
+<h2>Exercises<a class="headerlink" href="#Exercises" title="Permalink to this headline">¶</a></h2>
+<p>And now for some git/github exercises!</p>
+<p>Duke students: as usual, these are what we’ll be doing in class, not something to be done as homework.</p>
+<p>Non-Duke students: unfortunately these are meant to be done in small groups, so if you’re using this on your own it may be a little more difficult than the other exercises on this site… Though I suppose you can “play all the parts” if you have more than 1 github account and computer?!</p>
+<p><a class="reference internal" href="exercises/Exercise_git.html"><span class="doc">Git Exercises</span></a></p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Practical DS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_schedule.html">CLASS SCHEDULE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning_track.html">LEARNING TOPICS</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup_environment.html">Setting Up Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_python_packages.html">Managing Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_dataframes.html">Pandas 2: DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part2.html">Plotting, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cleaning_editingvalues.html">Cleaning: Editing Values</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyter.html">Jupyter</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Git and Github</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#What-Is-Git(hub)-&amp;-Why-Should-I-Learn-It?">What Is Git(hub) &amp; Why Should I Learn It?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Learning-Git">Learning Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#git-lfs">git-lfs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#An-Aside-on-Graphical-User-Interfaces">An Aside on Graphical User Interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Getting-Help">Getting Help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Exercises">Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pr_review.html">Reviewing Code on Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CLOUD</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_storage_on_azure.html">Storage on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Dask on Azure Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
+</ul>
+<p class="caption"><span class="caption-text">SKILLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_big_data.html">What is Big Data?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="big_data_strategies.html">Working with Big Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backwards_design.html">Backwards Design</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="buying_datascience_computer.html">Buying a Data Science Computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="jupyter.html" title="previous chapter">The Jupyter Project</a></li>
+      <li>Next: <a href="pr_review.html" title="next chapter">Reviewing Code on Github</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick Eubank.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/git_and_github.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <!-- <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script> -->
+    
+  </body>
+</html>

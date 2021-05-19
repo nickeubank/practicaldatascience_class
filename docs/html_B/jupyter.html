@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-133829453-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Jupyter Project &#8212; Practical Data Science</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Git and Github" href="git_and_github.html" />
+    <link rel="prev" title="Advanced Command Line Tutorial" href="command_line_part2.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="The-Jupyter-Project">
+<h1>The Jupyter Project<a class="headerlink" href="#The-Jupyter-Project" title="Permalink to this headline">¶</a></h1>
+<p>Today, if you use more than one programming language for data science, you probably also also use different programs to edit and interact with those programs. R users, for example, often use RStudio, Python users use Spyder, and Julia users use Juno.</p>
+<p>But in recent years, an amazing efforts has been underway to provide a single set of tools that work with nearly <em>any</em> underlying programming language: Jupyter (as in <strong>Ju</strong> (Julia) - <strong>py</strong> (Python) - te<strong>R</strong> (R)).</p>
+<p>The idea of Jupyter is to seperate the interface you are working with from the underlying programming language doing your analysis. This makes it possible to create one interface (a text editor, a window where results are displayed, etc.) that can be used to run your analyses in any number of different programs. In the Jupyter ecosystem, the program being used to actually run your analysis (i.e. Python, R) is referred to as a <strong>kernel</strong>.</p>
+<p>Jupyter was originally focused on unifying Julia, Python, and R, it actually now supports dozens and dozens of different <a class="reference external" href="https://github.com/jupyter/jupyter/wiki/Jupyter-kernels">kernels</a> including javascript, Go, Haskell, Matlab, Stata, bash, Scala, and so much more.</p>
+<p>(Note: Jupyter Notebooks used to be called IPython Notebooks before they expanded to support more languages, so if you see people talking about IPython Notebooks, just think of that as an early, Python specific version of Jupyter Notebooks).</p>
+<div class="section" id="Jupyter-Notebooks">
+<h2>Jupyter Notebooks<a class="headerlink" href="#Jupyter-Notebooks" title="Permalink to this headline">¶</a></h2>
+<p>Jupyter notebooks are a tool for easily integrating text, code, and code output into a single document. This not only makes them <em>incredibly</em> useful for instructional materials (this entire site is actually built with Jupyter Notebooks), but also makes them useful as a method of sharing analyses. Using Jupyter Notebooks, you can not only share the conclusions of your analysis with colleagues, but also the code that generated those analyses, making it easy for others to see how you reached your
+conclusions and, crucially, play with that code to see what happens if the analysis is changed slightly. Indeed, Notebooks are so useful for sharing analyses that they’ve become the <em>de facto</em> standard for sharing information at many companies, including <a class="reference external" href="https://medium.com/netflix-techblog/notebook-innovation-591ee3221233">Netflix</a>.</p>
+<p>OK, I know, that all sounds really abstract. What makes Jupyter Notebooks special is their interactivity, so it’s hard to understand their value without seeing them in action.</p>
+<div class="section" id="Jupyter-Notebook-Tutorial">
+<h3>Jupyter Notebook Tutorial<a class="headerlink" href="#Jupyter-Notebook-Tutorial" title="Permalink to this headline">¶</a></h3>
+<p>To learn the basics of Jupyter Notebooks, please watch <a class="reference external" href="https://www.youtube.com/watch?v=HW29067qVWk">watch this short tutorial</a>. As you watch the video, follow along yourself – since you’ve installed <a class="reference internal" href="setup_environment.html"><span class="doc">Anaconda</span></a>, you already have Jupyter Notebooks installed, so just running the command <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">notebook</span></code> from your terminal should launch the notebook navigator. We’ll build on the skills from this tutorial in our in-class exercises.</p>
+<p>If you got an error when you tried to run <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">notebook</span></code> like <code class="docutils literal notranslate"><span class="pre">&quot;Error</span> <span class="pre">executing</span> <span class="pre">Jupyter</span> <span class="pre">command</span> <span class="pre">'notebook':</span> <span class="pre">[Errno</span> <span class="pre">2]</span> <span class="pre">No</span> <span class="pre">such</span> <span class="pre">file</span> <span class="pre">or</span> <span class="pre">directory&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">command</span> <span class="pre">not</span> <span class="pre">found:</span> <span class="pre">jupyter</span></code> (this might happen if you didn’t install a new installation of Anaconda because you already had it installed, or if you’re using Minicoda), you can make sure Jupyter Notebooks is installed by running <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">jupyterlab</span></code> from the command line.</p>
+</div>
+</div>
+<div class="section" id="Jupyter-Lab">
+<h2>Jupyter Lab<a class="headerlink" href="#Jupyter-Lab" title="Permalink to this headline">¶</a></h2>
+<p>Notebooks have been around since 2014, but while they are great for instructional materials and sharing analyses, they weren’t appropriate for managing full projects. In 2018, though, Jupyter launched a new tool: Jupyter Lab.</p>
+<p>Jupyter Lab is meant to be an all-in-one data science interface:</p>
+<ul class="simple">
+<li><p>Easily run and write Jupyter Notebooks (and do things you couldn’t do before, like drag cells from one notebook to another, collapse cells, etc.).</p></li>
+<li><p>Work with a text-editor in one pane and an active kernel session in another, just like you do in RStudio or Spyder.</p></li>
+<li><p>Edit popular data science file formats with live preview, such as Markdown, JSON, CSV, Vega, VegaLite, and more.</p></li>
+</ul>
+<p>Again, this is all a little abstract for a tool that’s fundamentally about interactivity, so to see Jupyter Lab in action, watch <a class="reference external" href="https://youtu.be/Gzun8PpyBCo?t=542">this video</a> <strong>starting 9 minutes in</strong> and <strong>stopping 30 minutes in (when they switch speakers)</strong>. Don’t worry about absorbing every detail — we’ll get lots of practice with Jupyter Lab below — the goal is just to give you a sense of how Jupyter Lab works generally.</p>
+<p>To follow along with this video:</p>
+<ul class="simple">
+<li><p>Make sure you have the most recent version of Jupyter Lab installed (the version that comes with the Anaconda distribution you already installed is a little behind) by running <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">update</span> <span class="pre">jupyterlab</span></code>.</p></li>
+<li><p>Type <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">lab</span></code> on the command line to start a jupyter lab session!</p></li>
+</ul>
+</div>
+<div class="section" id="Is-Jupyter-the-best-tool-for-data-science?">
+<h2>Is Jupyter the best tool for data science?<a class="headerlink" href="#Is-Jupyter-the-best-tool-for-data-science?" title="Permalink to this headline">¶</a></h2>
+<p>Where Jupyter Lab really shines is in it’s support for <em>interactive</em> programming and data analysis, and in providing a single interface for working in different programming languages. But whether that makes it the <em>best</em> tool depends on how you like to work, and what you’re doing. The reality is that <em>every</em> tool has strengths and weaknesses, so what’s best depends on what you are doing <em>and</em> your personal preferences. But there are some use cases for which I think Jupyter is really valueable.</p>
+<p>In the introduction of this course, we talked about the two big branches of data science: the software development branch, and the data analysis branch.</p>
+<p>The way people in these different branches work is <em>very</em> different. People who work in the software development branch of data science are writing generalized software that will be packaged up, shipped out, and run on other computers somewhere. And as a result, the code they write is often “non-linear” (it isn’t meant to be run one line after the other sequentially). Instead it’s full of different functions and routines that may get called at different times depending on the input data.
+Moreover, when writing this kind of code, you get to assume the data entering your program has some kind of initial structure, making it easier to predict what your code will do when executed. As a result, people doing this type of data science tend to prefer more developed text editors (Atom, Emacs, Vim, etc.) that don’t provide as much support for interactivity, but offer better tools for things like debugging software packages.</p>
+<p>People in the data analysis branch, by contrast, often want to see the result of each line of code they write. That’s because when analyzing data for the first time, you may know what your code is doing in an abstract sense (say, calculating the average of a variable), but you don’t know what the output of that code will be! Moreover, you never <em>really</em> know the structure of real-world your data until you’ve cleaned the heck out of it, so you want to look at it often to see what issues are
+coming up. And when cleaning data, you are often writing very linear (this-line-runs-after-the-last-line) scripts where you want to check your efforts to clean your data after each line. When doing this kind of work (especially if you spend a lot of time moving between programming languages), having one program that will work with different kernels and allows for rich, interactive programming like Jupyter can be very valuable.</p>
+<p>So if you do a lot of interactive data analysis, I would encourage you to give Jupyter Notebooks and Jupyter Labs a try. It might not be the tool you use for everything you do, but its used by enough people and has enough advantages, I think it’s a tool most Data Scientists should have a working familiarity with.</p>
+</div>
+<div class="section" id="Setting-Up-R-with-Jupyter">
+<h2>Setting Up R with Jupyter<a class="headerlink" href="#Setting-Up-R-with-Jupyter" title="Permalink to this headline">¶</a></h2>
+<p>When you <a class="reference internal" href="setup_environment.html"><span class="doc">installed Anaconda</span></a>, you actually also installed Jupyter, and you so you can already open up Jupyter and use it with a Python Kernel. However, since most people taking this course are Duke MIDS students who are also doing coursework in R, let’s set up Jupyter to work with R as well.</p>
+<ol class="arabic simple">
+<li><p>If you do <em>not</em> have R installed, <a class="reference external" href="https://cloud.r-project.org/">download and install it here</a>. If you have R installed, skip to step 2.</p></li>
+<li><p>Open R by openning your command line tool (Oh-My-Zsh on Mac, Cmder in Windows) and typing <code class="docutils literal notranslate"><span class="pre">R</span></code>. <em>Don’t open it by double clicking its icon!</em></p>
+<ul class="simple">
+<li><p>If you can’t open R by just typing <code class="docutils literal notranslate"><span class="pre">R</span></code>, you have to launch it by putting in the absolute path to your R installation. On a Mac, doing this requires typing something like the following into your command line (depending on exactly where R is installed on your system): <code class="docutils literal notranslate"><span class="pre">/Applications/R.app/Contents/MacOS/R</span></code>. Similarly, using Cmder on Windows you need to type something like (depending on installed version): <code class="docutils literal notranslate"><span class="pre">/c/Program</span> <span class="pre">Files/R/R-3.6.0/bin/R.exe</span></code>.</p></li>
+</ul>
+</li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">install.packages(&quot;IRkernel&quot;)</span></code></p></li>
+<li><p>After installation is complete, execute the command: <code class="docutils literal notranslate"><span class="pre">IRkernel::installspec()</span></code> in R.</p></li>
+</ol>
+<p>That should be it. To see if R installed correctly, open a new session of Jupyter Lab (open a new console and type <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">lab</span></code>), and you should see buttons for both “Python 3” and “R” (though you won’t have Bash, Julia, or Stata listed like I do):</p>
+<p><img alt="jupyter_launch_page" src="_images/jupyter_launch_page.png" /></p>
+<p>If you don’t see a button for <code class="docutils literal notranslate"><span class="pre">R</span></code>, make sure you followed all the steps above!</p>
+<p><strong>If the command ``IRkernel::installspec()`` generates this error:</strong></p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span> <span class="n">in</span> <span class="n">IRkernel</span><span class="o">::</span><span class="nf">installspec</span><span class="p">()</span> <span class="o">:</span>
+  <span class="n">jupyter</span><span class="o">-</span><span class="n">client</span> <span class="n">has</span> <span class="n">to</span> <span class="n">be</span> <span class="n">installed</span> <span class="n">but</span> “<span class="n">jupyter</span> <span class="n">kernelspec</span> <span class="o">--</span><span class="n">version</span>” <span class="n">exited</span> <span class="n">with</span> <span class="n">code</span> <span class="m">127</span><span class="n">.</span>
+<span class="n">In</span> <span class="n">addition</span><span class="o">:</span> <span class="n">Warning</span> <span class="n">message</span><span class="o">:</span>
+<span class="n">In</span> <span class="nf">system2</span><span class="p">(</span><span class="s">&quot;jupyter&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;kernelspec&quot;</span><span class="p">,</span> <span class="s">&quot;--version&quot;</span><span class="p">),</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="kc">FALSE</span><span class="p">)</span> <span class="o">:</span>
+  <span class="n">error</span> <span class="n">in</span> <span class="n">running</span> <span class="n">command</span>
+</pre></div>
+</div>
+<p>That means R can’t find your installation of jupyter. That probably means anaconda isn’t set up with your command line tool, so please go back and see <code class="docutils literal notranslate"><span class="pre">setup_environment.ipynb</span></code>.</p>
+<p><strong>If the command ``IRkernel::installspec()`` generates this error:</strong></p>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">xcrun</span><span class="o">:</span> <span class="n">error</span><span class="o">:</span> <span class="n">invalid</span> <span class="n">active</span> <span class="n">developer</span> <span class="nf">path </span><span class="p">(</span><span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Developer</span><span class="o">/</span><span class="n">CommandLineTools</span><span class="p">),</span> <span class="n">missing</span> <span class="n">xcrun</span> <span class="n">at</span><span class="o">:</span> <span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Developer</span><span class="o">/</span><span class="n">CommandLineTools</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">xcrun</span>
+</pre></div>
+</div>
+<p>If that means that R want you to install apple developer tools. Just run the following command at the command line (not in R, in your bash or oh-my-zsh session): <code class="docutils literal notranslate"><span class="pre">xcode-select</span> <span class="pre">--install</span></code>, or if that doesn’t work, run <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">xcode-select</span> <span class="pre">--reset</span></code>. This should lead to a somewhat slow software installation.</p>
+</div>
+<div class="section" id="Jupyter-Lab-Exercises!">
+<h2>Jupyter Lab Exercises!<a class="headerlink" href="#Jupyter-Lab-Exercises!" title="Permalink to this headline">¶</a></h2>
+<p>Click here for some <a class="reference internal" href="exercises/Exercise_jupyterlab.html"><span class="doc">Jupyter Lab exercises</span></a>!</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Practical DS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_schedule.html">CLASS SCHEDULE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning_track.html">LEARNING TOPICS</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup_environment.html">Setting Up Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_python_packages.html">Managing Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_dataframes.html">Pandas 2: DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part2.html">Plotting, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cleaning_editingvalues.html">Cleaning: Editing Values</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Jupyter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Jupyter-Notebooks">Jupyter Notebooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Jupyter-Lab">Jupyter Lab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Is-Jupyter-the-best-tool-for-data-science?">Is Jupyter the best tool for data science?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Setting-Up-R-with-Jupyter">Setting Up R with Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Jupyter-Lab-Exercises!">Jupyter Lab Exercises!</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="git_and_github.html">Git and Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pr_review.html">Reviewing Code on Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CLOUD</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_storage_on_azure.html">Storage on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Dask on Azure Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
+</ul>
+<p class="caption"><span class="caption-text">SKILLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_big_data.html">What is Big Data?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="big_data_strategies.html">Working with Big Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backwards_design.html">Backwards Design</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="buying_datascience_computer.html">Buying a Data Science Computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="command_line_part2.html" title="previous chapter">Advanced Command Line Tutorial</a></li>
+      <li>Next: <a href="git_and_github.html" title="next chapter">Git and Github</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick Eubank.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/jupyter.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <!-- <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script> -->
+    
+  </body>
+</html>

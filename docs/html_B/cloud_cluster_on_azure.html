@@ -1,0 +1,695 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-133829453-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Setting Up a Cluster on Azure for Data Science &#8212; Practical Data Science</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Dask Cluster on Azure Example" href="cloud_dask.html" />
+    <link rel="prev" title="Renting a VM for Data Science on Azure" href="cloud_vm_on_azure.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Setting-Up-a-Cluster-on-Azure-for-Data-Science">
+<h1>Setting Up a Cluster on Azure for Data Science<a class="headerlink" href="#Setting-Up-a-Cluster-on-Azure-for-Data-Science" title="Permalink to this headline">¶</a></h1>
+<p>As discussed in our <a class="reference internal" href="cloud_vm_on_azure.html"><span class="doc">last lesson</span></a>, getting a single large VM is <em>by far</em> the easiest way to move your work to the cluster, and it’s what I would do 99% of the time. But sometimes no single computer is big enough to do all the compute you want to accomplish. When that happens, we turn to using Virtual Machine Cluster, and in particular we’re gonna figure out how to set one up with <code class="docutils literal notranslate"><span class="pre">dask</span></code>.</p>
+<p>As this is one of the later reading in a series, I’ll assume you already know about the <a class="reference internal" href="cloud_what_is_it.html"><span class="doc">basics of what the cloud is</span></a> and how <a class="reference internal" href="cloud_storage_on_azure.html"><span class="doc">Azure Storage</span></a> works (and that you have an Azure account already!).</p>
+<div class="section" id="Setup">
+<h2>Setup<a class="headerlink" href="#Setup" title="Permalink to this headline">¶</a></h2>
+<p>Setting up a cluster is, unfortunately, a little more complicated than starting up a pre-configured VM. With that in mind, we’re going to move from setting resources up interactively on the Azure website to using the Azure Command Line Tool (CLI). So before we dive in, go <a class="reference external" href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli">read this</a> and follow the directions for installing the tool. Once it’s installed, come on back!</p>
+<div class="section" id="Install-relevant-packages.">
+<h3>Install relevant packages.<a class="headerlink" href="#Install-relevant-packages." title="Permalink to this headline">¶</a></h3>
+<p>First, run the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;dask-cloudprovider[azure]&quot;</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;dask-cloudprovider[azure]&quot;</span> <span class="o">--</span><span class="n">upgrade</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">adlfs</span> <span class="n">lz4</span> <span class="n">blosc</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">dask</span> <span class="o">--</span><span class="n">upgrade</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">distributed</span> <span class="o">--</span><span class="n">upgrade</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Setup-Resources">
+<h3>Setup Resources<a class="headerlink" href="#Setup-Resources" title="Permalink to this headline">¶</a></h3>
+<p>Now we’ll talk through setting up all the resources you need for your cluster using the Azure commandline tool.</p>
+<ol class="arabic simple">
+<li><p>Login to Azure.</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az login
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Create a new resource group.</p></li>
+</ol>
+<p>If you have an existing resource group you’re welcome to use it. However, when you create your cluster it’ll create all sorts of ancillary resources (mostly related to networking protocols) so if you put them all in a new resource group, it’s much easier to clean everything up when you’re done by just deleting the resource group.</p>
+<p>Note that location refers to which of Azure’s data centers you want to connect to. You can see a list of <a class="reference external" href="https://azure.microsoft.com/en-us/global-infrastructure/geographies/">available regions here</a>. If you’re at Duke, it’s probably best to use “eastus”.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az group create --location &lt;location&gt; <span class="se">\</span>
+                --name &lt;resource group name&gt; <span class="se">\</span>
+                --subscription &lt;subscription&gt;
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Create a virtual network.</p></li>
+</ol>
+<p>In order for the computers in your cluster to see one another, they have to be placed in a virtual network. Here’s a basic configuration recommended by the dask team. This will support up to 255 nodes.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az network vnet create -g &lt;resource group name&gt; <span class="se">\</span>
+                       -n &lt;vnet name&gt; <span class="se">\</span>
+                       --address-prefix <span class="m">10</span>.0.0.0/16 <span class="se">\</span>
+                       --subnet-name &lt;subnet name&gt; <span class="se">\</span>
+                       --subnet-prefix <span class="m">10</span>.0.0.0/24
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Create a security rule.</p></li>
+</ol>
+<p>By default, when you create a virtual network it’s locked down for security. So the first thing we have to do is create a security rule that allows you to connect to the virtual network from home. This requires creating a Network Security Group and new rule.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az network nsg create -g &lt;resource group name&gt; <span class="se">\</span>
+                      --name &lt;security group name&gt;
+
+az network nsg rule create -g &lt;resource group name&gt; <span class="se">\</span>
+                           --nsg-name &lt;security group name&gt; <span class="se">\</span>
+                           -n MyNsgRuleWithAsg <span class="se">\</span>
+                           --priority <span class="m">500</span> <span class="se">\</span>
+                           --source-address-prefixes Internet <span class="se">\</span>
+                           --destination-port-ranges <span class="m">8786</span> <span class="m">8787</span> <span class="se">\</span>
+                           --destination-address-prefixes <span class="s1">&#39;*&#39;</span> <span class="se">\</span>
+                           --access Allow --protocol Tcp <span class="se">\</span>
+                           --description <span class="s2">&quot;Allow Internet to Dask on ports 8786,8787.&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Start-your-cluster!">
+<h2>Start your cluster!<a class="headerlink" href="#Start-your-cluster!" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have all resources set up to support the cluster, all that’s left is to get it started! The following code will take a few minutes, but you should get a lot of regular notifications about progress.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">load_ext</span> lab_black
+<span class="kn">from</span> <span class="nn">dask_cloudprovider.azure</span> <span class="kn">import</span> <span class="n">AzureVMCluster</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Start cluster</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">AzureVMCluster</span><span class="p">(</span>
+    <span class="n">resource_group</span><span class="o">=</span><span class="s2">&quot;nce8rg&quot;</span><span class="p">,</span>
+    <span class="n">vnet</span><span class="o">=</span><span class="s2">&quot;nce8vn&quot;</span><span class="p">,</span>
+    <span class="n">security_group</span><span class="o">=</span><span class="s2">&quot;nce8nsg&quot;</span><span class="p">,</span>
+    <span class="n">n_workers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">location</span><span class="o">=</span><span class="s2">&quot;eastus&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Creating scheduler instance
+Assigned public IP
+Network interface ready
+Creating VM
+Created VM dask-8eec3fa0-scheduler
+Waiting for scheduler to run
+Scheduler is running
+Creating worker instance
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/Nick/miniconda3/lib/python3.7/contextlib.py:119: UserWarning: Creating your cluster is taking a surprisingly long time. This is likely due to pending resources. Hang tight!
+  next(self.gen)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Network interface ready
+Creating VM
+Created VM dask-8eec3fa0-worker-29ac2137
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Connect-to-Your-Cluster">
+<h2>Connect to Your Cluster<a class="headerlink" href="#Connect-to-Your-Cluster" title="Permalink to this headline">¶</a></h2>
+<p>Finally, we need to connect our personal computer to the cluster so we can start assigning it work to do! Thankfully with dask this is <em>super</em> easy. (Not familiar with dask yet? <a class="reference internal" href="distributed_computing.html"><span class="doc">Check out this intro here!</span></a>).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/Nick/miniconda3/lib/python3.7/site-packages/distributed/client.py:1129: VersionMismatchWarning: Mismatched versions found
+
++---------+--------+-----------+---------+
+| Package | client | scheduler | workers |
++---------+--------+-----------+---------+
+| lz4     | 3.1.0  | 3.1.1     | None    |
++---------+--------+-----------+---------+
+  warnings.warn(version_module.VersionMismatchWarning(msg[0][&#34;warning&#34;]))
+</pre></div></div>
+</div>
+<p>And that’s it! Now you have a running <code class="docutils literal notranslate"><span class="pre">dask</span></code> cluster you’re connected to from home! Now you just use it like any other dask session. Want to see your dask Dashboard to see how your cluster is running? Just run <code class="docutils literal notranslate"><span class="pre">cluster.dashboard_link</span></code> and click the link!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cluster</span><span class="o">.</span><span class="n">dashboard_link</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;http://52.151.219.69:8787/status&#39;
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Scaling-Your-Cluster">
+<h2>Scaling Your Cluster<a class="headerlink" href="#Scaling-Your-Cluster" title="Permalink to this headline">¶</a></h2>
+<p>The great thing about Azure VM Clusters is that you can create a cluster that starts with, say, two computers (nodes), but then scale it up to 100 nodes when you’ve debugged your code and are ready to run a bit of computationally intensive code. Then when you’re done, those nodes will automatically shut down after they’ve been idle for a set period of time, and you’ll be back to the two nodes. And that means you only have to pay for the 100 nodes <em>when you are using them!</em>. Pretty amazing,
+honestly.</p>
+<p>To scale your cluster, use the <code class="docutils literal notranslate"><span class="pre">.scale()</span></code> method:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>cluster.scale<span class="o">?</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">Signature:</span> cluster<span class="ansi-blue-fg">.</span>scale<span class="ansi-blue-fg">(</span>n<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">,</span> memory<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span> cores<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-red-fg">Docstring:</span>
+Scale cluster to n workers
+
+Parameters
+----------
+n: int
+    Target number of workers
+
+Examples
+--------
+&gt;&gt;&gt; cluster.scale(10)  # scale cluster to ten workers
+<span class="ansi-red-fg">File:</span>      ~/miniconda3/lib/python3.7/site-packages/distributed/deploy/spec.py
+<span class="ansi-red-fg">Type:</span>      method
+
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Move from 1 worker to 2</span>
+<span class="n">cluster</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Creating worker instance
+</pre></div></div>
+</div>
+<p>Note that scaling is pretty fast, but not instant, so it may take a little time before you see your new works on your dask Dashboard.</p>
+</div>
+<div class="section" id="Closing-your-Cluster">
+<h2>Closing your Cluster<a class="headerlink" href="#Closing-your-Cluster" title="Permalink to this headline">¶</a></h2>
+<p>It’s <strong>super</strong> important that when you’re done you close your cluster! Otherwise Azure will just keep billing you for it running. (Reminder: its good practice to set up billing alerts! See the last section <a class="reference internal" href="cloud_vm_on_azure.html"><span class="doc">here</span></a> for details.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cluster</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Network interface ready
+Creating VM
+Created VM dask-8eec3fa0-worker-99699f0c
+Terminated VM dask-8eec3fa0-worker-29ac2137
+Removed disks for VM dask-8eec3fa0-worker-29ac2137
+Deleted network interface
+Terminated VM dask-8eec3fa0-worker-99699f0c
+Removed disks for VM dask-8eec3fa0-worker-99699f0c
+Deleted network interface
+</pre></div></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Practical DS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_schedule.html">CLASS SCHEDULE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning_track.html">LEARNING TOPICS</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup_environment.html">Setting Up Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managing_python_packages.html">Managing Packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_dataframes.html">Pandas 2: DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part2.html">Plotting, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cleaning_editingvalues.html">Cleaning: Editing Values</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyter.html">Jupyter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_and_github.html">Git and Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pr_review.html">Reviewing Code on Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CLOUD</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_storage_on_azure.html">Storage on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setup a Cluster on Azure</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Start-your-cluster!">Start your cluster!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Connect-to-Your-Cluster">Connect to Your Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Scaling-Your-Cluster">Scaling Your Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Closing-your-Cluster">Closing your Cluster</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Dask on Azure Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
+</ul>
+<p class="caption"><span class="caption-text">SKILLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_big_data.html">What is Big Data?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="big_data_strategies.html">Working with Big Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backwards_design.html">Backwards Design</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="buying_datascience_computer.html">Buying a Data Science Computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="cloud_vm_on_azure.html" title="previous chapter">Renting a VM for Data Science on Azure</a></li>
+      <li>Next: <a href="cloud_dask.html" title="next chapter">Dask Cluster on Azure Example</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick Eubank.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/cloud_cluster_on_azure.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <!-- <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script> -->
+    
+  </body>
+</html>
