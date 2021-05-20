@@ -56,7 +56,7 @@
 <li><p>If you only want this for a year or two, I’d say you want double the storage you currently use; if you’re gonna need this computer to last you a while I would say four times what you use now.</p></li>
 </ul>
 </li>
-<li><p><strong>A reasonable processor:</strong> At least an intel i7, or an i9 if you can get it. &gt;= 6 cores I think.</p></li>
+<li><p><strong>A reasonable processor:</strong> At least an intel i7, or an i9 if you can get it, or an Apple M1 or better. &gt;= 6 cores I think.</p></li>
 </ul>
 <p>From a data science perspective, I don’t think you need to worry about GPUs very much unless you’re buying a desktop. I’m not a serious GPU user, but my understanding is that laptops just don’t come with “good” GPUs by data science standards, I wouldn’t worry about the GPU in your laptop (unless you like playing games).</p>
 </div>
@@ -65,17 +65,10 @@
 <p>I prefer macs – they have the same OS architecture as linux (see <a class="reference internal" href="command_line_part1.html"><span class="doc">discussion here</span></a>), and so are popular in data science, and help train you well for using linux computers while cloud computing. (But I’m also addicted to iMessages, so maybe that’s just stockholm syndrome speaking. :-))</p>
 <p>But of course macs are also expensive, and while there are ways to try to get them cheaper (see notes below), you can definitely get more power from a Windows machine at the same price. Moreover, if you prefer getting a windows machine for either price or personal preference reasons, if you want to be able to work in Linux, it now runs relatively seamlessly from within Windows with <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/">WSL 2</a>.</p>
 <p>Finally, if you just want to get an actual Linux laptop, you can do that to! If you decide to go that route, I strongly suggest that you buy it from an established retailer who will make sure that everything is installed and set up when it arrives at your door like <a class="reference external" href="https://pop.system76.com/">System76</a>. But be aware that managing Linux operating system is sure to come with some frustrations, so only do this if you enjoy mucking around and learning how operating systems really work.</p>
-<div class="section" id="The-Mac-M1-Chip">
-<h3>The Mac M1 Chip<a class="headerlink" href="#The-Mac-M1-Chip" title="Permalink to this headline">¶</a></h3>
-<p>Apple just released their M1 processor, and it looks <em>insanely</em> fast. But a few words of caution:</p>
-<ul class="simple">
-<li><p>first, as of Nov 2020, nobody has actually held one so at the very least you should wait a couple months until people have tested them</p></li>
-<li><p>Second, while I would definitely recommend one to my parents who just use a standard Apple software, there are likely to be issues with open source software for a while so I don’t know that I would buy it until I’m sure that has been addressed.</p></li>
-<li><p>This is Apple’s first new chip and it seems like they were targeting the high-efficiency lower performance end of their product line, which probably means there’s another much more powerful chip coming for their more powerful computers. So even if you want a new processor, you might want to wait nine months until that comes out.</p></li>
-<li><p>The M1 has integrated RAM, which means you can never add memory later. And right now, the most memory any of these offer is 16GB, which I think is the bare minimum for data science work.</p></li>
-</ul>
-<p>Current compatibility efforts: <a class="reference external" href="https://developer.r-project.org/Blog/public/2020/11/02/will-r-work-on-apple-silicon/index.html">R</a>, <a class="reference external" href="https://github.com/tensorflow/tensorflow/issues/44751">TensorFlow</a>, <a class="reference external" href="https://github.com/JuliaLang/julia/issues/36617">Julia</a>, and <a class="reference external" href="https://blog.stata.com/2020/11/10/stata-for-mac-with-apple-silicon/">Stata</a>. Vanilla Python I understand will work natively, but it’s less clear about how the data science stack (numpy, scipy) will run given they are built
-on a lot of fortran, which they’ll have to learn to re-compile to apple.</p>
+<div class="section" id="A-Note-on-Macs">
+<h3>A Note on Macs<a class="headerlink" href="#A-Note-on-Macs" title="Permalink to this headline">¶</a></h3>
+<p>Rumor has it that Apple <a class="reference external" href="https://www.forbes.com/sites/ewanspence/2021/05/18/apple-macbook-pro-macbook-air-leak-screen-design-m2-processor/?sh=43989c962689">will be releasing a new MacBook Pro line as soon as this summer</a>. So if your thinking about getting a new Mac, you may want to try to put off that decision for a couple months.</p>
+<p>Your other option is to get one of the already refreshed Macs with the M1 chips. However, be aware that the M1 has integrated RAM, which means you can never add memory later. And right now, <strong>the most memory any of these offer is 16GB,</strong> which I think is the bare minimum for data science work. So if you get an M1 Macbook, bear in mind you will probably have to replace it before too long.</p>
 </div>
 </div>
 <div class="section" id="Saving-Money">
@@ -90,7 +83,7 @@ faster in the last many years</span></a>, so if you can upgrade the other compon
 <li><p>for the same level of performance, desktops are much much cheaper than laptops</p></li>
 <li><p>Windows and Linux machines are cheaper than Macs</p></li>
 </ul>
-<p>And finally, if you’re buying a mac, consider whether you can buy lower specs and upgrade yourself. Many used laptops only have 16GB ram because most people don’t need more than that, but may be expandable; and if you can avoid paying Apple for RAM upgrades and do them yourself, you’ll save money.</p>
+<p>And finally, if you’re buying a mac, consider whether you can buy lower specs and upgrade yourself. Many used laptops only have 16GB ram because most people don’t need more than that, but may be expandable; and if you can avoid paying Apple for RAM upgrades and do them yourself, you’ll save money. <strong>But this only works with older MacBook Pros – newer ones aren’t upgradeable</strong></p>
 </div>
 </div>
 
