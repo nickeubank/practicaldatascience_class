@@ -3,17 +3,6 @@
 
 <html>
   <head>
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-133829453-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-    <!-- End Google Analytics -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Big Data Exercises &#8212; Practical Data Science</title>
@@ -23,10 +12,7 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -78,7 +64,7 @@ include end points (so if the readme says data is in columns 10-20, in Python th
 </div>
 <p>(to just get the columns whose names start with “value”) with <code class="docutils literal notranslate"><span class="pre">.mean(axis='columns')</span></code> (which averages across columns (along rows) rather than the usual averaging across rows (along columns).</p>
 <p><strong>(6)</strong> Now for each weather station, generate a separate plot of the daily temperatures over time. You should end up with a plot that looks something like this:</p>
-<p><img alt="temp_plots_Colorado" src="../_images/temp_plots_Boulder_CO.png" /></p>
+<img alt="temp_plots_Colorado" src="../_images/temp_plots_Boulder_CO.png" />
 <div class="section" id="Want-More-Practice?">
 <h2>Want More Practice?<a class="headerlink" href="#Want-More-Practice?" title="Permalink to this headline">¶</a></h2>
 <p>If you <em>really</em> want a challenge, the file <code class="docutils literal notranslate"><span class="pre">ghcnd_daily_30gb.tar.gz</span></code> will decompress into <code class="docutils literal notranslate"><span class="pre">ghcnd_daily.dat</span></code>, the full version of the GHCND daily data. It contains not only daily high temps, but also daily low temps, preciptionation, etc. Moreover, it is still in fixed-width format, and is about 30gb in raw form.</p>
@@ -199,7 +185,7 @@ include end points (so if the readme says data is in columns 10-20, in Python th
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -208,6 +194,23 @@ include end points (so if the readme says data is in columns 10-20, in Python th
     </div>
 
     
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
     
   </body>
 </html>

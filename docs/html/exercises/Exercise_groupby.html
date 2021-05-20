@@ -3,17 +3,6 @@
 
 <html>
   <head>
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-133829453-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-    <!-- End Google Analytics -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Groupby and Arrest Data &#8212; Practical Data Science</title>
@@ -23,10 +12,7 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -512,7 +498,7 @@ could infer it was likely about 50% White in 1995.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pandas</span></code> offers an <code class="docutils literal notranslate"><span class="pre">interpolate</span></code> method that will do this for you, but <code class="docutils literal notranslate"><span class="pre">interpolate</span></code> just doesn’t interpolations for one set of observations. In this case, however, we need to do our interpolations <em>within each group</em>, so you’ll have to figure out how to use <code class="docutils literal notranslate"><span class="pre">interpolate</span></code> with groupby. (<em>Hint:</em> this is probably a job for <code class="docutils literal notranslate"><span class="pre">apply</span></code>).</p>
 <p><strong>(12)</strong> Now that we have the share of the population in each county that is White, and the share of drug arrestees who are White all in one dataset, we can look at how the <em>ratio</em> of these two numbers changes over time. Plot the trend, over time, in this ratio.</p>
 <p>Do we see any substantial change in the racial incidence of drug arrests over the 40 years of this data, a period in which there have been several waves of changes in public attitudes and rhetoric around policing, including the rise of the war on drugs, the “tough on crime 1990s”, and the more recent wave of concern about the mass incarceration of black Americans?</p>
-<p><img alt="US_incarceration_rate_timeline" src="../_images/US_incarceration_rate_timeline.gif" /></p>
+<img alt="US_incarceration_rate_timeline" src="../_images/US_incarceration_rate_timeline.gif" />
 </div>
 </div>
 <div class="section" id="Absolutely-positively-need-the-solutions?">
@@ -628,7 +614,7 @@ could infer it was likely about 50% White in 1995.</p>
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -636,7 +622,24 @@ could infer it was likely about 50% White in 1995.</p>
           rel="nofollow">Page source</a>
     </div>
 
-   
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
     
   </body>
 </html>

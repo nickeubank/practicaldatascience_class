@@ -3,17 +3,6 @@
 
 <html>
   <head>
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-133829453-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-    <!-- End Google Analytics -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Python: Variables vs Objects &#8212; Practical Data Science</title>
@@ -23,10 +12,7 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Numbers in Computers" href="ints_and_floats.html" />
@@ -337,11 +323,11 @@ itself.</p>
 </div>
 <p>If it’s helpful, here’s a visual depiction of what’s going on:</p>
 <p>First we create a list associated with <code class="docutils literal notranslate"><span class="pre">x</span></code>:</p>
-<p><img alt="vars_v_objects_1" src="_images/vars_v_objects_11.png" /></p>
+<img alt="vars_v_objects_1" src="_images/vars_v_objects_1.png" />
 <p>Then we create a var <code class="docutils literal notranslate"><span class="pre">y</span></code> also pointed at that same list:</p>
-<p><img alt="vars_v_objects_2" src="_images/vars_v_objects_21.png" /></p>
+<img alt="vars_v_objects_2" src="_images/vars_v_objects_2.png" />
 <p>Then we modify the list <em>through</em> <code class="docutils literal notranslate"><span class="pre">x</span></code>, creating a change also visible through <code class="docutils literal notranslate"><span class="pre">y</span></code>:</p>
-<p><img alt="vars_v_objects_3" src="_images/vars_v_objects_31.png" /></p>
+<img alt="vars_v_objects_3" src="_images/vars_v_objects_3.png" />
 <p>If what you want to do is make a <em>copy</em> of x, you use the <code class="docutils literal notranslate"><span class="pre">copy()</span></code> command. This makes an entirely new list (a new object that looks the same as the old one, but which can be put on a different shelf) so that changes to <code class="docutils literal notranslate"><span class="pre">x</span></code> won’t impact the list associated with <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
@@ -367,11 +353,11 @@ itself.</p>
 </div>
 <p>Visually, this code sequence looks like this:</p>
 <p>Start with <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> as before:</p>
-<p><img alt="vars_v_objects_2" src="_images/vars_v_objects_21.png" /></p>
+<img alt="vars_v_objects_2" src="_images/vars_v_objects_2.png" />
 <p>Then we make <code class="docutils literal notranslate"><span class="pre">y_copy</span></code>:</p>
-<p><img alt="vars_v_objects_4" src="_images/vars_v_objects_4.png" /></p>
+<img alt="vars_v_objects_4" src="_images/vars_v_objects_4.png" />
 <p>And modify <code class="docutils literal notranslate"><span class="pre">x</span></code>, changing what we get when we call <code class="docutils literal notranslate"><span class="pre">y</span></code>, but not <code class="docutils literal notranslate"><span class="pre">y_copy</span></code>:</p>
-<p><img alt="vars_v_objects_5" src="_images/vars_v_objects_5.png" /></p>
+<img alt="vars_v_objects_5" src="_images/vars_v_objects_5.png" />
 <p>If you want to see if two variables point to the same thing, you can use the <code class="docutils literal notranslate"><span class="pre">is</span></code> operator, which tests whether two variables are pointed at the same place in memory / same shelf:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -573,9 +559,9 @@ True
 </pre></div></div>
 </div>
 <p>As we can see, <code class="docutils literal notranslate"><span class="pre">y</span></code> is still pointing at the old string and still has the same <code class="docutils literal notranslate"><span class="pre">id()</span></code>. Visually, this can be visualized as <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> both pointing to the same string:</p>
-<p><img alt="var_v_object_string_1" src="_images/var_v_object_string_1.png" /></p>
+<img alt="var_v_object_string_1" src="_images/var_v_object_string_1.png" />
 <p>Then <code class="docutils literal notranslate"><span class="pre">x</span></code> being redirected to a new object (“MY STRING”) because strings are immutable (meaning the original value of “my string” couldn’t just be modified in place).</p>
-<p><img alt="var_v_object_string_2" src="_images/var_v_object_string_2.png" /></p>
+<img alt="var_v_object_string_2" src="_images/var_v_object_string_2.png" />
 <p>This illustrates one of the naunces of Python: <strong>if you mutate a mutable object, that change will propagate to all variables that point at said object. But if you modify an immutable object, a new object will actually be created, so that change will not be accessible to variables pointing at the old object.</strong></p>
 </div>
 <div class="section" id="What’s-mutable,-and-what’s-immutable?">
@@ -881,7 +867,7 @@ True
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -892,7 +878,7 @@ True
     
 
     
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
 
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-133829453-1']);
@@ -906,7 +892,7 @@ True
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
 
-    </script> -->
+    </script>
     
   </body>
 </html>

@@ -3,17 +3,6 @@
 
 <html>
   <head>
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-133829453-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-    <!-- End Google Analytics -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Machine Learning with Scikit-Learn &#8212; Practical Data Science</title>
@@ -23,10 +12,7 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -128,7 +114,7 @@ are notorious for proxying for race in machine learning algorithms since residen
 <p><strong>(6)</strong> Now fit your model against X and y. (If you’re unsure how to do this, read the docs for the model and look at the examples at the bottom!</p>
 <p><strong>Note:</strong> In <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>, the <code class="docutils literal notranslate"><span class="pre">.fit()</span></code> method returned a new fitted model. In <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>, by contrast, <code class="docutils literal notranslate"><span class="pre">.fit</span></code> modifies (mutates) the model in place.</p>
 <p>Machine learning, more than absolutely anything else, is concerned with predicting values, and that’s evident in what functionality is exposed by this linear model. As you may recall, in <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>, you could type <code class="docutils literal notranslate"><span class="pre">.summary()</span></code> and get something that looked like this:</p>
-<p><img alt="statsmodel_output" src="../_images/statsmodel_output.png" /></p>
+<img alt="statsmodel_output" src="../_images/statsmodel_output.png" />
 <p>A full printout of various dignostics, all your coefficients, estimates of confidence intervals for each coefficient, etc. etc. By contrast, <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> from <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> has no <code class="docutils literal notranslate"><span class="pre">summary</span></code> method. Indeed, the only output you really get for what the model has actually fit is <code class="docutils literal notranslate"><span class="pre">my_model.coef_</span></code>, which looks like:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">my_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 <span class="o">&gt;</span> <span class="n">my_model</span><span class="o">.</span><span class="n">coef_</span>
@@ -320,7 +306,7 @@ are notorious for proxying for race in machine learning algorithms since residen
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -330,6 +316,22 @@ are notorious for proxying for race in machine learning algorithms since residen
 
     
 
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
     
   </body>
 </html>

@@ -3,17 +3,6 @@
 
 <html>
   <head>
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-133829453-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-    <!-- End Google Analytics -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Merging Data to Understand the Relationship between Drug Legalization and Violent Crime &#8212; Practical Data Science</title>
@@ -23,10 +12,7 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -630,7 +616,7 @@ Name: _merge, dtype: int64
 </div>
 <p>Allowing us to easily diagnose the problem.</p>
 <p><strong>Note:</strong> The <code class="docutils literal notranslate"><span class="pre">pandas</span></code> merge function allows users to decide whether to keep only observations that merge (<code class="docutils literal notranslate"><span class="pre">how='inner'</span></code>), all the observations from the first dataset pasted to merge (<code class="docutils literal notranslate"><span class="pre">how='left'</span></code>), all the observations from the second dataset passed to merge (<code class="docutils literal notranslate"><span class="pre">how='right'</span></code>), or all observations (<code class="docutils literal notranslate"><span class="pre">how='outer'</span></code>):</p>
-<p><img alt="join_types" src="../_images/join-or-merge-in-python-pandas.png" /></p>
+<img alt="join_types" src="../_images/join-or-merge-in-python-pandas.png" />
 <p>But one danger to using the more restrictive options (like the default, <code class="docutils literal notranslate"><span class="pre">how='inner'</span></code>) is that the merge throws away all the observations that fail to merge, and while this may be the <em>eventual</em> goal of your analysis, it means that you don’t get to see all the observations that failed to merge that maybe you thought <em>would</em> merge. In other words, it throws away the errors so you can’t look at them!</p>
 <p>So to use <code class="docutils literal notranslate"><span class="pre">indicator</span></code> effectively, you have to:</p>
 <ul class="simple">
@@ -778,7 +764,7 @@ Name: _merge, dtype: int64
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -788,6 +774,22 @@ Name: _merge, dtype: int64
 
     
 
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
     
   </body>
 </html>

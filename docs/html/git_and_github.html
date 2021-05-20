@@ -3,17 +3,6 @@
 
 <html>
   <head>
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-133829453-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-    <!-- End Google Analytics -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Git and Github &#8212; Practical Data Science</title>
@@ -23,7 +12,6 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
@@ -63,7 +51,7 @@ help you resolve those conflicting edits in a very efficient manner instead of w
 <li><p><strong>You can easily see what changes you’re co-author has made:</strong> Because git is organized around keeping track of <em>changes</em> (again, called commits), when your co-author makes changes to a document, git allows you to easily see <em>just the changes</em> your co-author has made. This makes it much easier for colleagues to be aware of how their project is changing to watch out of problems (e.g. you can easily see if your co-author recoded a variable in a way that is problematic for code you wrote later).
 For example, here’s an example of a github report on changes a co-author made in a shared project, where the (red) text on the left is what the code used to say, while the (green) text on the right is what it now says. And github even allows you to comment directly on changes if you want:</p></li>
 </ol>
-<p><img alt="git_diff_example" src="_images/git_example1.png" /></p>
+<img alt="git_diff_example" src="_images/git_example1.png" />
 <p>Much more helpful than a Drobox “[Name] made changes to [File]” notification. :)</p>
 <ol class="arabic simple" start="4">
 <li><p><strong>Allows you to contribute to open source projects:</strong> This may not be something you’re planning to jump into, but learning git will make this an option. If you find that a package you use doesn’t have a feature you need, the ability to use git will make it possible for you to add that feature to the package, not only allowing you to do what you want to do, but also making that fix available to the broader community.</p></li>
@@ -254,7 +242,7 @@ learn a little bit more about data-science-specific git issues (like how to put 
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -265,7 +253,7 @@ learn a little bit more about data-science-specific git issues (like how to put 
     
 
     
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
 
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-133829453-1']);
@@ -279,7 +267,7 @@ learn a little bit more about data-science-specific git issues (like how to put 
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
 
-    </script> -->
+    </script>
     
   </body>
 </html>

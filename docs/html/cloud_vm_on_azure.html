@@ -3,17 +3,6 @@
 
 <html>
   <head>
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-133829453-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-    <!-- End Google Analytics -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Renting a VM for Data Science on Azure &#8212; Practical Data Science</title>
@@ -23,10 +12,7 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Setting Up a Cluster on Azure for Data Science" href="cloud_cluster_on_azure.html" />
@@ -303,9 +289,9 @@ remember: YOUR LIFE WILL ALMOST ALWYS BE EASIER IF YOU JUST GET ONE VIRTUAL MACH
 <li><p>At the stage it says “pick a Resource Group if you have one or create a new name”, you don’t have one, so make a new name. See the note above.</p></li>
 </ul>
 <p>Once you create a Workspace, you’ll be brought to a Workspace page. As of October 2020, Microsoft is in the process of migrating from one interface to another, so if you see this in the middle of your landing page:</p>
-<p><img alt="azure_new_mlstudio" src="_images/azure_new_mlstudio.png" /></p>
+<img alt="azure_new_mlstudio" src="_images/azure_new_mlstudio.png" />
 <p>Select “Launch Now”, and you should end up on a page whose URL starts with <code class="docutils literal notranslate"><span class="pre">ml.azure.com</span></code>, and which looks like this:</p>
-<p><img alt="azure_ml_studio" src="_images/azure_ml_studio.png" /></p>
+<img alt="azure_ml_studio" src="_images/azure_ml_studio.png" />
 </div>
 <div class="section" id="2.-Rent-Your-VM">
 <h2>2. Rent Your VM<a class="headerlink" href="#2.-Rent-Your-VM" title="Permalink to this headline">¶</a></h2>
@@ -318,7 +304,7 @@ overspending – you can get those, just takes some extra permissions so Azure i
 <p>Now once you have a VM, you can connect in two ways: you can use JupyterLab, RStudio, or Jupyter; or you can connect via the commandline by enabling SSH (which you will see is an option here). Enabling SSH requires sharing the public key from your personal computer, which takes a little work, so lets skip it for now and just leave that turned off. If/when you want that option, you can find directions for setting up <a class="reference external" href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys#provide-an-ssh-public-key-when-deploying-a-vm">SSH keys
 here</a>. The other ways to connect will become available when the machine is up andr unning. Click <code class="docutils literal notranslate"><span class="pre">Create</span></code>, and go grab a cup of coffee while your machine gets setup! (You’ll have to wait about 5-7 minutes for it to get going).</p>
 <p>Once it’s running, click on the name of your VM in your list of compute resources, and then click on the <code class="docutils literal notranslate"><span class="pre">Run</span></code> tab. There, on the right side, you’ll see a series of links to Jupyter, JupyterLab, RSTudio, and (if you enabled it) ssh:</p>
-<p><img alt="azure_vm_services" src="_images/azure_vm_services.png" /></p>
+<img alt="azure_vm_services" src="_images/azure_vm_services.png" />
 <p>Just click on those links and the service you requested for the VM will pop up! TA-DA! You’re running Jupyter on the cloud!</p>
 <p>(Because we’re in AzureML, the VMs offered are all running the linux operating system and come with standard Data Science software installed. If you want a different kind of VM – say, a Windows machine, or a linux machine without software pre-installed – go back to your <a class="reference external" href="https://portal.azure.com/#home">Azure Portal page</a>, and select “Virtual Machines.” There you can completely control the configuration of your VM, and even set up a Remote Desktop Connection if you want to use a regular
 Windows experience with full graphical user interface.)</p>
@@ -869,7 +855,7 @@ we’ll see later, there are also lots of Python libraries that can do the same 
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -880,7 +866,7 @@ we’ll see later, there are also lots of Python libraries that can do the same 
     
 
     
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
 
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-133829453-1']);
@@ -894,7 +880,7 @@ we’ll see later, there are also lots of Python libraries that can do the same 
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
 
-    </script> -->
+    </script>
     
   </body>
 </html>

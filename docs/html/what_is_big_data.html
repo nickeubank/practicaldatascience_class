@@ -3,17 +3,6 @@
 
 <html>
   <head>
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-133829453-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-    <!-- End Google Analytics -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>What is Big Data? &#8212; Practical Data Science</title>
@@ -23,10 +12,7 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Big Data Strategies" href="big_data_strategies.html" />
@@ -61,7 +47,7 @@ into a <em>tiny</em> set of memory banks inside your processor from which they c
 <p>How much slower? Data can move from main memory to the processor at a rate ~1,000 times faster than from a spinning harddrive, over 100 times faster than from SATA SSDs, and over 25 times faster than from m2 SSDs. (speeds estimted from transfer speed estimates <a class="reference external" href="https://en.wikipedia.org/wiki/Memory_hierarchy#Examples">here</a>).</p>
 <p>But even those transfer speeds are only half the story – hard drives also have higher <em>latency</em>, meaning that with harddrives, there’s a much longer lag between when you <em>ask</em> for data when the data transfer begins than with main memory. How much slower? This table re-scales actual latency times (the time between when you ask for a byte of data and when it arrives at the processor) to human time scales (don’t worry about the cache entries yet) (<a class="reference external" href="https://www.formulusblack.com/blog/compute-performance-distance-of-data-as-a-measure-of-latency/">from this excellent
 post</a>).</p>
-<p><img alt="human_time" src="_images/human_time.png" /></p>
+<img alt="human_time" src="_images/human_time.png" />
 <p>As the table shows, if we were to pretend that a single tick of your processor (essentially how long it takes to add two numbers) took 1 second, then stopping to get <em>one byte</em> of data from main memory would take several minutes. And if we wanted to get data from a spinning harddrive, we’d have to wait between 11 days and <em>four months</em>. SSDs obviously perform much better than physical harddrives with spinning platters, but even those take hours to days. <em>And that’s just to get the first byte!</em>
 There are <em>also</em> the differences in transfer rates once data starts flowing!</p>
 <p>In other words, when working with large datasets, moving around your data is often the most expensive thing you will do, and the penalities for <em>not</em> being able to fit your data into main memory mean that something that might take minutes if you could do it with data in main memory could take days.</p>
@@ -189,7 +175,7 @@ tricks for trying to use data in ways that are more likely to result in your com
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -200,7 +186,7 @@ tricks for trying to use data in ways that are more likely to result in your com
     
 
     
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
 
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-133829453-1']);
@@ -214,7 +200,7 @@ tricks for trying to use data in ways that are more likely to result in your com
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
 
-    </script> -->
+    </script>
     
   </body>
 </html>

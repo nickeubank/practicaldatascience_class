@@ -3,17 +3,6 @@
 
 <html>
   <head>
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-133829453-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-    <!-- End Google Analytics -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jupyter Lab Exercises &#8212; Practical Data Science</title>
@@ -23,10 +12,7 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -55,7 +41,7 @@
 <p>First, let’s open the file <code class="docutils literal notranslate"><span class="pre">analyze_health_and_income.R</span></code> (make sure it’s the <code class="docutils literal notranslate"><span class="pre">.R</span></code> file) by navigating to where you downloaded <code class="docutils literal notranslate"><span class="pre">jupyter_lab</span></code> folder using the file navigator on the left hand pane. If the file navigator not immediately visible, you can open it by clicking the folder icon in at the top of the left sidebar.</p>
 <p>This has now opened a text editor window. To pair it with an active kernel (i.e. a running session of R), we need to right click somewhere inside the file and select “Create Console for Editor”, then choose to open an R kernel. This will open a new window with the same name as your current text file (“analyze_health.R”), but with a different icon (there should be a blue box with a cursor).</p>
 <p>This window is your interface to an active R session, and the setup you have now is basically the same as in RStudio:</p>
-<p><img alt="rstudio" src="../_images/rstudio_layout.png" /></p>
+<img alt="rstudio" src="../_images/rstudio_layout.png" />
 <p>You can enter commands directly into the console window, or you can run a block of code from your text-editor window by highlighting it and hitting Shift-Enter.</p>
 <div class="section" id="Exercise-1">
 <h3>Exercise 1<a class="headerlink" href="#Exercise-1" title="Permalink to this headline">¶</a></h3>
@@ -72,9 +58,9 @@
 <div class="section" id="Exercise-3">
 <h3>Exercise 3<a class="headerlink" href="#Exercise-3" title="Permalink to this headline">¶</a></h3>
 <p>Grab the tab of the <code class="docutils literal notranslate"><span class="pre">analyze_health_and_income</span></code> console tab and drag it to the right side of the text window:</p>
-<p><img alt="converting_to_spyder" src="../_images/converting_to_spyder.png" /></p>
+<img alt="converting_to_spyder" src="../_images/converting_to_spyder.png" />
 <p>Then you’ll get something like this:</p>
-<p><img alt="spyder_layout" src="../_images/spyder_layout.png" /></p>
+<img alt="spyder_layout" src="../_images/spyder_layout.png" />
 </div>
 </div>
 <div class="section" id="Multiple-Kernels">
@@ -83,8 +69,8 @@
 <h3>Exercise 4<a class="headerlink" href="#Exercise-4" title="Permalink to this headline">¶</a></h3>
 <p>Now let’s open <code class="docutils literal notranslate"><span class="pre">analyze_health_and_income.py</span></code> (note the <code class="docutils literal notranslate"><span class="pre">py</span></code> file suffix: this is a Python file not R file). Create a kernel for this file as well by right clicking on the text file and clicking “Create A Console for Editor”. This time select Python 3.</p>
 <p>(By default the new console will appear along the bottom, so move it on top of the other console to organize your space:</p>
-<p><img alt="moving_second_console" src="../_images/moving_second_console.png" /></p>
-<p><img alt="two_tabs" src="../_images/two_tabs.png" /></p>
+<img alt="moving_second_console" src="../_images/moving_second_console.png" />
+<img alt="two_tabs" src="../_images/two_tabs.png" />
 </div>
 <div class="section" id="Exercise-5">
 <h3>Exercise 5<a class="headerlink" href="#Exercise-5" title="Permalink to this headline">¶</a></h3>
@@ -212,7 +198,7 @@
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -221,6 +207,23 @@
     </div>
 
     
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
     
   </body>
 </html>

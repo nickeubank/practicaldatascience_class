@@ -3,17 +3,6 @@
 
 <html>
   <head>
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-133829453-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-    <!-- End Google Analytics -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Variables v Objects Exercises &#8212; Practical Data Science</title>
@@ -23,10 +12,7 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -292,13 +278,13 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>If we were to draw out how this code is being executed, we would want to draw three figures, one for each line of code, like this:</p>
 <p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code>:</p>
-<p><img alt="vars_v_objects_1" src="../_images/vars_v_objects_1.png" /></p>
+<img alt="vars_v_objects_1" src="../_images/vars_v_objects_1.png" />
 <p><code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">x</span></code>:</p>
-<p><img alt="vars_v_objects_2" src="../_images/vars_v_objects_2.png" /></p>
+<img alt="vars_v_objects_2" src="../_images/vars_v_objects_2.png" />
 <p><code class="docutils literal notranslate"><span class="pre">x.append(4)</span></code>:</p>
-<p><img alt="vars_v_objects_3" src="../_images/vars_v_objects_3.png" /></p>
+<img alt="vars_v_objects_3" src="../_images/vars_v_objects_3.png" />
 <p>Similarly, we could write a dictionary as:</p>
-<p><img alt="vars_v_objects_dict" src="../_images/vars_v_objects_dict.png" /></p>
+<img alt="vars_v_objects_dict" src="../_images/vars_v_objects_dict.png" />
 <p>To help complete these exercises, you can print out copies of <a class="reference internal" href="code_drawing_template.html"><span class="doc">code-drawing templates here</span></a>.</p>
 <div class="section" id="Exercise-1">
 <h2>Exercise 1<a class="headerlink" href="#Exercise-1" title="Permalink to this headline">¶</a></h2>
@@ -382,7 +368,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>Naturally, we might think that <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are now fully independent, but it turns out this is not the case. The reason is that <code class="docutils literal notranslate"><span class="pre">copy</span></code> copied the <em>arrow</em> from our first list (42, 3.14) to the second list (1, 2, 3), but it did <em>not</em> create an entirely new copy of the second list (<code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code>).</p>
 <p>In other words, it copied the <em>object reference</em> in the first list, not the referenced object itself, which looks like this:</p>
-<p><img alt="recursive_copy" src="../_images/recursive_copy.png" /></p>
+<img alt="recursive_copy" src="../_images/recursive_copy.png" />
 <p>Thus if we modify this second list through <code class="docutils literal notranslate"><span class="pre">x</span></code>, that change will also be evident in <code class="docutils literal notranslate"><span class="pre">y</span></code>!</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -415,7 +401,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <p>which will generate this situation:</p>
-<p><img alt="recursive_deepcopy" src="../_images/recursive_deepcopy.png" /></p>
+<img alt="recursive_deepcopy" src="../_images/recursive_deepcopy.png" />
 </div>
 <div class="section" id="Exercise-7">
 <h2>Exercise 7<a class="headerlink" href="#Exercise-7" title="Permalink to this headline">¶</a></h2>
@@ -539,7 +525,7 @@ div.rendered_html tbody tr:hover {
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -549,6 +535,22 @@ div.rendered_html tbody tr:hover {
 
     
 
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
     
   </body>
 </html>

@@ -3,17 +3,6 @@
 
 <html>
   <head>
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-133829453-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-    <!-- End Google Analytics -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Git and Github, Part 2 &#8212; Practical Data Science</title>
@@ -23,10 +12,7 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -74,12 +60,12 @@ that line of code, then it would delete those changes to use 2015 instead of 201
 <p><strong>(2)</strong> On Computer A, create a new branch called “this_is_gonna_be_a_problem”.</p>
 <p><strong>(3)</strong> In that branch, open the README.md and add to the title (the <em>very first line</em> of the readme) the year of data you’re using (“2016”).</p>
 <p><strong>(4)</strong> Commit and push your edits, and create a new pull request. If you look at your pull request, you should see:</p>
-<p><img alt="ok_to_merge image" src="../_images/ok_to_merge.png" /></p>
+<img alt="ok_to_merge image" src="../_images/ok_to_merge.png" />
 <p>That’s because at the moment, since you created your branch, no other changes have been made to the master branch that might conflict with your edits, so if you wanted to merge right now, git would know that it should use your edits.</p>
 <p><strong>(5)</strong> Now, still on Computer A, switch back to the master branch and edit the README.md title (the <em>very</em> first line) by adding the details of the GDP per capita variable (e.g. “Constant 2010 US$”).</p>
 <p><strong>(6)</strong> Add, commit, and push those changes directly (no PR – we want to modify the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch directly).</p>
 <p><strong>(7)</strong> Now go back to your PR. You should see that because the master branch has now added edits <em>to the line you also edited since you created your branch,</em>, you can no longer just merge your edits! You’ll see:</p>
-<p><img alt="not ok to merge" src="../_images/not_ok_to_merge.png" /></p>
+<img alt="not ok to merge" src="../_images/not_ok_to_merge.png" />
 </div>
 <div class="section" id="Resolving-a-Merge-Conflict">
 <h2>Resolving a Merge Conflict<a class="headerlink" href="#Resolving-a-Merge-Conflict" title="Permalink to this headline">¶</a></h2>
@@ -93,7 +79,7 @@ that line of code, then it would delete those changes to use 2015 instead of 201
 struggling with the idea of rebasing and want to learn more, <a class="reference external" href="https://www.youtube.com/watch?v=f1wnYdLEpgI">I recommend this video</a>.</p>
 <p>Note it’s important that you’ve checked out your <code class="docutils literal notranslate"><span class="pre">this_is_gonna_be_a_problem</span></code> branch before you do this! <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">rebase</span> <span class="pre">master</span></code> says to git “rebase the currently active branch off of master”. If the branch you have open is master, it will just announce that the rebase is done, since master is already up to date with… master (trivially!).</p>
 <p>Visually, you can imagine it like:</p>
-<p><img alt="rebase" src="../_images/rebase.png" /></p>
+<img alt="rebase" src="../_images/rebase.png" />
 <p>Rebase can be useful for several things, not just conflicts. If you’ve been working on a branch for a while and you just want to bring all the features and updates from master into that branch, <code class="docutils literal notranslate"><span class="pre">rebase</span></code> pulls all those in.</p>
 <p>But in this case, <code class="docutils literal notranslate"><span class="pre">rebase</span></code> will <em>try</em> and integrate your branch with the master branch, and in doing so will give you a chance to address all the conflicts that have appeared (in this case, both you and your teammates editing the first line of the README.md at the same time).</p>
 <p>When you try and rebase, you should get a message that looks something like this:</p>
@@ -141,16 +127,16 @@ struggling with the idea of rebasing and want to learn more, <a class="reference
 <p>Github is both great and terrible when it comes to Jupyter Notebooks.</p>
 <p><strong>(9)</strong> To understand why, let’s begin by having everyone add and push a Jupyter Notebook to their repository. Once you’ve pushed your files, navigate to the notebook on github in your browser.</p>
 <p>The first thing you’ll likely see is… nothing:</p>
-<p><img alt="notebook_not_rendered" src="../_images/notebook_not_rendered.png" /></p>
+<img alt="notebook_not_rendered" src="../_images/notebook_not_rendered.png" />
 <p>The reason is that github has service that renders jupyter notebooks to look like, well… jupyter notebooks. And when you push a jupyter notebook, that notebook gets put into a queue for rendering, and it will thus only be visible as a rendered document when it gets to the front and gets rendered. This can take a while, so we’ll just move on. But if you want to see what github looks like when presented a <em>rendered</em> notebook, you can find this page as a <a class="reference external" href="https://github.com/nickeubank/practicaldatascience/blob/master/source/exercises/Exercise_git_2.ipynb">github-rendered notebook
 here!</a>.</p>
 <p>This happens because the pretty version of the jupyter notebook you know and love is a <em>rendered</em> interface. If you want to see what a jupyter notebook looks like behind the scenes, click the <em>raw</em> button on the notebooks github page. <em>That</em> is actually everything that is in a jupyter notebook – a plaintext file in JSON formatting.</p>
 <p>This is important to understand, because it also impacts how git manages changes to jupyter notebooks.</p>
 <p><strong>(9)</strong> To illustrate, open the jupyter notebook you added to your repository and make some changes – add some text in one cell, and maybe add a new cell. Then commit and push those changes.</p>
 <p><strong>(10)</strong> In github, you can always easily see what has changed in a commit by clicking on the “Commits” button:</p>
-<p><img alt="commits_button" src="../_images/commits_button.png" /></p>
+<img alt="commits_button" src="../_images/commits_button.png" />
 <p>then clicking on the hash number next to a given commit (the hash number is what uniquely identifies a commit). So in my repo, I’d click on the 829715d button:</p>
-<p><img alt="click_the_hash" src="../_images/click_the_hash.png" /></p>
+<img alt="click_the_hash" src="../_images/click_the_hash.png" />
 <p>That will bring you to a page that shows you a side-by-side comparison of what was in the repo before this commit, and what changed in this commit with nice coloring.</p>
 <p>The problem, as you can see though, is that git interacts with jupyter notebooks at the level of those plaintext JSON formats, making diffs hard to understand.</p>
 <p>It is for this reason that jupyter notebooks, while amazing for many things, and while fine to put into github repositories to share and host, are not great for collaborative analysis, because these diffs are just very hard to read.</p>
@@ -299,7 +285,7 @@ who wanted to clone your repository would have to download <em>every one of thos
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -307,7 +293,24 @@ who wanted to clone your repository would have to download <em>every one of thos
           rel="nofollow">Page source</a>
     </div>
 
-   
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
     
   </body>
 </html>

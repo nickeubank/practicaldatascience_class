@@ -3,17 +3,6 @@
 
 <html>
   <head>
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-133829453-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-    <!-- End Google Analytics -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Git and Github, Part 1 &#8212; Practical Data Science</title>
@@ -23,10 +12,7 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -85,7 +71,7 @@ be running the master branch), but it’s also often useful in data science (whe
 <p>“Switching” branches means that git (potentially) changes what files are visible to your computer and operating system. Because our new branch is, well… new, it still looks exactly the same as our master branch, so you won’t see any changes in your files. If you’re using Cmder on windows or Oh-My-Zsh on a Mac, though, you can see what branch your on by looking at your command line prompt. It should move from showing either “master” or “main” to your new branch name (here: “my_new_branch”) when
 you switch:</p>
 <p>** Note: the primary branch of a github repo USED to be called <code class="docutils literal notranslate"><span class="pre">master</span></code>, but as of late 2020 the default is not <code class="docutils literal notranslate"><span class="pre">main</span></code>, so you’ll likely see both for a while!**</p>
-<p><img alt="branch_change_in_terminal" src="../_images/branch_change_in_terminal.png" /></p>
+<img alt="branch_change_in_terminal" src="../_images/branch_change_in_terminal.png" />
 <p>Now any changes you make and commit to the files in your repository will be <em>changes made to the active branch</em>, not to master.</p>
 <p><strong>(6)</strong> Still on Computer A, let’s start writing some analysis code! Before we start, though, an important note: Git is only really build for simple, plaintext files, so please don’t use Jupyter Notebooks (we’ll discuss that in more detail below). You can use text files you edit and work with in Jupyter Lab, but not notebooks. For a refresher on how to use text files in Jupyter Lab (in a manner analogous to RStudio) see <a class="reference internal" href="Exercise_jupyterlab.html"><span class="doc">JupyterLab Exercises</span></a>.</p>
 <p>OK, so now let’s create a regular Python (<code class="docutils literal notranslate"><span class="pre">.py</span></code>) analysis file in our repository. If you’re using Jupyter Lab, just create a new textfile, save it into the repository folder, then get to work (right-click the text file, select “Create Console for Editor”, then select Python 3 to create a kernel where you can run your code as you work).</p>
@@ -100,9 +86,9 @@ you switch:</p>
 <p><strong>(7)</strong> Once you’re done, add and commit the new analysis file (from in your command line session). Then push these files to github.</p>
 <p>When you try and push them to github, you will be told that you can’t push them because there’s no branch on github to receive the push. That’s because you created your new branch <em>locally</em>, but it doesn’t exist yet on github. Follow the directions for telling github to make a branch to receive your push, then push again.</p>
 <p><strong>(8)</strong> Now in your browswer, navigate to the repository on github. There, switch over to your new branch:</p>
-<p><img alt="switch_to_new_branch" src="../_images/switch_to_new_branch.png" /></p>
+<img alt="switch_to_new_branch" src="../_images/switch_to_new_branch.png" />
 <p>And look for the “Pull Request” button:</p>
-<p><img alt="new_pr_button" src="../_images/new_pr_button.png" /></p>
+<img alt="new_pr_button" src="../_images/new_pr_button.png" />
 <p><strong>(9)</strong> This should take you to a Pull Request screen where you can title your PR and add comments. In the comments, ask the person who has Computer B to review your PR (you can use the <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> and their user name to address them. So type <code class="docutils literal notranslate"><span class="pre">&#64;otheruser</span> <span class="pre">would</span> <span class="pre">you</span> <span class="pre">please</span> <span class="pre">review</span> <span class="pre">this?</span></code>. Then click “Submit Pull Request”.</p>
 </div>
 <div class="section" id="Part-3:-Reviewing-a-Pull-Request">
@@ -239,7 +225,7 @@ you switch:</p>
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -249,6 +235,22 @@ you switch:</p>
 
     
 
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
     
   </body>
 </html>

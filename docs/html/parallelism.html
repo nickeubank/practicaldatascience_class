@@ -3,17 +3,6 @@
 
 <html>
   <head>
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-133829453-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-    <!-- End Google Analytics -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Parallel Computing &#8212; Practical Data Science</title>
@@ -23,7 +12,6 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
@@ -301,7 +289,7 @@ Solutions</span></a>), and the headaches of parallelizing code are many.</p>
 <p>The simple answer is that, when it comes to running a serial program (a problem where you run your code in sequence, one step at a time), processors stop getting faster in about the mid-2000s.</p>
 <p>This might surprise you. Most of us have heard that Moore’s Law dictates that processors are doubling in performance every 18 months. The reality, however, is more complicated.</p>
 <p>Moore’s law used to apply to a number of aspect of processors: the size of transistors, the number of transisters, and the speed that a processor executed serial code. But as shown in the figure below, processor frequency and the speed of serial execution stopped this pattern of doubling in the mid-2000s (serial execution has still been making small gains since then, but even that is iffy – those improvements are due to little hacks that only work when programs work in just the right way).</p>
-<p><img alt="42-years-processor-trend" src="_images/42-years-processor-trend.png" /></p>
+<img alt="42-years-processor-trend" src="_images/42-years-processor-trend.png" />
 <p>Source: <a class="reference external" href="https://www.karlrupp.net/2018/02/42-years-of-microprocessor-trend-data/">karlrupp.net</a></p>
 <p>And so since chip makers have lost the ability to make their processors faster, they’ve turned to just giving us more and more processors in the form or more “cores”: components of chips that are capable of independent operation. And leveraging the availability of massive numbers of cores (either in single machines, or for huge datasets, across lots of computers) has become the only place left to go for performance!</p>
 </div>
@@ -320,7 +308,7 @@ Solutions</span></a>), and the headaches of parallelizing code are many.</p>
 <div class="math notranslate nohighlight">
 \[\frac{1}{(1-P)}\]</div>
 <p>Expressed graphically, this is:</p>
-<p><img alt="amdahlslaw" src="_images/amdahlslaw.png" /></p>
+<img alt="amdahlslaw" src="_images/amdahlslaw.png" />
 <p>Source: <a class="reference external" href="https://en.wikipedia.org/wiki/Amdahl%27s_law">Wikipedia</a></p>
 <p>As this figure shows, even for a task that is <em>95% parallelizable</em>, the biggest possible performance gain you will ever get (with infinite cores), even ignoring any real-world overheads required to execute that parallelization is 20x.</p>
 <p>Now, to be clear, that doesn’t mean there aren’t situations where the best strategy is parallelism. If you’ve exhausted all your other opportunities to speed up your code, parallelism may be all that’s left. And in data science, it’s not uncommon to have code that can be much more than 95% parallelizable – for example, if you need to run a simulation 1,000,000 times, and each run is relatively short, you can get close to 100% parallelizable. But the point is that parallelism is no silver bullet,
@@ -330,9 +318,9 @@ and it’s important to think hard about whether your problem is suited to paral
 <div class="section" id="Vocabulary">
 <h2>Vocabulary<a class="headerlink" href="#Vocabulary" title="Permalink to this headline">¶</a></h2>
 <p>The terms processor and core are often used interchangable among computer scientists to refer to “units capable of indepedent operation”. This can be confusing because most of us think of a “processor” as a single square piece of silicone material that is plugged into our motherboard (e.g. a Intel i9, or an Intel i7):</p>
-<p><img alt="intel_chip" src="_images/intel_chip.jpg" /></p>
+<img alt="intel_chip" src="_images/intel_chip.jpg" />
 <p>But what most of us think of as processors today often have many cores (the Intel i9 on my laptop has 8 cores, each capable of working relatively independently). Here’s a labeled image of the inside of a core i7 processor with four distinct “cores”:</p>
-<p><img alt="core_i7" src="_images/core_i7.gif" /></p>
+<img alt="core_i7" src="_images/core_i7.gif" />
 <p>And while most of us refer to the chip as a processor, and these cores as… cores, computer scientists have a tendency to use the term “processors” and “core” interchangeable to refer to what most of us call “cores”.</p>
 <p>And the question of “how many processors / cores do I have” gets even more confusing for two reasons:</p>
 <p>First, many desktops have two seperate chips (i.e. two Intel i7s, or two Intel i9s), leading some people to call these multi-processor machines. :/</p>
@@ -602,7 +590,7 @@ Wall time: 45.9 s
 </div>
 <p>Much better. From 180 seconds to 31 seconds. But still that’s only a 5x speed up with 10 cores!</p>
 <p>By the way, if you want to see the parallelism in action, you can look at your Activity Monitor (mac) or Resource Monitor (Windows). Here’s mine while that is running:</p>
-<p><img alt="activity_monitor_parallelism" src="_images/activity_monitor_parallelism.png" /></p>
+<img alt="activity_monitor_parallelism" src="_images/activity_monitor_parallelism.png" />
 <p>But at the risk of beating a dead horse, we can get far better performance benefits just by using the tips in the <a class="reference internal" href="performance_understanding.html"><span class="doc">performance section</span></a> like vectorizing:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
@@ -808,7 +796,7 @@ learned here applies to those packages as well!</p>
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -819,7 +807,7 @@ learned here applies to those packages as well!</p>
     
 
     
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
 
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-133829453-1']);
@@ -833,7 +821,7 @@ learned here applies to those packages as well!</p>
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
 
-    </script> -->
+    </script>
     
   </body>
 </html>

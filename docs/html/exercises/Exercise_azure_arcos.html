@@ -3,17 +3,6 @@
 
 <html>
   <head>
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-133829453-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-    <!-- End Google Analytics -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Importing Opioid Shipment Data on Azure &#8212; Practical Data Science</title>
@@ -23,10 +12,7 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -71,9 +57,9 @@
 <p>Since we’re requesting a cluster with 4 or 6 CPUs (depending on what kind of account you have), if have a VM running <em>anywhere</em> on Azure (even a Stopped VM counts against quota – you have to delete the VM), your AzureMLCluster command will just sit there processing forever until eventually you get a timeout error (with no reference to Quotas).</p>
 <p>To check the status of your cluster startup, login to Azure in your browser and navigate to your Machine Learning Workspace. Remember to navigate to the new version by clicking “Launch Studio” if you end up in the old interface (the new interface will have a URL that starts <code class="docutils literal notranslate"><span class="pre">ml.azure.com</span></code>). The click on <code class="docutils literal notranslate"><span class="pre">Compute</span></code> on the left menu towards the bottom and click on the <code class="docutils literal notranslate"><span class="pre">Compute</span> <span class="pre">Clusters</span></code> tab. There you should see the cluster your Python commands are trying to create. There you can see your
 quota status by clicking on the <code class="docutils literal notranslate"><span class="pre">View</span> <span class="pre">Quota</span></code> button, though this only appears if you have at least one cluster trying to start up (which is a little annoying):</p>
-<p><img alt="azure_quota_button" src="../_images/azure_quota_button.png" /></p>
+<img alt="azure_quota_button" src="../_images/azure_quota_button.png" />
 <p>Also, if you’re hitting your quote limit, you may also see a red circle next to the cluster that’s starting up. If you click on it, you’ll see:</p>
-<p><img alt="azure_quota_warning" src="../_images/azure_quota_warning.png" /></p>
+<img alt="azure_quota_warning" src="../_images/azure_quota_warning.png" />
 <p>If you’re having continued issues, make sure you don’t have any VMs up in your current workspace, and that you haven’t left any VMs open in other workspaces you may have created!</p>
 </div>
 </div>
@@ -108,9 +94,9 @@ quota status by clicking on the <code class="docutils literal notranslate"><span
 <li><p>Don’t load columns you don’t need!</p></li>
 </ul>
 <p>As you run your code, make sure to click on the Dashboard link below where you created your cluster:</p>
-<p><img alt="dask_dashboard" src="../_images/dask_dashboard.png" /></p>
+<img alt="dask_dashboard" src="../_images/dask_dashboard.png" />
 <p>Among other things, the bar across the bottom should give you a sense of how long your task will take:</p>
-<p><img alt="dask_progress" src="../_images/dask_progress.png" /></p>
+<img alt="dask_progress" src="../_images/dask_progress.png" />
 <p><strong>(8)</strong> Now let’s calculate, <em>for each state</em>, what company shipped the most pills?</p>
 <p>Note you will quickly find that you can’t sort in dask – sorting in parallel is <em>really</em> tricky! So you’ll have to work around that. Do what you need to do on the big dataset first, then compute it all so you get it as a regular pandas dataframe, then finish.</p>
 <p>Does this seem like a situation where a single company is responsible for the opioid epidemic?</p>
@@ -226,7 +212,7 @@ quota status by clicking on the <code class="docutils literal notranslate"><span
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -237,7 +223,21 @@ quota status by clicking on the <code class="docutils literal notranslate"><span
     
 
     
-   
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
     
   </body>
 </html>
