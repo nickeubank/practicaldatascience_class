@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>The Cloud &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Setting Up Data Storage on Azure" href="cloud_storage_on_azure.html" />
@@ -33,11 +36,11 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="The-Cloud">
+  <section id="The-Cloud">
 <h1>The Cloud<a class="headerlink" href="#The-Cloud" title="Permalink to this headline">¶</a></h1>
 <p>It has become a bit of a trope on the internet to quip “there is no cloud; it’s just somebody else’s computer.” In fact, there are <a class="reference external" href="https://www.redbubble.com/i/sticker/there-is-no-cloud-it-s-just-someone-else-s-computer-by-geekgoods/48737406.EJUG5">even stickers to that effect</a>! But while it is true that a a big part of the innovation of the cloud is allow you to rent hardware from somebody else without owning it yourself, what makes the cloud The Cloud is not just the ability to rent
 hardware, but also all the innovations in software that make it possible for (a) lots of computers in a data center to work together in concert, and (b) the resources of a giant data center to be divvied up among lots of separate users seamlessly.</p>
-<div class="section" id="Why-the-Cloud-is-Complicated">
+<section id="Why-the-Cloud-is-Complicated">
 <h2>Why the Cloud is Complicated<a class="headerlink" href="#Why-the-Cloud-is-Complicated" title="Permalink to this headline">¶</a></h2>
 <p>Perhaps no single innovation has been as central to the rise of the cloud as the software that makes it possible to carve up a single computer into lots of smaller Virtual Machines, each of which acts like a single, normal computer. This technology – known as virtualization – it means that if you go to amazon or microsoft and say that you want to rent a computer with 2 processing cores, 16 gigs of ram, and 100 gigabytes of hard drive space, Amazon/Microsoft doesn’t have to go find a computer in
 their data center that has exactly those specifications. Instead, they can find any computer that has at least those resources available, and create a virtual machine on the computer that has access to exactly those resources. To you, this computer looks exactly like a single computer with those resources, but Amazon/Microsoft is free to allocate any other resources on that computer to other people by creating more virtual machines. All of these virtual machines can run on the same physical
@@ -45,8 +48,8 @@ computer, but all of them are protected from one another, so users can only use 
 <p>But here’s the problem with virtualization: it makes it possible to divide up big computers into little computers, but you can’t combine several small computers into one super virtual machine. The reasons for this are a little bit technical, but the basic idea is that when multiple processes are running on the same computer, they can all see and manipulate the same data in memory; but when processes are running on different physical computers, they can only communicate with one another by
 sending messages across ethernet cables, a process that works very differently and is much much slower.</p>
 <p>As a result, if you want to use 200 processing cores to analyze a huge data set, you can’t just request a single virtual machine with 200 cores, because nobody makes a single physical computer with 200 cores. Instead, you will have to rent lots of smaller virtual machine and set them up so that they can interact with each other to share the work using a tool like <code class="docutils literal notranslate"><span class="pre">dask</span></code>.</p>
-</div>
-<div class="section" id="The-Cloud-is-Not-Primarily-for-Data-Analysis">
+</section>
+<section id="The-Cloud-is-Not-Primarily-for-Data-Analysis">
 <h2>The Cloud is Not Primarily for Data Analysis<a class="headerlink" href="#The-Cloud-is-Not-Primarily-for-Data-Analysis" title="Permalink to this headline">¶</a></h2>
 <p>One thing that’s important to understand about the cloud is that most people using it to do the type of work that you all want to do as a data analyst. Most people using the cloud are using it to provide some type of service to internet users. For these people, the role of the cloud is <strong>to serve lots and lots of users, each of whom needs a little bit of processing power and to process a little bit of data.</strong> For example, if you have a messaging app, you’ll have lots of people regularly checking
 for and sending messages, but each of these interactions requires only a tiny amount of processor time, and will only involve moving a tiny amount of data.</p>
@@ -55,13 +58,13 @@ for and sending messages, but each of these interactions requires only a tiny am
 <p>That’s not to say data scientists never use the cloud in the first manner described. Many times after a model has been trained, data scientists want that model easily accessible by users. For example, if you write an algorithm that asks users for a few favorite songs and recommends new artists, you probably want that model to be accessible through a webpage or app. In that situation, we’re in the world of “model deployment,” which is back to a world where lots of users simulaneous want to
 interact in a way that is pretty simple for each user (using a model is easy computationally, unlike training one). To learn about how deployment works on Azure <a class="reference external" href="https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-existing-model">you can read more here</a>. This is, however, not our focus here. In these exercises, we’ll be talking primarily about data <strong>analysis</strong> – small number of users, lots of data and compute.</p>
 <p>And that also means you should be aware then when you google around for resources about cloud services, <em>most</em> cloud users don’t have the same needs you will as a data analyst! So be careful when you pick which internet resources to use for learning about data analysis on the cloud.</p>
-</div>
-<div class="section" id="Components-of-the-Cloud">
+</section>
+<section id="Components-of-the-Cloud">
 <h2>Components of the Cloud<a class="headerlink" href="#Components-of-the-Cloud" title="Permalink to this headline">¶</a></h2>
 <p>In the next set of readings and exercises, we’ll be learning how – in a specific sense – we can setup virtual machines and <code class="docutils literal notranslate"><span class="pre">dask</span></code> clusters on the Microsoft Azure system (why Azure? Because Duke has a relationship with them, and they’re the quickest growing Cloud service, even if they’re still smaller than Amazon AWS. So not really an endorsement, just a convenient choice.). But for the moment, let’s focus on <em>general</em> principles of cloud computing – concepts that will apply whether you use
 Microsoft Azure, Amazon AWS, Google Cloud, or any other service.</p>
 <p>But if what follows starts to sound overwhelmingly complex, I encourage you to quickly jump ahead to <a class="reference internal" href="cloud_dask.html"><span class="doc">the page where we actually set up a dask cluster and do some computing</span></a> to see what this looks like in practice, where hopefully you will see that it’s not nearly as bad as it seems like it’s going to be.</p>
-<div class="section" id="Compute">
+<section id="Compute">
 <h3>Compute<a class="headerlink" href="#Compute" title="Permalink to this headline">¶</a></h3>
 <p>As a data analyst, there are two ways that you can approach doing your work on the cloud: the first is just to get a <strong>big virtual machine</strong> with lots of resources and use it as a single machine; the second is to rent a lot of (usually smaller) machines and use them together in a <strong>cluster</strong>.</p>
 <p><strong>Single VMs</strong></p>
@@ -81,8 +84,8 @@ resources become available.</p>
 <p>This option can be better if you want to run a LOT of jobs (e.g. thousands) because this kind of compute is generally cheaper, especially if you are ok using “low priority nodes”. Low priority nodes are nodes that Azure could re-claim at any time if someone decides they’ll pay for the priviledge, but which are 80% cheaper than dedicated nodes as a result. This may sound awful, but batch computing systems keep track of when a node is killed for some reason, and puts the job it was doing when it
 died back in the queue to ensure everything still gets done.</p>
 <p>If you’re interested in batch computing, the relevant keywords to find these services at Azure are <a class="reference external" href="https://azure.microsoft.com/en-us/services/batch/">Azure Batch</a> and <a class="reference external" href="https://azure.microsoft.com/en-us/features/azure-cyclecloud/">Azure CycleCloud (which supports schedulers like SLURM)</a>. Here’s a little Batch <a class="reference external" href="https://www.youtube.com/watch?v=ZQFqMBc0QaM">how-to video</a>.</p>
-</div>
-<div class="section" id="Storage">
+</section>
+<section id="Storage">
 <h3>Storage<a class="headerlink" href="#Storage" title="Permalink to this headline">¶</a></h3>
 <p>Storage is one of the coolest parts of the Cloud. That’s because: it’s (effectively) infinite! Not Dropbox file size limits, not harddrive constraints. If you can afford it (details of pricing below), you can store it.</p>
 <p>When you get Cloud storage, you should be aware it comes in many flavors. Most importantly for our purposes (and in order of performance) in varies in what it will accept, how quickly it can be accessed, and the level of data redundancy in storage.</p>
@@ -101,25 +104,25 @@ died back in the queue to ensure everything still gets done.</p>
 <p>All cloud storage is backed up / duplicated, but how aggressively varies. For example, most cloud storage offers a “geographic redundancy”, which means it has copies in different data centers, so if one data center goes down you can still access your data. You <em>can</em> pay for this, but really that’s for people who use storage to back a website who never want their customers to be unable to visit their site even if a data center is down for a few hours (which I think is super rare?).</p>
 <p><strong>Storage Cost</strong></p>
 <p>So what’s storage cost? Here’s a <a class="reference external" href="https://azure.microsoft.com/en-us/pricing/details/storage/">full list of prices for Azure</a>, but for what you’re most likely to use (hot, locally redundant Blob storage), probably about <strong>20 dollars per TB per month.</strong> So not nothing, but not awful.</p>
-</div>
-<div class="section" id="Virtual-Networks">
+</section>
+<section id="Virtual-Networks">
 <h3>Virtual Networks<a class="headerlink" href="#Virtual-Networks" title="Permalink to this headline">¶</a></h3>
 <p>The last thing to be aware of is that if you decide to run a <em>cluster</em> (multiple computers networked together) or connect storage in certain ways, you may have to connect them all to a Virtual Network to make it easier for them to see one another.</p>
-</div>
-</div>
-<div class="section" id="A-Final-Note-on-Complexity">
+</section>
+</section>
+<section id="A-Final-Note-on-Complexity">
 <h2>A Final Note on Complexity<a class="headerlink" href="#A-Final-Note-on-Complexity" title="Permalink to this headline">¶</a></h2>
 <p>A final note on complexity: because the Cloud is used for <em>so many</em> different purposes, and by such different users (everything from small businesses to Twitter and Netflix), it is almost infinitely configurable. If you want, you can just rent dedicated control of a couple physical computers, and not only control them, but also control all the network systems that connect them at the lowest level possible.</p>
 <p>In these tutorials, though, I’m going to assume you’re an applied data scientist interested in analysis, and so I’m gonna do my very, <em>very</em> best to provide the smoothest on-ramp to these services as I can. I’ll show you only what I think you need to know to feel comfortable using the tools you’re using and to have a somewhat generalizable understanding of what’s going on (so if things change a little in the future, you don’t feel lost) without getting into the infinite possibilities of the
 cloud.</p>
 <p>In addition, I will do my best to use the tools you already know as much as possible: Python, pandas, and dask. Services like Amazon AWS and Microsoft Azure have all sorts of specialty tools for machine learning, and some day you may decide that you prefer those to what I’m gonna show you. But I’m a firm believer in minimizing the number of tools you need to learn, so I’ll try and keep things as focused as I can.</p>
 <p>Finally, if, when you’re done, you say “BUT I WANT TO CONFIGURE MY OWN VIRTUAL NETWORK AND DOCKER IMAGES AND KUBERNETES CONFIGURATIONS!” (don’t worry, none of that should mean anything to you), then good for you! The internet is <em>full</em> of in depth tutorials on those things. But if you just want to start using the Cloud to manipulation your data, then <em>hopefully</em> by the end of this section, you’ll feel good to go!</p>
-</div>
-<div class="section" id="Let’s-Get-Going!">
+</section>
+<section id="Let’s-Get-Going!">
 <h2>Let’s Get Going!<a class="headerlink" href="#Let’s-Get-Going!" title="Permalink to this headline">¶</a></h2>
 <p>OK, enough abstract concepts – <a class="reference external" href="cloud_azureml.ipynb">let’s get setup on Azure and start doing some data science</a>!</p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -236,7 +239,7 @@ cloud.</p>
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

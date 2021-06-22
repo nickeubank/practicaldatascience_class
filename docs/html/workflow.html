@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Workflow Management &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="What is Big Data?" href="what_is_big_data.html" />
@@ -38,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -153,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -219,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -266,27 +284,27 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Workflow-Management">
+<section id="Workflow-Management">
 <h1>Workflow Management<a class="headerlink" href="#Workflow-Management" title="Permalink to this headline">¶</a></h1>
 <p>A key part of being a successful data scientist is keep track of all the data that goes into a project, the various manipulations that are performed on that data, and final results. In this tutorial, I outline some principles and pratices that I have found exceedingly useful in managing my workflows over the years. Workflow management can be very personal, so feel free to take from this what you will.</p>
-<div class="section" id="File-Numbering">
+<section id="File-Numbering">
 <h2>File Numbering<a class="headerlink" href="#File-Numbering" title="Permalink to this headline">¶</a></h2>
 <p>A key feature of data science workflows is that they are often sequential: code for importing data is meant to be run before code for cleaning data, and code for cleaning is meant to be run before analysis. With that in mind, I am an advocate of pre-fixing all files with a number. For example, a small project might have three files of the following structure:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">10</span><span class="n">_import_data</span><span class="o">.</span><span class="n">py</span>
-<span class="mi">20</span><span class="n">_clean_data</span><span class="o">.</span><span class="n">py</span>
-<span class="mi">30</span><span class="n">_analyze_data</span><span class="o">.</span><span class="n">py</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>10_import_data.py
+20_clean_data.py
+30_analyze_data.py
 </pre></div>
 </div>
 <p>Why 10, 20, 30 and not 1, 2, 3? Because another key feature of data science is that projects never quite end up looking the way we expect them to when we start, and numbering by tens makes it easy to add files between existing files without having to re-number everything.</p>
 <p>For example, suppose I realize that before cleaning my data, I need to export some summary statistics about cleanliness issues. With this file structure, I can easily add a new file in the middle of the existing files:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">10</span><span class="n">_import_data</span><span class="o">.</span><span class="n">py</span>
-<span class="mi">15</span><span class="n">_export_cleanliness_report</span><span class="o">.</span><span class="n">py</span>
-<span class="mi">20</span><span class="n">_clean_data</span><span class="o">.</span><span class="n">py</span>
-<span class="mi">30</span><span class="n">_analyze_data</span><span class="o">.</span><span class="n">py</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>10_import_data.py
+15_export_cleanliness_report.py
+20_clean_data.py
+30_analyze_data.py
 </pre></div>
 </div>
-</div>
-<div class="section" id="Use-lots-of-small-files">
+</section>
+<section id="Use-lots-of-small-files">
 <h2>Use lots of small files<a class="headerlink" href="#Use-lots-of-small-files" title="Permalink to this headline">¶</a></h2>
 <p>OK, you might ask, but why do I need lots of files at all? Why not just one big “project” file? The answer is twofold.</p>
 <p>The first is that it’s easier to debug small files. The only way to <em>really</em> know if your code works is to run it from start to finish in a clean session of whatever program you’re using (R, Stata, Python, Julia). That way you know that if the code works, it works because everything you need is in the file, and that the code isn’t running because you manually created an important variable that’s not in the code, but is already in memory. But if you’re entire project is in one many-thousand-line
@@ -294,15 +312,15 @@ file, running that file takes forever. Moreover, when a problem occurs in that g
 of data??), it’s very clear where you need to make changes.</p>
 <p>The second reason is perhaps even more important. In my experience, we aren’t really smart enough to work with files that do more than one or two things. Your computer is more than happy to save thousands of lines of code in a single file called <code class="docutils literal notranslate"><span class="pre">my_data_science_project.py</span></code>. The problem is that it’s very hard for <em>you</em> to look at a file with thousands of lines of code and answer the question “is the code in this file accomplishing what I want this file to accomplish?”. If, by contrast, you
 have a smaller file that does one thing in much less code, it’s easier to evaluate that small chunk of code and decide if it accomplishes the goal set-out by the file’s title (importing your data).</p>
-</div>
-<div class="section" id="Carefully-manage-your-source-data">
+</section>
+<section id="Carefully-manage-your-source-data">
 <h2>Carefully manage your source data<a class="headerlink" href="#Carefully-manage-your-source-data" title="Permalink to this headline">¶</a></h2>
 <p><strong>Every</strong> data science project should have a folder called something like <code class="docutils literal notranslate"><span class="pre">source_data</span></code> (or, if you’re also numbering folders, <code class="docutils literal notranslate"><span class="pre">00_source_data</span></code>). This is the folder where you keep the input data for your project, the data you got from somewhere else you wish to analyze. This may be the raw results from a survey, data you downloaded from a government source, or data provided to you from another department.</p>
 <p><strong>YOU SHOULD NEVER, EVER, EVER MODIFY THE FILES IN THIS FOLDER</strong></p>
 <p>Files in this folder are sacrosanct. You can <em>read</em> them into your programs (obviously, you have to), but you should never <em>re-save</em> them. After you read them in, if you need to save anything, <em>you save it somewhere else</em>.</p>
 <p>The reason is that you never want to risk corrupting your source data. If you have raw survey data, you never want to, say, modify those results directly, because what if you make a mistake? Your survey data is now corrupted, and (a) there’s no record of that corruption, and (b) if you didn’t keep backups of your raw data (which you should!) you’ve lost irreplaceable data.</p>
-</div>
-<div class="section" id="Folder-Strutures">
+</section>
+<section id="Folder-Strutures">
 <h2>Folder Strutures<a class="headerlink" href="#Folder-Strutures" title="Permalink to this headline">¶</a></h2>
 <p>With that mind, I usually work with the following top-level folder structure in my projects:</p>
 <ul class="simple">
@@ -327,8 +345,8 @@ have a smaller file that does one thing in much less code, it’s easier to eval
 </pre></div>
 </div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -444,7 +462,7 @@ have a smaller file that does one thing in much less code, it’s easier to eval
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

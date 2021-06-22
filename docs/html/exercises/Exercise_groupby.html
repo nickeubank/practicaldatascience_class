@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Groupby and Arrest Data &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -36,21 +39,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -151,7 +168,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -217,6 +234,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -264,14 +282,14 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Groupby-and-Arrest-Data">
+<section id="Groupby-and-Arrest-Data">
 <h1>Groupby and Arrest Data<a class="headerlink" href="#Groupby-and-Arrest-Data" title="Permalink to this headline">¶</a></h1>
 <p>In our merging exercises, we examined the relationship between county-level violent arrest totals and county-level drug arrest totals. In those exercises, you were given a dataset that provided you with county-level arrest totals. But that’s not actually how the data is provided by the state of California. This week we will work with the <em>raw</em> California arrest data, which is not organized by county or even county-year.</p>
 <p><strong>(1)</strong> Download the raw California arrest data from the State Attorney General’s office <a class="reference external" href="https://openjustice.doj.ca.gov/data">here</a> by scrolling down to the “Arrests” category and downloading the “Arrests - CSV, 5.8 MB” file.</p>
-<div class="section" id="Learning-the-Group-Structure-of-Your-Data">
+<section id="Learning-the-Group-Structure-of-Your-Data">
 <h2>Learning the Group Structure of Your Data<a class="headerlink" href="#Learning-the-Group-Structure-of-Your-Data" title="Permalink to this headline">¶</a></h2>
 <p><strong>(2)</strong> What is the unit of observation for this dataset? In other words, when row zero says that there were 505 arrests for <code class="docutils literal notranslate"><span class="pre">VIOLENT</span></code> crimes, what exactly is that telling you – 505 arrests in 1980? 505 arrests in Alameda County?</p>
-<div class="section" id="Testing-Your-Assumptions">
+<section id="Testing-Your-Assumptions">
 <h3>Testing Your Assumptions<a class="headerlink" href="#Testing-Your-Assumptions" title="Permalink to this headline">¶</a></h3>
 <p>It’s important to be able to test whether the data you are working with really is organized the way you think it is, especially when working with groupby, so let’s discuss how to check your answer to number 2 with <code class="docutils literal notranslate"><span class="pre">duplicated</span></code>. Consider the following data:</p>
 <div class="nbinput docutils container">
@@ -499,14 +517,14 @@ could infer it was likely about 50% White in 1995.</p>
 <p><strong>(12)</strong> Now that we have the share of the population in each county that is White, and the share of drug arrestees who are White all in one dataset, we can look at how the <em>ratio</em> of these two numbers changes over time. Plot the trend, over time, in this ratio.</p>
 <p>Do we see any substantial change in the racial incidence of drug arrests over the 40 years of this data, a period in which there have been several waves of changes in public attitudes and rhetoric around policing, including the rise of the war on drugs, the “tough on crime 1990s”, and the more recent wave of concern about the mass incarceration of black Americans?</p>
 <img alt="US_incarceration_rate_timeline" src="../_images/US_incarceration_rate_timeline.gif" />
-</div>
-</div>
-<div class="section" id="Absolutely-positively-need-the-solutions?">
+</section>
+</section>
+<section id="Absolutely-positively-need-the-solutions?">
 <h2>Absolutely positively need the solutions?<a class="headerlink" href="#Absolutely-positively-need-the-solutions?" title="Permalink to this headline">¶</a></h2>
 <p><em>Don’t use this link until you’ve really, really spent time struggling with your code!</em> Doing so only results in you cheating yourself.</p>
 <p><a class="reference internal" href="../solutions_warning.html"><span class="doc">Link</span></a></p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -614,7 +632,7 @@ could infer it was likely about 50% White in 1995.</p>
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

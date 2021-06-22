@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Changing Data Values to Clean Data &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
    
@@ -36,21 +39,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -151,7 +168,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -217,6 +234,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -264,11 +282,11 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Changing-Data-Values-to-Clean-Data">
+<section id="Changing-Data-Values-to-Clean-Data">
 <h1>Changing Data Values to Clean Data<a class="headerlink" href="#Changing-Data-Values-to-Clean-Data" title="Permalink to this headline">¶</a></h1>
 <p>In a perfect world, our datasets would all arrive containing only accurate data formatted in exactly the way we need. Sadly, the world we live in is <em>not</em> perfect. Either because of clumsy data entry, bad translation between data formats, survey participations trying to be jerks, or the coding errors of other data scientists, messy data is a fact of life. As a result, a key part of being a data scientist is to learn to (a) seek out and identify data cleanliness problems, and (b) learn to correct
 them. These parts of data science are not nearly as cool or widely discussed as new machine learning packages or the latest learning algorithm, but as anyone who has done data science in the real world will tell you, cleaning (plus merging and reshaping, which we’ll cover soon) will take up the <em>vast</em> majority of your working life. So in this lesson, we’ll talk about tools in <code class="docutils literal notranslate"><span class="pre">pandas</span></code> for identifying and correcting problems with your data!</p>
-<div class="section" id="Identifying-Problems">
+<section id="Identifying-Problems">
 <h2>Identifying Problems<a class="headerlink" href="#Identifying-Problems" title="Permalink to this headline">¶</a></h2>
 <p>Everything I said above may sound… well, awful, but here’s the good news: once you get into it, data cleaning begins to feel less like grunt work and more like being a detective, and it can actually be a lot of fun. In some of the examples below, I’ll be showing you problems in small toy datasets where you can easily see the problems with the data just by looking at the dataset. In real data, however, things aren’t so easy – when your data has hundreds of thousands of rows, or where data errors
 are subtle, learning to find and isolate problems can actually be quite fun and challenging!</p>
@@ -478,8 +496,8 @@ Name: empstat, dtype: int64
 <p><img alt="dino_plot_scatter" src="_images/dino_plot_scatter.png" /><img alt="dino_plot_dino" src="_images/dino_plot_dino.png" /></p>
 <p>And of course, if we want to be more formal about it, we can also see the famous Anscombe’s Quartet of distributions with the same linear regression fits:</p>
 <img alt="anscombes_quartet" src="_images/anscombes_quartet.png" />
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -587,7 +605,7 @@ Name: empstat, dtype: int64
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

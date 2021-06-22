@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Python v R: Important Differences To Be Aware Of &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Python: Variables vs Objects" href="vars_v_objects.html" />
@@ -38,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -153,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -219,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -266,7 +284,7 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Python-v-R:-Important-Differences-To-Be-Aware-Of">
+<section id="Python-v-R:-Important-Differences-To-Be-Aware-Of">
 <h1>Python v R: Important Differences To Be Aware Of<a class="headerlink" href="#Python-v-R:-Important-Differences-To-Be-Aware-Of" title="Permalink to this headline">¶</a></h1>
 <p>R and Python have a lot of similarities, but there are some important differences. The biggest, discussed below, is the idea that there is a distinction between a variables and the object associated with it. But before we dive into that, a few smaller differences that tend to get people tripped up:</p>
 <ul class="simple">
@@ -274,7 +292,7 @@ div.rendered_html tbody tr:hover {
 <li><p><strong>Periods are operators in Python</strong>: In R, it’s common to use periods in variable names (like: <code class="docutils literal notranslate"><span class="pre">my.list</span></code>). There are many syntax differences between R and Python, but for some reason people really struggle with this one – periods are an operator in Python, so don’t use them in names! The convention is to use underscores, like: <code class="docutils literal notranslate"><span class="pre">my_list</span></code>.</p></li>
 <li><p><strong>In Python you always count starting at 0, not 1</strong> For example, to get the first entry in a list, you type <code class="docutils literal notranslate"><span class="pre">my_list[0]</span></code>, not <code class="docutils literal notranslate"><span class="pre">my_list[1]</span></code>. <code class="docutils literal notranslate"><span class="pre">my_list[1]</span></code> will get you the <em>second</em> entry in the list.</p></li>
 </ul>
-<div class="section" id="Variables-vs-Objects">
+<section id="Variables-vs-Objects">
 <h2>Variables vs Objects<a class="headerlink" href="#Variables-vs-Objects" title="Permalink to this headline">¶</a></h2>
 <p>Now the big conceptual difference between Python and R: the variable / object distinction.</p>
 <p>Say you make a new vector as follows:</p>
@@ -333,8 +351,8 @@ itself.</p>
 </pre></div></div>
 </div>
 <p>This is a HUGE place to get in trouble, so please go read the full tutorial on <a class="reference internal" href="vars_v_objects.html"><span class="doc">this topic here</span></a>!</p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -447,7 +465,7 @@ itself.</p>
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

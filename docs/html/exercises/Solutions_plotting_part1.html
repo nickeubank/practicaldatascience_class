@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Plotting Exercises, Part 1 &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -36,21 +39,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -151,7 +168,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -217,6 +234,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -264,9 +282,9 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Plotting-Exercises,-Part-1">
+<section id="Plotting-Exercises,-Part-1">
 <h1>Plotting Exercises, Part 1<a class="headerlink" href="#Plotting-Exercises,-Part-1" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="Exercise-1">
+<section id="Exercise-1">
 <h2>Exercise 1<a class="headerlink" href="#Exercise-1" title="Permalink to this headline">¶</a></h2>
 <p>Create a pandas dataframe from the “Datasaurus.txt” file using the code:</p>
 <div class="nbinput nblast docutils container">
@@ -280,18 +298,18 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <p>Note that the file being downloaded is <em>not</em> actually a CSV file. It is tab-delimited, meaning that within each row, columns are separated by tabs rather than commas. We communicate this to pandas with the <code class="docutils literal notranslate"><span class="pre">delimiter=&quot;\t&quot;</span></code> option (<code class="docutils literal notranslate"><span class="pre">&quot;\t&quot;</span></code> is how we write a tab, as we will discuss in future lessons).</p>
-</div>
-<div class="section" id="Exercise-2">
+</section>
+<section id="Exercise-2">
 <h2>Exercise 2<a class="headerlink" href="#Exercise-2" title="Permalink to this headline">¶</a></h2>
 <p>This dataset actually contains 13 separate example datasets, each with two variables named <code class="docutils literal notranslate"><span class="pre">example[number]_x</span></code> and <code class="docutils literal notranslate"><span class="pre">example[number]_y</span></code>.</p>
 <p>In order to get a better sense of what these datasets look like, write a loop that iterates over each example dataset (numbered 1 to 13) and print out the mean and standard deviation for <code class="docutils literal notranslate"><span class="pre">example[number]_x</span></code> and <code class="docutils literal notranslate"><span class="pre">example[number]_y</span></code> for each dataset.</p>
 <p>For example, the first iteration of this loop might return something like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Example</span> <span class="n">Dataset</span> <span class="mi">1</span><span class="p">:</span>
-<span class="n">Mean</span> <span class="n">x</span><span class="p">:</span> <span class="mf">23.12321978429576</span><span class="p">,</span>
-<span class="n">Mean</span> <span class="n">y</span><span class="p">:</span> <span class="mf">98.23980921730972</span><span class="p">,</span>
-<span class="n">Std</span> <span class="n">Dev</span> <span class="n">x</span><span class="p">:</span> <span class="mf">21.2389710287</span><span class="p">,</span>
-<span class="n">Std</span> <span class="n">Dev</span> <span class="n">y</span><span class="p">:</span> <span class="mf">32.2389081209832</span><span class="p">,</span>
-<span class="n">Correlation</span><span class="p">:</span> <span class="mf">0.73892819281</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Example Dataset 1:
+Mean x: 23.12321978429576,
+Mean y: 98.23980921730972,
+Std Dev x: 21.2389710287,
+Std Dev y: 32.2389081209832,
+Correlation: 0.73892819281
 </pre></div>
 </div>
 <p>(Though you shouldn’t get those specific values)</p>
@@ -609,8 +627,8 @@ Std Dev y: 26.93
 Correlation: -0.07
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Exercise-3">
+</section>
+<section id="Exercise-3">
 <h2>Exercise 3<a class="headerlink" href="#Exercise-3" title="Permalink to this headline">¶</a></h2>
 <p>Based only on these results, discuss what might you conclude about these example datasets with your partner. Write down your thoughts.</p>
 <div class="nbinput nblast docutils container">
@@ -622,8 +640,8 @@ Correlation: -0.07
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="Execise-4">
+</section>
+<section id="Execise-4">
 <h2>Execise 4<a class="headerlink" href="#Execise-4" title="Permalink to this headline">¶</a></h2>
 <p>Write a loop that iterates over these example datasets, and using the <code class="docutils literal notranslate"><span class="pre">plotnine</span></code> library, plot a simple scatter plot of each dataset with the <code class="docutils literal notranslate"><span class="pre">x</span></code> variable on the x-axis and the <code class="docutils literal notranslate"><span class="pre">y</span></code> variable on the y-axis. Save these plots as PDFs somewhere you can find them.</p>
 <p>Hint: When writing this type of code, it is often best to start by writing code to do what you want for the first iteration of the loop. Once you have code that works for the first example dataset, then write the full loop around it.</p>
@@ -835,8 +853,8 @@ Correlation: -0.07
 &lt;ggplot: (8783737358961)&gt;
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Exercise-5">
+</section>
+<section id="Exercise-5">
 <h2>Exercise 5<a class="headerlink" href="#Exercise-5" title="Permalink to this headline">¶</a></h2>
 <p>Review you plots. How does your impression of how these datasets differ from what you wrote down in Exercise 3?</p>
 <div class="nbinput nblast docutils container">
@@ -848,8 +866,8 @@ Correlation: -0.07
 </pre></div>
 </div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -957,7 +975,7 @@ Correlation: -0.07
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

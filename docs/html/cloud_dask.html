@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Dask Cluster on Azure Example &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Azure from the Command Line" href="cloud_azure_cli.html" />
@@ -38,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -153,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -219,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -266,16 +284,16 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Dask-Cluster-on-Azure-Example">
+<section id="Dask-Cluster-on-Azure-Example">
 <h1>Dask Cluster on Azure Example<a class="headerlink" href="#Dask-Cluster-on-Azure-Example" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="NOTE:-DASK-CLOUDPROVIDER-IS-IN-A-STATE-OF-FLUX,-AND-SO-THE-CODE-BELOW-DOESN&quot;T-ACTUALLY-WORK-AT-THE-MOMENT…-CHECK-BACK-IN-A-FEW-WEEKS?---Nick,-Dec-2020.">
-<h2>NOTE: DASK-CLOUDPROVIDER IS IN A STATE OF FLUX, AND SO THE CODE BELOW DOESN”T ACTUALLY WORK AT THE MOMENT… CHECK BACK IN A FEW WEEKS? - Nick, Dec 2020.<a class="headerlink" href="#NOTE:-DASK-CLOUDPROVIDER-IS-IN-A-STATE-OF-FLUX,-AND-SO-THE-CODE-BELOW-DOESN"T-ACTUALLY-WORK-AT-THE-MOMENT…-CHECK-BACK-IN-A-FEW-WEEKS?---Nick,-Dec-2020." title="Permalink to this headline">¶</a></h2>
+<section id="NOTE:-DASK-CLOUDPROVIDER-IS-IN-A-STATE-OF-FLUX,-AND-SO-THE-CODE-BELOW-DOESN”T-ACTUALLY-WORK-AT-THE-MOMENT…-CHECK-BACK-IN-A-FEW-WEEKS?---Nick,-Dec-2020.">
+<h2>NOTE: DASK-CLOUDPROVIDER IS IN A STATE OF FLUX, AND SO THE CODE BELOW DOESN”T ACTUALLY WORK AT THE MOMENT… CHECK BACK IN A FEW WEEKS? - Nick, Dec 2020.<a class="headerlink" href="#NOTE:-DASK-CLOUDPROVIDER-IS-IN-A-STATE-OF-FLUX,-AND-SO-THE-CODE-BELOW-DOESN”T-ACTUALLY-WORK-AT-THE-MOMENT…-CHECK-BACK-IN-A-FEW-WEEKS?---Nick,-Dec-2020." title="Permalink to this headline">¶</a></h2>
 <p>In this lesson, we’ll be using a dask cluster to replicate the <a class="reference internal" href="exercises/Exercise_bigdata.html"><span class="doc">exercise we did in the Big Data section</span></a> where we loaded global temperature data to measure global warming at a number of locations. You can get the data we’re using for this <a class="reference external" href="https://www.dropbox.com/s/oq36w90hm9ltgvc/global_climate_data.zip?dl=0">exercise here</a>).</p>
 <p>I’m also assuming you already have a Azure account and have already read through <a class="reference internal" href="cloud_storage_on_azure.html"><span class="doc">Azure Storage</span></a> and <a class="reference internal" href="cloud_cluster_on_azure.html"><span class="doc">Setting Up a Cluster on Azure</span></a></p>
 <p><strong>Want to use Amazon AWS?</strong> You can do that too! The package we use to launch our cluster below also supports AWS. We won’t go through that here, but you can find <a class="reference external" href="https://cloudprovider.dask.org/en/stable/index.html">info on it here</a>.</p>
 <p>If you want to follow along, just decompress the <code class="docutils literal notranslate"><span class="pre">ghcnd_daily.tar.gz</span></code> file and upload the resulting <code class="docutils literal notranslate"><span class="pre">.csv</span></code> into a Blob container using the web interface. Note this will take a little while. Will talk about more efficient methods of upload in our next tutorial.</p>
-</div>
-<div class="section" id="Starting-a-Dask-Cluster">
+</section>
+<section id="Starting-a-Dask-Cluster">
 <h2>Starting a Dask Cluster<a class="headerlink" href="#Starting-a-Dask-Cluster" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -364,8 +382,8 @@ Created VM dask-9283e987-worker-ec20074c
 </pre></div></div>
 </div>
 <p>Note that we’re using the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/virtual-machines/dv2-dsv2-series">“Standard_DS11_v2” VM</a> because it only has 2 cores, but it does have high speed data connections (the “S” in “DS11” is for Storage-optimized). And for data science, we almost always want fast storage access.</p>
-</div>
-<div class="section" id="Using-Your-Cluster">
+</section>
+<section id="Using-Your-Cluster">
 <h2>Using Your Cluster<a class="headerlink" href="#Using-Your-Cluster" title="Permalink to this headline">¶</a></h2>
 <p>There are two ways to use your cluster: You can click on the link above to open a connection to JupyterLab running on one of the computers in your cluster, or connect from here with this command:</p>
 <div class="nbinput docutils container">
@@ -397,30 +415,30 @@ Created VM dask-9283e987-worker-ec20074c
 </pre></div></div>
 </div>
 <p>And you’re off to the races! One note though – if you decide to work from your own computer, you may get a warning about version differences between <code class="docutils literal notranslate"><span class="pre">dask</span></code> on the cloud on and on your own computer. I initially got:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">Nick</span><span class="o">/</span><span class="n">miniconda3</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.7</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">distributed</span><span class="o">/</span><span class="n">client</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">1130</span><span class="p">:</span> <span class="n">VersionMismatchWarning</span><span class="p">:</span> <span class="n">Mismatched</span> <span class="n">versions</span> <span class="n">found</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/Users/Nick/miniconda3/lib/python3.7/site-packages/distributed/client.py:1130: VersionMismatchWarning: Mismatched versions found
 
-<span class="o">+---------+---------------+---------------+---------------+</span>
-<span class="o">|</span> <span class="n">Package</span> <span class="o">|</span> <span class="n">client</span>        <span class="o">|</span> <span class="n">scheduler</span>     <span class="o">|</span> <span class="n">workers</span>       <span class="o">|</span>
-<span class="o">+---------+---------------+---------------+---------------+</span>
-<span class="o">|</span> <span class="n">lz4</span>     <span class="o">|</span> <span class="kc">None</span>          <span class="o">|</span> <span class="mf">3.1.0</span>         <span class="o">|</span> <span class="mf">3.1.0</span>         <span class="o">|</span>
-<span class="o">|</span> <span class="n">numpy</span>   <span class="o">|</span> <span class="mf">1.19.1</span>        <span class="o">|</span> <span class="mf">1.19.2</span>        <span class="o">|</span> <span class="mf">1.19.2</span>        <span class="o">|</span>
-<span class="o">|</span> <span class="n">python</span>  <span class="o">|</span> <span class="mf">3.7.8</span><span class="o">.</span><span class="n">final</span><span class="mf">.0</span> <span class="o">|</span> <span class="mf">3.6.9</span><span class="o">.</span><span class="n">final</span><span class="mf">.0</span> <span class="o">|</span> <span class="mf">3.6.9</span><span class="o">.</span><span class="n">final</span><span class="mf">.0</span> <span class="o">|</span>
-<span class="o">+---------+---------------+---------------+---------------+</span>
-  <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">version_module</span><span class="o">.</span><span class="n">VersionMismatchWarning</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;warning&quot;</span><span class="p">]))</span>
++---------+---------------+---------------+---------------+
+| Package | client        | scheduler     | workers       |
++---------+---------------+---------------+---------------+
+| lz4     | None          | 3.1.0         | 3.1.0         |
+| numpy   | 1.19.1        | 1.19.2        | 1.19.2        |
+| python  | 3.7.8.final.0 | 3.6.9.final.0 | 3.6.9.final.0 |
++---------+---------------+---------------+---------------+
+  warnings.warn(version_module.VersionMismatchWarning(msg[0][&quot;warning&quot;]))
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">numpy</span></code> and <code class="docutils literal notranslate"><span class="pre">python</span></code> issues don’t seem like to cause big problems (though if you have a mismatch and get problems down the road, consider changing your Python version!), but the fact that the schedulers and workers have one package I don’t (<code class="docutils literal notranslate"><span class="pre">lz4</span></code>) is a problem, so I installed it before moving forward. (<code class="docutils literal notranslate"><span class="pre">lz4</span></code> is a compression algorithm used to send data back and forth, so not having it is a big problem).</p>
-</div>
-<div class="section" id="Accessing-Storage">
+</section>
+<section id="Accessing-Storage">
 <h2>Accessing Storage<a class="headerlink" href="#Accessing-Storage" title="Permalink to this headline">¶</a></h2>
 <p>First, we’ll contect to the container where I put the climate data. As you saw in the last exercise, you can upload data using the Azure web interface, and I would do that if you want to do these exercises. However there are more efficient tools we’ll cover in the <a class="reference external" href="cloud_azurestorage.ipynb">next lesson</a>.</p>
 <p>As discussed previously, <a class="reference internal" href="cloud_storage_on_azure.html"><span class="doc">dask can access Azure storage</span></a> without the help of any other libraries – you just need to be able to pass it your Storage Account name and Access Key, which you can find by going to your Azure Portal, then your Storage Account, and then clicking on “Access Keys” on the left menu. The syntax is:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dask.dataframe</span> <span class="k">as</span> <span class="nn">dd</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import dask.dataframe as dd
 
-<span class="n">storage_options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;account_name&#39;</span><span class="p">:</span> <span class="n">ACCOUNT_NAME</span><span class="p">,</span> <span class="s1">&#39;account_key&#39;</span><span class="p">:</span> <span class="n">ACCOUNT_KEY</span><span class="p">}</span>
+storage_options={&#39;account_name&#39;: ACCOUNT_NAME, &#39;account_key&#39;: ACCOUNT_KEY}
 
-<span class="n">ddf</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;az://</span><span class="si">{CONTAINER}</span><span class="s1">/</span><span class="si">{FOLDER}</span><span class="s1">/*.csv&#39;</span><span class="p">,</span> <span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span><span class="p">)</span>
-<span class="n">ddf</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s1">&#39;az://</span><span class="si">{CONTAINER}</span><span class="s1">/folder.parquet&#39;</span><span class="p">,</span> <span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span><span class="p">)</span>
+ddf = dd.read_csv(&#39;az://{CONTAINER}/{FOLDER}/*.csv&#39;, storage_options=storage_options)
+ddf = dd.read_parquet(&#39;az://{CONTAINER}/folder.parquet&#39;, storage_options=storage_options)
 </pre></div>
 </div>
 <p>But since I don’t want you to see all my secret codes, I’m gonna load my information from a file. You can do this, but you can also put them in your code <em>if your code isn’t public!</em></p>
@@ -558,7 +576,7 @@ Created VM dask-9283e987-worker-ec20074c
 </pre></div></div>
 </div>
 <p>You will see that I added some code to explicitly name the types of some columns (the flags). As you may recall from our other lesson, dask isn’t great at type inference, and will otherwise assume those are <code class="docutils literal notranslate"><span class="pre">float</span></code> columns instead of <code class="docutils literal notranslate"><span class="pre">objects</span></code>. Without that code, I get this error:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/azureml-envs/azureml_c6bd17107f471892400d23146f291775/lib/python3.6/site-packages/dask/dataframe/io/csv.py in coerce_dtypes()
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/azureml-envs/azureml_c6bd17107f471892400d23146f291775/lib/python3.6/site-packages/dask/dataframe/io/csv.py in coerce_dtypes()
 
 ValueError: Mismatched dtypes found in `pd.read_csv`/`pd.read_table`.
 
@@ -675,8 +693,8 @@ quick to remind users</a>: “For data that fits into RAM, Pandas can often be f
 </div>
 </div>
 <p>And that, my friends, is global warming.</p>
-</div>
-<div class="section" id="Done-with-your-cluster?">
+</section>
+<section id="Done-with-your-cluster?">
 <h2>Done with your cluster?<a class="headerlink" href="#Done-with-your-cluster?" title="Permalink to this headline">¶</a></h2>
 <p>You have two options: you can shut it down manually with the method <code class="docutils literal notranslate"><span class="pre">.close()</span></code> on your cluster object.</p>
 <div class="nbinput nblast docutils container">
@@ -689,8 +707,8 @@ quick to remind users</a>: “For data that fits into RAM, Pandas can often be f
 </div>
 </div>
 <p>(For some reason when I get this I get the error above, but I can confirm on the Azure cite my cluster has been deleted.)</p>
-</div>
-<div class="section" id="Extensions-and-Fun-Resources">
+</section>
+<section id="Extensions-and-Fun-Resources">
 <h2>Extensions and Fun Resources<a class="headerlink" href="#Extensions-and-Fun-Resources" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">dask-ml</span></code>: As a reminder, if you now want to do some machine learning, you can <a class="reference external" href="https://ml.dask.org/">use dask-ml on this system</a>, which does the same thing for <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> that regular <code class="docutils literal notranslate"><span class="pre">dask</span></code> does for <code class="docutils literal notranslate"><span class="pre">pandas</span></code>.</p></li>
@@ -702,8 +720,8 @@ founders about <a class="reference external" href="https://talkpython.fm/episode
 <li><p>The folks from coiled have also compiled a <a class="reference external" href="https://coiled.io/videos/">great collection of videos and tutorials about dask and Python at scale here</a></p></li>
 <li><p>Working with GPUs? There’s a project to offer the kind of CPU parallelization we get from <code class="docutils literal notranslate"><span class="pre">dask</span></code> for GPUs called <a class="reference external" href="https://docs.rapids.ai/api/cudf/stable/dask-cudf.html">dask-cudf</a> (part of the <a class="reference external" href="https://rapids.ai/index.html">RAPIDS project</a>. The project is young but growing quickly. My guess, though, is that those libraries will become the infrastructure for updates to tools like <code class="docutils literal notranslate"><span class="pre">dask-ml</span></code> rather than something most applied people need to play with. But putting it here as an FYI!</p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -755,7 +773,7 @@ founders about <a class="reference external" href="https://talkpython.fm/episode
 <li class="toctree-l1"><a class="reference internal" href="cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Dask on Azure Example</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#NOTE:-DASK-CLOUDPROVIDER-IS-IN-A-STATE-OF-FLUX,-AND-SO-THE-CODE-BELOW-DOESN&quot;T-ACTUALLY-WORK-AT-THE-MOMENT…-CHECK-BACK-IN-A-FEW-WEEKS?---Nick,-Dec-2020.">NOTE: DASK-CLOUDPROVIDER IS IN A STATE OF FLUX, AND SO THE CODE BELOW DOESN”T ACTUALLY WORK AT THE MOMENT… CHECK BACK IN A FEW WEEKS? - Nick, Dec 2020.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#NOTE:-DASK-CLOUDPROVIDER-IS-IN-A-STATE-OF-FLUX,-AND-SO-THE-CODE-BELOW-DOESN”T-ACTUALLY-WORK-AT-THE-MOMENT…-CHECK-BACK-IN-A-FEW-WEEKS?---Nick,-Dec-2020.">NOTE: DASK-CLOUDPROVIDER IS IN A STATE OF FLUX, AND SO THE CODE BELOW DOESN”T ACTUALLY WORK AT THE MOMENT… CHECK BACK IN A FEW WEEKS? - Nick, Dec 2020.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Starting-a-Dask-Cluster">Starting a Dask Cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Using-Your-Cluster">Using Your Cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Accessing-Storage">Accessing Storage</a></li>
@@ -821,7 +839,7 @@ founders about <a class="reference external" href="https://talkpython.fm/episode
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

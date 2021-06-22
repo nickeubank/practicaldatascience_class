@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Azure from the Command Line &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Authentication" href="cloud_authentication.html" />
@@ -38,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -153,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -219,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -266,18 +284,18 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Azure-from-the-Command-Line">
+<section id="Azure-from-the-Command-Line">
 <h1>Azure from the Command Line<a class="headerlink" href="#Azure-from-the-Command-Line" title="Permalink to this headline">¶</a></h1>
 <p>In our past tutorials, we mostly manipulated our Azure resources using the Azure web interface, but once you get comfortable with Azure, you’ll likely find this a little clunky for some things.</p>
 <p>Thankfully, Azure <em>also</em> has a Command Line Interface (CLI)! In addition to letting you manage all your resources, it can also help you managing things like data uploads or downloads (so you don’t have to navigate to your Container in your browser).</p>
-<div class="section" id="Installing">
+<section id="Installing">
 <h2>Installing<a class="headerlink" href="#Installing" title="Permalink to this headline">¶</a></h2>
 <p>Azure CLI is easy to install using the directions for your operating system <a class="reference external" href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli">here</a>.</p>
 <p>Then all authorization is managed by just running <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">login</span></code> – that’ll open a login in your browser which will then authorize your session for whatever you want to do!</p>
 <p>The only catch is that if you want to login to a different “tenant” within your account (e.g. if you have an account with free student credits AND the ability to use resources billed to your company or school), you have to specify your tenant (e.g. <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">login</span> <span class="pre">--tenant</span> <span class="pre">&lt;tenant&gt;</span></code>). You can find your tenant ID by going to portal.azure.com, selecting “Azure Active Directory”, and looking at your Overview tab.</p>
 <p>Then you can basically do anything you can do through the web interface from the command line! <a class="reference external" href="https://docs.microsoft.com/en-us/cli/azure/get-started-with-azure-cli">You can find a great quickstart guide</a> for an overview of how it all works.</p>
-</div>
-<div class="section" id="Managing-Storage-with-Azure-CLI">
+</section>
+<section id="Managing-Storage-with-Azure-CLI">
 <h2>Managing Storage with Azure CLI<a class="headerlink" href="#Managing-Storage-with-Azure-CLI" title="Permalink to this headline">¶</a></h2>
 <p>The one set of tools within the Azure CLI I <em>will</em> make sure to point out are tools for uploading and downloading data. There’s <a class="reference external" href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-cli">a tutorial here</a>, but the basic syntax is very simple:</p>
 <p><strong>Upload Data:</strong></p>
@@ -299,14 +317,14 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <p>(Though note that doing so requires adding a “role” to your account to authorize this behavior. This is discussed below, and the CLI will also give you directions if you don’t have the relevant role).</p>
-</div>
-<div class="section" id="Moving-Lots-of-Data?">
+</section>
+<section id="Moving-Lots-of-Data?">
 <h2>Moving Lots of Data?<a class="headerlink" href="#Moving-Lots-of-Data?" title="Permalink to this headline">¶</a></h2>
 <p>The Azure CLI is a good tool, but if you’re moving data around a lot, here’s an even better tool that may be worth your investment: AzCopy. It’s a little less friendly to setup than the Azure CLI, but its much more powerful.</p>
 <p>For example, we often have folders of data we want to mirror on Azure, use for computations, then when we’re done running some calculations, we might want to bring the updated version of the folder back to our computer. Rather than moving data file by file with Azure CLI, or even just copying the data all together, we can use <code class="docutils literal notranslate"><span class="pre">azcopy</span></code> to <em>sync</em> the two folders – you just point at the folder you want to sync, and it will synchronize the contents across platforms, transfering only the data
 that’s actually different between two folders (like <code class="docutils literal notranslate"><span class="pre">rsync</span></code>, if you know what that is!)</p>
 <p>So here’s a setup guide for AzCopy, sorry it’s kinda annoying.</p>
-<div class="section" id="Installing-azcopy">
+<section id="Installing-azcopy">
 <h3>Installing azcopy<a class="headerlink" href="#Installing-azcopy" title="Permalink to this headline">¶</a></h3>
 <p>To install <code class="docutils literal notranslate"><span class="pre">azcopy</span></code>, download the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10">relevant version from here</a> and unzip the download. The follow these directions:</p>
 <p><strong>Mac</strong></p>
@@ -321,8 +339,8 @@ that’s actually different between two folders (like <code class="docutils lite
 <p>See above, but skip step 4.</p>
 <p><strong>Windows</strong>:</p>
 <p>Similarly, you want to copy the downloaded folder somewhere on your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> variable, so run <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$PATH</span></code>, then put the <code class="docutils literal notranslate"><span class="pre">azcopy</span></code> file in any folder in that list of folders.</p>
-</div>
-<div class="section" id="Authorizing-azcopy">
+</section>
+<section id="Authorizing-azcopy">
 <h3>Authorizing azcopy<a class="headerlink" href="#Authorizing-azcopy" title="Permalink to this headline">¶</a></h3>
 <p>The next step is a little annoying, but here we go: you have to visit the webpage for the Storage Account you want to use and add a “role” to your Azure account.</p>
 <p>To do so, go to Azure Portal, click on Storage Accounts, then select the account you want to work with. Once you’re inside:</p>
@@ -336,8 +354,8 @@ that’s actually different between two folders (like <code class="docutils lite
 </ol>
 <p>For me, this looks like:</p>
 <img alt="azure_storageblobdatacontributor" src="_images/azure_storageblobdatacontributor.png" />
-</div>
-<div class="section" id="Using-azcopy">
+</section>
+<section id="Using-azcopy">
 <h3>Using azcopy<a class="headerlink" href="#Using-azcopy" title="Permalink to this headline">¶</a></h3>
 <p>We’ll demonstrate using <code class="docutils literal notranslate"><span class="pre">azcopy</span></code> by uploading our Climate Data we used in the <a class="reference internal" href="exercises/Exercise_bigdata.html"><span class="doc">exercise we did in the Big Data section</span></a> where we loaded global temperature data and measure global warming at a number of locations. You can get the data we’re using for this <a class="reference external" href="https://www.dropbox.com/s/oq36w90hm9ltgvc/global_climate_data.zip?dl=0">exercise here</a>). Note I’m decompressing the <code class="docutils literal notranslate"><span class="pre">ghcnd_daily_30gb.tar.gz</span></code> file before upload.</p>
 <div class="nbinput docutils container">
@@ -366,7 +384,7 @@ azcopy login --tenant-id <span class="s2">&quot;XXXXXX-XXXX-XXXX-XXXX-XXXXXXXX&q
 </pre></div>
 </div>
 <p>This will result in a message like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">To</span> <span class="n">sign</span> <span class="ow">in</span><span class="p">,</span> <span class="n">use</span> <span class="n">a</span> <span class="n">web</span> <span class="n">browser</span> <span class="n">to</span> <span class="nb">open</span> <span class="n">the</span> <span class="n">page</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">microsoft</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">devicelogin</span> <span class="ow">and</span> <span class="n">enter</span> <span class="n">the</span> <span class="n">code</span> <span class="n">EA64FHRE5</span> <span class="n">to</span> <span class="n">authenticate</span><span class="o">.</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code EA64FHRE5 to authenticate.
 </pre></div>
 </div>
 <p>So do what it says, and when you come back the message should have changed to:</p>
@@ -383,11 +401,11 @@ azcopy login --tenant-id <span class="s2">&quot;XXXXXX-XXXX-XXXX-XXXX-XXXXXXXX&q
 </pre></div>
 </div>
 <p>As you can see, the syntax is pretty simple. The URL structure for Azure Blob storage is always:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="p">[</span><span class="n">account</span><span class="p">]</span><span class="o">.</span><span class="n">blob</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">windows</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="p">[</span><span class="n">container</span><span class="p">]</span><span class="o">/</span><span class="p">[</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">blob</span><span class="p">]</span><span class="s2">&quot;</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>https://[account].blob.core.windows.net/[container]/[path/to/blob]&quot;
 </pre></div>
 </div>
 <p>And the syntax for <code class="docutils literal notranslate"><span class="pre">azcopy</span></code> is just</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">azcopy</span> <span class="n">copy</span> <span class="p">[</span><span class="n">source</span><span class="p">]</span> <span class="p">[</span><span class="n">destination</span><span class="p">]</span> <span class="p">[</span><span class="n">flags</span><span class="p">]</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>azcopy copy [source] [destination] [flags]
 </pre></div>
 </div>
 <p>Note that you can also add a <code class="docutils literal notranslate"><span class="pre">--recursive</span></code> flag and point to a directory instead of using wildcards.</p>
@@ -397,9 +415,9 @@ azcopy login --tenant-id <span class="s2">&quot;XXXXXX-XXXX-XXXX-XXXX-XXXXXXXX&q
 </pre></div>
 </div>
 <p>Here’s the full <code class="docutils literal notranslate"><span class="pre">azcopy</span></code> <a class="reference external" href="https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10">documentation</a>.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
           </div>
@@ -514,7 +532,7 @@ azcopy login --tenant-id <span class="s2">&quot;XXXXXX-XXXX-XXXX-XXXX-XXXXXXXX&q
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

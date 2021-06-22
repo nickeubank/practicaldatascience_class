@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Views and Copies in pandas &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Fixing Data Cleanliness Problems" href="cleaning_editingvalues.html" />
@@ -38,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -153,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -219,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -266,7 +284,7 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Views-and-Copies-in-pandas">
+<section id="Views-and-Copies-in-pandas">
 <h1>Views and Copies in <code class="docutils literal notranslate"><span class="pre">pandas</span></code><a class="headerlink" href="#Views-and-Copies-in-pandas" title="Permalink to this headline">¶</a></h1>
 <p>In our <code class="docutils literal notranslate"><span class="pre">numpy</span></code> <a class="reference external" href="exercises/exercise_numpy.ipynb">exercises</a>, we discussed in detail how, when one takes a slice of an array, what one gets is not an entirely new array, but rather a <em>view</em> of the original array. Views share the underlying data of the array from which they were spawned, meaning changes to one impact the other. <code class="docutils literal notranslate"><span class="pre">pandas</span></code> also often exhibits this behavior, but in some much more nuanced and often deeply problematic ways.</p>
 <p>Subsetting Series or DataFrames in <code class="docutils literal notranslate"><span class="pre">pandas</span></code> will also <em>sometimes</em> generate views, but will also sometimes not. This differs from how views work in <code class="docutils literal notranslate"><span class="pre">numpy</span></code>: in <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, the rules for when you get views and when you don’t are a little complicated, but they are consistent: certain behaviors (like a basic slice) will <em>always</em> return a view, and others (fancy slicing) will <em>never</em> return a view.</p>
@@ -787,10 +805,10 @@ Name: a, dtype: float64
 Name: a, dtype: float64
 </pre></div></div>
 </div>
-<div class="section" id="How-to-deal-with-views-in-pandas">
+<section id="How-to-deal-with-views-in-pandas">
 <h2>How to deal with views in pandas<a class="headerlink" href="#How-to-deal-with-views-in-pandas" title="Permalink to this headline">¶</a></h2>
 <p>I won’t mince words: I think this behavior deeply problematic, and I’ve long advocated for it to be changed. There is a plan to <em>eventually</em> fix this behavior, but that plan has been on the shelf for years now, so who knows when it might arrive.</p>
-<div class="section" id="The-Good-News">
+<section id="The-Good-News">
 <h3>The Good News<a class="headerlink" href="#The-Good-News" title="Permalink to this headline">¶</a></h3>
 <p>To help address this issue, <code class="docutils literal notranslate"><span class="pre">pandas</span></code> has a built in alert system to inform you if you try to modify something that might be a view. For example:</p>
 <div class="nbinput docutils container">
@@ -879,8 +897,8 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="The-Bad-News">
+</section>
+<section id="The-Bad-News">
 <h3>The Bad News<a class="headerlink" href="#The-Bad-News" title="Permalink to this headline">¶</a></h3>
 <p>But this is only a partial fix, because while this warns you when you are modifying something that may be a few, there is no system for alerting you to the possibility that changes to your <em>original</em> DataFrame may impact slices you may have saved.</p>
 <div class="nbinput docutils container">
@@ -1042,9 +1060,9 @@ See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stabl
 </table>
 </div></div>
 </div>
-</div>
-</div>
-<div class="section" id="No,-the-problem-doesn’t-only-emerge-when-you-change-a-columns-type">
+</section>
+</section>
+<section id="No,-the-problem-doesn’t-only-emerge-when-you-change-a-columns-type">
 <h2>No, the problem doesn’t <em>only</em> emerge when you change a columns type<a class="headerlink" href="#No,-the-problem-doesn’t-only-emerge-when-you-change-a-columns-type" title="Permalink to this headline">¶</a></h2>
 <p>Some readers may have noticed a pattern in the illustrations I’ve presented, and from them developed an intuition that a column will only lose it’s “view-ness” when one changes the datatype of that column. Though this will always cause problems, it is not the only place problems can arise. What follows isn’t something you <em>need</em> to know, but may be useful if you’re deeply interested.</p>
 <p>In the examples above, each column was it’s own object, and so behaved independently. But this is not always the case in <code class="docutils literal notranslate"><span class="pre">pandas</span></code>. If a DataFrame is created from a single numpy matrix with multiple columns, <code class="docutils literal notranslate"><span class="pre">pandas</span></code> will try to be efficient by just keeping that matrix intact.</p>
@@ -1244,8 +1262,8 @@ Name: a, dtype: int64
 </pre></div>
 </div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -1359,7 +1377,7 @@ Name: a, dtype: int64
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

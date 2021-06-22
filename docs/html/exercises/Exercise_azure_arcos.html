@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Importing Opioid Shipment Data on Azure &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -31,27 +34,27 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="Importing-Opioid-Shipment-Data-on-Azure">
+  <section id="Importing-Opioid-Shipment-Data-on-Azure">
 <h1>Importing Opioid Shipment Data on Azure<a class="headerlink" href="#Importing-Opioid-Shipment-Data-on-Azure" title="Permalink to this headline">¶</a></h1>
 <p>Yup, it’s time to work with everyone’s favorite data: The DEA ARCOS opioid drug shipment database! But today we’re gonna work with this data not on our personal computers, but instead on a dask cluster running on Microsoft Azure.</p>
 <p>For these exercises, you’ll need an Azure account with available credits. The easiest way to do this is to set up a new account (either by signing up as a student, or just using a new gmail account to sign up as a new regular user). <a class="reference external" href="../cloud_azureml.ipynb">You can find instructions for doing so here</a>.</p>
 <p>As with our last exercise using dask, to strike a balance between keeping the data big enough to be interesting and small enough you don’t have to wait around too long, we’ll be working with a thinned version that has only January and February from 2011 and 2012. This way the workflow you develop will be same the same workflow you’d use for the full dataset, of course, but we can move quickly, even on the limited resources you’re allowed to use on a free account.</p>
 <p><strong>Before you start, make sure to review the package setup instructions for</strong><a class="reference internal" href="../cloud_dask.html"><span class="doc">dask here!</span></a></p>
-<div class="section" id="Loading-Data-to-Azure">
+<section id="Loading-Data-to-Azure">
 <h2>Loading Data to Azure<a class="headerlink" href="#Loading-Data-to-Azure" title="Permalink to this headline">¶</a></h2>
 <p><strong>(1)</strong> Download the thinned ARCOS data <a class="reference external" href="https://www.dropbox.com/s/mm0wwwho61pc6q7/arcos_jan_feb_2011_2012.tsv.zip?dl=0">from this link</a>. It should be about 250MB zipped, 2.31 GB unzipped.</p>
 <p><strong>(2)</strong> Let’s upload this data to Azure by creating a new Storage Account and Blob Container (you may have already done this while reading about Azure in today’s readings, but let’s do it again for practice!). If you can’t remember how to do it, <a class="reference external" href="https://www.practicaldatascience.org/html/cloud_azureml.html#Storage-on-Azure">you can review instructions here</a>.</p>
 <p>If you have an existing Resource Group, you can use that, but if not remember you’ll have to create one of those too!</p>
 <p><strong>(3)</strong> Once you have a Blob Container, unzip your data and then start the upload process through the web browser interface (will talk about other tools for managing data tomorrow).</p>
 <p>Note you <strong>must</strong> unzip your files first! Annoying, I know. There are ways to upload zipped files and unzip them later, but they’re surprisingly complicated, and dask won’t read a zipped file.</p>
-</div>
-<div class="section" id="Setting-Up-Dask-on-AzureML">
+</section>
+<section id="Setting-Up-Dask-on-AzureML">
 <h2>Setting Up Dask on AzureML<a class="headerlink" href="#Setting-Up-Dask-on-AzureML" title="Permalink to this headline">¶</a></h2>
 <p><strong>(4)</strong> While that’s happening, let’s get ready to start a <code class="docutils literal notranslate"><span class="pre">dask</span></code> cluster. First, let’s create a new Workspace! Again, you probably did this already, but let’s do it again anyway. :) Practice makes perfect. Again, <a class="reference external" href="https://www.practicaldatascience.org/html/cloud_azureml.html#Create-a-Workspace">directions are here if you’ve forgotten</a>.</p>
 <p><strong>(5)</strong> Now, following the example <a class="reference internal" href="../cloud_dask.html"><span class="doc">from the readings</span></a>, create a new notebook and write your code to start a dask cluster and get it running!</p>
 <p>Since you’re probably using a free student account, use <code class="docutils literal notranslate"><span class="pre">vm_size=&quot;Standard_DS11_v2&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">initial_node_count=3</span></code>. This will keep us to 6 total CPUs (this is not a lot, but it’s what we can do for free!). If you’re using a normal free account, your quota is 4 CPUs, so set your <code class="docutils literal notranslate"><span class="pre">initial_node_count=2</span></code>.</p>
 <p>Note we’re using DS11 because <a class="reference external" href="https://docs.microsoft.com/en-us/azure/virtual-machines/dv2-dsv2-series">that model has 2 CPUs per node</a>, so we can stay under our 6 CPU quota for free accounts, and fast storage (the “S” in “DS11” is for Storage-optimized, and for data science, we almost always want fast storage access).</p>
-<div class="section" id="A-Note-on-Quotas">
+<section id="A-Note-on-Quotas">
 <h3>A Note on Quotas<a class="headerlink" href="#A-Note-on-Quotas" title="Permalink to this headline">¶</a></h3>
 <p><strong>Remember that for a free account, Azure imposes a quota of only 6 CPUs for students and 4 CPUs for normal free accounts to use across all your activities on Azure.</strong></p>
 <p>Since we’re requesting a cluster with 4 or 6 CPUs (depending on what kind of account you have), if have a VM running <em>anywhere</em> on Azure (even a Stopped VM counts against quota – you have to delete the VM), your AzureMLCluster command will just sit there processing forever until eventually you get a timeout error (with no reference to Quotas).</p>
@@ -61,9 +64,9 @@ quota status by clicking on the <code class="docutils literal notranslate"><span
 <p>Also, if you’re hitting your quote limit, you may also see a red circle next to the cluster that’s starting up. If you click on it, you’ll see:</p>
 <img alt="azure_quota_warning" src="../_images/azure_quota_warning.png" />
 <p>If you’re having continued issues, make sure you don’t have any VMs up in your current workspace, and that you haven’t left any VMs open in other workspaces you may have created!</p>
-</div>
-</div>
-<div class="section" id="Actually-Analyzing-Data">
+</section>
+</section>
+<section id="Actually-Analyzing-Data">
 <h2>Actually Analyzing Data<a class="headerlink" href="#Actually-Analyzing-Data" title="Permalink to this headline">¶</a></h2>
 <p>OK, is your dask cluster up and running? And has your data upload finished? Then it’s time to start analyzing some data!</p>
 <p>Starting from the code you wrote for our last exercise (where you used dask to load your arcos data on your own computer), let’s write some code to analyze the ARCOS data you’ve written on the cloud.</p>
@@ -103,8 +106,8 @@ quota status by clicking on the <code class="docutils literal notranslate"><span
 <p><strong>(9)</strong> Now go ahead and try and re-do the chunking you did by hand for your project using dask – calculate, for each year, the total opioids sent to each county in the US (note that I’ve included <code class="docutils literal notranslate"><span class="pre">year</span></code> as its own variable so you don’t have to parse <code class="docutils literal notranslate"><span class="pre">TRANSACTION_DATE</span></code>).</p>
 <p><strong>(10)</strong> In several of the preceding analyses, we loaded nearly the same data before doing slightly different data wrangling manipulations. In these situations, it is often best to not run these manipulations separately, but instead to run the common component of the analyses (here, loading the data), then caching that intermediate data using the <code class="docutils literal notranslate"><span class="pre">.persist()</span></code> method (e.g. <code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">client.persist(df)</span></code>).</p>
 <p>Take the code you’ve already written to try and generate answers to questions 7, 8, and 9 <em>efficiently</em> using <code class="docutils literal notranslate"><span class="pre">persist</span></code>. If you have time, you can then run each of your answers above again and time them, then compare that total run time to how long your new code (that uses <code class="docutils literal notranslate"><span class="pre">persist</span></code>) takes.</p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -212,7 +215,7 @@ quota status by clicking on the <code class="docutils literal notranslate"><span
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

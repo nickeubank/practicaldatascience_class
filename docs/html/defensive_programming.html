@@ -4,17 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Defensive Programming &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Workflow Management" href="workflow.html" />
@@ -40,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -155,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -221,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -268,7 +284,7 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Defensive-Programming">
+<section id="Defensive-Programming">
 <h1>Defensive Programming<a class="headerlink" href="#Defensive-Programming" title="Permalink to this headline">¶</a></h1>
 <p>In recent years, the social sciences have been struggling with a wave of papers that have turned out to have problems not because of problems of theory, or choice of statistical models, but rather because of simple programming errors. In perhaps the most embarassing, Steven Levitt (co-author of the acclaimed Freakonomics, and winner of one of the most prestigious awards in economics) had a paper about the political explosive (at least in the US) topic of abortion and crime that turned out to be
 wrong <a class="reference external" href="https://www.economist.com/finance-and-economics/2005/12/01/oops-onomics">because he hadn’t put a set of controls into a regression he thought he had (may require sign-in, though I think you can see without paying).</a> Moreover, as some of <a class="reference external" href="https://thepoliticalmethodologist.com/2014/12/09/a-decade-of-replications-lessons-from-the-quarterly-journal-of-political-science/">my own work has shown</a>, the replication packages that come with a substantial number of political science papers have
@@ -279,7 +295,7 @@ our mistakes will be found and corrected.</p>
 scientists <em>assume</em> programmers will make mistakes, and instead of chiding people to “just be careful,” they have developed a battery of practices to address the problem. These practices – often referred to as “defensive programming” skills – are designed to (a) minimize the probability mistakes occur and (b) maximize the probability that mistakes that do occur are caught.</p>
 <p>In this tutorial, we’ll cover a number of these defensive programming practices with an eye towards their application in the context of applied data science. I did not invent any of these practices, but you will likely find that the way I present them (and the use-cases I emphasize) will differ from most other presentations you will find online. That is because in this tutorial, I will focus on the type of applied data analysis common in the social sciences, natural science, or business
 analysis, rather than the type of “software engineering” applications where these methods are most commonly applied.</p>
-<div class="section" id="Adding-Tests">
+<section id="Adding-Tests">
 <h2>Adding Tests<a class="headerlink" href="#Adding-Tests" title="Permalink to this headline">¶</a></h2>
 <p>If we could only adopt one practice to improve the quality of our code, my vote would be for the addition of tests. Tests are simple true-false statements users place in their code. A test checks for a certain condition (like whether the sample size in a regression is what you expect), and if the condition is not met, stops your code and alerts you to the problem. Right now, many users may say “Yeah, I always check that kind of stuff by hand when I’m writing my code. Why do I need to add tests?”
 The answer is four-fold:</p>
@@ -289,7 +305,7 @@ The answer is four-fold:</p>
 <li><p><strong>Catch your problems faster.</strong> This is less about code integrity than sanity, but a great upside to tests is that they ensure that if a mistake slips into your code, you become aware of it quickly, making it easier to identify and fix the changes that caused the problem.</p></li>
 <li><p><strong>Tests catch more than anticipated problems.</strong> When problems emerge in code, they often manifest in lots of different ways. Duplicate observations, for example, will not only lead to inaccurate observation counts, but may also give rise to bizarre summary statistics, bad subsequent merges, etc. Thus adding tests not only guards against errors we’ve thought of, but may also guard against errors we don’t anticipate during the test writing process.</p></li>
 </ol>
-<div class="section" id="Writing-Tests">
+<section id="Writing-Tests">
 <h3>Writing Tests<a class="headerlink" href="#Writing-Tests" title="Permalink to this headline">¶</a></h3>
 <p>Tests are easy to write in any language, but given this courses’ focus on Python, will discuss it here. For examples of tests in Stata and R, you can see <a class="reference external" href="http://www.nickeubank.com/replication">some resources I created towards the bottom of this site</a>.</p>
 <p>In Python, tests are written using the <code class="docutils literal notranslate"><span class="pre">assert</span></code> keyword:</p>
@@ -444,13 +460,13 @@ The answer is four-fold:</p>
 <span class="ansi-red-fg">ValueError</span>: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="When-should-I-write-tests?">
+</section>
+<section id="When-should-I-write-tests?">
 <h3>When should I write tests?<a class="headerlink" href="#When-should-I-write-tests?" title="Permalink to this headline">¶</a></h3>
 <p>Great question! More on that in the last section of this tutorial (let’s focus on principles before we get too far into specific implementation questions).</p>
-</div>
-</div>
-<div class="section" id="Never-Transcribe">
+</section>
+</section>
+<section id="Never-Transcribe">
 <h2>Never Transcribe<a class="headerlink" href="#Never-Transcribe" title="Permalink to this headline">¶</a></h2>
 <p>We’ve already covered tricks to maximize the probability we catch our mistakes, but how do we minimize the probability they will occur? If there is anything I learned working as the Replication Assistant at the <em>Quarterly Journal of Political Science</em> testing people’s replication packages, it is that authors should <strong>never</strong> transcribe numbers from their statistical software into their papers by hand. This was <em>easily</em> the largest source of replication issues we encountered, as doing so
 introduced two types of errors:</p>
@@ -488,8 +504,8 @@ has <a class="reference external" href="http://repec.org/bocode/e/estout/esttab.
 </div>
 <p>While this type of integration works best for LaTeX, it can still be accomplished with many other programs like Word. For example, most packages that generate<code class="docutils literal notranslate"><span class="pre">.tex</span></code> files that can be easily integrated into LaTeX also often have options to export to <code class="docutils literal notranslate"><span class="pre">.txt</span></code> or <code class="docutils literal notranslate"><span class="pre">.rtf</span></code> files that you can easily use in Word. These tools can be used to generate tables can either be (a) copied whole-cloth into Word by hand (minimizing the risk of mis-transcriptions that may occur when typing individual values),
 or (b) using Word’s <a class="reference external" href="https://support.office.com/en-us/article/Insert-an-object-in-Word-or-Outlook-8fc1ea53-0e01-4603-a4cf-98c49b6ea3f5">Link to Existing File</a> feature to connect your Word document to the output of your code in a way that ensures the Word doc loads the most recent version of the table every time Word is opened. Some great tips for combining R with Word <a class="reference external" href="http://stanford.edu/~ejdemyr/r-tutorials/tables-in-r/">can be found here</a>.</p>
-</div>
-<div class="section" id="Style-Matters">
+</section>
+<section id="Style-Matters">
 <h2>Style Matters<a class="headerlink" href="#Style-Matters" title="Permalink to this headline">¶</a></h2>
 <p>Formatting isn’t just about aesthetics, it also makes it easier to read your code and thus recognize potential problems. Here are a few tips:</p>
 <ul class="simple">
@@ -515,8 +531,8 @@ problems but will not actually generate the quantity of interest.</p></li>
 </div>
 </div>
 <p>You can find a great Python style <a class="reference external" href="https://docs.python-guide.org/writing/style/">guide here</a>. Also, be aware that Python style is generally guided by the “bible” of Python style, a document known as “PEP8” you’ll hear talked about everywhere. <a class="reference external" href="http://adv-r.had.co.nz/Style.html">A full style guide for R can be found here</a>, and a <a class="reference external" href="https://michaelshill.net/2015/07/31/in-stata-coding-style-is-the-essential/">Stata style guide can be found here</a>.</p>
-</div>
-<div class="section" id="Don’t-Duplicate-Information">
+</section>
+<section id="Don’t-Duplicate-Information">
 <h2>Don’t Duplicate Information<a class="headerlink" href="#Don’t-Duplicate-Information" title="Permalink to this headline">¶</a></h2>
 <p>Tricks to minimize the probability of errors often require a little more sophisticated programming, so they won’t be for everyone (tests, I feel, are more accessible to everyone). Nevertheless, here’s another valuable practice: <strong>Never replicate information.</strong></p>
 <p>Information should only be expressed once in a file. For example, say you want to drop observations from a dataset if a person’s income has ever dropped below 20,000. You <em>could</em> do this like this:</p>
@@ -648,8 +664,8 @@ problems but will not actually generate the quantity of interest.</p></li>
 </div></div>
 </div>
 <p>Written like this, if you ever decide to go back and change the common cutoff, you only have to make <em>in one place</em>, and there’s no way to make the change in some cases but forget others.</p>
-</div>
-<div class="section" id="Collaboration">
+</section>
+<section id="Collaboration">
 <h2>Collaboration<a class="headerlink" href="#Collaboration" title="Permalink to this headline">¶</a></h2>
 <p>Until now, the focus of this piece has been on <em>individual</em> coding practices that minimize the risk of errors. But as social science becomes increasingly collaborative, we also need to think about how to avoid errors in collaborative projects. In my experience, the way most social scientists collaborate on code (myself included, historically) is to place their code in a shared folder (like Dropbox or Box) and have co-authors work on the same files. There are a number of problems with this
 strategy, however:</p>
@@ -670,8 +686,8 @@ online:</p>
 <img alt="git_example1" src="_images/git_example1.png" />
 <p>The Figure shows an example of a small proposed change to the code for a project on <em>GitHub</em>. Several aspects of the interface are worth noting. First, the interface displays <em>all</em> changes and the lines just above and below the changes across all documents in the project. This ensures no changes are overlooked. (Authors can click to “unfold” the code around a change if they need more context.) Second, the interface shows the prior contents of the project (on the left) and new content (on the
 right). In the upper pane, content has been changed, so old content is shown in red and new content in green. In the lower pane, new content has just been added, so simple grey space is shown on the left. Third, authors can easily comment (and discuss) individual lines of code, as shown here. (If you’ve somehow gotten to this page without learning git and github, just see the tutorial on <a class="reference internal" href="git_and_github.html"><span class="doc">that topic here</span></a>!</p>
-</div>
-<div class="section" id="When-Should-I-Write-Tests?">
+</section>
+<section id="When-Should-I-Write-Tests?">
 <h2>When Should I Write Tests?<a class="headerlink" href="#When-Should-I-Write-Tests?" title="Permalink to this headline">¶</a></h2>
 <p>The best way to get into writing tests is to think about how you check your data interactively to make stuff work. After a <code class="docutils literal notranslate"><span class="pre">merge</span></code> or a <code class="docutils literal notranslate"><span class="pre">groupby</span></code> command, most people pause to browse the data and/or watch the code step by step, or do a set of quick tabs or plots. But these are not systematic, and you generally only do them once (when you’re first writing the code).</p>
 <p>A great way to write tests is to think about what you’re looking for when you do these interactive tests and convert the logic of those interactive interrogations into systematic assert statements. That way they’ll be baked into your code, and will be executed every time your code runs!1</p>
@@ -680,7 +696,7 @@ right). In the upper pane, content has been changed, so old content is shown in 
 <li><p>After complicated manipulations: If you have to think more than a little about how to get Python or Pandas to do something, there’s a chance you missed something. Add a test or two to make sure you did it right! Personally, for example, I almost never use <code class="docutils literal notranslate"><span class="pre">groupby</span></code> commands without adding tests — it’s just not a natural way to think about things, so I know I may have screwed up (and often have!).</p></li>
 <li><p>Before dropping observations: Dropping observations masks problems. Before you drop variables, add a test to, say, count the number of observations you expect to drop.</p></li>
 </ul>
-<div class="section" id="Common-Test-Examples">
+<section id="Common-Test-Examples">
 <h3>Common Test Examples<a class="headerlink" href="#Common-Test-Examples" title="Permalink to this headline">¶</a></h3>
 <p>Test number of observations is right:</p>
 <div class="nbinput docutils container">
@@ -812,9 +828,9 @@ right). In the upper pane, content has been changed, so old content is shown in 
 </pre></div>
 </div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
           </div>
@@ -932,7 +948,7 @@ right). In the upper pane, content has been changed, so old content is shown in 
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

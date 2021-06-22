@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Index Alignment Exercises, Discussion &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -36,21 +39,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -151,7 +168,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -217,6 +234,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -264,7 +282,7 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Index-Alignment-Exercises,-Discussion">
+<section id="Index-Alignment-Exercises,-Discussion">
 <h1>Index Alignment Exercises, Discussion<a class="headerlink" href="#Index-Alignment-Exercises,-Discussion" title="Permalink to this headline">¶</a></h1>
 <p>If you didn’t see the problem coming and change your code, you probably did the following:</p>
 <div class="nbinput docutils container">
@@ -415,7 +433,7 @@ dtype: int64
 </table>
 </div></div>
 </div>
-<div class="section" id="The-Problem">
+<section id="The-Problem">
 <h2>The Problem<a class="headerlink" href="#The-Problem" title="Permalink to this headline">¶</a></h2>
 <p>Uh oh… as you can see, 20 dollars went to the person who arrived second, and 10 dollars go to the person who arrived first… Why did that happen?</p>
 <p>The answer is index alignment.</p>
@@ -501,7 +519,7 @@ array([2, 4, 6])
 </div></div>
 </div>
 <p>The result is that when you combine <code class="docutils literal notranslate"><span class="pre">attendees['arrival_order']</span></code> with <code class="docutils literal notranslate"><span class="pre">prizes</span></code>, the entry of <code class="docutils literal notranslate"><span class="pre">prizes</span></code> with index value <code class="docutils literal notranslate"><span class="pre">0</span></code> (20 dollars) is added to Jill’s row, and the entry with index value <code class="docutils literal notranslate"><span class="pre">1</span></code> (10 dollars) is added to Kumar’s row.</p>
-<div class="section" id="Forcing-row-by-row-alignment">
+<section id="Forcing-row-by-row-alignment">
 <h3>Forcing row-by-row alignment<a class="headerlink" href="#Forcing-row-by-row-alignment" title="Permalink to this headline">¶</a></h3>
 <p>Thankfully, it’s not too hard to avoid index alignment. When you reset an index, by default your data gets a new index where each row’s index value is it’s row number. To see this in action, let’s start our exercise over by creating our original data structures again:</p>
 <div class="nbinput nblast docutils container">
@@ -737,13 +755,13 @@ dtype: int64
 </div></div>
 </div>
 <p>And we get the result we expected!</p>
-</div>
-<div class="section" id="When-Index-Alignment-Comes-Up">
+</section>
+<section id="When-Index-Alignment-Comes-Up">
 <h3>When Index Alignment Comes Up<a class="headerlink" href="#When-Index-Alignment-Comes-Up" title="Permalink to this headline">¶</a></h3>
 <p>The other thing about index alignment is that it thankfully doesn’t come up all that often. Indeed, that’s why it’s often not emphasized in intro exercises. <strong>That’s because different columns in the same DataFrame always share the same index, so when you execute operations using columns from the same DataFrame, index alignment looks like order alignment.</strong> This issue only comes up with you are doing an operation on <code class="docutils literal notranslate"><span class="pre">Series</span></code> that are <em>not</em> from the same <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
           </div>
@@ -851,7 +869,7 @@ dtype: int64
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

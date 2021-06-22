@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Speed in Python &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Solving Performance Issues" href="performance_solutions.html" />
@@ -38,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -153,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -219,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -266,11 +284,11 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Speed-in-Python">
+<section id="Speed-in-Python">
 <h1>Speed in Python<a class="headerlink" href="#Speed-in-Python" title="Permalink to this headline">¶</a></h1>
 <p>First, the good news: as a Data Scientist working in Python, <em>most</em> of the time whatever libraries you want to use have already been carefully engineered to deliver amazing performance, meaning working about code speed is something you <em>usually</em> won’t have to worry about. But understanding why programs like Python can sometimes be slow is still important for being able to avoid accidentally writing code that runs so slowly you can’t get your work done, and for trouble shooting if you end up in a
 situation where you really need something to go faster.</p>
-<div class="section" id="The-Python-Ease-of-Use-/-Speed-Tradeoff">
+<section id="The-Python-Ease-of-Use-/-Speed-Tradeoff">
 <h2>The Python Ease of Use / Speed Tradeoff<a class="headerlink" href="#The-Python-Ease-of-Use-/-Speed-Tradeoff" title="Permalink to this headline">¶</a></h2>
 <p>There are two primary factors that determine the speed of a program:</p>
 <ul class="simple">
@@ -307,16 +325,16 @@ typed means the language is never quite sure of the type of a variable until it 
 advance, and you don’t have to do that every time you run your code.</p>
 <p>But to make Python interactive, it was decided that Python should evaluate each line of code when it reaches that code. That massively increases it’s flexibility and allows you to program interactively, but for loops like this, it means to do 1,000 additions, it also has to compile low-level machine code 1,000 times. (Note: there are newer languages like <a class="reference external" href="https://julialang.org/">Julia</a> that have are still interactive, but which are also smart enough to recognize these situations and only
 compile machine code once. Moreover, these languages also reduce the amount of “dereferencing” required. But that’s not Python.)</p>
-</div>
-<div class="section" id="Rules-for-Going-Fast-in-Python">
+</section>
+<section id="Rules-for-Going-Fast-in-Python">
 <h2>Rules for Going Fast in Python<a class="headerlink" href="#Rules-for-Going-Fast-in-Python" title="Permalink to this headline">¶</a></h2>
 <p>So now that you have some sense of why Python can be slow, let’s talk about how to keep your Python code fast (note to R users: basically everything I say here about Python also applies to R):</p>
-<div class="section" id="Rule-1:-Use-other-people’s-functions">
+<section id="Rule-1:-Use-other-people’s-functions">
 <h3>Rule 1: Use other people’s functions<a class="headerlink" href="#Rule-1:-Use-other-people’s-functions" title="Permalink to this headline">¶</a></h3>
 <p>Let’s start with the dirty secret of Python: when you use a library in Python, the code you’re running was almost never actually written in Python. Instead, the functions you’re calling have a “thin” layer of Python at the top (which is what you’re interacting with), but when it comes to doing serious computations, the functions are actually calling tools written in C, which is <em>blazing</em> fast. (This is also true of R, by the way).</p>
 <p>Thus the first rule of speed in Python: when you need speed, use tools that other people have written and distributed in big libraries (like <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, <code class="docutils literal notranslate"><span class="pre">sci-py</span></code>, <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>, etc.). Because what you’re really doing is using C, and C is 10s or 100s of times faster than Python.</p>
-</div>
-<div class="section" id="Rule-2:-Vectorize,-Don’t-write-loops">
+</section>
+<section id="Rule-2:-Vectorize,-Don’t-write-loops">
 <h3>Rule 2: Vectorize, Don’t write loops<a class="headerlink" href="#Rule-2:-Vectorize,-Don’t-write-loops" title="Permalink to this headline">¶</a></h3>
 <p>When you use “vectorized” code (meaning code where you interact two full vectors or matrices in one command instead of looping over elements), you get <em>huge</em> performance gains. For example, consider the performance differences between the following two blocks of code, both of which do <em>exactly the same thing</em>:</p>
 <div class="nbinput docutils container">
@@ -388,8 +406,8 @@ array([     0,      1,      2, ..., 999997, 999998, 999999])
 <p>But in the vectorized function, Python (or rather, the <code class="docutils literal notranslate"><span class="pre">numpy</span></code> code written in C that gets called) is designed to understand that it’s about to do something to every entry of an array, so it remembers where the array is located, and so only has to look up where to find the array once.</p>
 <p>In addition, arrays are <em>typed</em>, meaning that Python also knows that every entry of the array it’s modifying is an integer. As a result, it doesn’t have to check the type of every entry in the array when the operation is vectorized, it checks once and knows that it’s working with an array of integers.</p>
 <p>(You may say “but can’t it do the same in the loop?” In theory it could, and there are languages like Julia that are designed to be smarter about this kind of stuff. But currently, because Python only evaluates a line of code when it is reached means that it can be frustratingly myopic.)</p>
-</div>
-<div class="section" id="A-Note-On-Object-Vectors">
+</section>
+<section id="A-Note-On-Object-Vectors">
 <h3>A Note On Object Vectors<a class="headerlink" href="#A-Note-On-Object-Vectors" title="Permalink to this headline">¶</a></h3>
 <p>You now also know enough to understand why object vectors in numpy and pandas are less performant.</p>
 <p>When you’re working with a pandas Series or numpy array of integers, all of the entries of those arrays live in the same place in memory. This is because it is easy for a computer to put, say, 100 integers side by side, since it knows that each integer requires exactly 64 bits and so it can put them all end to end and tell the computer that each number starts 64 bits after the last.</p>
@@ -448,13 +466,13 @@ You can’t just put them end-to-end and tell the computer “each number starts
 </pre></div></div>
 </div>
 <p>See? Same operation (doubling each entry of arrays with the integers from 0 to 1,000,000), but the object array operation is ~25x slower.</p>
-</div>
-</div>
-<div class="section" id="Still-have-problems?">
+</section>
+</section>
+<section id="Still-have-problems?">
 <h2>Still have problems?<a class="headerlink" href="#Still-have-problems?" title="Permalink to this headline">¶</a></h2>
 <p>Check out more <a class="reference internal" href="performance_solutions.html"><span class="doc">advanced performance solutions</span></a>!</p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -569,7 +587,7 @@ You can’t just put them end-to-end and tell the computer “each number starts
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

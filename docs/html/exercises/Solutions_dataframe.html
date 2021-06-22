@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Estimating Labor Market Returns to Education &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -36,21 +39,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -151,7 +168,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -217,6 +234,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -264,7 +282,7 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Estimating-Labor-Market-Returns-to-Education">
+<section id="Estimating-Labor-Market-Returns-to-Education">
 <h1>Estimating Labor Market Returns to Education<a class="headerlink" href="#Estimating-Labor-Market-Returns-to-Education" title="Permalink to this headline">¶</a></h1>
 <p><strong>Note:</strong> Most students taking this class are Duke MIDS students who have worked with <code class="docutils literal notranslate"><span class="pre">pandas</span></code> previously. As a result, these exercises are very light on basic pandas Series and DataFrame manipulations. If you are new to <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, I would advise looking into some addition practice opportunities with <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, as discussed on the <a class="reference internal" href="../not_a_mids_student.html"><span class="doc">Advice for Non-MIDS Students</span></a> page, such as DataCamp’s “pandas Fundamentals” course.</p>
 <p>In this exercise, we’re going to use data from the <a class="reference external" href="https://usa.ipums.org/usa/acs.shtml">American Communities Survey (ACS)</a> to study the relationship betwen educational attainment and wages. The ACS is a survey conducted by the United States Census Bureau (though it is not “The Census,” which is a counting of every person in the United States that takes place every 10 years) to measure numerous features of the US population. The data we will be working with includes about 100 variables from
@@ -272,11 +290,11 @@ the 2017 ACS survey, and is a 10% sample of the ACS (which itself is a 1% sample
 <p>This data comes from <a class="reference external" href="https://usa.ipums.org/usa/">IPUMS</a>, which provides a very useful tool for getting subsets of major survey datasets, not just from the US, but <a class="reference external" href="https://international.ipums.org/international-action/sample_details">from government statistical agencies the world over</a>.</p>
 <p>This is <em>real</em> data, meaning that you are being provided the data as it is provided by IPUMS. Documentation for all variables used in this data can be found <a class="reference external" href="https://usa.ipums.org/usa-action/variables/group">here</a> (you can either search by variable name to figure out the meaning of a variable in this data, or search for something you want to see if a variable with the right name is in this data).</p>
 <p>Within this data is information on both the educational background and current earnings of a representative sample of Americans. We will now use this data to estimate the labor-market returns to graduating high school and college, and to learn something about the meaning of an educational degree.</p>
-<div class="section" id="Exercise-1">
+<section id="Exercise-1">
 <h2>Exercise 1<a class="headerlink" href="#Exercise-1" title="Permalink to this headline">¶</a></h2>
 <p>Data for these <a class="reference external" href="https://github.com/nickeubank/MIDS_Data/tree/master/US_AmericanCommunitySurvey">exercises can be found here</a>. First, download <code class="docutils literal notranslate"><span class="pre">US_ACS_2017_10pct_sample.dta</span></code>.</p>
-</div>
-<div class="section" id="Exercise-2">
+</section>
+<section id="Exercise-2">
 <h2>Exercise 2<a class="headerlink" href="#Exercise-2" title="Permalink to this headline">¶</a></h2>
 <p>Now import <code class="docutils literal notranslate"><span class="pre">US_ACS_2017_10pct_sample.dta</span></code> into a pandas DataFrame. This can be done with the command <code class="docutils literal notranslate"><span class="pre">pd.read_stata</span></code>, which will read in files created in the program Stata (and which uses the file suffix <code class="docutils literal notranslate"><span class="pre">.dta</span></code>). This is a format commonly used by social scientists.</p>
 <div class="nbinput nblast docutils container">
@@ -295,7 +313,7 @@ the 2017 ACS survey, and is a 10% sample of the ACS (which itself is a 1% sample
 </pre></div>
 </div>
 </div>
-<div class="section" id="Getting-to-Know-Your-Data">
+<section id="Getting-to-Know-Your-Data">
 <h3>Getting to Know Your Data<a class="headerlink" href="#Getting-to-Know-Your-Data" title="Permalink to this headline">¶</a></h3>
 <p>When you get a new dataset like this, it’s good to start by trying to get a feel for its contents and organization. Toy datasets you sometimes get in classes are often very small, and easy to look at, but this is a pretty large dataset, so you can’t just open it up and get a good sense of it. Here are some ways to get to know your data.</p>
 <p><strong>3)</strong> How many rows are in your data?</p>
@@ -339,7 +357,7 @@ the 2017 ACS survey, and is a 10% sample of the ACS (which itself is a 1% sample
 </pre></div></div>
 </div>
 <p><strong>5)</strong> Let’s see what variables are in this dataset. First, try to see them all using the command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">acs</span><span class="o">.</span><span class="n">columns</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>acs.columns
 </pre></div>
 </div>
 <div class="nbinput docutils container">
@@ -366,7 +384,7 @@ Index([&#39;year&#39;, &#39;datanum&#39;, &#39;serial&#39;, &#39;cbserial&#39;, 
 </pre></div></div>
 </div>
 <p>As you will see, <code class="docutils literal notranslate"><span class="pre">python</span></code> doesn’t like to print out all the different variables. To get everything printed out, we can loop over all the columns and print them one at a time with the command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">acs</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>for c in acs.columns: print(c)
 </pre></div>
 </div>
 <p>Try it.</p>
@@ -836,7 +854,7 @@ jobs in the first place is called the “extensive margin”.)</p>
 </div></div>
 </div>
 <p><strong>9)</strong> Now let’s turn to education. The <code class="docutils literal notranslate"><span class="pre">educ</span></code> variable seems to have a lot of discrete values. Let’s see what values exist, and their distribution, using the <code class="docutils literal notranslate"><span class="pre">value_counts()</span></code> method. This is an <em>extremely</em> useful tool you’ll use a lot! Try the following code (modified for the name of your dataset, of course):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">acs</span><span class="p">[</span><span class="s1">&#39;educ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>acs[&#39;educ&#39;].value_counts()
 </pre></div>
 </div>
 <div class="nbinput docutils container">
@@ -1145,16 +1163,16 @@ those who have finished 4 years of college earn 75,485.05
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="Take-aways">
+</section>
+<section id="Take-aways">
 <h3>Take-aways<a class="headerlink" href="#Take-aways" title="Permalink to this headline">¶</a></h3>
 <p>Congratulations! You just discovered “the sheepskin effect!”: people with degrees tend to earn substantially more than people who have <em>almost</em> as much education, but don’t have an actual degree.</p>
 <p>In economics, this is viewed as evidence that the reason employers pay people with high school degrees more than those without degree is <em>not</em> that they think those who graduated high school have learned specific, useful skills. If that were the case, we would expect employee earnings to rise with every year of high school, since in each year of high school we learn more.</p>
 <p>Instead, this suggests employees pay high school graduates more because they think <em>the kind of people</em> who can finish high school are the <em>kind of people</em> who are likely to succeed at their jobs. Finishing high school, in other words, isn’t about accumulating specific knowledge; it’s about showing that you <em>are the kind of person</em> who can rise to the challenge of finishing high school, also suggesting you are also the kind of person who can succeed as an employee.</p>
 <p>(Obviously, this does not tell us whether that is an <em>accurate</em> inference, just that that seems to be how employeers think.)</p>
 <p>In other words, in the eyes of employers, a high school degree is a <em>signal</em> about the kind of person you are, not certification that you’ve learned a specific set of skills (an idea that earned <a class="reference external" href="https://en.wikipedia.org/wiki/Michael_Spence">Michael Spence</a> a Nobel Prize in Economics).</p>
-</div>
-<div class="section" id="Want-More-Practice?">
+</section>
+<section id="Want-More-Practice?">
 <h3>Want More Practice?<a class="headerlink" href="#Want-More-Practice?" title="Permalink to this headline">¶</a></h3>
 <p><strong>(14)</strong> The US Census isn’t the only organization that published surveys of their populations – most countries in the world conduct regular surveys, and most publish versions of their data online.</p>
 <p>In addition to making US Census data available to researchers, IPUMS (through “IPUMS International”) also makes survey data available from a wide range of countries.</p>
@@ -1171,9 +1189,9 @@ with unfinished dirt floors tend to be poorer than people with concrete floors) 
 <li><p>When extract is ready, download!</p></li>
 </ol>
 <p><strong>(15)</strong> Repeat these exercises for your new dataset!</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
           </div>
@@ -1281,7 +1299,7 @@ with unfinished dirt floors tend to be poorer than people with concrete floors) 
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

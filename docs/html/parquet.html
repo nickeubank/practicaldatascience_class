@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Parquet &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="The Cloud" href="cloud_what_is_it.html" />
@@ -38,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -153,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -219,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -266,7 +284,7 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Parquet">
+<section id="Parquet">
 <h1>Parquet<a class="headerlink" href="#Parquet" title="Permalink to this headline">¶</a></h1>
 <p>When it comes to storing tabular data in Python, there are a lot of choices, many of which we’ve talked about before (HDF5, CSV, dta, etc.). However, the strorage format I think it best today (October 2020) is <code class="docutils literal notranslate"><span class="pre">parquet</span></code>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">parquet</span></code> has a number of strengths:</p>
@@ -278,7 +296,7 @@ div.rendered_html tbody tr:hover {
 <li><p><strong>It’s built for distributed computing:</strong> <code class="docutils literal notranslate"><span class="pre">parquet</span></code> was actually invented to support Hadoop distributed computing.</p></li>
 </ul>
 <p>To use it, install <code class="docutils literal notranslate"><span class="pre">fastparquet</span></code> with <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">fastparquet</span></code>. (Note there’s a second engine out there, <code class="docutils literal notranslate"><span class="pre">pyarrow</span></code>, but I’ve found people have fewer problems with <code class="docutils literal notranslate"><span class="pre">fastparquet</span></code>).</p>
-<div class="section" id="Using-parquet">
+<section id="Using-parquet">
 <h2>Using parquet<a class="headerlink" href="#Using-parquet" title="Permalink to this headline">¶</a></h2>
 <p>Here’s some code examples for saving and loading <code class="docutils literal notranslate"><span class="pre">parquet</span></code> files:</p>
 <div class="nbinput nblast docutils container">
@@ -554,8 +572,8 @@ dtype: object
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id="Chunking-with-parquet">
+</section>
+<section id="Chunking-with-parquet">
 <h2>Chunking with parquet<a class="headerlink" href="#Chunking-with-parquet" title="Permalink to this headline">¶</a></h2>
 <p>Parquet allows chunking, but not quite as easily as you can chunk a csv.</p>
 <p>First, you have to save your file into chunks of a size you want. Parquet always saves rows as chunks, but by default each chunk has 50,000,000 rows, which (if you’re chunking) may be too many:</p>
@@ -724,8 +742,8 @@ dtype: object
 </table>
 </div></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -839,7 +857,7 @@ dtype: object
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

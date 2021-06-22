@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>The Jupyter Project &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Git and Github" href="git_and_github.html" />
@@ -33,25 +36,25 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="The-Jupyter-Project">
+  <section id="The-Jupyter-Project">
 <h1>The Jupyter Project<a class="headerlink" href="#The-Jupyter-Project" title="Permalink to this headline">¶</a></h1>
 <p>Today, if you use more than one programming language for data science, you probably also also use different programs to edit and interact with those programs. R users, for example, often use RStudio, Python users use Spyder, and Julia users use Juno.</p>
 <p>But in recent years, an amazing efforts has been underway to provide a single set of tools that work with nearly <em>any</em> underlying programming language: Jupyter (as in <strong>Ju</strong> (Julia) - <strong>py</strong> (Python) - te<strong>R</strong> (R)).</p>
 <p>The idea of Jupyter is to seperate the interface you are working with from the underlying programming language doing your analysis. This makes it possible to create one interface (a text editor, a window where results are displayed, etc.) that can be used to run your analyses in any number of different programs. In the Jupyter ecosystem, the program being used to actually run your analysis (i.e. Python, R) is referred to as a <strong>kernel</strong>.</p>
 <p>Jupyter was originally focused on unifying Julia, Python, and R, it actually now supports dozens and dozens of different <a class="reference external" href="https://github.com/jupyter/jupyter/wiki/Jupyter-kernels">kernels</a> including javascript, Go, Haskell, Matlab, Stata, bash, Scala, and so much more.</p>
 <p>(Note: Jupyter Notebooks used to be called IPython Notebooks before they expanded to support more languages, so if you see people talking about IPython Notebooks, just think of that as an early, Python specific version of Jupyter Notebooks).</p>
-<div class="section" id="Jupyter-Notebooks">
+<section id="Jupyter-Notebooks">
 <h2>Jupyter Notebooks<a class="headerlink" href="#Jupyter-Notebooks" title="Permalink to this headline">¶</a></h2>
 <p>Jupyter notebooks are a tool for easily integrating text, code, and code output into a single document. This not only makes them <em>incredibly</em> useful for instructional materials (this entire site is actually built with Jupyter Notebooks), but also makes them useful as a method of sharing analyses. Using Jupyter Notebooks, you can not only share the conclusions of your analysis with colleagues, but also the code that generated those analyses, making it easy for others to see how you reached your
 conclusions and, crucially, play with that code to see what happens if the analysis is changed slightly. Indeed, Notebooks are so useful for sharing analyses that they’ve become the <em>de facto</em> standard for sharing information at many companies, including <a class="reference external" href="https://medium.com/netflix-techblog/notebook-innovation-591ee3221233">Netflix</a>.</p>
 <p>OK, I know, that all sounds really abstract. What makes Jupyter Notebooks special is their interactivity, so it’s hard to understand their value without seeing them in action.</p>
-<div class="section" id="Jupyter-Notebook-Tutorial">
+<section id="Jupyter-Notebook-Tutorial">
 <h3>Jupyter Notebook Tutorial<a class="headerlink" href="#Jupyter-Notebook-Tutorial" title="Permalink to this headline">¶</a></h3>
 <p>To learn the basics of Jupyter Notebooks, please watch <a class="reference external" href="https://www.youtube.com/watch?v=HW29067qVWk">watch this short tutorial</a>. As you watch the video, follow along yourself – since you’ve installed <a class="reference internal" href="setup_environment.html"><span class="doc">Anaconda</span></a>, you already have Jupyter Notebooks installed, so just running the command <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">notebook</span></code> from your terminal should launch the notebook navigator. We’ll build on the skills from this tutorial in our in-class exercises.</p>
 <p>If you got an error when you tried to run <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">notebook</span></code> like <code class="docutils literal notranslate"><span class="pre">&quot;Error</span> <span class="pre">executing</span> <span class="pre">Jupyter</span> <span class="pre">command</span> <span class="pre">'notebook':</span> <span class="pre">[Errno</span> <span class="pre">2]</span> <span class="pre">No</span> <span class="pre">such</span> <span class="pre">file</span> <span class="pre">or</span> <span class="pre">directory&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">command</span> <span class="pre">not</span> <span class="pre">found:</span> <span class="pre">jupyter</span></code> (this might happen if you didn’t install a new installation of Anaconda because you already had it installed, or if you’re using Minicoda), you can make sure Jupyter Notebooks is installed by running <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">jupyterlab</span></code> from the command line.</p>
-</div>
-</div>
-<div class="section" id="Jupyter-Lab">
+</section>
+</section>
+<section id="Jupyter-Lab">
 <h2>Jupyter Lab<a class="headerlink" href="#Jupyter-Lab" title="Permalink to this headline">¶</a></h2>
 <p>Notebooks have been around since 2014, but while they are great for instructional materials and sharing analyses, they weren’t appropriate for managing full projects. In 2018, though, Jupyter launched a new tool: Jupyter Lab.</p>
 <p>Jupyter Lab is meant to be an all-in-one data science interface:</p>
@@ -66,8 +69,8 @@ conclusions and, crucially, play with that code to see what happens if the analy
 <li><p>Make sure you have the most recent version of Jupyter Lab installed (the version that comes with the Anaconda distribution you already installed is a little behind) by running <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">update</span> <span class="pre">jupyterlab</span></code>.</p></li>
 <li><p>Type <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">lab</span></code> on the command line to start a jupyter lab session!</p></li>
 </ul>
-</div>
-<div class="section" id="Is-Jupyter-the-best-tool-for-data-science?">
+</section>
+<section id="Is-Jupyter-the-best-tool-for-data-science?">
 <h2>Is Jupyter the best tool for data science?<a class="headerlink" href="#Is-Jupyter-the-best-tool-for-data-science?" title="Permalink to this headline">¶</a></h2>
 <p>Where Jupyter Lab really shines is in it’s support for <em>interactive</em> programming and data analysis, and in providing a single interface for working in different programming languages. But whether that makes it the <em>best</em> tool depends on how you like to work, and what you’re doing. The reality is that <em>every</em> tool has strengths and weaknesses, so what’s best depends on what you are doing <em>and</em> your personal preferences. But there are some use cases for which I think Jupyter is really valueable.</p>
 <p>In the introduction of this course, we talked about the two big branches of data science: the software development branch, and the data analysis branch.</p>
@@ -76,8 +79,8 @@ Moreover, when writing this kind of code, you get to assume the data entering yo
 <p>People in the data analysis branch, by contrast, often want to see the result of each line of code they write. That’s because when analyzing data for the first time, you may know what your code is doing in an abstract sense (say, calculating the average of a variable), but you don’t know what the output of that code will be! Moreover, you never <em>really</em> know the structure of real-world your data until you’ve cleaned the heck out of it, so you want to look at it often to see what issues are
 coming up. And when cleaning data, you are often writing very linear (this-line-runs-after-the-last-line) scripts where you want to check your efforts to clean your data after each line. When doing this kind of work (especially if you spend a lot of time moving between programming languages), having one program that will work with different kernels and allows for rich, interactive programming like Jupyter can be very valuable.</p>
 <p>So if you do a lot of interactive data analysis, I would encourage you to give Jupyter Notebooks and Jupyter Labs a try. It might not be the tool you use for everything you do, but its used by enough people and has enough advantages, I think it’s a tool most Data Scientists should have a working familiarity with.</p>
-</div>
-<div class="section" id="Setting-Up-R-with-Jupyter">
+</section>
+<section id="Setting-Up-R-with-Jupyter">
 <h2>Setting Up R with Jupyter<a class="headerlink" href="#Setting-Up-R-with-Jupyter" title="Permalink to this headline">¶</a></h2>
 <p>When you <a class="reference internal" href="setup_environment.html"><span class="doc">installed Anaconda</span></a>, you actually also installed Jupyter, and you so you can already open up Jupyter and use it with a Python Kernel. However, since most people taking this course are Duke MIDS students who are also doing coursework in R, let’s set up Jupyter to work with R as well.</p>
 <ol class="arabic simple">
@@ -107,12 +110,12 @@ coming up. And when cleaning data, you are often writing very linear (this-line-
 </pre></div>
 </div>
 <p>If that means that R want you to install apple developer tools. Just run the following command at the command line (not in R, in your bash or oh-my-zsh session): <code class="docutils literal notranslate"><span class="pre">xcode-select</span> <span class="pre">--install</span></code>, or if that doesn’t work, run <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">xcode-select</span> <span class="pre">--reset</span></code>. This should lead to a somewhat slow software installation.</p>
-</div>
-<div class="section" id="Jupyter-Lab-Exercises!">
+</section>
+<section id="Jupyter-Lab-Exercises!">
 <h2>Jupyter Lab Exercises!<a class="headerlink" href="#Jupyter-Lab-Exercises!" title="Permalink to this headline">¶</a></h2>
 <p>Click here for some <a class="reference internal" href="exercises/Exercise_jupyterlab.html"><span class="doc">Jupyter Lab exercises</span></a>!</p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -229,7 +232,7 @@ coming up. And when cleaning data, you are often writing very linear (this-line-
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Machine Learning with Scikit-Learn &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -31,7 +34,7 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="Machine-Learning-with-Scikit-Learn">
+  <section id="Machine-Learning-with-Scikit-Learn">
 <h1>Machine Learning with Scikit-Learn<a class="headerlink" href="#Machine-Learning-with-Scikit-Learn" title="Permalink to this headline">¶</a></h1>
 <p>In these exercises, we’ll learn to fit and evaluate (in a basic way) machine learning models using the package <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>.</p>
 <p>The emphasis of these exercises is to help you get comfortable with the data wrangling component of machine learning so that in future courses you can focus on the <em>theory</em> underlying machine learning. With that in mind, we will be quite cavalier with model fitting and evaluation. As with our <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> exercises, in which we quickly ran through a few models to practice model <em>implemention</em> without thinking too much about model selection and specification, this is <strong>not</strong> how you should do
@@ -48,7 +51,7 @@ are notorious for proxying for race in machine learning algorithms since residen
 <p>And so as a result, this well-meaning machine learning algorithm resulted in black patients receiving fewer preventative medical interventions than white patients, even after taking into account other (medically relevant) factors.</p>
 <p>So: in this exercise we’ll play with predict birth weights in infants. But do <strong>NOT</strong> think that just because it’s this easy to fit a model, it is appropriate to then go use these in the real world in contexts where people’s lives are affected!</p>
 <p><strong>(1)</strong> Load the data “smoking.csv”, which includes information on both biometrics of infants at birth, and information on mothers (variables prefixed with the letter “m”), from <a class="reference external" href="https://github.com/nickeubank/MIDS_Data">this MIDS repo</a>. We’ll be working with this data in this exercise.</p>
-<div class="section" id="Formatting-Your-Data">
+<section id="Formatting-Your-Data">
 <h2>Formatting Your Data<a class="headerlink" href="#Formatting-Your-Data" title="Permalink to this headline">¶</a></h2>
 <p>Unlike in <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>, we can’t use <code class="docutils literal notranslate"><span class="pre">pandas</span></code> DataFrames in scikit-learn, so the first step in nearly any machine learning workflow (if you haven’t already been given a nice giant numpy array) is to convert our heterogeneous pandas array (which includes strings, categorical variables, integers, and floating point numbers) into a single large matrix that consists only of floating point numbers.</p>
 <p>While you can do this by hand, this is most easily accomplished using the <code class="docutils literal notranslate"><span class="pre">Patsy</span></code> library, which will take a pandas array and a special formula string and return numpy arrays for use in libraries like scikit-learn. (<code class="docutils literal notranslate"><span class="pre">patsy</span></code> is actually the library that implemented the formulas we used in <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> to specify our regression models – here we’re just using it on its own).</p>
@@ -61,7 +64,7 @@ are notorious for proxying for race in machine learning algorithms since residen
 <li><p>Mother’s height (<code class="docutils literal notranslate"><span class="pre">mht</span></code>)</p></li>
 </ul>
 <p>For race, recall that in the raw data, <code class="docutils literal notranslate"><span class="pre">mrace</span></code> is coded as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mrace    mother’s race or ethnicity
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mrace    mother’s race or ethnicity
          0-5= white
          6  = mexican
          7 = black
@@ -74,8 +77,8 @@ are notorious for proxying for race in machine learning algorithms since residen
 <p><strong>(2)</strong> Begin by using <code class="docutils literal notranslate"><span class="pre">patsy.dmatrices()</span></code> to create two datasets (<code class="docutils literal notranslate"><span class="pre">y</span></code>, which is the birth weights, and <code class="docutils literal notranslate"><span class="pre">X</span></code>, which is a matrix with all your “features” in a nice numpy array).</p>
 <p><strong>(3)</strong> Look at your features matrix <code class="docutils literal notranslate"><span class="pre">X</span></code>. How many columns does it have? How does that compare to the number of variables you used as inputs? (if they’re the same, you probably did something wrong…). Can you explain the difference?</p>
 <p>If not <a class="reference external" href="https://hackernoon.com/what-is-one-hot-encoding-why-and-when-do-you-have-to-use-it-e3c6186d008f">read this!</a>. This is one of the very nice things that <code class="docutils literal notranslate"><span class="pre">patsy</span></code> does for us!</p>
-</div>
-<div class="section" id="Splitting-Your-Data">
+</section>
+<section id="Splitting-Your-Data">
 <h2>Splitting Your Data<a class="headerlink" href="#Splitting-Your-Data" title="Permalink to this headline">¶</a></h2>
 <p>In machine learning, model selection is often accomplished by:</p>
 <ol class="arabic simple">
@@ -97,8 +100,8 @@ are notorious for proxying for race in machine learning algorithms since residen
 </div>
 <p>Where <code class="docutils literal notranslate"><span class="pre">X_train</span></code> is your training features, <code class="docutils literal notranslate"><span class="pre">Y_train</span></code> are your training birth weights, <code class="docutils literal notranslate"><span class="pre">X_test</span></code> are your test features, and <code class="docutils literal notranslate"><span class="pre">Y_test</span></code> are your test birth weights. The <code class="docutils literal notranslate"><span class="pre">random_state</span></code> var just ensures that you can re-create this split if you have to re-run your code (helpful for debugging).</p>
 <p><strong>(4)</strong> So start by splitting YOUR data.</p>
-</div>
-<div class="section" id="Training-your-Model">
+</section>
+<section id="Training-your-Model">
 <h2>Training your Model<a class="headerlink" href="#Training-your-Model" title="Permalink to this headline">¶</a></h2>
 <p>And now it’s time to train our model!</p>
 <p><code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> is much loved because it has, like… every model ever already built in, and it provides a common interface (API) for all of them. Seriously – go check out all the supervised machine learning models that come <a class="reference external" href="https://scikit-learn.org/stable/supervised_learning.html#supervised-learning">with scikit-learn here</a>.</p>
@@ -127,8 +130,8 @@ are notorious for proxying for race in machine learning algorithms since residen
 <p>Which I think we can all agree is not nearly as informative a print-out!</p>
 <p>To be clear, you can recover many of the diagnostics for LinearRegression by digging around in other corners of <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>, but what is made available speaks to the prioritizes of different users: <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> is for making predictions; <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> is for statistics and understanding mechanisms (i.e. seeing if the coefficient on smoking is significant).</p>
 <p><strong>(7)</strong> OK, but we’re in the world of sklearn, so let’s do some prediction! Now that you’ve fit your model, use the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method your data to create a set of predictions.</p>
-</div>
-<div class="section" id="Evaluating-your-Model">
+</section>
+<section id="Evaluating-your-Model">
 <h2>Evaluating your Model<a class="headerlink" href="#Evaluating-your-Model" title="Permalink to this headline">¶</a></h2>
 <p>So we now have a trained model that we can use to predict birthweights. Yay! But is it any good?</p>
 <p>All <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> models have a method called <code class="docutils literal notranslate"><span class="pre">score</span></code> you can used to get the most basic evaluation of your model. The syntax is just:</p>
@@ -138,8 +141,8 @@ are notorious for proxying for race in machine learning algorithms since residen
 <p>If you’re doing a classification model (something that tries to guess the category for each observation, like a model that evalutes a set of pictures and tries to figure out if the pictures are of cats, dogs, or humans), <code class="docutils literal notranslate"><span class="pre">score</span></code> will return an “accuracy” score (the percentage of observations you properly classified). For a regression model (trying to guess a continuous variable) it will give an R-squared score.</p>
 <p>As you get more sophisticated, you will discover these basic scores are often inadequate for evaluating models, and you can turn to other evaluation functions found in <a class="reference external" href="https://scikit-learn.org/stable/modules/model_evaluation.html#scoring-parameter">sklearn.metrics</a>. But for now we’ll just use the default <code class="docutils literal notranslate"><span class="pre">score</span></code> output of R-squared.</p>
 <p><strong>(8)</strong> What is the score of your model?</p>
-</div>
-<div class="section" id="Machine-Learning-Workflow-Summary">
+</section>
+<section id="Machine-Learning-Workflow-Summary">
 <h2>Machine Learning Workflow Summary<a class="headerlink" href="#Machine-Learning-Workflow-Summary" title="Permalink to this headline">¶</a></h2>
 <p>Congratulations! You just did you just fit your machine learning algorithm! And you also learned that sometimes what constitutes “machine learning” is in the eye of the beholder, given what you did today is the same thing you did in our last class without calling it machine learning. :)</p>
 <p>But hopefully that’s given you a general sense for the work-flow of scikit-learn:</p>
@@ -181,24 +184,24 @@ are notorious for proxying for race in machine learning algorithms since residen
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_predictions</span> <span class="o">=</span> <span class="n">my_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="Comparing-Models">
+</section>
+<section id="Comparing-Models">
 <h2>Comparing Models<a class="headerlink" href="#Comparing-Models" title="Permalink to this headline">¶</a></h2>
 <p>Now that we have a baseline estimate for the performance of <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> for this set of features and outputs, let’s try a different model and see how it compares!</p>
 <p><strong>(9)</strong> Now repeat your analysis using a Support Vector Regression (<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">sklearn.svm</span> <span class="pre">import</span> <span class="pre">SVR</span></code>). How does the model perform? Is it better or worse than LinearRegression?</p>
 <p><strong>(10)</strong> One choice parameter for SVRs is the kernel it uses for weighting (again, this isn’t a class on machine learning, so don’t worry too much about what this means – just know that it’s a parameter of the model). Check the SVR documentation to figure out how to set the kernel to <code class="docutils literal notranslate"><span class="pre">linear</span></code> and see how it performs now.</p>
 <p><strong>(11)</strong> Now pick whatever regression model you’d like and see how it performs (<a class="reference external" href="https://scikit-learn.org/stable/tutorial/machine_learning_map/index.html">some suggestions</a>). Play with your model specifications and see how well you can do with your new model of one of the ones we used above.</p>
-</div>
-<div class="section" id="Want-More-Practice?">
+</section>
+<section id="Want-More-Practice?">
 <h2>Want More Practice?<a class="headerlink" href="#Want-More-Practice?" title="Permalink to this headline">¶</a></h2>
 <p>Try replicating our attempts to predict whether infants would be born premature from the <a class="reference internal" href="Exercise_statsmodels.html"><span class="doc">statsmodels exercises</span></a> in scikit-learn. Start with a LogisticRegression, then try some different “classification models” for comparison!</p>
-</div>
-<div class="section" id="Absolutely-positively-need-the-solutions?">
+</section>
+<section id="Absolutely-positively-need-the-solutions?">
 <h2>Absolutely positively need the solutions?<a class="headerlink" href="#Absolutely-positively-need-the-solutions?" title="Permalink to this headline">¶</a></h2>
 <p><em>Don’t use this link until you’ve really, really spent time struggling with your code!</em> Doing so only results in you cheating yourself.</p>
 <p><a class="reference internal" href="../solutions_warning.html"><span class="doc">Link</span></a></p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -306,7 +309,7 @@ are notorious for proxying for race in machine learning algorithms since residen
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

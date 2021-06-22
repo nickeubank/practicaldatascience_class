@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Data Science Languages: Why So Many? &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
    
@@ -36,21 +39,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -151,7 +168,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -217,6 +234,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -264,11 +282,11 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Data-Science-Languages:-Why-So-Many?">
+<section id="Data-Science-Languages:-Why-So-Many?">
 <h1>Data Science Languages: Why So Many?<a class="headerlink" href="#Data-Science-Languages:-Why-So-Many?" title="Permalink to this headline">¶</a></h1>
 <p>R, Python, Stata, Matlab, Julia: there are a <em>lot</em> of languages people use for data science. So why are there so many, and which should you use?</p>
 <p>The truth is that there are pros and cons to each of these languages, and what is best for you will likely depend not only on what you want to do with the language, but also on factors like your prior experience, risk aversion, and what the people in you office (the easiest people to ask for help, and potential collaborators) already use.</p>
-<div class="section" id="Stata">
+<section id="Stata">
 <h2>Stata<a class="headerlink" href="#Stata" title="Permalink to this headline">¶</a></h2>
 <p><em>Note: First thing to keep in mind about Stata: unlike R, Python and Julia, it is</em><strong>not</strong><em>free!</em></p>
 <p>Stata is one of the most popular tools among applied economists, and for good reason. It is an extremely powerful tool for data manipulation and econometric analysis. Its syntax is simpler than that of R, has lots of in-built statistical tools, lots of good add-ones, is very good for data-cleaning, and has a strong support community (the <a class="reference external" href="http://www.statalist.org/forums/help">statalist community</a> can solve almost any problem you have).</p>
@@ -278,8 +296,8 @@ div.rendered_html tbody tr:hover {
 <li><p>Stata’s programming language is easy to read and work with, but it’s also a little unusual. As a result, people with programming experience tend to hate it, and learning to code in Stata doesn’t do a great job of setting you up for working in another language in the future.</p></li>
 </ul>
 <p>But if you just want to do econometrics, and don’t have a lot of programming background, Stata is hard to beat!</p>
-</div>
-<div class="section" id="R">
+</section>
+<section id="R">
 <h2>R<a class="headerlink" href="#R" title="Permalink to this headline">¶</a></h2>
 <p>R was the first data science programming language, and in many circles (like the social sciences outside of economics) it is by far the dominant choice.</p>
 <p>R’s biggest asset is the huge library of tools (“packages”) that have been written by users and published online over the years to add new functionalities to R. There are packages for econometric analysis, geospatial analysis, network analysis, textual analysis, etc.</p>
@@ -289,8 +307,8 @@ weakness – Stata users often complain that the syntax is more complex than a s
 <p>This compromise has also lead to variability in the quality of packages available for R. Because anyone can easily write and publish a package for R, there is a huge world of good libraries to choose from, but it is also the case that some libraries are poorly written – making them a little hard to figure out – and some are just wrong. Make sure to check with someone more familiar with R for their impressions of a given library before using it in your analysis.</p>
 <p>R also has issues with performance. As dicussed in <a class="reference external" href="performance.ipynb">Speed</a>, this doesn’t really come up if you’re using a core library (which was actually written in a really fast language like C or C++). But if you want to write <em>custom</em> code that does things that a good, high performance, off-the-shelf library doesn’t already do, code you write yourself in R is likely to be painfully slow.</p>
 <p>Moreover, R also has a reputation for not being very memory efficient, which means that if you’re working with big datasets, R may also not be your best choice.</p>
-</div>
-<div class="section" id="Python">
+</section>
+<section id="Python">
 <h2>Python<a class="headerlink" href="#Python" title="Permalink to this headline">¶</a></h2>
 <p>Python was invented in the early 1990s to be a light, friendly, general purpose programming language. However, programmers found it so intuitive and easy to use, it quickly moved from being a tool for doing little jobs quickly into one of the dominant programming languages in the world. Dropbox, for example, is written in Python. And indeed, most Python programmers aren’t data scientists, they’re software developers or web developers. But in the last decade or so, Python has taken off in
 popularity for data science, and is currently the dominant language choice among natural scientists and computer scientists doing data science.</p>
@@ -299,8 +317,8 @@ popularity for data science, and is currently the dominant language choice among
 spreadsheet where one column might be strings (like people’s names) and another column is numeric (say, those people’s incomes). So <code class="docutils literal notranslate"><span class="pre">pandas</span></code> was developed on top of <code class="docutils literal notranslate"><span class="pre">numpy</span></code> to make that possible. As a result, you can now do most anything in Python (though statisticians still like R and Stata more, so the statistical libraries are a little better in those libraries), but it almost requires learning three languages: base Python, numpy, and then pandas. That’s not actually as bad as learning
 three languages (they <em>try</em> to have a consistent logic), but it’s definitely more complicated than something like R. With that said, learning Python will give you <em>very</em> generalizable programming skills since it’s a full general purpose language.</p>
 <p>One last note: If you’re working with really large datasets, want to connect to cloud services, need performance, or want to use something like Hadoop or Spark (don’t worry if you don’t know what those are), Python <em>crushes</em> R for flexibility and performance.</p>
-</div>
-<div class="section" id="Julia">
+</section>
+<section id="Julia">
 <h2>Julia<a class="headerlink" href="#Julia" title="Permalink to this headline">¶</a></h2>
 <p>Julia is the new kid on the block. Though it was in development and use by risk-loving developers for many years, version 1.0 was only released in 2018. This is both it’s strength and it’s weakness.</p>
 <p>The advantage of being a really new language is that Julia has taken advantage of all sorts of modern technologies behind the scenes to develop a language that is basically as easy to use as R or Python (the syntax is a lot like basic Python, but it has matrices and vectors built in so no need to deal with extra layers like numpy and pandas in Python), but is <em>extremely</em> fast. Like… <a class="reference external" href="https://julialang.org/benchmarks/">tens or hundreds of times faster</a> than custom functions you might write in
@@ -312,7 +330,7 @@ works, or want to modify the tool you’re writing, when you go look for the cod
 <p>Julia is different. While you can use C libraries in Julia, Julia is so fast that the entire language is written… in Julia. And so are most packages. It’s Julia all the way down. And that means that if you want to see how a tool you’re using works, or tweak it for your specific application, you’ll find you understand the code your tools were written in. If you’re happy just using pre-packaged libraries, this may not matter to you; but if you’re a researcher or someone who sometimes needs to do
 things that may not already be possible in an existing library, it’s <em>incredibly</em> nice.</p>
 <p>(If you want to know more about Julia, you can find a talk I have in mid-2018 on the value of the language for researchers <a class="reference external" href="https://www.youtube.com/watch?v=C4dMYHzW-SY">here</a>!)</p>
-<div class="section" id="Considerations-for-Picking-a-Language">
+<section id="Considerations-for-Picking-a-Language">
 <h3>Considerations for Picking a Language<a class="headerlink" href="#Considerations-for-Picking-a-Language" title="Permalink to this headline">¶</a></h3>
 <p>When choosing a software environment / language to use for you statistical work, there are a number of important considerations to take into account. Here are a few:</p>
 <p><strong>What do the people around you use?</strong></p>
@@ -324,28 +342,28 @@ things that may not already be possible in an existing library, it’s <em>incre
 trying to limit this behavior.</p>
 <p><strong>How much data do you have?</strong></p>
 <p>Most of the environments / languages discussed on this page are for manipulating data that fits comfortably into RAM. If you have a data set that’s quite large (more than 1/2 the amount of RAM you have on your computer), please read the page on [[Big Data]]</p>
-</div>
-<div class="section" id="Example-Code-from-Each-Language">
+</section>
+<section id="Example-Code-from-Each-Language">
 <h3>Example Code from Each Language<a class="headerlink" href="#Example-Code-from-Each-Language" title="Permalink to this headline">¶</a></h3>
 <p>You can get a feel for different environments pretty quickly by looking at example code, although as with any language keep in mind that some things that may seem bizarre or foreign at first can become intuitive with some practice. Here, are code snippets for each language to: open a dataset from a file; create a new variable using existing variables; recode a variable; run a basic OLS regression, and run a slightly more complicated OLS regression. Since presumably you are reading this because
 you don’t yet know these languages, don’t worry too much if not everything makes sense – these snippets are just provided to give you a glimpse of what the languages look like and how readable they are. Comments are included to explain a little of each step.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="o">*</span> <span class="n">Open</span> <span class="n">a</span> <span class="n">dataset</span> <span class="kn">from</span> <span class="nn">a</span> <span class="n">file</span><span class="p">:</span>
- <span class="n">use</span> <span class="n">myDataFile</span><span class="o">.</span><span class="n">dta</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> * Open a dataset from a file:
+ use myDataFile.dta
 
- <span class="o">*</span> <span class="n">Create</span> <span class="n">new</span> <span class="n">variable</span> <span class="n">called</span> <span class="n">age_squared</span> <span class="n">equal</span> <span class="n">to</span> <span class="n">each</span> <span class="n">person</span><span class="s1">&#39;s age squared:</span>
- <span class="n">generate</span> <span class="n">age_squared</span> <span class="o">=</span> <span class="n">age</span><span class="o">*</span><span class="n">age</span>
+ * Create new variable called age_squared equal to each person&#39;s age squared:
+ generate age_squared = age*age
 
- <span class="o">*</span> <span class="n">Set</span> <span class="n">variable</span> <span class="n">youngMan</span> <span class="n">values</span> <span class="n">to</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">male</span> <span class="ow">and</span> <span class="n">under</span> <span class="mi">25</span><span class="p">:</span>
- <span class="n">replace</span> <span class="n">youngMan</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">gender</span> <span class="o">==</span> <span class="s2">&quot;male&quot;</span> <span class="o">&amp;</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="mi">25</span>
+ * Set variable youngMan values to 1 if male and under 25:
+ replace youngMan = 1 if gender == &quot;male&quot; &amp; age &lt; 25
 
- <span class="o">*</span> <span class="n">Rename</span> <span class="n">a</span> <span class="n">variable</span> <span class="kn">from</span> <span class="nn">myVariable</span> <span class="n">to</span> <span class="n">myRenamedVariable</span><span class="p">:</span>
- <span class="n">rename</span> <span class="n">myVariable</span> <span class="n">myRenamedVariable</span>
+ * Rename a variable from myVariable to myRenamedVariable:
+ rename myVariable myRenamedVariable
 
- <span class="o">*</span> <span class="n">Run</span> <span class="n">an</span> <span class="n">OLS</span> <span class="n">regression</span> <span class="n">of</span> <span class="n">income</span> <span class="n">on</span> <span class="n">age</span> <span class="ow">and</span> <span class="n">height</span><span class="p">:</span>
- <span class="n">regress</span> <span class="n">income</span> <span class="n">age</span> <span class="n">height</span>
+ * Run an OLS regression of income on age and height:
+ regress income age height
 
-<span class="o">*</span> <span class="n">Run</span> <span class="n">an</span> <span class="n">OLS</span> <span class="n">regression</span> <span class="n">of</span> <span class="n">income</span> <span class="ow">and</span> <span class="n">age</span> <span class="ow">and</span> <span class="n">a</span> <span class="n">categorical</span> <span class="n">variable</span> <span class="k">for</span> <span class="n">level</span> <span class="n">of</span> <span class="n">education</span> <span class="k">for</span> <span class="n">men</span><span class="p">:</span>
- <span class="n">xi</span><span class="p">:</span> <span class="n">regress</span> <span class="n">income</span> <span class="n">age</span> <span class="n">i</span><span class="o">.</span><span class="n">education</span> <span class="k">if</span> <span class="n">gender</span> <span class="o">==</span> <span class="s2">&quot;male&quot;</span>
+* Run an OLS regression of income and age and a categorical variable for level of education for men:
+ xi: regress income age i.education if gender == &quot;male&quot;
 </pre></div>
 </div>
 <p>A few examples of R commands:</p>
@@ -403,9 +421,9 @@ you don’t yet know these languages, don’t worry too much if not everything m
 </pre></div>
 </div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
           </div>
@@ -513,7 +531,7 @@ you don’t yet know these languages, don’t worry too much if not everything m
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Debugging &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
    
@@ -31,24 +34,24 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="Debugging">
+  <section id="Debugging">
 <h1>Debugging<a class="headerlink" href="#Debugging" title="Permalink to this headline">¶</a></h1>
 <p>Few activities are as hated by most programmers as debugging. You always end up having to do it at the <em>worst</em> possible moment, and its easy to go insane doing it.</p>
 <p>But there are important strategies that can make debugging much less painful, and once you learn a few of them, debugging <em>can</em> actually be kind of fun (at least when you’re not facing a deadline). Think of it as a detective game where you are trying to follow the clues to track down an insidious criminal!</p>
-<div class="section" id="Debugging-is-an-active-pursuit">
+<section id="Debugging-is-an-active-pursuit">
 <h2>Debugging is an <em>active</em> pursuit<a class="headerlink" href="#Debugging-is-an-active-pursuit" title="Permalink to this headline">¶</a></h2>
 <p>The most valuable advice I ever got about programming was: “Programming is an <em>active</em> pursuit. If you could just stare at your code and see your problem, you probably won’t have made an error in the first place.” (Thank you <a class="reference external" href="https://research.pomona.edu/tahir-andrabi/">Tahir</a>!) Instead, the key to effective debugging is to <em>actively play with your code</em> to (a) locate the source of your bug, and then (b) figure out what’s going wrong.</p>
-</div>
-<div class="section" id="Types-of-Bugs">
+</section>
+<section id="Types-of-Bugs">
 <h2>Types of Bugs<a class="headerlink" href="#Types-of-Bugs" title="Permalink to this headline">¶</a></h2>
 <p>There are, broadly speaking, two types of errors in a problem: <strong>syntax errors and logic errors.</strong></p>
 <p>Syntax errors are the errors that arise when write code that won’t run. In many ways, this actually makes syntax errors easier, because by definition, they cause Python to raise and raise an Exception (the fancy name for an error), often making them much easier to diagnose.</p>
-</div>
-<div class="section" id="Finding-your-problem">
+</section>
+<section id="Finding-your-problem">
 <h2>Finding your problem<a class="headerlink" href="#Finding-your-problem" title="Permalink to this headline">¶</a></h2>
 <p>The first thing you should do when you hit a problem is to figure out the <em>exact location</em> of the problem.</p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -156,7 +159,7 @@
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

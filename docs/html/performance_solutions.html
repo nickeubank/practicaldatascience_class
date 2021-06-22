@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Solving Performance Issues &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Parallel Computing" href="parallelism.html" />
@@ -38,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -153,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -219,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -266,17 +284,17 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Solving-Performance-Issues">
+<section id="Solving-Performance-Issues">
 <h1>Solving Performance Issues<a class="headerlink" href="#Solving-Performance-Issues" title="Permalink to this headline">¶</a></h1>
 <p>So: you’ve done all the things suggested in the last page on <a class="reference internal" href="performance_understanding.html"><span class="doc">Performance basics</span></a> that you can do within the constraints of your project, and you still have a performance problem. Now what?</p>
-<div class="section" id="Do-you-need-to-optimize?">
+<section id="Do-you-need-to-optimize?">
 <h2>Do you <em>need</em> to optimize?<a class="headerlink" href="#Do-you-need-to-optimize?" title="Permalink to this headline">¶</a></h2>
 <p>So, before you start investing in optimizing your code, ask yourself whether you really <em>need</em> to optimize your code.</p>
 <p>In programming, there is often a trade-off between developer’s time (i.e. the time you spend actively playing with your code) and hardware time (the amount of computer time you code occupies when running). If you have a block of code you need to run every day, then investing <em>your</em> time in making it fast may really help make you more productive, and so may be worth the investment.</p>
 <p>If you have a block of code you only plan to run once or a couple times (say, the initial ingest of a big dataset), then it probably isn’t worth investing days making it 10x faster if the running time is less than insane (i.e. if you can just let it run overnight and it’ll be done by morning).</p>
 <p>So when deciding whether to optimize something, ask first “Will investing my time in optimizing this code really pay off in future productivity?”</p>
-</div>
-<div class="section" id="Profiling-Code">
+</section>
+<section id="Profiling-Code">
 <h2>Profiling Code<a class="headerlink" href="#Profiling-Code" title="Permalink to this headline">¶</a></h2>
 <p><strong>If you take nothing else away from this page, please read and remember this section!</strong></p>
 <p>There’s no reason to tune a line of code that is only responsible for 1/100 of your running time, so before you invest in speeding up your code, figure out <em>exactly</em> what in your code is causing it to be slow – a process known as “profiling”.</p>
@@ -285,7 +303,7 @@ div.rendered_html tbody tr:hover {
 <li><p>Profiling in R: the two packages I’ve seen used most are <a class="reference external" href="http://www.stat.berkeley.edu/~nolan/stat133/Fall05/lectures/profilingEx.html">Rprof</a> and <a class="reference external" href="http://adv-r.had.co.nz/Profiling.html#measure-perf">lineprof</a>.</p></li>
 <li><p>Profiling in Python: if you use Jupyter Notebooks or Jupyter Labs, you can use the <a class="reference external" href="http://pynash.org/2013/03/06/timing-and-profiling.html">prun tool</a>. If for some reason you’re not using Jupyter, here’s a <a class="reference external" href="https://zapier.com/engineering/profiling-python-boss/">guide to a few other tools</a>.</p></li>
 </ul>
-<div class="section" id="Profiling-Example">
+<section id="Profiling-Example">
 <h3>Profiling Example<a class="headerlink" href="#Profiling-Example" title="Permalink to this headline">¶</a></h3>
 <p>To illustrate, let’s write a function (called <code class="docutils literal notranslate"><span class="pre">my_analysis</span></code>) which we can pretend is a big analysis that’s causing me problems. Within this analysis we’ll place several functions, most of which are fast, but one of which is slow. To make it <em>really</em> easy to see what is fast and what is slow, these functions will just call the <code class="docutils literal notranslate"><span class="pre">time.sleep()</span></code> function, which literally just tells the computer to pause for a given number of seconds (i.e. <code class="docutils literal notranslate"><span class="pre">time.sleep(10)</span></code> makes execution pause for 10 seconds).</p>
 <div class="nbinput docutils container">
@@ -383,9 +401,9 @@ the result of my analysis is: 3
 <p>From <code class="docutils literal notranslate"><span class="pre">cumtime</span></code>, you can also see <em>in which functions</em> <code class="docutils literal notranslate"><span class="pre">time.sleep()</span></code> took the most time. As you can see, <code class="docutils literal notranslate"><span class="pre">cumtime</span></code> is not equal to the total time the function took to run – rather, it’s all the time spent within each function. <code class="docutils literal notranslate"><span class="pre">time.sleep()</span></code> has a <code class="docutils literal notranslate"><span class="pre">cumtime</span></code> of 6.009 because a total of 6 seconds was spend while that function ran, but it is <em>also</em> the case that <code class="docutils literal notranslate"><span class="pre">a_slow_function</span></code> (listed as <code class="docutils literal notranslate"><span class="pre">&lt;ipython-input-2-2718bcdb1d57&gt;:3(a_slow_function)</span></code>) has a <code class="docutils literal notranslate"><span class="pre">cumtime</span></code> of 5 seconds (because
 that function was in the process of executing when <code class="docutils literal notranslate"><span class="pre">time.sleep()</span></code> paused for 5 seconds).</p>
 <p>From this, we can deduce that <code class="docutils literal notranslate"><span class="pre">time.sleep()</span></code> was slowing down our code, and that the occurance of <code class="docutils literal notranslate"><span class="pre">time.sleep()</span></code> that slowed down our code the most was in <code class="docutils literal notranslate"><span class="pre">a_slow_function</span></code>.</p>
-</div>
-</div>
-<div class="section" id="Speeding-Code-with-Cython">
+</section>
+</section>
+<section id="Speeding-Code-with-Cython">
 <h2>Speeding Code with Cython<a class="headerlink" href="#Speeding-Code-with-Cython" title="Permalink to this headline">¶</a></h2>
 <p>There are two libraries designed to allow you to massively speed up Python code. The first is called <code class="docutils literal notranslate"><span class="pre">Cython</span></code>, and it is a way of writing code that is basically Python with type declarations. For example, if you wanted to add up all the numbers to a million in Python, you could write something like the following (obviously not the most concise way to do it, but you get the idea):</p>
 <div class="nbinput nblast docutils container">
@@ -528,7 +546,7 @@ that function was in the process of executing when <code class="docutils literal
 </pre></div></div>
 </div>
 <p>Yup… we reached the limit of the 32-bit integer, then keep adding things, making it go negative!</p>
-<div class="section" id="Cython-limitations">
+<section id="Cython-limitations">
 <h3>Cython limitations<a class="headerlink" href="#Cython-limitations" title="Permalink to this headline">¶</a></h3>
 <p>There are a few limitations to be aware of, however:</p>
 <ul class="simple">
@@ -542,17 +560,17 @@ that function was in the process of executing when <code class="docutils literal
 <li><p>The function you write will <em>not</em> be dynamically typed, so if you said the function would accept integers, you can only give it integers.</p></li>
 <li><p>Distributing code you write with Cython can be tricky…</p></li>
 </ul>
-</div>
-<div class="section" id="Cython-Advantages">
+</section>
+<section id="Cython-Advantages">
 <h3>Cython Advantages<a class="headerlink" href="#Cython-Advantages" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Can make C libraries directly accessable from Python (if you know how to work with C libraries)</p></li>
 <li><p>It is a very mature tool, so well supported and documented. Indeed, a lot of both pandas and libraries like scikit-learn are built on Cython to ensure performance!</p></li>
 <li><p>Definitely easier to write one function in Cython than move all your code to C!</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="Speeding-Code-with-Numba">
+</section>
+</section>
+<section id="Speeding-Code-with-Numba">
 <h2>Speeding Code with Numba<a class="headerlink" href="#Speeding-Code-with-Numba" title="Permalink to this headline">¶</a></h2>
 <p>Another tool you can use is <code class="docutils literal notranslate"><span class="pre">numba</span></code>. Numba is a program that, when it works, is <em>super easy</em> and kinda magic, but can also be rather finicky.</p>
 <p>The idea of <code class="docutils literal notranslate"><span class="pre">numba</span></code> is that it treats each function like it’s own little program, and tries to compile it to make it faster.</p>
@@ -632,7 +650,7 @@ that function was in the process of executing when <code class="docutils literal
 <p>Not bad, huh? Add one line of code, and this speeds up by 600x!</p>
 <p>But as I said, it doesn’t work with everything – not even all regular Python datatypes (e.g. if you define your own class, you’re apparently out of luck with Numba). Here’s an <a class="reference external" href="http://numba.pydata.org/numba-doc/latest/user/5minguide.html">intro to numba</a>, and here’s a <a class="reference external" href="https://numba.pydata.org/numba-doc/dev/reference/numpysupported.html">full list of things it can handle in nopython mode, and things it can’t.</a>.</p>
 <p>Also, as with Cython, note that <strong>in nopython Numba functions, loops are just as fast as vectorized code!</strong></p>
-<div class="section" id="Type-Stability">
+<section id="Type-Stability">
 <h3>Type Stability<a class="headerlink" href="#Type-Stability" title="Permalink to this headline">¶</a></h3>
 <p>If you want <code class="docutils literal notranslate"><span class="pre">numba</span></code> to work well, there is one overriding rule: your code must be “type-stable”. Type stability means that <em>conditional on the types of the input arguments</em>, the types of all variables in your code must be fully predictable.</p>
 <p>For example, consider the following code:</p>
@@ -757,29 +775,29 @@ https://github.com/numba/numba/issues/new
 
 </pre></div></div>
 </div>
-</div>
-</div>
-<div class="section" id="Use-Julia">
+</section>
+</section>
+<section id="Use-Julia">
 <h2>Use Julia<a class="headerlink" href="#Use-Julia" title="Permalink to this headline">¶</a></h2>
 <p>I would be remiss at this point to not mention one other option for getting more speed: use the programming language <a class="reference external" href="https://julialang.org/">Julia</a>. Julia is a very new language that has syntax that is <em>very</em> similar to Python, but which <a class="reference external" href="https://julialang.org/benchmarks/">runs tens or hundreds of times faster out of the box</a>. Basically, it’s kinda like an entire language built around the technology also used by <code class="docutils literal notranslate"><span class="pre">numba</span></code>, but where <code class="docutils literal notranslate"><span class="pre">numba</span></code> is kind of finiky because it’s been tacked on
 to a language that was never built for speed, Julia was designed from the ground up for speed.</p>
 <p>If you want to know why I love Julia, <a class="reference external" href="https://www.youtube.com/watch?v=C4dMYHzW-SY">you can find a talk I gave on it here</a>. It’s a little old (I refer to Julia 1.0 not being out yet, but Julia’s up to 1.2 now), but the core arguments all still apply.</p>
 <p>To be clear, I wouldn’t recommend jumping languages if you just have one function you need to speed up, but if you’re doing work that causes you to have performance issues regularly, consider Julia.</p>
 <p>(Note: Julia also reaches peak speed when code is type stable, but is also super fast even if your code isn’t type stable.)</p>
-</div>
-<div class="section" id="PyPy">
+</section>
+<section id="PyPy">
 <h2>PyPy<a class="headerlink" href="#PyPy" title="Permalink to this headline">¶</a></h2>
 <p>A quick note about something you may come across in the future: pypy!</p>
 <p>So while you might not realize it, there are actually several different back-end engines for running Python. Python itself is just a set of rules that dictate that code written in a certain way should behave in a certain way. BUt you can write different back-end engines that <em>implement</em> these rules in different ways.</p>
 <p><em>By far</em> the dominant backend (and, honestly, the only one you should use because it’s the most mature and most commonly used) is CPython, an implementation of Python written in C. But there are a number of other back-ends, like JPython (written in Java), IronPython (written in the .NET framework), etc.</p>
 <p>One of these is PyPy, an implementation of Python that is designed for speed. <em>When it works</em> PyPy is about 5x faster than CPython. That means that <em>the same code</em> run in CPython (what you’re using) will run about 5x slower (on average) than when run in PyPy.</p>
 <p>BUT: PyPy has coverage problems. It works well with vanilla Python code, but it does not support core data science libraries like <code class="docutils literal notranslate"><span class="pre">numpy</span></code>. So… yes, it does provide speedups for free, but only if you aren’t using things like <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, which themselves offer much more than 5x speed ups. So it’s unlikely to ever be a solution for you as a data scientist.</p>
-</div>
-<div class="section" id="Parallelization">
+</section>
+<section id="Parallelization">
 <h2>Parallelization<a class="headerlink" href="#Parallelization" title="Permalink to this headline">¶</a></h2>
 <p>If you’ve done all this and your code is <em>still</em> too slow, it’s time to look into <a class="reference internal" href="parallelism.html"><span class="doc">parallelization, which we’ll be doing soon!</span></a></p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -898,7 +916,7 @@ to a language that was never built for speed, Julia was designed from the ground
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

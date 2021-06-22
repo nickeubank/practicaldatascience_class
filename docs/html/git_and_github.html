@@ -4,17 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Git and Github &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Reviewing Code on Github" href="pr_review.html" />
@@ -35,9 +36,9 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="Git-and-Github">
+  <section id="Git-and-Github">
 <h1>Git and Github<a class="headerlink" href="#Git-and-Github" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="What-Is-Git(hub)-&amp;-Why-Should-I-Learn-It?">
+<section id="What-Is-Git(hub)-&amp;-Why-Should-I-Learn-It?">
 <h2>What Is Git(hub) &amp; Why Should I Learn It?<a class="headerlink" href="#What-Is-Git(hub)-&-Why-Should-I-Learn-It?" title="Permalink to this headline">¶</a></h2>
 <p>Git and github are a set of tools designed to facilitate collaboration on code. They make it possible for multiple people (in some cases, dozens or even hundreds of people) to work on code at the same time without getting in one another’s way. (Note: as we’ll discuss below, git and github are technically two different things, but you’ll almost certainly use them together, so I’m just going to call them “git” for now).</p>
 <p>It is no exaggeration to say that git (and other forms of <em>version control</em> software) underlie the entire world of open source software, and are central to the operation of nearly every tech company on the planet. Git is just a central part of how software is developed today.</p>
@@ -60,7 +61,7 @@ gerrymandering</a>, or tools to make it easy to <a class="reference external" hr
 </ol>
 <p>OK, now the bad news: there’s a reason I put so much energy into discussing the value of git before getting into how it works: learning git kinda sucks. I mean, it’s not painful like <a class="reference external" href="https://en.wikipedia.org/wiki/Leonid_Rogozov">performing an appendectomy on yourself without anesthesia</a>, and it’s not hard like quantum mechanics or geometric topology; it’s definitely something anyone can learn. But there’s no pretending that git is user friendly, and you’re sure to have a couple of moments
 when you’ll find yourself thinking (rightly) “why on Earth did they do it like that?”. So before you dive in, it’s good to have the expectation that there’s a initial uphill slog to learning git before it becomes really useful. But I promise: it pays off <em>big time</em>.</p>
-<div class="section" id="Git-versus-Github">
+<section id="Git-versus-Github">
 <h3>Git versus Github<a class="headerlink" href="#Git-versus-Github" title="Permalink to this headline">¶</a></h3>
 <p>As I eluded to earlier, though they’re almost always used together, git and github are actually two different things:</p>
 <ul class="simple">
@@ -68,17 +69,17 @@ when you’ll find yourself thinking (rightly) “why on Earth did they do it li
 <li><p><code class="docutils literal notranslate"><span class="pre">github</span></code> is a service that hosts a copy of your project in the cloud so you and your co-authors can easily share project changes. In addition, <code class="docutils literal notranslate"><span class="pre">github</span></code> also has a great interface for reviewing changes to a project in a user friendly manner, and it has an “issue tracker” system for hosting conversations about things that need to be done in a project.</p></li>
 </ul>
 <p>And when it comes to what is user-friendly and what is not, <code class="docutils literal notranslate"><span class="pre">git</span></code> is the kinda awful thing to learn, and <code class="docutils literal notranslate"><span class="pre">github</span></code> is magical.</p>
-</div>
-</div>
-<div class="section" id="Learning-Git">
+</section>
+</section>
+<section id="Learning-Git">
 <h2>Learning Git<a class="headerlink" href="#Learning-Git" title="Permalink to this headline">¶</a></h2>
 <p>Because it’s such a central tool in software development, there are <em>lots</em> of tutorials online for learning git, and it would be silly for me to try and write my own. However, I think most do a so-so job of offering users a general sense of what working with git is like. With that in mind, below is a simple overview of working with git, after which is a link to what I think is probably the best git and github tutorials I’ve found. Once you’ve completed the tutorials, please come back here to
 learn a little bit more about data-science-specific git issues (like how to put datasets into a git repository) in the last section below.</p>
-<div class="section" id="An-Overview-of-Working-with-Git">
+<section id="An-Overview-of-Working-with-Git">
 <h3>An Overview of Working with Git<a class="headerlink" href="#An-Overview-of-Working-with-Git" title="Permalink to this headline">¶</a></h3>
 <p><strong>Assignment 1: Please</strong><a class="reference external" href="https://guides.github.com/introduction/git-handbook/">read this handbook page</a><strong>to give you a sense of the general reason we’re interested in git and github, as well as give you an overview of normal workflows.</strong></p>
-</div>
-<div class="section" id="Practicing-Working-with-Git-and-Github">
+</section>
+<section id="Practicing-Working-with-Git-and-Github">
 <h3>Practicing Working with Git and Github<a class="headerlink" href="#Practicing-Working-with-Git-and-Github" title="Permalink to this headline">¶</a></h3>
 <p><strong>Assignment 2: After that, please complete the</strong><a class="reference external" href="https://github.com/jlord/git-it-electron">git-it</a><strong>tutorial.</strong></p>
 <p>Unlike many other tutorials git, it asks you to do things on your own computer, not an unrealistically easy to use terminal in the web-browswer, which gives a more authentic experience. Just follow <a class="reference external" href="https://github.com/jlord/git-it-electron">the directions here</a> to get started.</p>
@@ -90,13 +91,13 @@ learn a little bit more about data-science-specific git issues (like how to put 
 <li><p>following the four linkes under the “Explore more Git commands” of the <a class="reference external" href="https://guides.github.com/introduction/git-handbook/#basic-git">Github Handbook tutorial</a> you read above, or</p></li>
 <li><p>reading the full <a class="reference external" href="https://git-scm.com/book/en/v1/Git-Basics">Git Basics</a> tutorial chapter.</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="git-lfs">
+</section>
+</section>
+<section id="git-lfs">
 <h2>git-lfs<a class="headerlink" href="#git-lfs" title="Permalink to this headline">¶</a></h2>
 <p>On thing that’s unique to using git for data science is that we often want to put datasets into our git repositories. Unfortunately, <code class="docutils literal notranslate"><span class="pre">git</span></code> by itself can’t really handle datasets efficiently. To solve this problem, we use <code class="docutils literal notranslate"><span class="pre">git-lfs</span></code> (git Large File System). You can learn all about it <a class="reference external" href="https://www.youtube.com/watch?v=uLR1RNqJ1Mw">here in this 2 minute video</a>!</p>
-</div>
-<div class="section" id="An-Aside-on-Graphical-User-Interfaces">
+</section>
+<section id="An-Aside-on-Graphical-User-Interfaces">
 <h2>An Aside on Graphical User Interfaces<a class="headerlink" href="#An-Aside-on-Graphical-User-Interfaces" title="Permalink to this headline">¶</a></h2>
 <p>Git is most commonly used from the command line: the text-based interface for your operating system. There are graphical user interfaces for git, but most don’t quite implement all of gits features, so most tutorials teach git as a command line tool.</p>
 <p>If you have any comfort with the command line, learning git from the command line is probably the best way to start. You can later move to a graphical user interface, but knowing how to use the command line version means you can always do anything git can do, and online help will be easier to find.</p>
@@ -106,8 +107,8 @@ learn a little bit more about data-science-specific git issues (like how to put 
 <li><p>Try to find a good graphical user interface-based tutorial (and if you find one, let me know? I haven’t found one.. :( ).</p></li>
 </ul>
 <p>If you do eventually want a GUI, I recommend either <a class="reference external" href="https://desktop.github.com/">Github Desktop</a> (very clean and easy, but can’t do everything git can do) or <a class="reference external" href="https://www.sourcetreeapp.com/">Sourcetree</a> (busy, but more powerful and flexible.</p>
-</div>
-<div class="section" id="Getting-Help">
+</section>
+<section id="Getting-Help">
 <h2>Getting Help<a class="headerlink" href="#Getting-Help" title="Permalink to this headline">¶</a></h2>
 <p>A final word on git: there is <em>no way</em> you will internalize the syntax and approaches required to do all the things you might some day need to do. There are just too many things that can happen. But because git is <em>so</em> widely used, there are <em>lots</em> of tutorials out there, and you shouldn’t hesistate to use them. Here are a few great resources for specific topics:</p>
 <ul class="simple">
@@ -116,15 +117,15 @@ learn a little bit more about data-science-specific git issues (like how to put 
 <li><p><a class="reference external" href="https://git-scm.com/book/en/v1/Git-Branching-Basic-Branching-and-Merging">Dealing with Branches</a></p></li>
 <li><p>Merge conflicts: <a class="reference external" href="https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts">here</a> and <a class="reference external" href="https://git-scm.com/book/en/v1/Git-Branching-Basic-Branching-and-Merging#Basic-Merge-Conflicts">here</a></p></li>
 </ul>
-</div>
-<div class="section" id="Exercises">
+</section>
+<section id="Exercises">
 <h2>Exercises<a class="headerlink" href="#Exercises" title="Permalink to this headline">¶</a></h2>
 <p>And now for some git/github exercises!</p>
 <p>Duke students: as usual, these are what we’ll be doing in class, not something to be done as homework.</p>
 <p>Non-Duke students: unfortunately these are meant to be done in small groups, so if you’re using this on your own it may be a little more difficult than the other exercises on this site… Though I suppose you can “play all the parts” if you have more than 1 github account and computer?!</p>
 <p><a class="reference internal" href="exercises/Exercise_git.html"><span class="doc">Git Exercises</span></a></p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -242,7 +243,7 @@ learn a little bit more about data-science-specific git issues (like how to put 
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

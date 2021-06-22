@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Big Data Strategies &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Speed in Python" href="performance_understanding.html" />
@@ -38,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -153,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -219,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -266,9 +284,9 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Big-Data-Strategies">
+<section id="Big-Data-Strategies">
 <h1>Big Data Strategies<a class="headerlink" href="#Big-Data-Strategies" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="Step-1:-Do-I-Have-“Big-Data”?">
+<section id="Step-1:-Do-I-Have-“Big-Data”?">
 <h2>Step 1: Do I Have “Big Data”?<a class="headerlink" href="#Step-1:-Do-I-Have-“Big-Data”?" title="Permalink to this headline">¶</a></h2>
 <p>Oddly, this is not actually a straight-forward question for two reasons:</p>
 <ol class="arabic simple">
@@ -276,7 +294,7 @@ div.rendered_html tbody tr:hover {
 least</em> two times as much memory as your file takes up when first loaded.</p></li>
 <li><p><strong>The size of data changes as you change its format.</strong> For example, if you’re reading data from an inefficient file format (like a .csv text file), it may be the case that a file that is 10gb on disk may actually be only a few gb once you load it into a program like Python that knows how to store data more efficiently.</p></li>
 </ol>
-<div class="section" id="So-how-do-I-check-to-see-if-my-data-is-fitting-in-memory?">
+<section id="So-how-do-I-check-to-see-if-my-data-is-fitting-in-memory?">
 <h3>So how do I check to see if my data is fitting in memory?<a class="headerlink" href="#So-how-do-I-check-to-see-if-my-data-is-fitting-in-memory?" title="Permalink to this headline">¶</a></h3>
 <p>If your program starts using more space than you have main memory, your operating system will usually just start using your harddrive for extra space without telling you (this is called “virtual memory”, and is nice in that it prevents your computer from crashing, though it will slow stuff down a lot). As a result, you won’t always get an error message if you try and load a file to is much bigger than main memory.</p>
 <p>To avoid this, use one of the tools provided by your operating system to monitor whether it’s using the harddrive:</p>
@@ -284,9 +302,9 @@ least</em> two times as much memory as your file takes up when first loaded.</p>
 <li><p><strong>OSX:</strong> OSX comes with a program called <a class="reference external" href="https://support.apple.com/en-us/HT201464#memory">Activity Monitor</a> in the Applications &gt; Utilities folder. The memory tab of Activity Monitor has a graph at the bottom called “Memory Pressure”. If this is green, you’re good. If it’s yellow or red, you’re actively going back and forth to your harddrive. (Note your computer may be using “virtual memory” without affecting performance if it’s just storing away things you aren’t actively using).</p></li>
 <li><p><strong>Windows:</strong> Windows has a program called <a class="reference external" href="http://en.wikipedia.org/wiki/Resource_Monitor">“Resource Monitor”</a> that shows data on memory use. If you get near 100% Used Physical Memory, your computer is probably using the harddrive.</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="Step-2:-Pick-a-Strategy">
+</section>
+</section>
+<section id="Step-2:-Pick-a-Strategy">
 <h2>Step 2: Pick a Strategy<a class="headerlink" href="#Step-2:-Pick-a-Strategy" title="Permalink to this headline">¶</a></h2>
 <p>If you have big data, you basically have four options:</p>
 <ol class="arabic simple">
@@ -295,7 +313,7 @@ least</em> two times as much memory as your file takes up when first loaded.</p>
 <li><p>Minimize the penalties of working off your harddrive (not usually practical for data science)</p></li>
 <li><p>Break your job into pieces and distribute over multiple machines.</p></li>
 </ol>
-<div class="section" id="Strategy-1:-Trim-till-it-fits">
+<section id="Strategy-1:-Trim-till-it-fits">
 <h3>Strategy 1: Trim till it fits<a class="headerlink" href="#Strategy-1:-Trim-till-it-fits" title="Permalink to this headline">¶</a></h3>
 <p>At least in my experience, <em>most</em> of the time people have a dataset that’s too big to load into main memory, they’re in a situation where the <em>raw</em> data they want to work with is too big for main memory, but the dataset they are trying to create for analysis will not be. This can happen when the raw data you’re working with:</p>
 <ul class="simple">
@@ -359,15 +377,15 @@ least</em> two times as much memory as your file takes up when first loaded.</p>
 </div>
 </div>
 <p>Python won’t delete the list because while you deleted <code class="docutils literal notranslate"><span class="pre">x</span></code>, the list is still accessible via <code class="docutils literal notranslate"><span class="pre">y</span></code>!</p>
-</div>
-<div class="section" id="Strategy-2:-Pay-for-More-Memory">
+</section>
+<section id="Strategy-2:-Pay-for-More-Memory">
 <h3>Strategy 2: Pay for More Memory<a class="headerlink" href="#Strategy-2:-Pay-for-More-Memory" title="Permalink to this headline">¶</a></h3>
 <p>Don’t overlook this option: buying RAM doesn’t cost a fortune (especially for desktops), and renting a single big virtual machine on the cloud can be similarly cost effective.</p>
 <p>For example, you can get 100gb of RAM new for about $300 (and this will only go down over time), which means you can easily buy a desktop PC with all the ram and processing power you want for well under a thousand dollars. That’s not a small amount of money, but <em>your</em> time as a data scientist is also valuable (both to you and to whoever is paying you), and if you can obviate having to deal with all these kinds of problems buy just buying a bigger computer (especially if it helps you avoid the
 strategies described below), it can be an incredibly good investment.</p>
 <p>And you can rent a Virtual Machine with hundreds of GB of RAM for a couple bucks an hour, something <a class="reference internal" href="cloud_what_is_it.html"><span class="doc">we’ll discuss in a later lesson</span></a>.</p>
-</div>
-<div class="section" id="Strategy-3:-Minimize-disk-access-penalties.">
+</section>
+<section id="Strategy-3:-Minimize-disk-access-penalties.">
 <h3>Strategy 3: Minimize disk-access penalties.<a class="headerlink" href="#Strategy-3:-Minimize-disk-access-penalties." title="Permalink to this headline">¶</a></h3>
 <p>There are a number of tools designed to minimize the penalties associated with moving data off disk. <code class="docutils literal notranslate"><span class="pre">HDF5</span></code>, for example, is a file format that does things like:</p>
 <ul class="simple">
@@ -377,8 +395,8 @@ strategies described below), it can be an incredibly good investment.</p>
 </ul>
 <p>SQL, similarly, is designed to maximize the efficiency by which data can be pulled from disk, but in general if you aren’t in a situation where (a) lots of people are gonna be accessing the same data <em>at the same time</em>, or (b) you don’t plan to do tons of different analyses using the same dataset over a long period, the up front costs of setting up a SQL database overwhelm the benefits it has at the time you want to run a query.</p>
 <p>But it’s also worth emphasizing that the strategies described above are generally only efficient if your goal is to pull a <em>subset</em> of data from disk. This makes them useful for things like medical databases, where doctors want to be able to quickly pull the records of individual patients. But in data science, we <em>usually</em> want to load a lot of data at once, and so the ability to quickly pull subsets of data isn’t always super useful.</p>
-</div>
-<div class="section" id="Strategy-4:-Distributed-Computing">
+</section>
+<section id="Strategy-4:-Distributed-Computing">
 <h3>Strategy 4: Distributed Computing<a class="headerlink" href="#Strategy-4:-Distributed-Computing" title="Permalink to this headline">¶</a></h3>
 <p><strong>If absolutely everything else has failed</strong> it’s time to turn to distributed computing!</p>
 <p>Distributed computing (using lots of individual computers working in concern in a “cluster”) is the practice of taking your task and your data, breaking it into smaller pieces, sending those pieces to different computers, running the “smaller pieces” on those different computers, then bringing back the results and recombining them into a single output.</p>
@@ -399,14 +417,14 @@ strategies described below), it can be an incredibly good investment.</p>
 <p>So if you’re in this domain, what options are open to you?</p>
 <p>The Cloud! There are a few platforms for managing a distributed cluster of computers, including things you may have heard of like <a class="reference external" href="https://en.wikipedia.org/wiki/Apache_Hadoop">Apache Hadoop</a> or <a class="reference external" href="https://en.wikipedia.org/wiki/Apache_Spark">Apache Spark</a>, which you can kind of think of as Hadoop v2.0.</p>
 <p>In this class, though, we’ll primarily focus on how to use a program called <code class="docutils literal notranslate"><span class="pre">dask</span></code>, which has the same syntax as <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, but works like Spark. We’ll cover <code class="docutils literal notranslate"><span class="pre">dask</span></code> <a class="reference internal" href="distributed_computing.html"><span class="doc">in a later class</span></a>, then also learn to setup a <code class="docutils literal notranslate"><span class="pre">dask</span></code> cluster on the <a class="reference external" href="cloud_azureml.ipynb">Microsoft Azure system too</a>!</p>
-</div>
-</div>
-<div class="section" id="Exercises!">
+</section>
+</section>
+<section id="Exercises!">
 <h2>Exercises!<a class="headerlink" href="#Exercises!" title="Permalink to this headline">¶</a></h2>
 <p>Great! Now that you have some context for big data, let’s do some exercises.</p>
 <p><a class="reference external" href="exercises/exercise_bigdata.ipynb">Exercises</a></p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -521,7 +539,7 @@ strategies described below), it can be an incredibly good investment.</p>
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

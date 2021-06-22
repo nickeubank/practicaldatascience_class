@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Pandas Lesson 2: Dataframes &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Plotting with plotnine" href="plotting_part1.html" />
@@ -38,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -153,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -219,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -266,7 +284,7 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Pandas-Lesson-2:-Dataframes">
+<section id="Pandas-Lesson-2:-Dataframes">
 <h1>Pandas Lesson 2: Dataframes<a class="headerlink" href="#Pandas-Lesson-2:-Dataframes" title="Permalink to this headline">¶</a></h1>
 <p>In Pandas Lesson 1, we learned about Series: an ordered collection of observations, analogous to a <code class="docutils literal notranslate"><span class="pre">numpy</span></code> vector but with super-powers.</p>
 <p>In this tutorial, we’ll learn about DataFrames, a method of holding <em>tabular</em> data in which each row is an observation, and each column is a variable. (OK, there are some different forms of tabular data, but that’s the most common format you’ll encounter).</p>
@@ -359,10 +377,10 @@ div.rendered_html tbody tr:hover {
 </div></div>
 </div>
 <p>As you can see, each of the 6 rows in the DataFrame <code class="docutils literal notranslate"><span class="pre">world</span></code> is a different country, and each column contains different information about that country (the country’s name, its region, it’s income level (GDP per Capita in 2008), and how close it was to an idealized liberal democracy in 2008 (it’s polity IV score).</p>
-<div class="section" id="1.-What-is-a-DataFrame">
+<section id="1.-What-is-a-DataFrame">
 <h2>1. What is a DataFrame<a class="headerlink" href="#1.-What-is-a-DataFrame" title="Permalink to this headline">¶</a></h2>
 <p>Where a Series was a one-dimensional collection of data, a DataFrame is fundementally two dimensional. As a result, it has many of the same types of features as a Series, but generalized to two dimension.</p>
-<div class="section" id="Index-and-Columns">
+<section id="Index-and-Columns">
 <h3>Index and Columns<a class="headerlink" href="#Index-and-Columns" title="Permalink to this headline">¶</a></h3>
 <p>For example, like a Series, a DataFrame has an index that labels every row: in this case, it’s the usual default index that labels each row with its initial row number. Unlike a Series, however, DataFrames have a second set of labels: column names!</p>
 <div class="nbinput docutils container">
@@ -410,8 +428,8 @@ RangeIndex(start=0, stop=6, step=1)
 Index([&#39;country&#39;, &#39;region&#39;, &#39;gdppcap08&#39;, &#39;polityIV&#39;], dtype=&#39;object&#39;)
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Constructing-DataFrames">
+</section>
+<section id="Constructing-DataFrames">
 <h3>Constructing DataFrames<a class="headerlink" href="#Constructing-DataFrames" title="Permalink to this headline">¶</a></h3>
 <p>As with Series, there are many ways to construct a DataFrame. Honestly, by far the most common is that you’ll read in a dataset from a file. Pandas offers lots of tools for doing this depending on the format of the data you’re importing. We’ll discuss this more in future lessons, but here are just a few methods to know about:</p>
 <ul class="simple">
@@ -492,9 +510,9 @@ Index([&#39;country&#39;, &#39;region&#39;, &#39;gdppcap08&#39;, &#39;polityIV&#
 </table>
 </div></div>
 </div>
-</div>
-</div>
-<div class="section" id="2.-Getting-To-Know-Your-DataFrame">
+</section>
+</section>
+<section id="2.-Getting-To-Know-Your-DataFrame">
 <h2>2. Getting To Know Your DataFrame<a class="headerlink" href="#2.-Getting-To-Know-Your-DataFrame" title="Permalink to this headline">¶</a></h2>
 <p>While our toy <code class="docutils literal notranslate"><span class="pre">smallworld</span></code> dataset is small enough to easy print out and visualize, most datasets worth working with are too big to just look at. In those situations, we need tools to summarize the contents of our DataFrame.</p>
 <p>Let’s load up a version of the <code class="docutils literal notranslate"><span class="pre">smallworld</span></code> dataset we looked at above that actually has all the countries in the world (instead of just 6). You can find the original dataset <a class="reference external" href="https://github.com/nickeubank/practicaldatascience/blob/master/Example_Data/world-small.csv">here</a>.</p>
@@ -1296,11 +1314,11 @@ gdppcap08
 polityIV
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="3.-Subsetting-a-DataFrame">
+</section>
+<section id="3.-Subsetting-a-DataFrame">
 <h2>3. Subsetting a DataFrame<a class="headerlink" href="#3.-Subsetting-a-DataFrame" title="Permalink to this headline">¶</a></h2>
 <p>As with Series, one of the most important skills for working with DataFrames is knowing how to subset them. Thankfully, DataFrames works kind of like a two-dimensional generalization of Series when it comes to the use of <code class="docutils literal notranslate"><span class="pre">iloc</span></code> and <code class="docutils literal notranslate"><span class="pre">loc</span></code>.</p>
-<div class="section" id="iloc">
+<section id="iloc">
 <h3>iloc<a class="headerlink" href="#iloc" title="Permalink to this headline">¶</a></h3>
 <p>To subset a DataFrame using <code class="docutils literal notranslate"><span class="pre">iloc</span></code>, we now have to pass two arguments into <code class="docutils literal notranslate"><span class="pre">iloc</span></code> seperated by a comma. For example, if we wanted the entry in the fourth row of the first column, we would use:</p>
 <div class="nbinput docutils container">
@@ -1492,8 +1510,8 @@ polityIV
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id="loc">
+</section>
+<section id="loc">
 <h3>loc<a class="headerlink" href="#loc" title="Permalink to this headline">¶</a></h3>
 <p>The generalization of <code class="docutils literal notranslate"><span class="pre">.loc</span></code> from Series to DataFrames works the same as <code class="docutils literal notranslate"><span class="pre">iloc</span></code>. If you pass two arguments, the first will subset rows (though for <code class="docutils literal notranslate"><span class="pre">.loc</span></code>, the subsetting is on index values, not row numbers), and the second will subset columns (again, on column names, not column order).</p>
 <div class="nbinput docutils container">
@@ -1608,8 +1626,8 @@ Name: country, dtype: object
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id="Logical-Tests">
+</section>
+<section id="Logical-Tests">
 <h3>Logical Tests<a class="headerlink" href="#Logical-Tests" title="Permalink to this headline">¶</a></h3>
 <p>Subsetting with logical tests also works in a familiar manner for DataFrames:</p>
 <ul class="simple">
@@ -2190,8 +2208,8 @@ Name: country, dtype: object
 <p>96 rows × 2 columns</p>
 </div></div>
 </div>
-</div>
-<div class="section" id="[]-Square-brackets">
+</section>
+<section id="[]-Square-brackets">
 <h3><code class="docutils literal notranslate"><span class="pre">[]</span></code> Square brackets<a class="headerlink" href="#[]-Square-brackets" title="Permalink to this headline">¶</a></h3>
 <p>As with Series, single square brackets in <code class="docutils literal notranslate"><span class="pre">pandas</span></code> change their behavior depending on the values you pass them. Again, it is worth emphasizing that there is <em>nothing</em> that one can do with square brackets that you can’t do with <code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>, so if they seem to strange, you don’t have to use them.</p>
 <p>With that said, as summarized below, <code class="docutils literal notranslate"><span class="pre">[]</span></code> is actually much safer on DataFrames than on Series.</p>
@@ -2505,9 +2523,9 @@ During handling of the above exception, another exception occurred:
 </pre></div></div>
 </div>
 <p>Similarly, boolean subsetting always acts like you’re using <code class="docutils literal notranslate"><span class="pre">.loc</span></code> (aligning on index values where it can, row order if it can’t), and slices in <code class="docutils literal notranslate"><span class="pre">[]</span></code> <em>always</em> get behavior like <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>, making behavior much more predictable.</p>
-</div>
-</div>
-<div class="section" id="4.-Getting-Columns-with-Dot-Notation">
+</section>
+</section>
+<section id="4.-Getting-Columns-with-Dot-Notation">
 <h2>4. Getting Columns with Dot-Notation<a class="headerlink" href="#4.-Getting-Columns-with-Dot-Notation" title="Permalink to this headline">¶</a></h2>
 <p>In addition to passing the name of a column into <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or to <code class="docutils literal notranslate"><span class="pre">[]</span></code>, columns can also <em>sometimes</em> be access using dot-notation:</p>
 <div class="nbinput docutils container">
@@ -2878,8 +2896,8 @@ Name: country, dtype: object
 <li><p>Never, just <em>never</em> use dot-notation on the left-side of the assignment operator. It’s just begging for trouble.</p></li>
 <li><p>Try not to use it on the right side of the assignment operator. It’s safer than using it on the left side of the assignment operator, but none of us will ever memorize all the names of methods in <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, and if your column happens to have the same name as a method, you may not notice the error.</p></li>
 </ul>
-</div>
-<div class="section" id="5.-DataFrames:-Collection-of-Series">
+</section>
+<section id="5.-DataFrames:-Collection-of-Series">
 <h2>5. DataFrames: Collection of Series<a class="headerlink" href="#5.-DataFrames:-Collection-of-Series" title="Permalink to this headline">¶</a></h2>
 <p>While it is natural to think of a DataFrame as a single table (like a numpy matrix), in reality <strong>a DataFrame is just a collection of Series</strong>.</p>
 <p>To see this, let’s pull out individual columns using square bracket notation, and check it’s type:</p>
@@ -2903,7 +2921,7 @@ pandas.core.series.Series
 </div>
 <p>Tada!</p>
 <p>And that means that you can always pull out a column from a DataFrame and manipulate it using the tools you’ve already learned from the Series tutorial. And because you know how to extract the <code class="docutils literal notranslate"><span class="pre">numpy</span></code> array that underlies a Series, that means you also always know how to move from DataFrames to <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays if you need to.</p>
-<div class="section" id="Selecting-Series-versus-Selecting-DataFrames">
+<section id="Selecting-Series-versus-Selecting-DataFrames">
 <h3>Selecting Series versus Selecting DataFrames<a class="headerlink" href="#Selecting-Series-versus-Selecting-DataFrames" title="Permalink to this headline">¶</a></h3>
 <p>There is one point of nuance worth exploring: when you extract a single column from a DataFrame, you have the choice of either extracting a Series, or extracting a DataFrame with a single column. What determines this is whether you use one pair of square brackets, or two.</p>
 <p>If you use a single set of square brackets (or pass just the name of a column to <code class="docutils literal notranslate"><span class="pre">loc</span></code>, you get back a Series. But if you pass a <em>list</em> with the column name, you get back a DataFrame:</p>
@@ -2964,14 +2982,14 @@ pandas.core.series.Series
 </pre></div></div>
 </div>
 <p>(Obviously, if you ask for more than one row, or more than one column, you will always get back a DataFrame, since the object you’re requesting is intrinsically 2-dimensional and can’t be represented as a Series. )</p>
-</div>
-</div>
-<div class="section" id="6.-Exercises!">
+</section>
+</section>
+<section id="6.-Exercises!">
 <h2>6. Exercises!<a class="headerlink" href="#6.-Exercises!" title="Permalink to this headline">¶</a></h2>
 <p><em>If you are enrolled in Practical Data Science at Duke, don’t do these exercises on your own – we’ll do them in class!</em></p>
 <p><a class="reference internal" href="exercises/Exercise_dataframe.html"><span class="doc">DataFrame Exercises</span></a></p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -3089,7 +3107,7 @@ pandas.core.series.Series
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

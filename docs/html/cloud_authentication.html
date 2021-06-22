@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Authentication &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Getting Help Online" href="getting_help.html" />
@@ -33,19 +36,19 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="Authentication">
+  <section id="Authentication">
 <h1>Authentication<a class="headerlink" href="#Authentication" title="Permalink to this headline">¶</a></h1>
 <p>One thing you may have already noticed is that the way we’ve been using a few different techniques to authenticate ourselves when we’re using Azure services – we accessed our Azure Storage Account with a long key, but we accessed our Workspace by having Python open a browser window where we had to log in. So… what’s the deal?</p>
 <p>In short, there are two types of authentication in Azure (and many cloud platforms): keys (or secrets), and a managed access system called Azure Active Directory (or AD).</p>
-<div class="section" id="Secret-Keys">
+<section id="Secret-Keys">
 <h2>Secret Keys<a class="headerlink" href="#Secret-Keys" title="Permalink to this headline">¶</a></h2>
 <p>Keys (secrets) are long strings of numbers/letters/symbols that are used as passwords for various services. For example, when we accessed accessed our storage by using a very long secret key. Keys are really easy to use initially (just copy and paste the string!), but for reasons we’ll discuss below, they’re actually much less secure and can lead to all sorts of problems. And so because of that, Azure also has…</p>
-</div>
-<div class="section" id="Azure-Active-Directory-(Azure-AD)">
+</section>
+<section id="Azure-Active-Directory-(Azure-AD)">
 <h2>Azure Active Directory (Azure AD)<a class="headerlink" href="#Azure-Active-Directory-(Azure-AD)" title="Permalink to this headline">¶</a></h2>
 <p>Azure Active Directory (AD) is a service provided by Azure for managing access to Azure resources and services. Basically, instead of managing secret keys yourself, you just tell Azure who you want to have access to resources, and people log-in through Azure to get access. It’s exactly the same as the system that underlies the “Sign-in with Google” or “Sign-in with Facebook” buttons you see all over the web.</p>
-</div>
-<div class="section" id="Why-Do-We-Have-Both-/-Which-Should-I-Use?">
+</section>
+<section id="Why-Do-We-Have-Both-/-Which-Should-I-Use?">
 <h2>Why Do We Have Both / Which Should I Use?<a class="headerlink" href="#Why-Do-We-Have-Both-/-Which-Should-I-Use?" title="Permalink to this headline">¶</a></h2>
 <p>For a long time, keys were the only way to manage access to computer systems, and they are still often times the easiest to use. But they also have a <em>lot</em> of security problems:</p>
 <ul class="simple">
@@ -62,8 +65,8 @@ that key! If you have a key that only controls access to a small Storage Account
 </ul>
 <p>Of course, this <em>does</em> mean that you’re moving all your trust from your key to people’s Azure logins. But whereas keys are just secret strings of letters and numbers, Azure AD logins are much more secure – it generally requires two-factor authentication, and (I <em>think</em>) it tracks login behavior for suspicious activity (e.g. if I try and login from Duke in the morning and Moscow at lunch, my guess it that Azure would ask for some extra verifications).</p>
 <p>So what service is best? In general, Azure AD is more secure and often easier to use, so you probably want to use it when you can, but there are still situations where you might want to use a key. For example…</p>
-</div>
-<div class="section" id="SSH-Authentication">
+</section>
+<section id="SSH-Authentication">
 <h2>SSH Authentication<a class="headerlink" href="#SSH-Authentication" title="Permalink to this headline">¶</a></h2>
 <p>While <em>most</em> of the time we have the option of easily accessing Azure services using Azure AD, one exception is when you want to ssh into a virtual machine. (Azure has something for this, <a class="reference external" href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/key-vault-setup">Key Vault</a>, but not gonna lie: seems super complicated…)</p>
 <p><code class="docutils literal notranslate"><span class="pre">ssh</span></code>ing is when you connect to a virtual machine from the command line (e.g. your command line session becomes a command line session on the virtual machine) using the <strong>S</strong>ecure <strong>SH</strong>ell protocol. This is great both for working on a virtual machine, and also moving files back and forth (as both <a class="reference external" href="https://www.garron.me/en/articles/scp.html">scp</a> and <a class="reference external" href="https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories-on-a-vps">rsync</a> — the
@@ -71,13 +74,13 @@ easiest tools for transfering data between computers from the command line — r
 <p>There are a couple ways to connect two computers using ssh. The first is to just connect normally (type <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">&lt;username&gt;&#64;&lt;hostcomputeraddress&gt;</span></code>) then answer the password prompts. The problem with this strategy, however, is that Azure doesn’t support password prompts because user-created passwords tend to be wildly insecure.</p>
 <p>So the second option to use an RSA keypair, which is where you generate a pair of matching keys on your own computer (they get stored in <code class="docutils literal notranslate"><span class="pre">~/.ssh</span></code>), then give one to the VM you want to connect with at setup. From that point forward, whenever you type <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">&lt;username&gt;&#64;&lt;hostcomputeraddress&gt;</span></code> (or use <code class="docutils literal notranslate"><span class="pre">scp</span></code> to copy files), your computer will automatically check these codes and log you in automatically.</p>
 <p>You can find a tutorial on setting up ssh keypairs on <a class="reference external" href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys">Mac or Linux here</a>, and on <a class="reference external" href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/ssh-from-windows">Windows here</a>.</p>
-</div>
-<div class="section" id="Conclusion">
+</section>
+<section id="Conclusion">
 <h2>Conclusion<a class="headerlink" href="#Conclusion" title="Permalink to this headline">¶</a></h2>
 <p>So what authentication system should you use?</p>
 <p>If your system is just for you, and your data’s not super sensitive, using keys is probably fine. But Azure AD is better, safer, and often just as easy to use. And if you’re working with a <em>team</em>, I dare say it’s a must.</p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -194,7 +197,7 @@ easiest tools for transfering data between computers from the command line — r
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

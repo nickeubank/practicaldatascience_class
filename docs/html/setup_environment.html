@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Installing Setting Up Your Python Installation &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Managing Python Packages" href="managing_python_packages.html" />
@@ -33,7 +36,7 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="Installing-Setting-Up-Your-Python-Installation">
+  <section id="Installing-Setting-Up-Your-Python-Installation">
 <h1>Installing Setting Up Your Python Installation<a class="headerlink" href="#Installing-Setting-Up-Your-Python-Installation" title="Permalink to this headline">¶</a></h1>
 <p>In this tutorial, we’ll go over how to set up all the tools you need to not only work effectively in Python. This will include not only installing Python and a system for managing Python called <code class="docutils literal notranslate"><span class="pre">conda</span></code>, but we’ll also get you setup with a basic text editor for working with plaintext files.</p>
 <p>In particular, we’re going to work through five things:</p>
@@ -44,43 +47,43 @@
 <li><p>Configure <code class="docutils literal notranslate"><span class="pre">miniconda</span></code> to use <code class="docutils literal notranslate"><span class="pre">conda-forge</span></code></p></li>
 <li><p>Install some packages!</p></li>
 </ol>
-<div class="section" id="1.-Installing-A-Basic-Text-Editor">
+<section id="1.-Installing-A-Basic-Text-Editor">
 <h2>1. Installing A Basic Text Editor<a class="headerlink" href="#1.-Installing-A-Basic-Text-Editor" title="Permalink to this headline">¶</a></h2>
 <p>One tool you will find incredibly helpful in your career as a data scientist is a good text editor designed to work with plain text files (files that just contain simple text, but no fancy formatting like a Microsoft Word document or a PDF). You’ve probably seen a simple version of this type of editor before (Notepad on Windows, or TextEdit on macs), but is really useful to install a more robust text editor instead.</p>
 <p>For this purpose I’m going to recommend Visual Studio Code (better known as VSCode). It’s a Microsoft project, but it’s open source and in addition to being an easy way to edit plaintext files comes with a lot of packages for adding extra functionality. VSCode is definitely not the only good text editor out there, and you’ll find that people have very strong opinions about which one to use (some people swear by in-terminal editors like eMacs, or Vim), and personally I used to rely on Atom (since
 github – which developed Atom – was bought by Microsoft, it looks like a lot of the development energy has moved over to VSCode, so I think that’s a better place to go now…). If you already have one of these and like it, please feel free to stick with it!</p>
 <p>So before we install Python, please follow the directions below to install VSCode if you don’t already have a good text editor.</p>
-<div class="section" id="Installing-VSCode-on-Macs">
+<section id="Installing-VSCode-on-Macs">
 <h3>Installing VSCode on Macs<a class="headerlink" href="#Installing-VSCode-on-Macs" title="Permalink to this headline">¶</a></h3>
 <p>Download and run <a class="reference external" href="https://code.visualstudio.com/download">installer here</a>.</p>
 <p>Then to make VS Code accessible from the command line (so you can type things like <code class="docutils literal notranslate"><span class="pre">code</span> <span class="pre">FILENAME</span></code> and have the file you named open in VS Code), make sure that after you install VSCode, follow the directions <a class="reference external" href="https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line">here (for macs)</a>.</p>
-</div>
-<div class="section" id="Installing-VSCode-on-Windows">
+</section>
+<section id="Installing-VSCode-on-Windows">
 <h3>Installing VSCode on Windows<a class="headerlink" href="#Installing-VSCode-on-Windows" title="Permalink to this headline">¶</a></h3>
 <p>Download <a class="reference external" href="https://code.visualstudio.com/download">installer here</a>, and make sure that during install you select the “Add to PATH” option.</p>
-</div>
-</div>
-<div class="section" id="2.-Installing-Python-and-conda">
+</section>
+</section>
+<section id="2.-Installing-Python-and-conda">
 <h2>2. Installing Python and conda<a class="headerlink" href="#2.-Installing-Python-and-conda" title="Permalink to this headline">¶</a></h2>
 <p>Unlike a programming language like R, Python doesn’t have an internal system for installing and updating packages. Instead, we will need to install a dedicated Python package manager (which will also install Python itself).</p>
 <p>Within the Python ecosystem, there are two main package managers: <code class="docutils literal notranslate"><span class="pre">conda</span></code> and <code class="docutils literal notranslate"><span class="pre">pip</span></code>. Among data scientists, conda is by far the preferred choice. That’s because while both conda and pip do a good job installing Python packages, conda is also capable of installing a wide range of binary dependencies that are often required for data science packages (e.g. <code class="docutils literal notranslate"><span class="pre">geos</span></code> for geospatial work, <code class="docutils literal notranslate"><span class="pre">igraph</span></code> for network analysis, etc.). Indeed, you can even do things like install R through conda. Moreover,
 as long as you install packages from a specific provider in conda (something will discuss how to do below), conda does a really good job of avoiding package conflicts. Of course, you will sometimes find conda doesn’t have a package you need, in which case you can use <code class="docutils literal notranslate"><span class="pre">pip</span></code> without problems, but in general I recommend starting with conda.</p>
 <p>Of the first thing we need to do is install conda. Is there two ways to do this: the first is to install the Anaconda distribution, which includes both the conda package manager <em>and</em> a ton of commonly used packages; the second is to install <code class="docutils literal notranslate"><span class="pre">miniconda</span></code>, which only installs Python and the conda package manager. I strongly recommend the second option (miniconda) because in my experience having a ton of packages preinstalled causes lots of package conflicts down the road.</p>
 <p>So to install Python, go to the <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">miniconda Download page</a>, download and install the most recent Python 3.x version of miniconda (as of Oct 2020, this was Python 3.8). (On a Mac, the <code class="docutils literal notranslate"><span class="pre">Pkg</span></code> installer is easier to use) using the installation instructions for your operating system detailed below:</p>
-<div class="section" id="Installation-for-Mac-Users">
+<section id="Installation-for-Mac-Users">
 <h3>Installation for Mac Users<a class="headerlink" href="#Installation-for-Mac-Users" title="Permalink to this headline">¶</a></h3>
 <p>By default, miniconda will install itself into your home folder. Except that and don’t try to install it in the custom location!</p>
-</div>
-<div class="section" id="Installation-for-Windows-Users">
+</section>
+<section id="Installation-for-Windows-Users">
 <h3>Installation for Windows Users<a class="headerlink" href="#Installation-for-Windows-Users" title="Permalink to this headline">¶</a></h3>
 <p>When asked whether you want to install for “Just Me” or “All Users”, pick “Just Me”.</p>
 <p>One of the checkboxes during the Windows installation is “do you want to add Anaconda to your PATH?”. Select Yes. I know they discourage it, but it allows miniconda to work well with Cmder.</p>
-</div>
-<div class="section" id="If-there’s-a-Python-3.8,-why-is-there-also-a-Python-2.7-available?">
+</section>
+<section id="If-there’s-a-Python-3.8,-why-is-there-also-a-Python-2.7-available?">
 <h3>If there’s a Python 3.8, why is there also a Python 2.7 available?<a class="headerlink" href="#If-there’s-a-Python-3.8,-why-is-there-also-a-Python-2.7-available?" title="Permalink to this headline">¶</a></h3>
 <p>In 2000, Python 3 was first released. Python 3 fixed a lot of things people disliked about Python, but in the process it made some changes that meant code written in Python 2 would not work any more. To ease the transition to Python 3, both Python 2 and Python 3 have been supported for several years so people could keep running their Python 2 projects while they finished the transition. Almost everything is now in Python 3, so since you don’t have any old code to worry about, you want Python 3.</p>
-</div>
-<div class="section" id="Deleting-conda">
+</section>
+<section id="Deleting-conda">
 <h3>Deleting conda<a class="headerlink" href="#Deleting-conda" title="Permalink to this headline">¶</a></h3>
 <p>One of the really nice things about conda is that it keeps everything in a single folder, including conda, Python, and all the packages you install. As a result, if you ever need to delete your conda installation (whether it’s Anaconda or miniconda), all you have to do is delete your folder.</p>
 <p>This is good to know because a lot of the troubleshooting advice you will get from the Internet when you have problems with packages is to just delete your installation and start again. In fact, if you already have a pre-existing anaconda or miniconda installation, I would actually recommend that you delete it and install a clean version using the instructions above.</p>
@@ -90,16 +93,16 @@ as long as you install packages from a specific provider in conda (something wil
 <li><p>if you move from Anaconda to miniconda (and thus change the name of your conda folder from <code class="docutils literal notranslate"><span class="pre">anaconda3</span></code> to <code class="docutils literal notranslate"><span class="pre">miniconda3</span></code>) or change where conda is installed, note that you’ll also need to update the code snippet in your <code class="docutils literal notranslate"><span class="pre">.zshrc</span></code> file too as discussed in the next section.</p></li>
 <li><p>deleting anaconda won’t delete Python from your computer altogether. macOS actually has its own version of Python that the operating system relies on (something you don’t really want to play with), so don’t be surprised if the command <code class="docutils literal notranslate"><span class="pre">python</span></code> still works after you’ve deleted conda because it’s referencing that other installation.</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="3.-Using-miniconda-with-Your-Command-Line-Tool">
+</section>
+</section>
+<section id="3.-Using-miniconda-with-Your-Command-Line-Tool">
 <h2>3. Using miniconda with Your Command Line Tool<a class="headerlink" href="#3.-Using-miniconda-with-Your-Command-Line-Tool" title="Permalink to this headline">¶</a></h2>
 <p>Below are some directions for making sure that you can use conda with your command line tool of choice!</p>
-<div class="section" id="Windows-Users-using-Cmder">
+<section id="Windows-Users-using-Cmder">
 <h3>Windows Users using Cmder<a class="headerlink" href="#Windows-Users-using-Cmder" title="Permalink to this headline">¶</a></h3>
 <p>If you’re <a class="reference internal" href="bash_on_windows.html"><span class="doc">using Cmder as suggsted</span></a>… you’re done! :) Congratulations.</p>
-</div>
-<div class="section" id="Using-conda-with-Oh-My-Zsh">
+</section>
+<section id="Using-conda-with-Oh-My-Zsh">
 <h3>Using conda with Oh-My-Zsh<a class="headerlink" href="#Using-conda-with-Oh-My-Zsh" title="Permalink to this headline">¶</a></h3>
 <p>If you installed Oh-My-Zsh during the command line exercises (<a class="reference internal" href="command_line_part1.html"><span class="doc">as suggested here</span></a>, then miniconda won’t work right away. The problem is that when you install miniconda, it adds some code to the <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> file in your user directory that makes conda visible to your bash session by adding it to your PATH variable (jump to the PATH variable section of the <a class="reference internal" href="command_line_part2.html"><span class="doc">Advanced Command Line</span></a> reading if that doesn’t sound familiar).</p>
 <p>But Oh-My-Zsh doesn’t run the <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> file when it opens; it runs the <code class="docutils literal notranslate"><span class="pre">.zshrc</span></code> file. So what we have to do is move the code Anaconda put in <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> into <code class="docutils literal notranslate"><span class="pre">.zshrc</span></code>. You can do this as follows:</p>
@@ -127,11 +130,11 @@ as long as you install packages from a specific provider in conda (something wil
 <span class="c1"># &lt;&lt;&lt; conda init &lt;&lt;&lt;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="Your-conda-works-if…">
+</section>
+<section id="Your-conda-works-if…">
 <h3>Your conda works if…<a class="headerlink" href="#Your-conda-works-if…" title="Permalink to this headline">¶</a></h3>
 <p>You can run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">-h</span></code> from your command line and you see a helpfile print out like below instead of <code class="docutils literal notranslate"><span class="pre">conda:</span> <span class="pre">command</span> <span class="pre">not</span> <span class="pre">found</span></code>, you’re good!</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>bash-3.2$ conda -h
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>bash-3.2$ conda -h
 usage: conda [-h] [-V] command ...
 
 conda is a tool for managing and deploying applications, environments and packages.
@@ -172,24 +175,24 @@ conda commands available from other packages:
 bash-3.2$
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="4.-Configure-conda-to-use-conda-forge">
+</section>
+</section>
+<section id="4.-Configure-conda-to-use-conda-forge">
 <h2>4. Configure conda to use conda-forge<a class="headerlink" href="#4.-Configure-conda-to-use-conda-forge" title="Permalink to this headline">¶</a></h2>
 <p>Conda is a package installer, but it is capable of installing from a number of different package providers (people who prepare packages for installation). By far the best provider of packages in <code class="docutils literal notranslate"><span class="pre">conda-forge</span></code>, so we’re gonna set that as your default by running the following two lines of code:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="n">add</span> <span class="n">channels</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span>
-<span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="nb">set</span> <span class="n">channel_priority</span> <span class="n">strict</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>conda config --add channels conda-forge
+conda config --set channel_priority strict
 </pre></div>
 </div>
-</div>
-<div class="section" id="5.-Install-some-packages!">
+</section>
+<section id="5.-Install-some-packages!">
 <h2>5. Install some packages!<a class="headerlink" href="#5.-Install-some-packages!" title="Permalink to this headline">¶</a></h2>
 <p>As you go along in life, you’ll find you need packages from time to time, but here’s a good startup installation command for things you’ll want in this class:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install pandas jupyterlab matplotlib black
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -306,7 +309,7 @@ bash-3.2$
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Time to Scale! &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -31,7 +34,7 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="Time-to-Scale!">
+  <section id="Time-to-Scale!">
 <h1>Time to Scale!<a class="headerlink" href="#Time-to-Scale!" title="Permalink to this headline">¶</a></h1>
 <p><strong>If you are not a Duke MIDS student:</strong> The following exercises are, I’m afraid, specially tailored to Duke students. You <em>can</em> do them if you’re not a Duke student, but you’ll have to pay 💰 to Azure. Sorry! My best guess is that this will cost &lt;10 USD per person, though, so it shouldn’t be too expensive to play with if you want to try it out with your own credit card!</p>
 <p>The plan for today is relatively simple: we’re gonna take what we did in our <a class="reference external" href="cloud_azure_arcos.ipynb">last exercise</a>, and scale it up!</p>
@@ -58,7 +61,7 @@
 <p>Now if you check your dask dashboard, you should slowly see more workers appear (click the workers tab to see progress). Note this will take 5-10 minutes – new computers are being setup for you!</p>
 <p><strong>(7)</strong> Once you have those workers, run your code again. How long did it take this time? Given we increased our the number of nodes we had from 2 to 6 (a 3x improvement), as the improvement more or less than you might have expected?</p>
 <p><strong>(8)</strong> <strong>CLOSE YOUR CLUSTER!</strong> We’re not on free accounts any more, so while your dask cluster will shut down on its own in a couple hours, please save Duke a little cash and shut it down explicitly with <code class="docutils literal notranslate"><span class="pre">amlcluster.close()</span></code> (if you called your cluster <code class="docutils literal notranslate"><span class="pre">amlcluster</span></code>).</p>
-</div>
+</section>
 
 
           </div>
@@ -166,7 +169,7 @@
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Setting Up a Cluster on Azure for Data Science &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Dask Cluster on Azure Example" href="cloud_dask.html" />
@@ -38,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -153,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -219,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -266,25 +284,25 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Setting-Up-a-Cluster-on-Azure-for-Data-Science">
+<section id="Setting-Up-a-Cluster-on-Azure-for-Data-Science">
 <h1>Setting Up a Cluster on Azure for Data Science<a class="headerlink" href="#Setting-Up-a-Cluster-on-Azure-for-Data-Science" title="Permalink to this headline">¶</a></h1>
 <p>As discussed in our <a class="reference internal" href="cloud_vm_on_azure.html"><span class="doc">last lesson</span></a>, getting a single large VM is <em>by far</em> the easiest way to move your work to the cluster, and it’s what I would do 99% of the time. But sometimes no single computer is big enough to do all the compute you want to accomplish. When that happens, we turn to using Virtual Machine Cluster, and in particular we’re gonna figure out how to set one up with <code class="docutils literal notranslate"><span class="pre">dask</span></code>.</p>
 <p>As this is one of the later reading in a series, I’ll assume you already know about the <a class="reference internal" href="cloud_what_is_it.html"><span class="doc">basics of what the cloud is</span></a> and how <a class="reference internal" href="cloud_storage_on_azure.html"><span class="doc">Azure Storage</span></a> works (and that you have an Azure account already!).</p>
-<div class="section" id="Setup">
+<section id="Setup">
 <h2>Setup<a class="headerlink" href="#Setup" title="Permalink to this headline">¶</a></h2>
 <p>Setting up a cluster is, unfortunately, a little more complicated than starting up a pre-configured VM. With that in mind, we’re going to move from setting resources up interactively on the Azure website to using the Azure Command Line Tool (CLI). So before we dive in, go <a class="reference external" href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli">read this</a> and follow the directions for installing the tool. Once it’s installed, come on back!</p>
-<div class="section" id="Install-relevant-packages.">
+<section id="Install-relevant-packages.">
 <h3>Install relevant packages.<a class="headerlink" href="#Install-relevant-packages." title="Permalink to this headline">¶</a></h3>
 <p>First, run the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;dask-cloudprovider[azure]&quot;</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;dask-cloudprovider[azure]&quot;</span> <span class="o">--</span><span class="n">upgrade</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">adlfs</span> <span class="n">lz4</span> <span class="n">blosc</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">dask</span> <span class="o">--</span><span class="n">upgrade</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">distributed</span> <span class="o">--</span><span class="n">upgrade</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install &quot;dask-cloudprovider[azure]&quot;
+pip install &quot;dask-cloudprovider[azure]&quot; --upgrade
+pip install adlfs lz4 blosc
+pip install dask --upgrade
+pip install distributed --upgrade
 </pre></div>
 </div>
-</div>
-<div class="section" id="Setup-Resources">
+</section>
+<section id="Setup-Resources">
 <h3>Setup Resources<a class="headerlink" href="#Setup-Resources" title="Permalink to this headline">¶</a></h3>
 <p>Now we’ll talk through setting up all the resources you need for your cluster using the Azure commandline tool.</p>
 <ol class="arabic simple">
@@ -332,9 +350,9 @@ az network nsg rule create -g &lt;resource group name&gt; <span class="se">\</sp
                            --description <span class="s2">&quot;Allow Internet to Dask on ports 8786,8787.&quot;</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="Start-your-cluster!">
+</section>
+</section>
+<section id="Start-your-cluster!">
 <h2>Start your cluster!<a class="headerlink" href="#Start-your-cluster!" title="Permalink to this headline">¶</a></h2>
 <p>Now that we have all resources set up to support the cluster, all that’s left is to get it started! The following code will take a few minutes, but you should get a lot of regular notifications about progress.</p>
 <div class="nbinput nblast docutils container">
@@ -397,8 +415,8 @@ Creating VM
 Created VM dask-8eec3fa0-worker-29ac2137
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Connect-to-Your-Cluster">
+</section>
+<section id="Connect-to-Your-Cluster">
 <h2>Connect to Your Cluster<a class="headerlink" href="#Connect-to-Your-Cluster" title="Permalink to this headline">¶</a></h2>
 <p>Finally, we need to connect our personal computer to the cluster so we can start assigning it work to do! Thankfully with dask this is <em>super</em> easy. (Not familiar with dask yet? <a class="reference internal" href="distributed_computing.html"><span class="doc">Check out this intro here!</span></a>).</p>
 <div class="nbinput docutils container">
@@ -446,8 +464,8 @@ Created VM dask-8eec3fa0-worker-29ac2137
 &#39;http://52.151.219.69:8787/status&#39;
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Scaling-Your-Cluster">
+</section>
+<section id="Scaling-Your-Cluster">
 <h2>Scaling Your Cluster<a class="headerlink" href="#Scaling-Your-Cluster" title="Permalink to this headline">¶</a></h2>
 <p>The great thing about Azure VM Clusters is that you can create a cluster that starts with, say, two computers (nodes), but then scale it up to 100 nodes when you’ve debugged your code and are ready to run a bit of computationally intensive code. Then when you’re done, those nodes will automatically shut down after they’ve been idle for a set period of time, and you’ll be back to the two nodes. And that means you only have to pay for the 100 nodes <em>when you are using them!</em>. Pretty amazing,
 honestly.</p>
@@ -502,8 +520,8 @@ Creating worker instance
 </pre></div></div>
 </div>
 <p>Note that scaling is pretty fast, but not instant, so it may take a little time before you see your new works on your dask Dashboard.</p>
-</div>
-<div class="section" id="Closing-your-Cluster">
+</section>
+<section id="Closing-your-Cluster">
 <h2>Closing your Cluster<a class="headerlink" href="#Closing-your-Cluster" title="Permalink to this headline">¶</a></h2>
 <p>It’s <strong>super</strong> important that when you’re done you close your cluster! Otherwise Azure will just keep billing you for it running. (Reminder: its good practice to set up billing alerts! See the last section <a class="reference internal" href="cloud_vm_on_azure.html"><span class="doc">here</span></a> for details.</p>
 <div class="nbinput docutils container">
@@ -531,8 +549,8 @@ Removed disks for VM dask-8eec3fa0-worker-99699f0c
 Deleted network interface
 </pre></div></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -649,7 +667,7 @@ Deleted network interface
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

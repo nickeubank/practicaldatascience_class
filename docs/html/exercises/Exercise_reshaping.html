@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Reshaping Exercises &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -31,7 +34,7 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="Reshaping-Exercises">
+  <section id="Reshaping-Exercises">
 <h1>Reshaping Exercises<a class="headerlink" href="#Reshaping-Exercises" title="Permalink to this headline">¶</a></h1>
 <p>Before we diving into actually doing some exercises, a few notes about reshaping in <code class="docutils literal notranslate"><span class="pre">pandas</span></code>.</p>
 <p><strong>So many tools:</strong> As is so often the case with <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, when there are multiple ways that something can be done, <code class="docutils literal notranslate"><span class="pre">pandas</span></code> implements all of them, even it if results in a lot of duplication of funcationality. As a result, there are several sets of methods that do very similar things, and which can be hard to keep straight:</p>
@@ -51,7 +54,7 @@
 <p>In general, I’m a big fan of this approach, and I think it’s a good one to use (especially numbers 1 and 2).</p>
 <p>Note that the question of what forms an “observation” depends on the analysis you plan to run (which depends on the answer you seek to ask! See! EVERYTHING ALWAYS COMES BACK TO THE QUESTION YOU ARE SEEKING TO ANSWER!). Suppose you have data on GDP from different countries for many years. If you plan to run a panel analysis where each observation is a country-year, then each row should be a country-year. But if you plan to do a country-level analysis using measures of, say, GDP variation over
 time, then each row should be a country!</p>
-<div class="section" id="Exercises!">
+<section id="Exercises!">
 <h2>Exercises!<a class="headerlink" href="#Exercises!" title="Permalink to this headline">¶</a></h2>
 <p>So in this exercise, we’re going to work with data from the World Development Indicators. Unlike in previous exercises, however, where I cleaned up the data before giving it to you, we’ll be working with the raw data just as you would get it from the World Bank download site. You can find the data <a class="reference external" href="https://github.com/nickeubank/MIDS_Data/blob/master/World_Development_Indicators/raw_WDI_Data_csv.zip">here</a>.</p>
 <p><strong>(1)</strong> Download and import the data.</p>
@@ -75,13 +78,13 @@ time, then each row should be a country!</p>
 <p><strong>(5)</strong> Subset for observations for which we have GINI index estimates.</p>
 <p><strong>(6)</strong> Plot the relationship between <strong>log</strong> GDP per capita and Gini scores for all country years and add a linear fit as well.</p>
 <p><strong>(7)</strong> It’s important to not always rely too much on a single measure of something like inequality. To check the robustness of our result, let’s be sure to also look at the relationship between inequality and income by using the income share of the richest 10% instead of just the GINI coefficient. Plot that relationship.</p>
-</div>
-<div class="section" id="Absolutely-positively-need-the-solutions?">
+</section>
+<section id="Absolutely-positively-need-the-solutions?">
 <h2>Absolutely positively need the solutions?<a class="headerlink" href="#Absolutely-positively-need-the-solutions?" title="Permalink to this headline">¶</a></h2>
 <p><em>Don’t use this link until you’ve really, really spent time struggling with your code!</em> Doing so only results in you cheating yourself.</p>
 <p><a class="reference internal" href="../solutions_warning.html"><span class="doc">Link</span></a></p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -189,7 +192,7 @@ time, then each row should be a country!</p>
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -4,17 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Coding Your Own Linear Regression Model &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -33,7 +34,7 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="Coding-Your-Own-Linear-Regression-Model">
+  <section id="Coding-Your-Own-Linear-Regression-Model">
 <h1>Coding Your Own Linear Regression Model<a class="headerlink" href="#Coding-Your-Own-Linear-Regression-Model" title="Permalink to this headline">¶</a></h1>
 <p>One task that you will almost certainly be required to do other data science courses (especially if you are a MIDS student) is to write up some of your statistical / machine learning models from scratch. This can be a very valuable exercise, as it ensures that you understand what is actually going on behind the scenes of the models you use ever day, and that you don’t just think of them as “black boxes”.</p>
 <p>To get a little practice doing this, today you will be coding up your own linear regression model!</p>
@@ -73,7 +74,7 @@ derivation.</p>
 <p><strong>(7)</strong> Now we’ll go ahead and cheat a little. Use <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> to see if your standard errors and r-squared are correct!</p>
 <p><strong>(8)</strong> Now implement <code class="docutils literal notranslate"><span class="pre">predict</span></code>! Then test it against your original <code class="docutils literal notranslate"><span class="pre">X</span></code> data – do you get back something very close to your true <code class="docutils literal notranslate"><span class="pre">y</span></code>?</p>
 <p><strong>(9)</strong> Finally, create the <em>option</em> of fitting the model with or without a constant term. As in <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>, make this an option you set during initialization.</p>
-</div>
+</section>
 
 
           </div>
@@ -181,7 +182,7 @@ derivation.</p>
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

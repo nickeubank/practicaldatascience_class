@@ -4,17 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Numbers in Computers &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Pandas Lesson 1: Series" href="pandas_series.html" />
@@ -40,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -155,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -221,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -268,20 +284,20 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Numbers-in-Computers">
+<section id="Numbers-in-Computers">
 <h1>Numbers in Computers<a class="headerlink" href="#Numbers-in-Computers" title="Permalink to this headline">¶</a></h1>
 <p>As a Data Scientist, you will spend a <em>lot</em> more time playing with numbers than most programmers. As a result, it pays to understand how numbers are represented in computers, and how those representations can get you into trouble.</p>
 <p>This lesson is divided into two parts. In the first portion, we’ll cover the basics of how computers think about numbers, and what issues can potentially arise with the two main numerical representations you’ll use. In the second portion, we’ll discuss when you need to worry about these hazards both (a) when using vanilla Python, and (b) when using <code class="docutils literal notranslate"><span class="pre">numpy</span></code> and <code class="docutils literal notranslate"><span class="pre">pandas</span></code>.</p>
-<div class="section" id="The-Two-Classes-of-Numbers:-Integers-and-Floating-Point-Numbers">
+<section id="The-Two-Classes-of-Numbers:-Integers-and-Floating-Point-Numbers">
 <h2>The Two Classes of Numbers: Integers and Floating Point Numbers<a class="headerlink" href="#The-Two-Classes-of-Numbers:-Integers-and-Floating-Point-Numbers" title="Permalink to this headline">¶</a></h2>
 <p>Broadly speaking, computers have two ways of representing numbers: integers and floating point numbers. In most intro computer science courses, students are taught that the integers are for… well integers (whole numbers), and floating point numbers are for numbers with decimal points, and that is true to a point. But below the hood, integers and floating point numbers work in very different ways, and there are distinct hazards when working with both.</p>
 <p>To learn the ins-and-outs of how integers and floating point numbers work, please review the following materials (these explanations are <em>very</em> good, and there’s no reason to try and write my own explanations when these exist). Then continue to the section below on Python-specific hazards.</p>
-<div class="section" id="Integers">
+<section id="Integers">
 <h3>Integers<a class="headerlink" href="#Integers" title="Permalink to this headline">¶</a></h3>
 <p>To see a great discussion of integers (and their major pitfall: integer overflow), <a class="reference external" href="https://www.youtube.com/watch?v=vA0Rl6Ne5C8">please watch this video.</a></p>
 <p>If after watching you feel you would like to learn more, then Chapters 7 and 8 of <em>Code: The Hidden Language of Computer Hardware and Software</em> by Charles Petzold will get into integers in great detail.</p>
-</div>
-<div class="section" id="Floating-Point-Numbers">
+</section>
+<section id="Floating-Point-Numbers">
 <h3>Floating Point Numbers<a class="headerlink" href="#Floating-Point-Numbers" title="Permalink to this headline">¶</a></h3>
 <p>Integers, as a data type, are wonderful. They are precise and pretty intuitive. But they also have their weaknesses: namely, they can’t represent numbers with decimal points (which we use all the time), and they can’t represent really big numbers.</p>
 <p>So how do we deal with decimals and really big numbers? Floating point numbers!</p>
@@ -290,9 +306,9 @@ div.rendered_html tbody tr:hover {
 <li><p><a class="reference external" href="https://www.youtube.com/watch?v=pQs_wx8eoQ8">Watch this video</a></p></li>
 <li><p><a class="reference external" href="https://docs.python.org/3/tutorial/floatingpoint.html#tut-fp-issues">Read this short note</a></p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="Numeric-Hazards-in-Python,-Numpy,-and-Pandas">
+</section>
+</section>
+<section id="Numeric-Hazards-in-Python,-Numpy,-and-Pandas">
 <h2>Numeric Hazards in Python, Numpy, and Pandas<a class="headerlink" href="#Numeric-Hazards-in-Python,-Numpy,-and-Pandas" title="Permalink to this headline">¶</a></h2>
 <p>So in general terms, the dangers to integers and floating points are:</p>
 <ul class="simple">
@@ -302,7 +318,7 @@ div.rendered_html tbody tr:hover {
 </ul>
 <p>But when we we need to worry about these issues?</p>
 <p>The answer is that it depends on whether you’re using regular, vanilla Python, or <code class="docutils literal notranslate"><span class="pre">numpy</span></code> / <code class="docutils literal notranslate"><span class="pre">pandas</span></code>.</p>
-<div class="section" id="Integer-Overflows-in-Python">
+<section id="Integer-Overflows-in-Python">
 <h3>Integer Overflows <em>in Python</em><a class="headerlink" href="#Integer-Overflows-in-Python" title="Permalink to this headline">¶</a></h3>
 <p>Python is meant to be a friendly language, and one manifestation of that is that in vanilla Python, you can’t overflow your integers! That’s because whenever Python does an integer computation, it stops to check whether you the integer in question has been allocated enough bits to store the result, and if not, it just adds more bits! So if you do math with an integer that won’t fit in 64 bits, it will just allocate more bits to the integer!</p>
 <div class="nbinput nblast docutils container">
@@ -327,8 +343,8 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <p>See? No problem!</p>
-</div>
-<div class="section" id="Interger-Overflows-in-numpy-and-pandas">
+</section>
+<section id="Interger-Overflows-in-numpy-and-pandas">
 <h3>Interger Overflows <em>in numpy and pandas</em><a class="headerlink" href="#Interger-Overflows-in-numpy-and-pandas" title="Permalink to this headline">¶</a></h3>
 <p>The problem with what Python does with integers is that, while convenient, it’s slow. Asking Python to add two integers doesn’t just require the computer to add two integers; it requires it to <em>also</em> check the size of the result, and if that size is so big it won’t fit in the existing number of bits that have been allocated, it has to allocate more bits. This makes adding integers in Python much, much slower than it could be. Like… 10x slower.</p>
 <p>That’s why libraries like <code class="docutils literal notranslate"><span class="pre">numpy</span></code> and <code class="docutils literal notranslate"><span class="pre">pandas</span></code> – which are designed for performance when working with huge datasets – don’t check for integer overflows. This makes them <em>much</em> faster, but if you add two really big integers in <code class="docutils literal notranslate"><span class="pre">numpy</span></code> (or add even small numbers to a <em>really</em> big number) and the result is bigger than what fits in the available bits, you’ll just end up with a negative number.</p>
@@ -468,9 +484,9 @@ array([2], dtype=uint64)
 array([18446744073709551615], dtype=uint64)
 </pre></div></div>
 </div>
-</div>
-</div>
-<div class="section" id="Floating-Point-Precision">
+</section>
+</section>
+<section id="Floating-Point-Precision">
 <h2>Floating Point Precision<a class="headerlink" href="#Floating-Point-Precision" title="Permalink to this headline">¶</a></h2>
 <p>Unfortunately, while vanilla Python can protect you from integer overflows, it can’t do anything about floating point precision. Whether you’re using <code class="docutils literal notranslate"><span class="pre">numpy</span></code> or not, you’re stuck with these types of things:</p>
 <div class="nbinput docutils container">
@@ -568,8 +584,8 @@ as shown in the help file).</p>
 True
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Random-Numbers">
+</section>
+<section id="Random-Numbers">
 <h2>Random Numbers<a class="headerlink" href="#Random-Numbers" title="Permalink to this headline">¶</a></h2>
 <p>Another oddity about how computers think about numbers that while it <em>seems</em> like computers generate random numbers for you all time time – for example, your computer is happy to give you a random subsample of your data if you ask – the reality is that because computers are deterministic, they actually <em>can’t</em> generate truly random numbers. Instead, they generate <a class="reference external" href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator">pseudo-random numbers</a> (PRNG), which are sequences of numbers that
 have all the statistical properties that we want from random numbers, but are actually created deterministically.</p>
@@ -706,7 +722,7 @@ array([3, 4, 2, 1])
 array([3, 4, 2, 1])
 </pre></div></div>
 </div>
-<div class="section" id="Cautionary-Notes">
+<section id="Cautionary-Notes">
 <h3>Cautionary Notes<a class="headerlink" href="#Cautionary-Notes" title="Permalink to this headline">¶</a></h3>
 <p>A few cautionary notes about random number generators:</p>
 <ul class="simple">
@@ -715,17 +731,17 @@ array([3, 4, 2, 1])
 <li><p>While setting a seed for the numpy random number generator will get you reproducible results across computer systems, this is not true for all random number generators. Some (especially ones written in C) will be reproducible <em>only for a given computer architecture</em>. If you share your mac code with a windows user, you may not get reproducible results.</p></li>
 </ul>
 <p>So random seeds are <em>very</em> useful, but if you really need reproducibility, make sure you test your code by running it over and over (and potentially on different computers) to be sure it’s configured correctly.</p>
-</div>
-<div class="section" id="Want-to-learn-more?">
+</section>
+<section id="Want-to-learn-more?">
 <h3>Want to learn more?<a class="headerlink" href="#Want-to-learn-more?" title="Permalink to this headline">¶</a></h3>
 <p>I highly recommend this <a class="reference external" href="https://youtu.be/C82JyCmtKWg">great video</a>!</p>
-</div>
-<div class="section" id="Random-numbers-and-cryptography">
+</section>
+<section id="Random-numbers-and-cryptography">
 <h3>Random numbers and cryptography<a class="headerlink" href="#Random-numbers-and-cryptography" title="Permalink to this headline">¶</a></h3>
 <p>The predictability of pseudo-random number generators is nice for data scientists, but it’s very dangerous for cryptography. If you’re interested in how people deal with this when security is important, <a class="reference external" href="https://www.youtube.com/watch?v=1cUUfMeOijg">you can learn about how the internet runs on lava lamps here!</a>.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
           </div>
@@ -841,7 +857,7 @@ array([3, 4, 2, 1])
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

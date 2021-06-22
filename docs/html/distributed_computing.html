@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Distributed Computing with dask &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Backwards Design" href="backwards_design.html" />
@@ -38,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -153,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -219,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -266,11 +284,11 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Distributed-Computing-with-dask">
+<section id="Distributed-Computing-with-dask">
 <h1>Distributed Computing with dask<a class="headerlink" href="#Distributed-Computing-with-dask" title="Permalink to this headline">¶</a></h1>
 <p>In this portion of the course, we’ll explore distributed computing with a Python library called <code class="docutils literal notranslate"><span class="pre">dask</span></code>.</p>
 <p>dask is a library designed to help facilitate (a) manipulation of very large datasets, and (b) distribution of computation across lots of cores or physical computers. It is very similar to Apache Spark in the functionality it provides, but it is tightly integrated into <code class="docutils literal notranslate"><span class="pre">numpy</span></code> and <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, making it <em>much</em> easier to learn than spark for users of those libraries.</p>
-<div class="section" id="What-can-dask-do-for-me?">
+<section id="What-can-dask-do-for-me?">
 <h2>What can dask do for me?<a class="headerlink" href="#What-can-dask-do-for-me?" title="Permalink to this headline">¶</a></h2>
 <p>To get a sense of why dask is so nice, let’s begin with a demonstration. Suppose I have a pretty big dataset (say, <a class="reference external" href="https://www.washingtonpost.com/graphics/2019/investigations/dea-pain-pill-database/">an 80GB CSV of all drug shipments in the United States from 2006 to 2012</a>). This data is too large for me to load into ram on my laptop directly, so if I were to work with it on my own, I’d do so by <a class="reference internal" href="big_data_strategies.html"><span class="doc">chunking the data by hand</span></a>. But using dask, I can do the
 following:</p>
@@ -476,8 +494,8 @@ Name: morphine_equivalent_g, dtype: float64
 </li>
 </ol>
 <p>And it did it all in 5 minutes!</p>
-</div>
-<div class="section" id="“Um…-why-didn’t-you-tell-us-about-this-before?”-I-hear-you-say…">
+</section>
+<section id="“Um…-why-didn’t-you-tell-us-about-this-before?”-I-hear-you-say…">
 <h2>“Um… why didn’t you tell us about this before?” I hear you say…<a class="headerlink" href="#“Um…-why-didn’t-you-tell-us-about-this-before?”-I-hear-you-say…" title="Permalink to this headline">¶</a></h2>
 <p>“This sure seems like this is easier than <a class="reference external" href="big_data_strategies">chunking by hand</a>!!!!”</p>
 <p>The answer is that these distributed computing tools are often very fragile and opaque, and it’s easy to get in trouble using them, and hard to figure out why if you don’t understand the underlying principles that govern their operation.</p>
@@ -498,8 +516,8 @@ Name: morphine_equivalent_g, dtype: float64
 </div>
 <p>dask would have tried to hand the full dataset back to me, and my computer would have crashed, just as it would had I tried to read the full dataset with <code class="docutils literal notranslate"><span class="pre">pandas</span></code>.</p>
 <p>So understanding the <em>intuition</em> of chunking is basically a pre-requisite to using these tools effectively.</p>
-</div>
-<div class="section" id="Vocabulary">
+</section>
+<section id="Vocabulary">
 <h2>Vocabulary<a class="headerlink" href="#Vocabulary" title="Permalink to this headline">¶</a></h2>
 <p>Now that we’ve seen this example, let’s formally introduce some distributed computing vocabulary:</p>
 <ul class="simple">
@@ -509,13 +527,13 @@ Name: morphine_equivalent_g, dtype: float64
 <li><p><strong>Scheduler</strong>: The part of the system that manages the assignment of tasks to different workers.</p></li>
 <li><p><strong>map-reduce</strong>: The name for the process of distributing sub-problems to workers (<code class="docutils literal notranslate"><span class="pre">map</span></code>), then processing them in a way that allows the results to be recombined (<code class="docutils literal notranslate"><span class="pre">reduce</span></code>). <code class="docutils literal notranslate"><span class="pre">map</span></code>s and <code class="docutils literal notranslate"><span class="pre">reduce</span></code>s are kind of the building blocks of distributed systems, though when working with dask you won’t usually have to manage the assignment or recombination of tasks yourself (they’re happening behind the scenes).</p></li>
 </ul>
-</div>
-<div class="section" id="Let’s-Learn-More-dask!">
+</section>
+<section id="Let’s-Learn-More-dask!">
 <h2>Let’s Learn More dask!<a class="headerlink" href="#Let’s-Learn-More-dask!" title="Permalink to this headline">¶</a></h2>
 <p>OK, now that we have the basic idea of dask in hand, please watch the following (<em>very</em> well organized) talk on dask. Then come back here and we can talk some more!</p>
 <p><a class="reference external" href="https://www.youtube.com/watch?v=RA_2qdipVng">Matthew Rocklin on Dask</a></p>
-</div>
-<div class="section" id="There-is-no-magic-here">
+</section>
+<section id="There-is-no-magic-here">
 <h2>There is no magic here<a class="headerlink" href="#There-is-no-magic-here" title="Permalink to this headline">¶</a></h2>
 <p>As noted in that video, one of the very nice things about dask (and one of the reasons it’s been able to offer so much functionality so quickly) is that it really is just an extension of <code class="docutils literal notranslate"><span class="pre">numpy</span></code> and <code class="docutils literal notranslate"><span class="pre">pandas</span></code>. There is no magic here.</p>
 <p>For example, suppose we wanted to find the largest number of pills in a single shipment in our ARCOS dataset, but we don’t have the memory to load the whole dataset into memory at once. How would we get that number? Probably by doing something like:</p>
@@ -604,8 +622,8 @@ Name: morphine_equivalent_g, dtype: float64
 <p>Moreover, when I said that’s exactly what dask did, I don’t just mean that you and dask are doing the same thing <em>in principle</em> – dask is built on pandas, so it really is calling <code class="docutils literal notranslate"><span class="pre">pd.read_csv</span></code>, and the <code class="docutils literal notranslate"><span class="pre">pandas</span></code> <code class="docutils literal notranslate"><span class="pre">.max()</span></code> method, just like you.</p>
 <p>Dask’s developers were smart, and didn’t want to reinvent the wheel – they just created a package full or recipes for using numpy/pandas to (a) divide tasks into smaller pieces it can distribute to different workers (map), and to (b) recombine the results of sub-problems to give you a single answer (reduce).</p>
 <p>But those recipes are just made of the pandas and numpy code you know and love. Or at least tolerate begrudingly.</p>
-</div>
-<div class="section" id="Lazy-Evaluation-and-Caching">
+</section>
+<section id="Lazy-Evaluation-and-Caching">
 <h2>Lazy Evaluation and Caching<a class="headerlink" href="#Lazy-Evaluation-and-Caching" title="Permalink to this headline">¶</a></h2>
 <p>You’ve already seen this above, but I think there are two concepts that are really central to not just dask, but <strong>any</strong> distributed computing platform (e.g. Spark, Hadoop, etc.), so I really want to drive home the importance of these concepts:</p>
 <p><strong>Lazy Evaluation:</strong> The fact that you can give dask a handful of commands <em>and then</em> tell it to execute them is at the absolute core of what makes it effective. The more commands you can give dask up front, the more it can optimize how it distributes that work – and how it moves data between different computers. Moving data between processes and between computers is <em>by far</em> the slowest part of distributed computing, so the more dask can minimize those transfers, the faster it will be.</p>
@@ -686,8 +704,8 @@ the data all over again. Since loading data is <em>very</em> slow, this would be
 <span class="n">max_ship</span><span class="p">,</span> <span class="n">mean_ship</span> <span class="o">=</span> <span class="n">dask</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">max_shipment</span><span class="p">,</span> <span class="n">mean_shipment</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="dask-versus-Spark-/-PySpark">
+</section>
+<section id="dask-versus-Spark-/-PySpark">
 <h2>dask versus Spark / PySpark<a class="headerlink" href="#dask-versus-Spark-/-PySpark" title="Permalink to this headline">¶</a></h2>
 <p>dask is something of a late-comer to the distributed computing game. Before its rise the most popular platforms were Hadoop and Spark (which is kinda Hadoop v2.0). So… how does dask compare to these? Or more specifically, how does dask compare to Spark (since no one uses Hadoop any more) and the Python library for using Spark (PySpark)?</p>
 <p>In terms of funcationality, dask and Spark basically do the same things. Both are tools for distributed computing across many computers, and conceptually they work in basically the same ways:</p>
@@ -704,8 +722,8 @@ the data all over again. Since loading data is <em>very</em> slow, this would be
 <p>And as for performance, it probably depends on the workload, but I’ve yet to see anything that suggests dask compute times are slower than Spark compute times. Case studies are always tricky since performance depends on the exact work being done, but here’s one <a class="reference external" href="https://arxiv.org/abs/1907.13030">case study comparison of performance</a> that puts dask just a little ahead. And I’ve heard reports of dask beating Spark by 40x in another project. So personally, I think dask is a no brainer: it will
 take <strong>much</strong> less of your time setup and use, and it should at least run about even with Spark.</p>
 <p>The only exceptions are some specific use cases, like network analysis, where Spark has some libraries that dask does not. For more on these types of issues, check out this <a class="reference external" href="https://docs.dask.org/en/latest/spark.html">conceptual comparison to Spark</a>.</p>
-</div>
-<div class="section" id="What-else-can-dask-do?">
+</section>
+<section id="What-else-can-dask-do?">
 <h2>What else can dask do?<a class="headerlink" href="#What-else-can-dask-do?" title="Permalink to this headline">¶</a></h2>
 <p>At this point, we’ve mostly emphasized what dask can do in terms of the data wrangling of dataframes. However, dask has a number of additional functionalities to be aware of:</p>
 <ul class="simple">
@@ -714,16 +732,16 @@ take <strong>much</strong> less of your time setup and use, and it should at lea
 <li><p>Distributed machine learning: dask has parallelized SOME machine learning methods in <a class="reference external" href="https://dask-ml.readthedocs.io/en/latest/">dask-ml</a></p></li>
 <li><p>dask can be used with different tools for parallelization other than <code class="docutils literal notranslate"><span class="pre">distributed</span></code> (for example, it can do some parallelism through multi-threading). However… it seems like everyone seems to agree at this point you should just use <code class="docutils literal notranslate"><span class="pre">distributed</span></code> all the time.</p></li>
 </ul>
-</div>
-<div class="section" id="What-can’t-dask-do?">
+</section>
+<section id="What-can’t-dask-do?">
 <h2>What can’t dask do?<a class="headerlink" href="#What-can’t-dask-do?" title="Permalink to this headline">¶</a></h2>
 <p>Because dask is basically a library full of little recipes for parallelizing common python, numpy, and pandas functions, you will occassionally find that there are some things that the authors of dask just haven’t implemented (usually because some operations are <em>really</em> hard to parallelize). Here are guides to what you can expect to work and what is unlikely to work with dask:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://docs.dask.org/en/latest/dataframe.html#scope">When using dask dataframes</a></p></li>
 <li><p><a class="reference external" href="https://docs.dask.org/en/latest/array.html#scope">When using dask arrays</a></p></li>
 </ul>
-</div>
-<div class="section" id="If-you-really-want-to-get-into-dask…">
+</section>
+<section id="If-you-really-want-to-get-into-dask…">
 <h2>If you really want to get into dask…<a class="headerlink" href="#If-you-really-want-to-get-into-dask…" title="Permalink to this headline">¶</a></h2>
 <p>Then <em>after</em> doing the exercise below (which I think is actually the most accessible to those taking this class), here are some extensions and next steps:</p>
 <ul class="simple">
@@ -736,15 +754,15 @@ take <strong>much</strong> less of your time setup and use, and it should at lea
 <li><p>Curious how dask compares to other tools for distributed computing? Here’s a <a class="reference external" href="https://docs.dask.org/en/latest/spark.html">conceptual comparison to Spark</a>, and here’s a <a class="reference external" href="https://arxiv.org/abs/1907.13030">case study comparison of performance</a>. Comparisons will usually depend a lot on the specifics of the work being done, but at least in this case, dask was a little faster than Spark.</p></li>
 <li><p>Working with GPUs? There’s a project to offer the kind of CPU parallelization we get from dask for GPUs called <a class="reference external" href="https://docs.rapids.ai/api/cudf/stable/dask-cudf.html">dask-cudf</a> (part of the <a class="reference external" href="https://rapids.ai/index.html">RAPIDS project</a>. The project is young but growing quickly. My guess, though, is that those libraries will become the infrastructure for updates to tools like <code class="docutils literal notranslate"><span class="pre">dask-ml</span></code> rather than something most applied people need to play with. But putting it here as an FYI!</p></li>
 </ul>
-</div>
-<div class="section" id="Exercises">
+</section>
+<section id="Exercises">
 <h2>Exercises<a class="headerlink" href="#Exercises" title="Permalink to this headline">¶</a></h2>
 <p>Exercises can be found <a class="reference internal" href="exercises/Exercise_dask.html"><span class="doc">here</span></a></p>
 <p>If you want more, you can find tutorials written by the dask team <a class="reference external" href="https://github.com/dask/dask-tutorial">here</a>.</p>
 <p>(Note: all these tutorials are great, but as the focus of this class is on real world tabular data, we’re gonna focus on those exercises).</p>
 <p><a class="reference internal" href="cheatsheets.html"><span class="doc">When you’re done, you can find a dask cheatsheet here for future reference!</span></a></p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -867,7 +885,7 @@ take <strong>much</strong> less of your time setup and use, and it should at lea
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

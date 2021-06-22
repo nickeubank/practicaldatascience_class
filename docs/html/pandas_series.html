@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Pandas Lesson 1: Series &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Pandas Lesson 2: Dataframes" href="pandas_dataframes.html" />
@@ -38,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -153,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -219,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -266,10 +284,10 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Pandas-Lesson-1:-Series">
+<section id="Pandas-Lesson-1:-Series">
 <h1>Pandas Lesson 1: Series<a class="headerlink" href="#Pandas-Lesson-1:-Series" title="Permalink to this headline">¶</a></h1>
 <p>This tutorial introduces the fundamental building block of <code class="docutils literal notranslate"><span class="pre">pandas</span></code>: <code class="docutils literal notranslate"><span class="pre">Series</span></code>. By the end of this section, you will learn how to create different types of Series, subset them, modify them, and summarize them.</p>
-<div class="section" id="1.-What-is-a-Series?">
+<section id="1.-What-is-a-Series?">
 <h2>1. What is a Series?<a class="headerlink" href="#1.-What-is-a-Series?" title="Permalink to this headline">¶</a></h2>
 <p>In the simpliest terms, a <code class="docutils literal notranslate"><span class="pre">Series</span></code> is an ordered collection of values, generally all of the same type. For example, you can have a Series that contains the ages of everyone in your class (a numeric Series), or a Series of all the names of people in your family (a string Series).</p>
 <p>This may sound familiar: isn’t that how we described <code class="docutils literal notranslate"><span class="pre">numpy</span></code> vectors (i.e. one-dimensional numpy arrays)? Yes! In fact, Series are basically one-dimensional <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays with lots of extra features added on top of them. As we’ll see, most everything you could do with a <code class="docutils literal notranslate"><span class="pre">numpy</span></code> array you can do with a Series; Series can just do <em>more</em>.</p>
@@ -339,8 +357,8 @@ div.rendered_html tbody tr:hover {
 dtype: int64
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Indices">
+</section>
+<section id="Indices">
 <h2>Indices<a class="headerlink" href="#Indices" title="Permalink to this headline">¶</a></h2>
 <p>One of the fundamental differences between <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays and Series is that all Series are associated with an <code class="docutils literal notranslate"><span class="pre">index</span></code>. An index is a set of labels for each observation in a Series. If you don’t specify an <code class="docutils literal notranslate"><span class="pre">index</span></code> when you create a Series, <code class="docutils literal notranslate"><span class="pre">pandas</span></code> will just create a default index that just labels each row with it’s initial row number, but you can specify an index if you want.</p>
 <p>In this case, for example, we know that these entries are associated with different days of the week, so let’s specify an index for our <code class="docutils literal notranslate"><span class="pre">attendance</span></code> Series:</p>
@@ -474,12 +492,12 @@ dtype: int64
 dtype: int64
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="2.-Subsetting-Series">
+</section>
+<section id="2.-Subsetting-Series">
 <h2>2. Subsetting Series<a class="headerlink" href="#2.-Subsetting-Series" title="Permalink to this headline">¶</a></h2>
 <p>Extracting a subset of elements from a Series is an extremely important task, not least because it generalizes nicely to working with bigger datasets (which are at the heart of data science). This process — whether applied to a Series or a dataset — is often referred to as “taking a subset”, “subsetting”, or “filtering”. If there is one skill you need to master as quickly as possible, it’s this.</p>
 <p>In <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, there are three ways to filter a Series: using a separate logical Series, using row-number indexing, and using index labels. I tend to use the first method most, but all three are useful. The first and second of these you will recognize from <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays, while the last once (since it uses index labels which only exist in <code class="docutils literal notranslate"><span class="pre">pandas</span></code>) is unique to <code class="docutils literal notranslate"><span class="pre">pandas</span></code>.</p>
-<div class="section" id="Subsetting-using-row-number-indexing">
+<section id="Subsetting-using-row-number-indexing">
 <h3>Subsetting using row-number indexing<a class="headerlink" href="#Subsetting-using-row-number-indexing" title="Permalink to this headline">¶</a></h3>
 <p>A different way to subset a Series is to specify the row-numbers you want to keep using the <code class="docutils literal notranslate"><span class="pre">iloc</span></code> function. (<code class="docutils literal notranslate"><span class="pre">iloc</span></code> stands for “integer location”, since row numbers are always integers). This will give you the behavior you’re more familiar with from <code class="docutils literal notranslate"><span class="pre">R</span></code> or <code class="docutils literal notranslate"><span class="pre">numpy</span></code>. Just remember that, as in all of Python, the first row is numbered <code class="docutils literal notranslate"><span class="pre">0</span></code>!</p>
 <div class="nbinput docutils container">
@@ -542,8 +560,8 @@ dtype: object
 dtype: object
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Subsetting-using-index-values">
+</section>
+<section id="Subsetting-using-index-values">
 <h3>Subsetting using index values<a class="headerlink" href="#Subsetting-using-index-values" title="Permalink to this headline">¶</a></h3>
 <p>Lastly, we can subset our rows using the index values associated with each row using the <code class="docutils literal notranslate"><span class="pre">loc</span></code> function.</p>
 <div class="nbinput nblast docutils container">
@@ -599,8 +617,8 @@ Friday       254
 dtype: int64
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Subsetting-with-logicals">
+</section>
+<section id="Subsetting-with-logicals">
 <h3>Subsetting with logicals<a class="headerlink" href="#Subsetting-with-logicals" title="Permalink to this headline">¶</a></h3>
 <p>Let’s jump right into an example, using our Zoo attendance Series:</p>
 <div class="nbinput docutils container">
@@ -792,8 +810,8 @@ dtype: object
 <p><strong>UGH</strong> I know. If I wrote pandas, this would not work and this would throw an exception. But that’s how it is.</p>
 <p>While this distinction between row numbers and index values is important, though, it comes up less often than you’d think. That’s because usually we subset by feeding in a new Series of booleans we made by hand; instead we build a new Series by executing a test on the Series we’re using. And when we do that, the new Series of booleans will have the same index as the old Series, so they align naturally. Look back at our example of <code class="docutils literal notranslate"><span class="pre">was_busy</span></code>: you’ll see that it automatically got the same index
 as our original Series, <code class="docutils literal notranslate"><span class="pre">attendance</span></code>. As a result, the first row of our boolean Series will have the same index value as the first row of our original Series, the second row of our boolean Series will have the same index value as the second row of our original Series, and so on. As a result, there’s no difference between matching on row order and matching on index value. But it does <em>occassionally</em> come up (like if you tried to re-sort one of these), so keep it in mind!</p>
-</div>
-<div class="section" id="Single-Square-Brackets-([])">
+</section>
+<section id="Single-Square-Brackets-([])">
 <h3>Single Square Brackets (<code class="docutils literal notranslate"><span class="pre">[]</span></code>)<a class="headerlink" href="#Single-Square-Brackets-([])" title="Permalink to this headline">¶</a></h3>
 <p>As discussed above, because Series have both an order of rows, and labels for each row, you should always think carefully about which method of subsetting you are invoking. My advice: <strong>Always using the ``.loc`` (for index labels) and ``.iloc`` (for row numbers) selectors. If you use these, the only surprising behavior to watch out for is that ``loc`` will align on row numbers if you pass a list or array of booleans with no index.</strong> But since you <em>can’t</em> align on an index in that case, there’s
 no alternative behavior you would be expecting in that situation.</p>
@@ -929,9 +947,9 @@ dtype: object
 </pre></div></div>
 </div>
 <p>So personally, I try to always use <code class="docutils literal notranslate"><span class="pre">loc</span></code> or <code class="docutils literal notranslate"><span class="pre">iloc</span></code> to avoid this kind of confusion. But if you do use <code class="docutils literal notranslate"><span class="pre">[]</span></code> on their own, just be very careful that you don’t inadvertently select row based on index values when you think you’re selecting on</p>
-</div>
-</div>
-<div class="section" id="Types-of-Series">
+</section>
+</section>
+<section id="Types-of-Series">
 <h2>Types of Series<a class="headerlink" href="#Types-of-Series" title="Permalink to this headline">¶</a></h2>
 <p>Before we dive too far into Series manipulations, it’s important to talk about datatypes. Every Series, as we will see, has a “dtype” (short for datatype). The <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of a Series is important to understand because a Series’ <code class="docutils literal notranslate"><span class="pre">dtype</span></code> determines what manipulations you can apply to that series.</p>
 <p>There are, broadly, two types of Series:</p>
@@ -1001,7 +1019,7 @@ dtype(&#39;O&#39;)
 </pre></div></div>
 </div>
 <p>As you can see, integer (<code class="docutils literal notranslate"><span class="pre">int64</span></code>) Series can <em>only</em> hold integers. If we add one number with a decimal component, the whole thing becomes a <code class="docutils literal notranslate"><span class="pre">float64</span></code>. Similarly, floating point Series can only hold numbers. If we add a single String, the whole thing becomes an Object (<code class="docutils literal notranslate"><span class="pre">O</span></code>) type.</p>
-<div class="section" id="Converting-datatypes">
+<section id="Converting-datatypes">
 <h3>Converting datatypes<a class="headerlink" href="#Converting-datatypes" title="Permalink to this headline">¶</a></h3>
 <p>If you want to change the datatype of a Series, you can do so with the <code class="docutils literal notranslate"><span class="pre">.asdtype()</span></code> method… provided a conversion is possible! For example, you can always convert integer arrays to floating point Series because a whole number can be represented as a floating point number (just trust me on this for now… we’ll discuss why later!).</p>
 <div class="nbinput docutils container">
@@ -1137,9 +1155,9 @@ dtype: int64
 <span class="ansi-red-fg">ValueError</span>: could not convert string to float: &#39;a string&#39;
 </pre></div></div>
 </div>
-</div>
-</div>
-<div class="section" id="3.-Series-Arithmetics">
+</section>
+</section>
+<section id="3.-Series-Arithmetics">
 <h2>3. Series Arithmetics<a class="headerlink" href="#3.-Series-Arithmetics" title="Permalink to this headline">¶</a></h2>
 <p>One of the nice things about Series is that, like <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays, we can easily do things like multiple <em>all</em> the values by another number easily. For example, suppose tickets to my zoo cost $15 per person. What is the total money generated by ticket sales each day? Let’s find out!</p>
 <div class="nbinput docutils container">
@@ -1223,7 +1241,7 @@ dtype: int64
 <li><p>Two Series with the same number of elements. <strong>When working with two Series, elements are matched based on index values, not row numbers</strong>.</p></li>
 </ol>
 <p>But note that the types of things you can do with a Series depends on the Series <code class="docutils literal notranslate"><span class="pre">dtype</span></code>. Math functions, for example, can only be applied to numeric datatypes!</p>
-<div class="section" id="Summarizing-with-Functions">
+<section id="Summarizing-with-Functions">
 <h3>Summarizing with Functions<a class="headerlink" href="#Summarizing-with-Functions" title="Permalink to this headline">¶</a></h3>
 <p>We often want to get summary statistics from a Series — that is, learn something general about it by looking beyond its constituent elements. If we have a Series in which each element represents a person’s height, we may want to know who the shortest or tallest person is, what the median or mean height is, what the standard deviation is, etc. Here are common summary facts for numeric Series (some also work for object types):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_numbers</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
@@ -1315,9 +1333,9 @@ dtype: int64
 dtype: float64
 </pre></div></div>
 </div>
-</div>
-</div>
-<div class="section" id="4.-Modifying-Series-Elements">
+</section>
+</section>
+<section id="4.-Modifying-Series-Elements">
 <h2>4. Modifying Series Elements<a class="headerlink" href="#4.-Modifying-Series-Elements" title="Permalink to this headline">¶</a></h2>
 <p>The subsetting logic from above can be used to modify Series. The idea here is that instead of keeping elements that meet a logical condition or occur at a specific index, we can change them. For example, what if we had mis-entered attendance for our zoo? We can fix it using a logical test, row-number indexing (<code class="docutils literal notranslate"><span class="pre">iloc</span></code>), or by index-value (<code class="docutils literal notranslate"><span class="pre">loc</span></code>).</p>
 <div class="nbinput docutils container">
@@ -1404,7 +1422,7 @@ Sunday       472
 dtype: int64
 </pre></div></div>
 </div>
-<div class="section" id="Element-Modification-and-DataTypes">
+<section id="Element-Modification-and-DataTypes">
 <h3>Element Modification and DataTypes<a class="headerlink" href="#Element-Modification-and-DataTypes" title="Permalink to this headline">¶</a></h3>
 <p>One of the big differences between Series and <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays is that Series are “dynamically typed”, meaning that if you have an integer Series and you try and add a number like 3.14 (which has a decimal component, and thus cannot be represented as a floating point number), <code class="docutils literal notranslate"><span class="pre">pandas</span></code> will just convert your whole array to floating point numbers so that it can hold 3.14. Similarly, if you try and add a string to a floating point array, <code class="docutils literal notranslate"><span class="pre">pandas</span></code> will just convert the whole array to an Object
 Series.</p>
@@ -1541,9 +1559,9 @@ dtype(&#39;int64&#39;)
 <span class="ansi-red-fg">ValueError</span>: invalid literal for int() with base 10: &#39;first entry&#39;
 </pre></div></div>
 </div>
-</div>
-</div>
-<div class="section" id="5.-numpy-Under-The-Hood">
+</section>
+</section>
+<section id="5.-numpy-Under-The-Hood">
 <h2>5. numpy Under The Hood<a class="headerlink" href="#5.-numpy-Under-The-Hood" title="Permalink to this headline">¶</a></h2>
 <p>As you may recall, at the start of this tutorial I recommended thinking of Series as augmented 1-dimensional <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays. It turns out that’s more than just a metaphor: behind every Series <em>is</em> a numpy array which you can access with the <code class="docutils literal notranslate"><span class="pre">.values</span></code> method:</p>
 <div class="nbinput docutils container">
@@ -1566,13 +1584,13 @@ array([132.0, &#39;no one showed up on Tuesday! :(&#39;, 112.0, 84.0, 254.0,
 </pre></div></div>
 </div>
 <p>This is good to know because every now and then you my find a tool that works with <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays but <em>not</em> <code class="docutils literal notranslate"><span class="pre">pandas</span></code>. And when that happens, you now know how to pull out the <code class="docutils literal notranslate"><span class="pre">numpy</span></code> array underlying your Series and use it directly!</p>
-</div>
-<div class="section" id="6.-Exercises!">
+</section>
+<section id="6.-Exercises!">
 <h2>6. Exercises!<a class="headerlink" href="#6.-Exercises!" title="Permalink to this headline">¶</a></h2>
 <p><em>If you are enrolled in Practical Data Science at Duke, don’t do these exercises on your own – we’ll do them in class!</em></p>
 <p><a class="reference internal" href="exercises/Exercise_series.html"><span class="doc">Series Exercises</span></a></p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -1692,7 +1710,7 @@ array([132.0, &#39;no one showed up on Tuesday! :(&#39;, 112.0, 84.0, 254.0,
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

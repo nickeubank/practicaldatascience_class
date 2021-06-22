@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Reviewing Code on Github &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Parquet" href="parquet.html" />
@@ -33,7 +36,7 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="Reviewing-Code-on-Github">
+  <section id="Reviewing-Code-on-Github">
 <h1>Reviewing Code on Github<a class="headerlink" href="#Reviewing-Code-on-Github" title="Permalink to this headline">¶</a></h1>
 <p>When you are responsible for reviewing code that someone has submitted in a Pull Request (commonly just called a “PR”) on github, your job isn’t as simple as responding “looks good!”. The goal of the Pull Request process is to ensure all merged code reflects the common wisdom of the team, so its your job to actually read the code you’re reviewing and to ask questions and provide detailed comments. This may be the last time anyone looks at this code before the rest of your team builds your
 analysis on its output, so take your reviewer role seriously!</p>
@@ -42,7 +45,7 @@ analysis on its output, so take your reviewer role seriously!</p>
 <p>To illustrate, here’s an exceptional PR review from last year by Vanessa, our 2020 TA, along with some great clarifying responses from Fang Feng. I would like to have seen more of Vanessa’s suggestions integrated into the code before committing (some were in commits below the discussion, but not all), but this is a great starting example.</p>
 <p>Note that much of the exchange took place through individual comments added to specific lines of code (to do this, click on the “Files changed” tab, then click on the <code class="docutils literal notranslate"><span class="pre">+</span></code> icon that comes up when you mouse over the line numbers next to the code you want to comment on). <strong>This only works if you submit your python code in a plain text file (.py)</strong>. Jupyter notebooks will make a mess of this kind of review!</p>
 <p><img alt="prreview_2" src="_images/prreview_2.png" /> <img alt="prreview_3" src="_images/prreview_3.png" /> <img alt="prreview_4" src="_images/prreview_4.png" /> <img alt="prreview_5" src="_images/prreview_5.png" /> <img alt="prreview_6" src="_images/prreview_6.png" /> <img alt="prreview_7" src="_images/prreview_7.png" /></p>
-</div>
+</section>
 
 
           </div>
@@ -152,7 +155,7 @@ analysis on its output, so take your reviewer role seriously!</p>
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Advanced Command Line Tutorial &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="The Jupyter Project" href="jupyter.html" />
@@ -38,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -153,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -219,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -266,13 +284,13 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Advanced-Command-Line-Tutorial">
+<section id="Advanced-Command-Line-Tutorial">
 <h1>Advanced Command Line Tutorial<a class="headerlink" href="#Advanced-Command-Line-Tutorial" title="Permalink to this headline">¶</a></h1>
 <p>In the last section, we practiced using a few tools and introduced the idea that the command line is just a way of talking to your operating system using text commands rather than by clicking on icons. In this section, we’ll introduce some more advanced tools, and discuss general principles that will help you during your data science career.</p>
 <p>Like everything in this course, this section will focus on tools that are most relevant for an applied data scientist. We will not try and cover advanced bash programming (loops, function definitions, etc.), because anything you can do that way you will also be able to do in Python, for which you are receiving lots of additional training. If you want to learn those skills, there are lots of great tutorials out there (e.g. the full <a class="reference external" href="https://www.datacamp.com/courses/introduction-to-shell-for-data-science">DataCamp
 tutorial</a>). Instead, the focus here is on skills you’re likely to use when using git, managing packages in Python, or getting stuff set up on remote servers so you can run your R or Python scripts.</p>
 <p>In the examples below, we’ll be working with the example data in the <a class="reference external" href="https://github.com/nickeubank/practicaldatascience/tree/master/Example_Data">Example_Data/command_line</a> folder in this repository, which you can download if you wish to follow along.</p>
-<div class="section" id="Command-Line-Syntax:-General-Principles">
+<section id="Command-Line-Syntax:-General-Principles">
 <h2>Command Line Syntax: General Principles<a class="headerlink" href="#Command-Line-Syntax:-General-Principles" title="Permalink to this headline">¶</a></h2>
 <p>You may have noticed there are some patterns to how command line tools we’ve covered so far operate. In this section we’ll introduce some general principles that are used by most command line programs (like <code class="docutils literal notranslate"><span class="pre">git</span></code>, <code class="docutils literal notranslate"><span class="pre">python</span></code>, <code class="docutils literal notranslate"><span class="pre">julia</span></code>, <code class="docutils literal notranslate"><span class="pre">conda</span></code>, <code class="docutils literal notranslate"><span class="pre">zip</span></code>, <code class="docutils literal notranslate"><span class="pre">ssh</span></code>, etc.):</p>
 <p>1: <strong>The first thing you type into the shell is actually just the name of a program.</strong> This may not be obvious, but when you type <code class="docutils literal notranslate"><span class="pre">cd</span></code> and <code class="docutils literal notranslate"><span class="pre">ls</span></code>, you’re actually asking your operating system to find and execute programs with those names. If you wanted to, you could actually find individual files called <code class="docutils literal notranslate"><span class="pre">cd</span></code> and <code class="docutils literal notranslate"><span class="pre">ls</span></code> that the operating system is running when you use those commands. And later on, you’ll spend a lot of time using the commands <code class="docutils literal notranslate"><span class="pre">python</span></code> or <code class="docutils literal notranslate"><span class="pre">git</span></code>, which is just a way of
@@ -372,52 +390,52 @@ drwxr-xr-x  35 Nick  staff   1.1K Jun 25 08:55 example_csvs
 -rw-r--r--   1 Nick  staff    40B Apr 11 14:08 just_another_file.txt
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Getting-Help">
+</section>
+<section id="Getting-Help">
 <h2>Getting Help<a class="headerlink" href="#Getting-Help" title="Permalink to this headline">¶</a></h2>
 <p>Now that you know that many commands have options, the next obvious question is: how do I learn what options are available?</p>
 <p>The answer is that most commands have helpfiles you can get either by typing <code class="docutils literal notranslate"><span class="pre">NAMEOFCOMMAND</span> <span class="pre">-h</span></code> or <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">NAMEOFCOMMAND</span></code>.</p>
 <p><strong>-h</strong></p>
 <p>For most commands, <code class="docutils literal notranslate"><span class="pre">NAMEOFCOMMAND</span> <span class="pre">-h</span></code> or <code class="docutils literal notranslate"><span class="pre">NAMEOFCOMMAND</span> <span class="pre">--help</span></code> will bring up a small guide to command options. For example, <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-h</span></code> or <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">--help</span></code> bring up:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">python</span> <span class="p">[</span><span class="n">option</span><span class="p">]</span> <span class="o">...</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span> <span class="n">cmd</span> <span class="o">|</span> <span class="o">-</span><span class="n">m</span> <span class="n">mod</span> <span class="o">|</span> <span class="n">file</span> <span class="o">|</span> <span class="o">-</span><span class="p">]</span> <span class="p">[</span><span class="n">arg</span><span class="p">]</span> <span class="o">...</span>
-<span class="n">Options</span> <span class="ow">and</span> <span class="n">arguments</span> <span class="p">(</span><span class="ow">and</span> <span class="n">corresponding</span> <span class="n">environment</span> <span class="n">variables</span><span class="p">):</span>
-<span class="o">-</span><span class="n">b</span>     <span class="p">:</span> <span class="n">issue</span> <span class="n">warnings</span> <span class="n">about</span> <span class="nb">str</span><span class="p">(</span><span class="n">bytes_instance</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">bytearray_instance</span><span class="p">)</span>
-         <span class="ow">and</span> <span class="n">comparing</span> <span class="nb">bytes</span><span class="o">/</span><span class="nb">bytearray</span> <span class="k">with</span> <span class="nb">str</span><span class="o">.</span> <span class="p">(</span><span class="o">-</span><span class="n">bb</span><span class="p">:</span> <span class="n">issue</span> <span class="n">errors</span><span class="p">)</span>
-<span class="o">-</span><span class="n">B</span>     <span class="p">:</span> <span class="n">don</span><span class="s1">&#39;t write .pyc files on import; also PYTHONDONTWRITEBYTECODE=x</span>
-<span class="o">-</span><span class="n">c</span> <span class="n">cmd</span> <span class="p">:</span> <span class="n">program</span> <span class="n">passed</span> <span class="ow">in</span> <span class="k">as</span> <span class="n">string</span> <span class="p">(</span><span class="n">terminates</span> <span class="n">option</span> <span class="nb">list</span><span class="p">)</span>
-<span class="o">-</span><span class="n">d</span>     <span class="p">:</span> <span class="n">debug</span> <span class="n">output</span> <span class="kn">from</span> <span class="nn">parser</span><span class="p">;</span> <span class="n">also</span> <span class="n">PYTHONDEBUG</span><span class="o">=</span><span class="n">x</span>
-<span class="o">-</span><span class="n">E</span>     <span class="p">:</span> <span class="n">ignore</span> <span class="n">PYTHON</span><span class="o">*</span> <span class="n">environment</span> <span class="n">variables</span> <span class="p">(</span><span class="n">such</span> <span class="k">as</span> <span class="n">PYTHONPATH</span><span class="p">)</span>
-<span class="o">-</span><span class="n">h</span>     <span class="p">:</span> <span class="nb">print</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span> <span class="p">(</span><span class="n">also</span> <span class="o">--</span><span class="n">help</span><span class="p">)</span>
-<span class="o">-</span><span class="n">i</span>     <span class="p">:</span> <span class="n">inspect</span> <span class="n">interactively</span> <span class="n">after</span> <span class="n">running</span> <span class="n">script</span><span class="p">;</span> <span class="n">forces</span> <span class="n">a</span> <span class="n">prompt</span> <span class="n">even</span>
-         <span class="k">if</span> <span class="n">stdin</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">appear</span> <span class="n">to</span> <span class="n">be</span> <span class="n">a</span> <span class="n">terminal</span><span class="p">;</span> <span class="n">also</span> <span class="n">PYTHONINSPECT</span><span class="o">=</span><span class="n">x</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>usage: python [option] ... [-c cmd | -m mod | file | -] [arg] ...
+Options and arguments (and corresponding environment variables):
+-b     : issue warnings about str(bytes_instance), str(bytearray_instance)
+         and comparing bytes/bytearray with str. (-bb: issue errors)
+-B     : don&#39;t write .pyc files on import; also PYTHONDONTWRITEBYTECODE=x
+-c cmd : program passed in as string (terminates option list)
+-d     : debug output from parser; also PYTHONDEBUG=x
+-E     : ignore PYTHON* environment variables (such as PYTHONPATH)
+-h     : print this help message and exit (also --help)
+-i     : inspect interactively after running script; forces a prompt even
+         if stdin does not appear to be a terminal; also PYTHONINSPECT=x
 </pre></div>
 </div>
 <p><strong>man</strong></p>
 <p>While <code class="docutils literal notranslate"><span class="pre">NAMEOFCOMMAND</span> <span class="pre">-h</span></code> works for most modern commands, for very old commands (those that have been around since the early days of computing like <code class="docutils literal notranslate"><span class="pre">ls</span></code> or <code class="docutils literal notranslate"><span class="pre">cd</span></code>), you often need to use <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">NAMEOFCOMMAND</span></code> (<code class="docutils literal notranslate"><span class="pre">man</span></code> is short for manual). To illustrate, <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">ls</span></code> brings up:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LS</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>                     <span class="n">BSD</span> <span class="n">General</span> <span class="n">Commands</span> <span class="n">Manual</span>                    <span class="n">LS</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>LS(1)                     BSD General Commands Manual                    LS(1)
 
-<span class="n">NAME</span>
-     <span class="n">ls</span> <span class="o">--</span> <span class="nb">list</span> <span class="n">directory</span> <span class="n">contents</span>
+NAME
+     ls -- list directory contents
 
-<span class="n">SYNOPSIS</span>
-     <span class="n">ls</span> <span class="p">[</span><span class="o">-</span><span class="n">ABCFGHLOPRSTUW</span><span class="nd">@abcdefghiklmnopqrstuwx1</span><span class="p">]</span> <span class="p">[</span><span class="n">file</span> <span class="o">...</span><span class="p">]</span>
+SYNOPSIS
+     ls [-ABCFGHLOPRSTUW@abcdefghiklmnopqrstuwx1] [file ...]
 
-<span class="n">DESCRIPTION</span>
-     <span class="n">For</span> <span class="n">each</span> <span class="n">operand</span> <span class="n">that</span> <span class="n">names</span> <span class="n">a</span> <span class="n">file</span> <span class="n">of</span> <span class="n">a</span> <span class="nb">type</span> <span class="n">other</span> <span class="n">than</span> <span class="n">directory</span><span class="p">,</span> <span class="n">ls</span>
-     <span class="n">displays</span> <span class="n">its</span> <span class="n">name</span> <span class="k">as</span> <span class="n">well</span> <span class="k">as</span> <span class="nb">any</span> <span class="n">requested</span><span class="p">,</span> <span class="n">associated</span> <span class="n">information</span><span class="o">.</span>  <span class="n">For</span>
-     <span class="n">each</span> <span class="n">operand</span> <span class="n">that</span> <span class="n">names</span> <span class="n">a</span> <span class="n">file</span> <span class="n">of</span> <span class="nb">type</span> <span class="n">directory</span><span class="p">,</span> <span class="n">ls</span> <span class="n">displays</span> <span class="n">the</span> <span class="n">names</span>
-     <span class="n">of</span> <span class="n">files</span> <span class="n">contained</span> <span class="n">within</span> <span class="n">that</span> <span class="n">directory</span><span class="p">,</span> <span class="k">as</span> <span class="n">well</span> <span class="k">as</span> <span class="nb">any</span> <span class="n">requested</span><span class="p">,</span> <span class="n">asso</span><span class="o">-</span>
-     <span class="n">ciated</span> <span class="n">information</span><span class="o">.</span>
-<span class="o">...</span>
+DESCRIPTION
+     For each operand that names a file of a type other than directory, ls
+     displays its name as well as any requested, associated information.  For
+     each operand that names a file of type directory, ls displays the names
+     of files contained within that directory, as well as any requested, asso-
+     ciated information.
+...
 </pre></div>
 </div>
 <p><strong>NOTE:</strong> Windows bash clients (like <code class="docutils literal notranslate"><span class="pre">Cmder</span></code> and <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">bash</span></code> often don’t support <code class="docutils literal notranslate"><span class="pre">man</span></code>. To get help for old commands, try googling what you would type if <code class="docutils literal notranslate"><span class="pre">man</span></code> actually worked, but into google (e.g. google <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">rmdir</span></code>).</p>
-</div>
-<div class="section" id="The-“Recursive”-Flag">
+</section>
+<section id="The-“Recursive”-Flag">
 <h2>The “Recursive” Flag<a class="headerlink" href="#The-“Recursive”-Flag" title="Permalink to this headline">¶</a></h2>
 <p>Now that you’re familiar with the idea of using flags to modify the behavior of commands, there’s one kinda weird flag that’s worth discussing in detail: <code class="docutils literal notranslate"><span class="pre">-r</span></code>, or occassionally <code class="docutils literal notranslate"><span class="pre">-R</span></code>.</p>
 <p>Many command line tools are designed to operate on <em>files</em>, and by default they won’t work if you try to use them at folders (directories). For example, if you try and copy a folder with <code class="docutils literal notranslate"><span class="pre">cp</span></code>, you’ll get the following error:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>➜  cp a_folder ~/desktop
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>➜  cp a_folder ~/desktop
 cp: a_folder is a directory (not copied).
 </pre></div>
 </div>
@@ -428,8 +446,8 @@ cp: a_folder is a directory (not copied).
 <li><p>Copying folders requires <code class="docutils literal notranslate"><span class="pre">cp</span> <span class="pre">-r</span></code></p></li>
 <li><p>Compress a folder with zip requires <code class="docutils literal notranslate"><span class="pre">zip</span> <span class="pre">-r</span></code></p></li>
 </ul>
-</div>
-<div class="section" id="Invisible-Files">
+</section>
+<section id="Invisible-Files">
 <h2>Invisible Files<a class="headerlink" href="#Invisible-Files" title="Permalink to this headline">¶</a></h2>
 <p>Now that you’re comfortable with options, it’s time to introduce you to a dark secret of modern operating systems: there are invisible files <em>everywhere</em>. When a programmer needs to hide a file or folder, but doesn’t want to show it to the user, (s)he prefixes the file name with a single period (<code class="docutils literal notranslate"><span class="pre">.</span></code>). The operating sytem then hides this files from the user.</p>
 <p>But now you can see them using the command line. Just use the <code class="docutils literal notranslate"><span class="pre">-a</span></code> flag (short for “all”) for the <code class="docutils literal notranslate"><span class="pre">ls</span></code> command to have it show you all the files that are there:</p>
@@ -486,8 +504,8 @@ drwxr-xr-x  35 Nick  staff  1120 Jun 25 08:55 example_csvs
 <p>This trick is useful to know, because in some programs (like git) rely on settings hidden in dot-files. In fact, you should try and memorize this command (<code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-la</span></code>) – many people use it more than plain old <code class="docutils literal notranslate"><span class="pre">ls</span></code>.</p>
 <p>How common are dot-files? Extremely. See for yourself: if you go to your home directory, you’ll find that all sorts of programs have been storying their settings and installed packages in dot-files. Just run <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">~</span></code> (remember that <code class="docutils literal notranslate"><span class="pre">~</span></code> is just a short hand for your home folder, which on most systems is <code class="docutils literal notranslate"><span class="pre">/users/YOURUSERNAME</span></code>), then <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-la</span></code>.</p>
 <p>Feel free to explore these files and folders if you want, but I would strongly suggest against editing anything unless you know what you’re doing – unlike <code class="docutils literal notranslate"><span class="pre">.DS_Store</span></code> files, changing some of these can really screw up how some applications work.</p>
-</div>
-<div class="section" id="Wildcards">
+</section>
+<section id="Wildcards">
 <h2>Wildcards<a class="headerlink" href="#Wildcards" title="Permalink to this headline">¶</a></h2>
 <p>As we saw in the last set of exercises, one of the most powerful command line tricks (and one of the places where using the command line can be <em>much</em> easier than trying to do things with your mouse) is the use of wildcards. Any time you are listing files, you can use an asterix (<code class="docutils literal notranslate"><span class="pre">*</span></code>) to allow any pattern to appear in part of a filename. For example, to list all the CSV files in a folder (but only the CSVs), you can type:</p>
 <div class="nbinput docutils container">
@@ -567,16 +585,16 @@ ls *.csv
 </pre></div></div>
 </div>
 <p>It will also catch (and if you were to use <code class="docutils literal notranslate"><span class="pre">rm</span></code>, delete) November (<code class="docutils literal notranslate"><span class="pre">2018_11_</span></code>) and December (<code class="docutils literal notranslate"><span class="pre">2019_12_</span></code>)! To <em>just</em> catch January, you’d have to be more specific and use <code class="docutils literal notranslate"><span class="pre">rm</span> <span class="pre">*2018_1_</span></code> (with the trailing underscore).</p>
-</div>
-<div class="section" id="Using-The-Outputs-of-Commands">
+</section>
+<section id="Using-The-Outputs-of-Commands">
 <h2>Using The Outputs of Commands<a class="headerlink" href="#Using-The-Outputs-of-Commands" title="Permalink to this headline">¶</a></h2>
 <p>We’ve seen there are several commands that will print information to the terminal for you to see. But sometimes we want to <em>do</em> something with the information that programs return. For example, it’s nice that <code class="docutils literal notranslate"><span class="pre">ls</span></code> shows us the contents of a folder, but what if we wanted to save that to disk so we could open it and use it in a different program?</p>
-<div class="section" id="Saving-to-Disk">
+<section id="Saving-to-Disk">
 <h3>Saving to Disk<a class="headerlink" href="#Saving-to-Disk" title="Permalink to this headline">¶</a></h3>
 <p>You can re-direct the output of any program that prints something to the screen to a file with the <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> command. For example, to save the output of the <code class="docutils literal notranslate"><span class="pre">ls</span></code> command to a file on your desktop, you would type <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">&gt;</span> <span class="pre">ls_output.txt</span></code>.</p>
 <p>Note that this will only work for commands that print something directly to the screen (like <code class="docutils literal notranslate"><span class="pre">ls</span></code>, or <code class="docutils literal notranslate"><span class="pre">cat</span></code>). It won’t work for programs that just open up an interactive session (like <code class="docutils literal notranslate"><span class="pre">less</span></code>).</p>
-</div>
-<div class="section" id="Piping">
+</section>
+<section id="Piping">
 <h3>Piping<a class="headerlink" href="#Piping" title="Permalink to this headline">¶</a></h3>
 <p>Sometimes instead of saving the output of a program to disk, you want to pass it to another program to analyze. This practice – using the output of one program as input to another – is called “piping”, and it can be very powerful (and is actually used in many programming languages, not just <code class="docutils literal notranslate"><span class="pre">bash</span></code>).</p>
 <p>For example, suppose we wanted to count the number of <code class="docutils literal notranslate"><span class="pre">.csv</span></code> files in a folder. One way to do this would be to use <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">*.csv</span></code> to save the names of all the files in a directory to disk, then use the <code class="docutils literal notranslate"><span class="pre">wc</span></code> command (short for “word count”) to count the number of lines in that file. To do so, we save the output of <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-1</span> <span class="pre">*.csv</span></code> to disk (the <code class="docutils literal notranslate"><span class="pre">-1</span></code> option forces <code class="docutils literal notranslate"><span class="pre">ls</span></code> to put one file name on each line), then point <code class="docutils literal notranslate"><span class="pre">wc</span></code> at the file using the <code class="docutils literal notranslate"><span class="pre">-l</span></code> option (which counts total lines, since if
@@ -666,14 +684,14 @@ wc -l ~/files_in_folder.txt
       32
 </pre></div></div>
 </div>
-</div>
-</div>
-<div class="section" id="The-nano-Editor">
+</section>
+</section>
+<section id="The-nano-Editor">
 <h2>The <code class="docutils literal notranslate"><span class="pre">nano</span></code> Editor<a class="headerlink" href="#The-nano-Editor" title="Permalink to this headline">¶</a></h2>
 <p>It is often the case when working at the command line that one wants to actually edit a file, not just look at it or move it around. For small, quick edits, <code class="docutils literal notranslate"><span class="pre">bash</span></code> comes with an extremely useful tool for this purpose: <code class="docutils literal notranslate"><span class="pre">nano</span></code>. Just type <code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">FILENAME</span></code> on almost any system, and you can edit your file without openning or installing additional programs.</p>
 <p>(Note for MIDS Students: you can also use emacs for the same purpose, since you’ve already gone through the pain of learning it!)</p>
-</div>
-<div class="section" id="The-PATH-Variable">
+</section>
+<section id="The-PATH-Variable">
 <h2>The PATH Variable<a class="headerlink" href="#The-PATH-Variable" title="Permalink to this headline">¶</a></h2>
 <p>The last feature of the command line that is important to understand is the PATH variable. We won’t get into all the intricacies of the PATH variable here, but having a basic understanding of its purpose and function will likely prove useful to you if you ever have to troubleshoot problems in the future.</p>
 <p>Have you ever wondered how the command line knows what to do when you type a command like <code class="docutils literal notranslate"><span class="pre">python</span></code> or <code class="docutils literal notranslate"><span class="pre">ls</span></code>? How does it know what program to run, especially on a computer that might have multiple installations of a program like Python?</p>
@@ -698,15 +716,15 @@ wc -l ~/files_in_folder.txt
 </div>
 <p>That means that when I type <code class="docutils literal notranslate"><span class="pre">python</span></code>, my computer will first look in the folder <code class="docutils literal notranslate"><span class="pre">/users/nick/anaconda3/bin</span></code> to see if there’s a file named <code class="docutils literal notranslate"><span class="pre">python</span></code> it can run. If it can’t find one there, it moves on to <code class="docutils literal notranslate"><span class="pre">/users/nick/anaconda3/condabin</span></code>, etc.</p>
 <p>(You’ll see that <code class="docutils literal notranslate"><span class="pre">/Users/Nick/anaconda3/bin</span></code> appears twice in my <code class="docutils literal notranslate"><span class="pre">PATH</span></code>. That’s because the program I’m working with adds <code class="docutils literal notranslate"><span class="pre">/Users/Nick/anaconda3/bin</span></code> to my PATH when it starts up, leading to duplication. Thankfully, duplication doesn’t really matter – the time it takes the computer to check that folder twice is miniscule).</p>
-<div class="section" id="Why-this-is-useful-to-know">
+<section id="Why-this-is-useful-to-know">
 <h3>Why this is useful to know<a class="headerlink" href="#Why-this-is-useful-to-know" title="Permalink to this headline">¶</a></h3>
 <p>In a perfect world, you’ll never have to worry about your PATH variable, but there are a couple situations where knowing about your PATH variable can be helpful. In particular:</p>
 <ul class="simple">
 <li><p>If downloaded a program, but you can’t run it from the command line, that probably means that it’s location isn’t in the <code class="docutils literal notranslate"><span class="pre">PATH</span></code> variable.</p></li>
 <li><p>If you find that when you type a command like <code class="docutils literal notranslate"><span class="pre">python</span></code>, the command line isn’t running the <strong>version</strong> of python you want it to run, that’s probably because a different version of python appears <strong>earlier</strong> in the PATH variable (since the command line will stop looking through these folders as soon as it finds a match). Note you can diagnose this problem by typing <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">COMMANDNAME</span></code>, which will tell you the folder from which COMMANDNAME is being run.</p></li>
 </ul>
-</div>
-<div class="section" id="Modifying-your-PATH-Variable">
+</section>
+<section id="Modifying-your-PATH-Variable">
 <h3>Modifying your PATH Variable<a class="headerlink" href="#Modifying-your-PATH-Variable" title="Permalink to this headline">¶</a></h3>
 <p>How you modify your PATH variable depends a little on your operating system.</p>
 <p><strong>Configuration File on macOS and Linux</strong></p>
@@ -728,14 +746,14 @@ see and open it.</p>
 </pre></div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="Command-Line-Exercises">
+</section>
+</section>
+<section id="Command-Line-Exercises">
 <h2>Command Line Exercises<a class="headerlink" href="#Command-Line-Exercises" title="Permalink to this headline">¶</a></h2>
 <p>Let’s do some exercises!</p>
 <p><a class="reference internal" href="exercises/Exercise_CommandLine_2_Advanced.html"><span class="doc">Advanced Command Line Exercises</span></a></p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -856,7 +874,7 @@ see and open it.</p>
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

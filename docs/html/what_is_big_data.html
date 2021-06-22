@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>What is Big Data? &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Big Data Strategies" href="big_data_strategies.html" />
@@ -33,11 +36,11 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="What-is-Big-Data?">
+  <section id="What-is-Big-Data?">
 <h1>What is Big Data?<a class="headerlink" href="#What-is-Big-Data?" title="Permalink to this headline">¶</a></h1>
 <p>Big Data is probably the only term that can compete with “data science” for frequency of use despite the fact no one means the same thing when they say it. In many contexts, for example, “big data” just refers to large datasets.</p>
 <p>In this course, however, we’ll use a much more precise definition: data is “big” if it doesn’t fit into RAM (which we’ll refer to here as <strong>main memory</strong> for reasons that will become clear later. ).</p>
-<div class="section" id="Why-does-it-matter-if-data-fits-into-main-memory?">
+<section id="Why-does-it-matter-if-data-fits-into-main-memory?">
 <h2>Why does it matter if data fits into main memory?<a class="headerlink" href="#Why-does-it-matter-if-data-fits-into-main-memory?" title="Permalink to this headline">¶</a></h2>
 <p>Before we get into big data and strategies for working with it, we need to take a short digression into computer architecture.</p>
 <p>When you computer executes code – for example, adding up all the entries in a vector – it doesn’t all happen in one place. Your computer stores data (like your vector) in main memory (again, this is the term used for what you buy as RAM) where it has several gigabytes of space to put things. But actual mathematical operations happen in the processor, which is physically located in a different place in your computer. So to add two numbers, you computer must move those numbers from main memory
@@ -51,17 +54,17 @@ post</a>).</p>
 <p>As the table shows, if we were to pretend that a single tick of your processor (essentially how long it takes to add two numbers) took 1 second, then stopping to get <em>one byte</em> of data from main memory would take several minutes. And if we wanted to get data from a spinning harddrive, we’d have to wait between 11 days and <em>four months</em>. SSDs obviously perform much better than physical harddrives with spinning platters, but even those take hours to days. <em>And that’s just to get the first byte!</em>
 There are <em>also</em> the differences in transfer rates once data starts flowing!</p>
 <p>In other words, when working with large datasets, moving around your data is often the most expensive thing you will do, and the penalities for <em>not</em> being able to fit your data into main memory mean that something that might take minutes if you could do it with data in main memory could take days.</p>
-<div class="section" id="OK,-what’s-this-cache-stuff?">
+<section id="OK,-what’s-this-cache-stuff?">
 <h3>OK, what’s this cache stuff?<a class="headerlink" href="#OK,-what’s-this-cache-stuff?" title="Permalink to this headline">¶</a></h3>
 <p>Because of how expensive it is to move data back and forth from main memory, you computer has a set of intermediate memory banks between main memory and your processor called <em>caches</em>. Caches try to predict what data you might use in the future, and keep it close to the processor so it can be accessed faster. Caches can substantially improve performance, but as a programmer you don’t actually get to control what gets put into cache – your cache is managed by the operating system. There are some
 tricks for trying to use data in ways that are more likely to result in your computer being able to use data stored in cache (in general, your computer fills the cache with (a) data you’ve used recently, and (b) data that is stored <em>near</em> the data you’ve used recently, so doing everything you can with the same object at once <em>can</em> help a little), but honestly they’re just not something you should worry about. I just wanted to demystify “cache” for when you come across it.</p>
-</div>
-</div>
-<div class="section" id="OK…-So-how-do-I-deal-with-Big-Data?">
+</section>
+</section>
+<section id="OK…-So-how-do-I-deal-with-Big-Data?">
 <h2>OK… So how do I deal with Big Data?<a class="headerlink" href="#OK…-So-how-do-I-deal-with-Big-Data?" title="Permalink to this headline">¶</a></h2>
 <p>Check out <a class="reference internal" href="big_data_strategies.html"><span class="doc">Big Data Strategies here!</span></a>.</p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -175,7 +178,7 @@ tricks for trying to use data in ways that are more likely to result in your com
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

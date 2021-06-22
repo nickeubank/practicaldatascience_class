@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Numpy Exercises &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -36,21 +39,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -151,7 +168,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -217,6 +234,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -264,10 +282,10 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Numpy-Exercises">
+<section id="Numpy-Exercises">
 <h1>Numpy Exercises<a class="headerlink" href="#Numpy-Exercises" title="Permalink to this headline">¶</a></h1>
 <p><strong>Note:</strong> Most students taking this class are Duke MIDS students who have worked with <code class="docutils literal notranslate"><span class="pre">numpy</span></code> previously. As a result, these exercises are very light on basic pandas Series and DataFrame manipulations. If you are new to <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, I would advise looking into some addition practice opportunities with <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, as discussed in the <a class="reference internal" href="../not_a_mids_student.html"><span class="doc">Advice for Non-MIDS Students</span></a> page.</p>
-<div class="section" id="Exercise-1">
+<section id="Exercise-1">
 <h2>Exercise 1<a class="headerlink" href="#Exercise-1" title="Permalink to this headline">¶</a></h2>
 <p>First, lets make a common array to work with.</p>
 <div class="nbinput docutils container">
@@ -310,8 +328,8 @@ array([[ 80842, 333008, 202553, 140037,  81969],
        [476442,  35455, 191553, 384154,  29917]])
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Exercise-2">
+</section>
+<section id="Exercise-2">
 <h2>Exercise 2<a class="headerlink" href="#Exercise-2" title="Permalink to this headline">¶</a></h2>
 <p>What is the average value of the second column (to two decimal places)</p>
 <div class="nbinput docutils container">
@@ -354,8 +372,8 @@ array([[ 80842, 333008, 202553, 140037,  81969],
 254579.25
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Exercise-3">
+</section>
+<section id="Exercise-3">
 <h2>Exercise 3<a class="headerlink" href="#Exercise-3" title="Permalink to this headline">¶</a></h2>
 <p>What is the average value of the first 5 rows of the third and fourth columns?</p>
 <div class="nbinput docutils container">
@@ -400,8 +418,8 @@ array([[ 80842, 333008, 202553, 140037,  81969],
 367843.75
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Exercise-4">
+</section>
+<section id="Exercise-4">
 <h2>Exercise 4<a class="headerlink" href="#Exercise-4" title="Permalink to this headline">¶</a></h2>
 <p><strong>Close Python</strong>. On a piece of paper, write down the final result of the following code:</p>
 <div class="nbinput docutils container">
@@ -463,8 +481,8 @@ array([[2, 4, 6],
        [5, 7, 9]])
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Execise-5">
+</section>
+<section id="Execise-5">
 <h2>Execise 5<a class="headerlink" href="#Execise-5" title="Permalink to this headline">¶</a></h2>
 <p><strong>Keep Python Closed!</strong> Write down the final result of the following code:</p>
 <div class="nbinput docutils container">
@@ -487,11 +505,11 @@ array([[2, 4, 6],
 array([2, 4, 6])
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Exercise-6">
+</section>
+<section id="Exercise-6">
 <h2>Exercise 6<a class="headerlink" href="#Exercise-6" title="Permalink to this headline">¶</a></h2>
 <p>Now open python and check your answers to Exercises 4 and 5.</p>
-<div class="section" id="Working-with-Views">
+<section id="Working-with-Views">
 <h3>Working with Views<a class="headerlink" href="#Working-with-Views" title="Permalink to this headline">¶</a></h3>
 <p>One of the nuances of <code class="docutils literal notranslate"><span class="pre">numpy</span></code> can can easily lead to problems is that when one takes a slice of an array, one does not actually get a new array; rather, one is given a “view” on the original array, meaning they are sharing the same underlying data.</p>
 <p>This is similar to the idea that variables are just pointers, and that different variables may point to the same object (discussed in the <a class="reference external" href="%5B../python_v_r.ipynb%5D">Python v. R / Variables as Pointers tutorial</a>.) But it is slightly different in that if two variables both point to the same <code class="docutils literal notranslate"><span class="pre">set</span></code>, where the two variables behave the same way. But one variable points to an array, and a second variable is a <em>slice</em> of that array, they are both accessing the same data in the same array, but they
@@ -632,8 +650,8 @@ array([ 1, -1,  3,  4])
 [1, 2, 3]
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="When-do-you-get-a-view,-and-when-do-you-get-a-copy?">
+</section>
+<section id="When-do-you-get-a-view,-and-when-do-you-get-a-copy?">
 <h3>When do you get a view, and when do you get a copy?<a class="headerlink" href="#When-do-you-get-a-view,-and-when-do-you-get-a-copy?" title="Permalink to this headline">¶</a></h3>
 <p>OK, now the <em>really</em> annoying thing: when do I get a view, and when do I get a copy?</p>
 <p>Generally speaking:</p>
@@ -766,15 +784,15 @@ array([4, 6])
 array([1, 4, 6])
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="How-to-Manage-Views-In-Your-Work">
+</section>
+<section id="How-to-Manage-Views-In-Your-Work">
 <h3>How to Manage Views In Your Work<a class="headerlink" href="#How-to-Manage-Views-In-Your-Work" title="Permalink to this headline">¶</a></h3>
 <p>Views exist because they are more memory efficient (a view doesn’t require making a new copy of data) and faster (again, no copying required). And if you’re doing super-computer simulations where every milisecond counts, or working with truely huge datasets, this is important. But for most data scientists, I tend to see it as a a trap waiting to get you in trouble.</p>
 <p>This is especially since there’s no reliable way to check if two arrays are views of one another except by modifying one and seeing if the other changes. (You may find people saying otherwise; don’t trust them!). The way we use <code class="docutils literal notranslate"><span class="pre">is</span></code> in regular Python to see if two variables point at the same object doesn’t work for numpy arrays. Thus its on you to remember the rules.</p>
 <p><strong>My advice on copies:</strong> UNLESS YOU REALLY NEED A VIEW AND ARE BEING SUPER CAREFUL: don’t use views for anything but <em>looking</em> at data. If you ever want to <em>modify</em> or <em>work with</em> a sub-array, just make a copy to be safe. Computers are fast enough and ram is plentiful enough that for most applications, it’s almost never a problem.</p>
-</div>
-</div>
-<div class="section" id="Exercise-7">
+</section>
+</section>
+<section id="Exercise-7">
 <h2>Exercise 7<a class="headerlink" href="#Exercise-7" title="Permalink to this headline">¶</a></h2>
 <p><strong>Close your computer / laptop</strong>. Let’s try and work out a few problems in our heads to test our understanding of <code class="docutils literal notranslate"><span class="pre">numpy</span></code> views. Let’s start with the following array:</p>
 <div class="nbinput docutils container">
@@ -816,8 +834,8 @@ array([1, 4, 6])
  [5 6]]
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Exercise-8">
+</section>
+<section id="Exercise-8">
 <h2>Exercise 8<a class="headerlink" href="#Exercise-8" title="Permalink to this headline">¶</a></h2>
 <p>Now suppose we run the code <code class="docutils literal notranslate"><span class="pre">my_array[:,</span> <span class="pre">:]</span> <span class="pre">=</span> <span class="pre">my_array</span> <span class="pre">*</span> <span class="pre">2</span></code>. Now what does <code class="docutils literal notranslate"><span class="pre">my_slice</span></code> look like?</p>
 <div class="nbinput docutils container">
@@ -840,8 +858,8 @@ array([[ 4,  6],
        [10, 12]])
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Exercise-9">
+</section>
+<section id="Exercise-9">
 <h2>Exercise 9<a class="headerlink" href="#Exercise-9" title="Permalink to this headline">¶</a></h2>
 <p>Now suppose we run <code class="docutils literal notranslate"><span class="pre">my_array</span> <span class="pre">=</span> <span class="pre">my_array</span> <span class="pre">*</span> <span class="pre">2</span></code>. What does <code class="docutils literal notranslate"><span class="pre">my_slice</span></code> look like?</p>
 <div class="nbinput docutils container">
@@ -864,12 +882,12 @@ array([[ 4,  6],
        [10, 12]])
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Exercise-10">
+</section>
+<section id="Exercise-10">
 <h2>Exercise 10<a class="headerlink" href="#Exercise-10" title="Permalink to this headline">¶</a></h2>
 <p>Stop, open Python, and try running these examples. Were your predictions correct? If not, why not?</p>
-</div>
-<div class="section" id="Exercise-11">
+</section>
+<section id="Exercise-11">
 <h2>Exercise 11<a class="headerlink" href="#Exercise-11" title="Permalink to this headline">¶</a></h2>
 <p>OK, let’s close Python again and go back to pen and paper. Let’s also reset <code class="docutils literal notranslate"><span class="pre">my_array</span></code> and start over with the following code:</p>
 <div class="nbinput docutils container">
@@ -911,7 +929,7 @@ array([[ 4,  6],
 </pre></div></div>
 </div>
 <p>Now suppose we run the following code: <code class="docutils literal notranslate"><span class="pre">my_array[:,</span> <span class="pre">:]</span> <span class="pre">=</span> <span class="pre">my_array</span> <span class="pre">*</span> <span class="pre">2</span></code>. What does <code class="docutils literal notranslate"><span class="pre">my_slice</span></code> look like?</p>
-<div class="section" id="Note:-Don’t-trust-my_array.base">
+<section id="Note:-Don’t-trust-my_array.base">
 <h3>Note: Don’t trust my_array.base<a class="headerlink" href="#Note:-Don’t-trust-my_array.base" title="Permalink to this headline">¶</a></h3>
 <p>You will find some tutorials online that suggest you can test if one array is a view of another with the code <code class="docutils literal notranslate"><span class="pre">my_slice.base</span> <span class="pre">is</span> <span class="pre">my_array</span></code>. The problem is… this doesn’t always work. It does sometimes:</p>
 <div class="nbinput docutils container">
@@ -1033,9 +1051,9 @@ True
 </div>
 <p>In practice, you can get infinite chains of <code class="docutils literal notranslate"><span class="pre">.base.base...</span></code>.</p>
 <p>And yes, if this is making your head hurt, that’s because you’re doing it right. :)</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
           </div>
@@ -1143,7 +1161,7 @@ True
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

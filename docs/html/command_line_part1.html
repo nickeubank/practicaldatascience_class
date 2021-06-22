@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>The Command Line, Basics &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Advanced Command Line Tutorial" href="command_line_part2.html" />
@@ -38,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -153,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -219,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -266,11 +284,11 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="The-Command-Line,-Basics">
+<section id="The-Command-Line,-Basics">
 <h1>The Command Line, Basics<a class="headerlink" href="#The-Command-Line,-Basics" title="Permalink to this headline">¶</a></h1>
 <p>It’s probably good to start by answering the question: What <em>is</em> the command line?</p>
 <p>The command line is a tool for talking to your operating system (e.g. macOS, Windows, etc.) using text instead of by moving around a mouse and clicking on things. Just as you can use your mouse to open folders, move and rename files, and launch programs, so too can you use the terminal to ask you operating system to do the same things.</p>
-<div class="section" id="Terminology">
+<section id="Terminology">
 <h2>Terminology<a class="headerlink" href="#Terminology" title="Permalink to this headline">¶</a></h2>
 <p>Before we get into the details of the terminal, though, a note on terminology: there are <em>lots</em> of names that float around that basically mean the same thing, including terminal, shell, command line, and bash. In this tutorial, the specific program we will be using is called <code class="docutils literal notranslate"><span class="pre">bash</span></code>. But if you’re working on a Mac, you’d never know you were using <code class="docutils literal notranslate"><span class="pre">bash</span></code> because Apple calls bash <code class="docutils literal notranslate"><span class="pre">Terminal</span></code>. Also, <code class="docutils literal notranslate"><span class="pre">bash</span></code> is based on a program called <code class="docutils literal notranslate"><span class="pre">shell</span></code>, so you may also hear the term <code class="docutils literal notranslate"><span class="pre">shell</span></code> used to
 describe the tool we’ll be using today. But for all intents and purposes, the terms <code class="docutils literal notranslate"><span class="pre">bash</span></code>, <code class="docutils literal notranslate"><span class="pre">command</span> <span class="pre">line</span></code>, <code class="docutils literal notranslate"><span class="pre">Terminal</span></code>, and <code class="docutils literal notranslate"><span class="pre">shell</span></code> are basically interchangeable on a mac or linux computer.</p>
@@ -284,8 +302,8 @@ AVAILABLE ON WINDOWS!</span></a> before starting any exercises.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">terminal</span></code>: sometimes used colloquially to refer to any system that lets you talk to you computer via text, but also the name Apple uses when you run <code class="docutils literal notranslate"><span class="pre">bash</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">DOS</span></code> and <code class="docutils literal notranslate"><span class="pre">CMD</span></code>: Window’s version of <code class="docutils literal notranslate"><span class="pre">bash</span></code> and <code class="docutils literal notranslate"><span class="pre">shell</span></code>. Same purpose, different syntax.</p></li>
 </ul>
-</div>
-<div class="section" id="Why-Should-I-Learn-The-Command-Line?">
+</section>
+<section id="Why-Should-I-Learn-The-Command-Line?">
 <h2>Why Should I Learn The Command Line?<a class="headerlink" href="#Why-Should-I-Learn-The-Command-Line?" title="Permalink to this headline">¶</a></h2>
 <p>There are three main reasons to learn to use the command line.</p>
 <ol class="arabic simple">
@@ -301,15 +319,15 @@ to use the command line* to:</p></li>
 <li><p><strong>You won’t always have a graphical interface.</strong> If your work ever requires you to use a remote server with, say, more computing power, those systems probably won’t offer a graphical user interface.</p></li>
 <li><p><strong>Sometimes you want to do something OVER AND OVER.</strong> Renaming a file by clicking on it, deleting the name, typing in a new name, and hitting return is great if you only need to rename one file. But what if you want to rename hundreds? The command line gives you the ability to write little scripts to do this kind of work for you.</p></li>
 </ol>
-</div>
-<div class="section" id="Learning-Command-Line-Basics">
+</section>
+<section id="Learning-Command-Line-Basics">
 <h2>Learning Command Line Basics<a class="headerlink" href="#Learning-Command-Line-Basics" title="Permalink to this headline">¶</a></h2>
 <p>Now that you have a sense of what the command line is about, I recommend you try out <a class="reference external" href="https://www.datacamp.com/courses/introduction-to-shell-for-data-science">this tutorial (“Introduction to Shell for Data Science”)</a> to get some experience working with it (the command line is used enough that people have already created great tutorials – I won’t insult their work by trying to re-create them). If you would prefer a DataCamp alternative, you can try the first three modules of the <a class="reference external" href="http://swcarpentry.github.io/shell-novice/">Software
 Carpentry</a> course on this topic, though I don’t think it’s quite as good.</p>
 <p>The first section of that tutorial (“Manipulating Files and Directories”) is <em>free</em> (though you do have to create an account) and will give you a pretty good introduction. If you <em>want</em> you can keep going and get better at manipulating files and things in the command line, but that’s not usually a first-order need.</p>
 <p>Once you’re done, come back here and we’ll talk a little about general principles of the command line.</p>
-</div>
-<div class="section" id="Making-the-Command-Line-Friendlier">
+</section>
+<section id="Making-the-Command-Line-Friendlier">
 <h2>Making the Command Line Friendlier<a class="headerlink" href="#Making-the-Command-Line-Friendlier" title="Permalink to this headline">¶</a></h2>
 <p><strong>If you installed ``Cmder`` on windows, as suggested above, ignore this section!</strong></p>
 <p>OK, if you’re using a Mac or Linux machine, the basic command line is ugly, and doesn’t offer much of an interface. That’s why I recommend installing a slightly nicer program like <a class="reference external" href="https://ohmyz.sh/">Oh My Zsh!</a> that causes your terminal to offer slightly more information than the default shell, especially if you use git. For example:</p>
@@ -318,8 +336,8 @@ Carpentry</a> course on this topic, though I don’t think it’s quite as good.
 <p>With Oh My Z!:</p>
 <img alt="zsh" src="_images/zsh.png" />
 <p>See how it now shows the folder I’m in on the left; shows that I’m in a git project when I navigate into <code class="docutils literal notranslate"><span class="pre">programming4ds</span></code> and tells me the branch (don’t worry if that doesn’t mean much to you), and highlights folders in blue so you can tell what’s a folder and what’s a file? Just helps keep you sane. :)</p>
-</div>
-<div class="section" id="Tab-Completion">
+</section>
+<section id="Tab-Completion">
 <h2>Tab-Completion<a class="headerlink" href="#Tab-Completion" title="Permalink to this headline">¶</a></h2>
 <p>If you’ve installed either <code class="docutils literal notranslate"><span class="pre">oh-my-zsh!</span></code> (mac) or <code class="docutils literal notranslate"><span class="pre">Cmder</span></code> (windows) then your command line now has a <em>very</em> useful ability: tab-completion! If you start to type the name of a file then hit tab, the command line will try and fill in the full file name.</p>
 <p>To illustrate, suppose you are looking at the following folder:</p>
@@ -345,14 +363,14 @@ example_csvs            just_another_file.txt
 <p>If I want to change my working directory to the <code class="docutils literal notranslate"><span class="pre">a_folder_with_stuff</span></code> folder, I don’t need to type out the whole name: I can just type <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">a_</span></code>, press tab, and the command line will fill in the folder name itself.</p>
 <p>Note that the command line can only fill in a file once you typed enough letters that there’s only one full name that would work. For example, if you are in a folder with files called <code class="docutils literal notranslate"><span class="pre">my_file1.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">my_file2.txt</span></code>, and <code class="docutils literal notranslate"><span class="pre">my_file3.txt</span></code> and you type <code class="docutils literal notranslate"><span class="pre">open</span> <span class="pre">my_</span></code> [tab], the command line can’t fill in the file name because <code class="docutils literal notranslate"><span class="pre">my_</span></code> could be the beginning of any of these file names.</p>
 <p>If you end up in this situation your command line will first try and fill in as much as it can (so it will fill in <code class="docutils literal notranslate"><span class="pre">open</span> <span class="pre">my_</span></code> to <code class="docutils literal notranslate"><span class="pre">open</span> <span class="pre">my_file</span></code>) and wait; if you hit tab again, it will list out the files that it can’t decide between.</p>
-</div>
-<div class="section" id="Command-Line-Exercises">
+</section>
+<section id="Command-Line-Exercises">
 <h2>Command Line Exercises<a class="headerlink" href="#Command-Line-Exercises" title="Permalink to this headline">¶</a></h2>
 <p>OK, got all that? Let’s do some exercises!</p>
 <p><a class="reference internal" href="exercises/Exercise_CommandLine_1_Basics.html"><span class="doc">Command Line Basics Exercises</span></a></p>
 <p>* <em>There are some graphical user interfaces that are meant to reduce the need to use the command line for things like managing python packages and git repositories, but as of 2019, they are not yet full replacements for command line tools</em>.</p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -470,7 +488,7 @@ example_csvs            just_another_file.txt
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

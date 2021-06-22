@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Fixing Data Cleanliness Problems &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="The Command Line, Basics" href="command_line_part1.html" />
@@ -38,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -153,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -219,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -266,13 +284,13 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Fixing-Data-Cleanliness-Problems">
+<section id="Fixing-Data-Cleanliness-Problems">
 <h1>Fixing Data Cleanliness Problems<a class="headerlink" href="#Fixing-Data-Cleanliness-Problems" title="Permalink to this headline">¶</a></h1>
 <p>One you find a problem in your data, the next step is to correct it, and there are (broadly speaking) two ways to do so in pandas: either by using a general cleaning function, or by directly editing an entry. In this section, I’ll provide an overview of how to do both!</p>
-<div class="section" id="Cleaning-Functions">
+<section id="Cleaning-Functions">
 <h2>Cleaning Functions<a class="headerlink" href="#Cleaning-Functions" title="Permalink to this headline">¶</a></h2>
 <p>Because we so often have to fix “bad” values in our data, pandas comes with a range of in-built tools for data cleaning. I won’t try and cover all of them, but here are a few of the most important to know.</p>
-<div class="section" id=".replace()">
+<section id=".replace()">
 <h3>.replace()<a class="headerlink" href="#.replace()" title="Permalink to this headline">¶</a></h3>
 <p>Probably the first go-to tool for fixing data issues is the <code class="docutils literal notranslate"><span class="pre">.replace()</span></code> method, which, as the name suggests, finds specific values in a Series and replaces them with other values. For example, let’s begin with this little dataset we’ve used a few times before with countries, their regions, GDP per capita, and Polity IV scores (a measure of how close countries are to being liberal democracies):</p>
 <div class="nbinput docutils container">
@@ -627,8 +645,8 @@ div.rendered_html tbody tr:hover {
 </table>
 </div></div>
 </div>
-</div>
-<div class="section" id=".str.-Methods">
+</section>
+<section id=".str.-Methods">
 <h3>.str. Methods<a class="headerlink" href="#.str.-Methods" title="Permalink to this headline">¶</a></h3>
 <p>Of all the formats of data you’ll come across, none are more prone to problems than strings. There are just SO MANY ways to get problems in strings – capitalization issues, differences in spellings, differences in accents, etc. So pandas has a special set of methods you access with the <code class="docutils literal notranslate"><span class="pre">.str.</span></code> suffix for strings, including:</p>
 <ul class="simple">
@@ -738,9 +756,9 @@ div.rendered_html tbody tr:hover {
 </div></div>
 </div>
 <p>Note I had to put a backslash before the <code class="docutils literal notranslate"><span class="pre">.</span></code> – because <code class="docutils literal notranslate"><span class="pre">.str.replace</span></code> is using regular expressions, some characters (like periods, parentheses, astrixes, etc.) have special meanings. Review <a class="reference external" href="https://realpython.com/python-data-types/#strings">this reading on strings</a> if that isn’t familiar.</p>
-</div>
-</div>
-<div class="section" id="Setting-Individual-Values">
+</section>
+</section>
+<section id="Setting-Individual-Values">
 <h2>Setting Individual Values<a class="headerlink" href="#Setting-Individual-Values" title="Permalink to this headline">¶</a></h2>
 <p>These methods are useful for a lot of changes, but sometimes we need more precision than we get from these generalized methods. For exmaple, suppose Mozambique experienced a coup, so we want to set its Polity score to 5. We can’t use <code class="docutils literal notranslate"><span class="pre">replace(15,</span> <span class="pre">5)</span></code>, because that would also change the value for Russia, which also has a value of 15.</p>
 <p>In these circumstances, we need to directly access certain cells.</p>
@@ -1081,7 +1099,7 @@ array([[  1,   2],
 </table>
 </div></div>
 </div>
-<div class="section" id="Our-Mozambique-Edit">
+<section id="Our-Mozambique-Edit">
 <h3>Our Mozambique Edit<a class="headerlink" href="#Our-Mozambique-Edit" title="Permalink to this headline">¶</a></h3>
 <p>OK, so let’s circle back to our desire to edit our Polity IV value for Mozambique. How would we use this technique here?</p>
 <div class="nbinput docutils container">
@@ -1258,9 +1276,9 @@ array([[  1,   2],
 </div>
 <p>Voila!</p>
 <p>And that’s how you make precise edits in pandas.</p>
-</div>
-</div>
-<div class="section" id="Missing-Data">
+</section>
+</section>
+<section id="Missing-Data">
 <h2>Missing Data<a class="headerlink" href="#Missing-Data" title="Permalink to this headline">¶</a></h2>
 <p>A last note on editing missing values. Let’s suppose we have no polity score for Mozambique:</p>
 <div class="nbinput docutils container">
@@ -1595,8 +1613,8 @@ False
 <li><p><code class="docutils literal notranslate"><span class="pre">.dropna()</span></code> Drop rows with missing values.</p></li>
 </ul>
 <p>And that’s how, once we’ve found problems, we can fix problems in our data!</p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -1711,7 +1729,7 @@ False
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Importing ARCOS Data with Dask &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -31,11 +34,11 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="Importing-ARCOS-Data-with-Dask">
+  <section id="Importing-ARCOS-Data-with-Dask">
 <h1>Importing ARCOS Data with Dask<a class="headerlink" href="#Importing-ARCOS-Data-with-Dask" title="Permalink to this headline">¶</a></h1>
 <p>Today, we’re gonna do some of the manipulations you were doing over the last several weeks for your Opioid project, but now in dask!</p>
 <p>For familiarity, and so you can see what advantages dask can bring to your workflow, today we’ll be working with the DEA ARCOS drug shipment database published by the Washington Post! However, to strike a balance between size and speed, we’ll be working with a slightly thinned version that has only the last two years of data, instead of all six.</p>
-<div class="section" id="Start-your-own-cluster!">
+<section id="Start-your-own-cluster!">
 <h2>Start your own cluster!<a class="headerlink" href="#Start-your-own-cluster!" title="Permalink to this headline">¶</a></h2>
 <p>dask has many backends, but the one that’s most versitile (and often most performant) is the <code class="docutils literal notranslate"><span class="pre">distributed</span></code> backend, so let’s use that here. Run:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span>
@@ -50,8 +53,8 @@
 <p>One cool thing you’ll see is that this panel includes a link to a Dashboard. Click this link, and a new tab will open in your browser that shows you, in real time, what your dask cluster is doing! We’ll come back to this later.</p>
 <p><strong>Note:</strong> these workers communication via networking protocols, so your firewall / anti-virus may ask if it’s ok to let Python accept connections (it is!). If you can’t get your system running, it may be due to your firewall / anti-virus. In that case, try <code class="docutils literal notranslate"><span class="pre">client</span> <span class="pre">=</span> <span class="pre">Client(processes=False)</span></code>. This will create four workers hiding in the same process (obviating the need for network protocols for communication between processes). Don’t worry if that last bit doesn’t make sense – those are
 implementation details you don’t ahve to worry about! :)</p>
-</div>
-<div class="section" id="Let’s-load-some-data!">
+</section>
+<section id="Let’s-load-some-data!">
 <h2>Let’s load some data!<a class="headerlink" href="#Let’s-load-some-data!" title="Permalink to this headline">¶</a></h2>
 <p><strong>(1)</strong> Download the thinned ARCOS data <a class="reference external" href="https://www.dropbox.com/s/o7nc6yvrwog4ozi/arcos_2011_2012.tsv.zip?dl=0">from this link</a>. It should be about 2GB zipped, 25 GB unzipped.</p>
 <p><strong>(2)</strong> Our goal today is going to be to find the pharmaceutical company that has shipped the most pills (<code class="docutils literal notranslate"><span class="pre">DOSAGE_UNIT</span></code>) in the US.</p>
@@ -74,8 +77,8 @@ implementation details you don’t ahve to worry about! :)</p>
 <p>Note you will quickly find that you can’t sort in dask – sorting in parallel is <em>really</em> tricky! So you’ll have to work around that. Do what you need to do on the big dataset first, then run <code class="docutils literal notranslate"><span class="pre">.compute()</span></code> so you get the data returned as a regular pandas dataframe, then finish.</p>
 <p>Does this seem like a situation where a single company is responsible for the opioid epidemic?</p>
 <p><strong>(5)</strong> Now go ahead and try and re-do the chunking you did by hand for your project – calculate, for each year, the total morphine equivalents sent to each county in the US.</p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -183,7 +186,7 @@ implementation details you don’t ahve to worry about! :)</p>
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

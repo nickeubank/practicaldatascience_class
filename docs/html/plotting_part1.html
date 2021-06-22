@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Plotting with plotnine &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Plotting with plotnine, Part 2" href="plotting_part2.html" />
@@ -38,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -153,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -219,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -266,7 +284,7 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Plotting-with-plotnine">
+<section id="Plotting-with-plotnine">
 <h1>Plotting with <code class="docutils literal notranslate"><span class="pre">plotnine</span></code><a class="headerlink" href="#Plotting-with-plotnine" title="Permalink to this headline">¶</a></h1>
 <p>The linchpin library for plotting in Python is without a doubt <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>. While infinitely flexible, however, for many applications <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> lacks user-friendly tools for quickly making common types of figures (scatter plots, linear fits, histograms, etc.). With that in mind, several other packages (most of which are actually built on <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>) have been created to provide a more user-friendly interface. Unlike in <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>, where you have to think in terms of the geometric
 objects you want to place on axes, all three of these alternative libraries allow for higher-level, more “declarative” code:</p>
@@ -276,11 +294,11 @@ objects you want to place on axes, all three of these alternative libraries allo
 <li><p><a class="reference external" href="https://seaborn.pydata.org/">seaborn</a>: <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> is also a declarative plotting language, although its syntax is a little less modular than <code class="docutils literal notranslate"><span class="pre">plotnine</span></code> or <code class="docutils literal notranslate"><span class="pre">altair</span></code> – e.g. there is a distinct command for plotting histograms, a command for kernel densities, a command for bivariate fits, etc. But still <em>much</em> easier than <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>.</p></li>
 </ul>
 <p>Given that many data scientists work in both R and Python (and indeed, this is required of MIDS students), in this course we will focus on <code class="docutils literal notranslate"><span class="pre">plotnine</span></code> to minimize the number of new tools students are required to learn.</p>
-<div class="section" id="Tutorial-Attribution">
+<section id="Tutorial-Attribution">
 <h2>Tutorial Attribution<a class="headerlink" href="#Tutorial-Attribution" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">plotnine</span></code> tutorial below is derived (with generous permission) from a <a class="reference external" href="http://www.rebeccabarter.com/blog/2017-11-17-ggplot2_tutorial/">truely excellent tutorial for ggplot2</a> (written for R) by Rebecca Barter, who <a class="reference external" href="http://www.rebeccabarter.com/">hosts an excellent data science in R blog</a>. It is very close to her original materials, with changes made primarily to convert R <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code> code into <code class="docutils literal notranslate"><span class="pre">plotnine</span></code> code (which is remakrably easy.</p>
-</div>
-<div class="section" id="Materials-Outline">
+</section>
+<section id="Materials-Outline">
 <h2>Materials Outline<a class="headerlink" href="#Materials-Outline" title="Permalink to this headline">¶</a></h2>
 <p>I will begin by providing an overview of the layered grammar of graphics upon which <code class="docutils literal notranslate"><span class="pre">plotnine</span></code> is built. I will then teach <code class="docutils literal notranslate"><span class="pre">plotnine</span></code> by layering examples ontop of one another. Finally, I will introduce some advanced topics such as faceting and themes.</p>
 <ol class="arabic simple" start="0">
@@ -289,9 +307,9 @@ objects you want to place on axes, all three of these alternative libraries allo
 <li><p>Basic <code class="docutils literal notranslate"><span class="pre">plotnine</span></code> plot types</p></li>
 </ol>
 <p>In <a class="reference internal" href="plotting_part2.html"><span class="doc">Plotting, Part 2</span></a>, well also get into different scales, axes, legend settings, faceting, themes, and other customizations. By the end of these two tutorials, you will be able to produce beautiful graphics such as this:</p>
-<p><img alt="081ab7de7c81432ab89b1d2c51b0e9df" class="no-scaled-link" src="_images/beautiful_plot.png" style="width: 800px;" /></p>
-</div>
-<div class="section" id="plotnine-for-ggplot2-users">
+<p><img alt="c17005e63eca4fef95d7d5f7c119cc90" class="no-scaled-link" src="_images/beautiful_plot.png" style="width: 800px;" /></p>
+</section>
+<section id="plotnine-for-ggplot2-users">
 <h2><code class="docutils literal notranslate"><span class="pre">plotnine</span></code> for <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code> users<a class="headerlink" href="#plotnine-for-ggplot2-users" title="Permalink to this headline">¶</a></h2>
 <p>If you have lots of experience with <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code>, then good news: <code class="docutils literal notranslate"><span class="pre">plotnine</span></code> is nearly identical (so much so that I intially assumed that the library was actually just running <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code> in the background). As far as I can tell, the only two syntax differences to be aware of are:</p>
 <ol class="arabic simple">
@@ -310,8 +328,8 @@ objects you want to place on axes, all three of these alternative libraries allo
 </pre></div>
 </div>
 <p>And honestly, if you’re a <code class="docutils literal notranslate"><span class="pre">ggplot</span></code> ace, you can probably stop right there! :) If not, read on!</p>
-</div>
-<div class="section" id="The-layered-grammar-of-graphics">
+</section>
+<section id="The-layered-grammar-of-graphics">
 <h2>The layered grammar of graphics<a class="headerlink" href="#The-layered-grammar-of-graphics" title="Permalink to this headline">¶</a></h2>
 <p>Hadley Wickham built ggplot2 based on a set of principles outlines in his <em>layered grammar of graphics</em> (inspired by Wilkinson’s orginal <em>grammar of graphics</em>). The basic idea is that a statistical graphic is a mapping from data to aesthetic attributes (such as colour, shape, and size) of geometric objects (such as points, lines, and bars).</p>
 <p>We will use some of this terminology as we progess and discover that each piece of terminology corresponds to a type of object in ggplot2.</p>
@@ -320,8 +338,8 @@ objects you want to place on axes, all three of these alternative libraries allo
 <li><p><strong>geoms</strong>: geometric objects (circles, lines, text) that you will actually see</p></li>
 <li><p><strong>aesthetics</strong>: the mapping from the data to the geographic objects (e.g. by describing position, size, colour, etc)</p></li>
 </ul>
-</div>
-<div class="section" id="Basic-plotnine">
+</section>
+<section id="Basic-plotnine">
 <h2>Basic plotnine<a class="headerlink" href="#Basic-plotnine" title="Permalink to this headline">¶</a></h2>
 <p>In this section, we are going to make our first plot. This plot will be based on the gapminder dataset on country wealth, demographics, and health outcomes. Below, we show the first 5 rows of the gapminder dataset.</p>
 <div class="nbinput docutils container">
@@ -471,7 +489,7 @@ The iterable function was deprecated in Matplotlib 3.1 and will be removed in 3.
 </pre></div>
 </div>
 </div>
-<div class="section" id="Aesthetic-mapping-to-layers">
+<section id="Aesthetic-mapping-to-layers">
 <h3>Aesthetic mapping to layers<a class="headerlink" href="#Aesthetic-mapping-to-layers" title="Permalink to this headline">¶</a></h3>
 <p>What we have done is map each country (row) in the data to a point in the space defined by the GDP and life expectancy value. The end result is an ugly blob of points. Fortunately, there are many things that we can do to make this blob of points prettier.</p>
 <p>For example, we can change the transparency of all points by setting the alpha argument to a low value, changing the color of the points to be blue instead of black, and making the points smaller.</p>
@@ -612,8 +630,8 @@ array([&#39;Asia&#39;, &#39;Europe&#39;, &#39;Africa&#39;, &#39;Americas&#39;, &
 &lt;ggplot: (-9223372029313258415)&gt;
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Types-of-layers">
+</section>
+<section id="Types-of-layers">
 <h3>Types of layers<a class="headerlink" href="#Types-of-layers" title="Permalink to this headline">¶</a></h3>
 <p>So far, we have only seen scatterplots (point geoms), however, there are many other geoms we could add, including:</p>
 <ul class="simple">
@@ -734,14 +752,14 @@ array([&#39;Asia&#39;, &#39;Europe&#39;, &#39;Africa&#39;, &#39;Americas&#39;, &
 &lt;ggplot: (7541648760)&gt;
 </pre></div></div>
 </div>
-</div>
-</div>
-<div class="section" id="Cheatsheet!">
+</section>
+</section>
+<section id="Cheatsheet!">
 <h2>Cheatsheet!<a class="headerlink" href="#Cheatsheet!" title="Permalink to this headline">¶</a></h2>
 <p>OK, that’s a lot of different geometries. How are you supposed to remember all of them?</p>
 <p>I suggested this <a class="reference external" href="https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf">this excellent cheatsheet</a>. It was written for R, so there may be some very small syntactic differences from <code class="docutils literal notranslate"><span class="pre">plotnine</span></code>, but those differences are almost always very small.</p>
-</div>
-<div class="section" id="Saving-your-plots">
+</section>
+<section id="Saving-your-plots">
 <h2>Saving your plots<a class="headerlink" href="#Saving-your-plots" title="Permalink to this headline">¶</a></h2>
 <p>You can save your plots using the <code class="docutils literal notranslate"><span class="pre">ggsave()</span></code> function.</p>
 <div class="nbinput nblast docutils container">
@@ -758,13 +776,13 @@ array([&#39;Asia&#39;, &#39;Europe&#39;, &#39;Africa&#39;, &#39;Americas&#39;, &
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="Exercises!">
+</section>
+<section id="Exercises!">
 <h2>Exercises!<a class="headerlink" href="#Exercises!" title="Permalink to this headline">¶</a></h2>
 <p><em>If you are enrolled in Practical Data Science at Duke, don’t do these exercises on your own – we’ll do them in class!</em></p>
 <p><a class="reference internal" href="exercises/Exercise_plotting_part1.html"><span class="doc">Plotting Exercises, Part 1</span></a></p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -884,7 +902,7 @@ array([&#39;Asia&#39;, &#39;Europe&#39;, &#39;Africa&#39;, &#39;Americas&#39;, &
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -4,15 +4,18 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Plotting with plotnine, Part 2 &#8212; Practical Data Science</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Views and Copies in pandas" href="views_and_copies_in_pandas.html" />
@@ -38,21 +41,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -153,7 +170,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -219,6 +236,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -266,13 +284,13 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Plotting-with-plotnine,-Part-2">
+<section id="Plotting-with-plotnine,-Part-2">
 <h1>Plotting with <code class="docutils literal notranslate"><span class="pre">plotnine</span></code>, Part 2<a class="headerlink" href="#Plotting-with-plotnine,-Part-2" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="Tutorial-Attribution">
+<section id="Tutorial-Attribution">
 <h2>Tutorial Attribution<a class="headerlink" href="#Tutorial-Attribution" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">plotnine</span></code> tutorial below is derived (with generous permission) from a <a class="reference external" href="http://www.rebeccabarter.com/blog/2017-11-17-ggplot2_tutorial/">truely excellent tutorial for ggplot2</a> (written for R) by Rebecca Barter, who <a class="reference external" href="http://www.rebeccabarter.com/">hosts an excellent data science in R blog</a>. It is very close to her original materials, with changes made primarily to convert R <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code> code into <code class="docutils literal notranslate"><span class="pre">plotnine</span></code> code (which is remakrably easy.</p>
-</div>
-<div class="section" id="Scales">
+</section>
+<section id="Scales">
 <h2>Scales<a class="headerlink" href="#Scales" title="Permalink to this headline">¶</a></h2>
 <p>We are going to return to our original scatterplot example to discuss scales, legend and positioning.</p>
 <p>To remind you, this scatterplot showed GDP per capita against life expectancy for each country colored by continent and sized by population.</p>
@@ -410,8 +428,8 @@ div.rendered_html tbody tr:hover {
 </pre></div></div>
 </div>
 <p>Scales also exist for other aesthetic featuers such as <code class="docutils literal notranslate"><span class="pre">fill</span></code>, <code class="docutils literal notranslate"><span class="pre">color</span></code>, <code class="docutils literal notranslate"><span class="pre">alpha</span></code>, etc.</p>
-</div>
-<div class="section" id="Changing-Labels">
+</section>
+<section id="Changing-Labels">
 <h2>Changing Labels<a class="headerlink" href="#Changing-Labels" title="Permalink to this headline">¶</a></h2>
 <p>Notice that in the last plot, we changed the name of the x-axis using the <code class="docutils literal notranslate"><span class="pre">name</span></code> argument in <code class="docutils literal notranslate"><span class="pre">scale_x_log10()</span></code>. If you want to play with all your labels in one place, though, we can use the <code class="docutils literal notranslate"><span class="pre">labs</span></code> option. As an example, below we add a title and change the name of the y-axis and legends using the <code class="docutils literal notranslate"><span class="pre">labs</span></code> function.</p>
 <div class="nbinput docutils container">
@@ -450,8 +468,8 @@ div.rendered_html tbody tr:hover {
 &lt;ggplot: (-9223372029312856274)&gt;
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Faceting">
+</section>
+<section id="Faceting">
 <h2>Faceting<a class="headerlink" href="#Faceting" title="Permalink to this headline">¶</a></h2>
 <p>Sometimes we want to be able to make multiple plots of the same thing across different categories. This can be achieved with minimal repetition using faceting.</p>
 <p>In the example below, we will remake the plot above individually for each continent.</p>
@@ -496,8 +514,8 @@ div.rendered_html tbody tr:hover {
 &lt;ggplot: (-9223372029312635420)&gt;
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Themes:-making-even-more-beautiful-figures-with-plotnine">
+</section>
+<section id="Themes:-making-even-more-beautiful-figures-with-plotnine">
 <h2>Themes: making even more beautiful figures with plotnine<a class="headerlink" href="#Themes:-making-even-more-beautiful-figures-with-plotnine" title="Permalink to this headline">¶</a></h2>
 <p>One of the first things I usually do when I make a ggplot is edit the default theme. I actually really don’t like the grey background, nor do I like having a grid unless it really helps with the plot interpretation.</p>
 <p>One of the simplest themes is <code class="docutils literal notranslate"><span class="pre">theme_classic</span></code>, however there are several other themes to choose from. The <code class="docutils literal notranslate"><span class="pre">ggthemes</span></code> package offers many additional themes, but you could also make your own using the <code class="docutils literal notranslate"><span class="pre">theme()</span></code> function.</p>
@@ -596,13 +614,13 @@ div.rendered_html tbody tr:hover {
 &lt;ggplot: (7543731818)&gt;
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Exercises!">
+</section>
+<section id="Exercises!">
 <h2>Exercises!<a class="headerlink" href="#Exercises!" title="Permalink to this headline">¶</a></h2>
 <p><em>If you are enrolled in Practical Data Science at Duke, don’t do these exercises on your own – we’ll do them in class!</em></p>
 <p><a class="reference internal" href="exercises/Exercise_plotting_part2.html"><span class="doc">Plotting Exercises, Part 2</span></a></p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -720,7 +738,7 @@ div.rendered_html tbody tr:hover {
       &copy;2019, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
