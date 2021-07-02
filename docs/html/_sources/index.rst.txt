@@ -3,7 +3,7 @@
 Welcome to Practical Data Science!
 ==================================
 
-*The course site for Duke MIDS Fall 2020 Practical Data Science Course*
+*The course site for Duke MIDS Fall 2021 Practical Data Science Course*
 
 **If you are not a Duke Masters in Data Science student, please see** `this page <not_a_mids_student.ipynb>`_ **about how best to use this site!**
 
@@ -23,14 +23,6 @@ In the second portion of the class, we will take a step back from the nuts and b
 This portion of the course will culminate in students picking a topic, developing an *answerable* question, thinking about what (in very concerte terms) an answer to that question would look like, figuring out what tools they would employ to generate that answer, and developing a plan for finding the data they would need to actually execute their project. 
 
 `The full syllabus for this course can be downloaded here <https://github.com/nickeubank/practicaldatascience/raw/master/syllabus/Syllabus_PracticalDataScience.pdf>`_. Please note that this syllabus is subject to change up until the first day of class.
-
-
-Covid-19 Accommodations
-------------------------
-
-This class is organized around having two (synchronous) class sessions every week. To accommodate the fact that, as a result of Covid-19, students are distributed across a wide range of time zones, once enrollment is complete we will conduct a survey of students to establish both student availability and time zones.  We will then select one or, if necessary, two times for each class session. If we need to pick two times for each class session, each student will be assigned to one of those two times and will be required to attend their assigned time each week. If possible, we will attempt to have class sessions on Tuesdays and Thursdays.
-
-**Synchronous attendance at both of your assigned class sessions each week is required unless you are unable to participate synchronously due to extenuating circumstances (such as an internet connection that will not support synchronous participation).** If you feel you may not be able to attend the synchronous classes for some reason, please speak with me immediately.
 
 `The (tentative) Class Schedule can be found here <class_schedule.rst>`_
 

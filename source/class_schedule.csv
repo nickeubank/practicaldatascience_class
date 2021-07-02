@@ -1,8 +1,8 @@
 ﻿"Date, Rm",Topic,Do Before Class,In-Class Exercise
-"Tues, Aug 18",- Class Introduction,"- `Student Survey <https://forms.gle/p4z28BLH6TyBRBHg9>`_
+"Tues, Aug 24",- Class Introduction,"- `Student Survey <https://forms.gle/p4z28BLH6TyBRBHg9>`_
 - `Watch Welcome Video <https://youtu.be/8IpLNrjINCA>`_
 - `What is Data Science? <https://www.youtube.com/watch?v=446X6hhXSjo>`_",
-"Thurs, Aug 20","- Command Line
+"Thurs, Aug 26","- Command Line
 - Jupyter Lab / Notebooks","- `Read and sign syllabus <https://github.com/nickeubank/practicaldatascience/raw/master/syllabus/Syllabus_PracticalDataScience.pdf>`_
 - `Register with IPUMS <https://uma.pop.umn.edu/usa/user/new>`_
 - `Register for DataCamp <https://www.datacamp.com/home>`_
@@ -10,80 +10,79 @@
 - `Setup Python <setup_environment.ipynb>`_
 - `Jupyter Tutorial <jupyter.ipynb>`_","`Link 1 <exercises/Exercise_CommandLine_1_Basics.ipynb>`_
 `Link 2 <exercises/Exercise_jupyterlab.ipynb>`_"
-"Fri, Aug 21",**SOFTWARE INSTALL DAY**,A day of trouble shooting install issues,
-"Tues, Aug 25",- Advanced Command Line,- `Advanced Command Line <command_line_part2.ipynb>`_,`Link <exercises/Exercise_CommandLine_2_Advanced.ipynb>`_
-"Thurs, Aug 27","- IPython
+"Fri, Aug 27",**SOFTWARE INSTALL DAY**,A day of trouble shooting install issues,
+"Tues, Aug 31",- Advanced Command Line,- `Advanced Command Line <command_line_part2.ipynb>`_,`Link <exercises/Exercise_CommandLine_2_Advanced.ipynb>`_
+"Thurs, Sep 2","- IPython
 - Packages
 - Python v. R / variables as pointers","- `Follow this link <https://gke.mybinder.org/v2/gh/ipython/ipython-in-depth/master?filepath=binder/Index.ipynb>`_ , then click ""Ipython - Beyond plain python"" and read that notebook. 
 - `Python packages <managing_python_packages.ipynb>`_
 - `variables v objects <vars_v_objects.ipynb>`_
 - `Python v. R <https://www.practicaldatascience.org/html/python_v_r.html>`_",`Link <exercises/Exercise_variables_v_objects.ipynb>`_
-"Tues, Sep 1",Numpy Basics,"- JVP pp 33-77
+"Tues, Sep 7",Numpy Basics,"- JVP pp 33-77
 - IF did not complete DataCamp: Do Numpy Section
 - `Numbers in Computer <ints_and_floats.ipynb>`_
 - `OPTIONAL: How numpy works <https://www.nature.com/articles/s41586-020-2649-2>`_",`Link <exercises/Exercise_numpy.ipynb>`_
-"Thurs, Sep 3",Pandas: Series,- `Pandas 1: Series <pandas_series.ipynb>`_,`Link <exercises/Exercise_series.ipynb>`_
-"Tues, Sep 8",Pandas: DataFrames,- `Pandas 2: DataFrames <pandas_dataframes.ipynb>`_,`Link <exercises/Exercise_dataframe.ipynb>`_
-"Thurs, Sep 10","- Intro to Plotting with PlotNine
-- Advanced Plotting","- `Plotting in Python, Part 1 <plotting_part1.ipynb>`_
-- `Plotting in Python, Part 2 <plotting_part2.ipynb>`_","`Link <exercises/Exercise_plotting_part1.ipynb>`_
+"Thurs, Sep 9",Pandas: Series,- `Pandas 1: Series <pandas_series.ipynb>`_,`Link <exercises/Exercise_series.ipynb>`_
+"Tues, Sep 14",Pandas: DataFrames,- `Pandas 2: DataFrames <pandas_dataframes.ipynb>`_,`Link <exercises/Exercise_dataframe.ipynb>`_
+"Thurs, Sep 16","- Intro to Plotting with Altair
+- Advanced Plotting",IN PROGRESS,"`Link <exercises/Exercise_plotting_part1.ipynb>`_
 `Link <exercises/Exercise_plotting_part2.ipynb>`_"
-"Tues, Sep 15",Pandas: Indices & Missing,"- WM pp 136-142
+"Tues, Sep 21",Pandas: Indices & Missing,"- WM pp 136-142
 - JVP pp 115-139
 - `Views and Copies in Pandas <views_and_copies_in_pandas.ipynb>`_","`Link 1 <exercises/Exercise_indices.ipynb>`_
 `Link 2 <exercises/Exercise_missing.ipynb>`_"
-"Thurs, Sep 17","- Pandas: Loading and saving data
+"Thurs, Sep 23","- Pandas: Loading and saving data
 - Pandas: Cleaning","- WM Chapter 6
 - WM Chapter 7
 - `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_
 - `Identifying Problems <cleaning_identifying.ipynb>`_
 - `Editing Values <cleaning_editingvalues.ipynb>`_",`Link <exercises/Exercise_cleaning.ipynb>`_
-"Tues, Sep 22","- Understanding Tracebacks
+"Tues, Sep 28","- Understanding Tracebacks
 - Pandas: Merging","- JVP pp 149 - 157
 - `What are Tracebacks? <https://www.youtube.com/watch?v=JD8BrXXNtjA>`_",`Link <exercises/Exercise_merging.ipynb>`_
-"Thurs, Sep 24","Big Data: What is it, how do I work with it?","- `What is Big Data? <what_is_big_data.ipynb>`_
+"Thurs, Sep 30","Big Data: What is it, how do I work with it?","- `What is Big Data? <what_is_big_data.ipynb>`_
 - `Strategies for Big Data <big_data_strategies.ipynb>`_
 - Download the dataset linked at the top of the linked exercise before class.
 - `Parquet Format <parquet.ipynb>`_",`Link <exercises/Exercise_bigdata.ipynb>`_
-"Tues, Sep 29",Collaborating using Github,- `Git and Github <git_and_github.ipynb>`_,`Link <exercises/Exercise_git.ipynb>`_
-"Thurs, Oct 1",Git and Github 2,,`Link <exercises/Exercise_git_2.ipynb>`_
-"Tues, Oct 6","- Defensive Programming
+"Tues, Oct 5",FALL BREAK,,
+"Thurs, Oct 7",Collaborating using Github,- `Git and Github <git_and_github.ipynb>`_,`Link <exercises/Exercise_git.ipynb>`_
+"Tues, Oct 12",Git and Github 2,,`Link <exercises/Exercise_git_2.ipynb>`_
+"Thurs, Oct 14","- Defensive Programming
 - Workflow
 - Getting Help Online","- `Defensive Programming <defensive_programming.ipynb>`_
 - `Iceberg Principle <iceberg_principle.ipynb>`_
 - `Workflow Management <workflow.ipynb>`_
 - `Getting Help <getting_help.ipynb>`_",**Discuss mid-semester project in class**
-"Thurs, Oct 8",Groupby / Split-Apply-Combine,"- WM pp Chpt 10, 10.1, 10.2, 10.3",`Link <exercises/Exercise_groupby.ipynb>`_
-"Tues, Oct 13","- Pandas: Reshaping
+"Tues, Oct 19",Groupby / Split-Apply-Combine,"- WM pp Chpt 10, 10.1, 10.2, 10.3",`Link <exercises/Exercise_groupby.ipynb>`_
+"Thurs, Oct 21","- Pandas: Reshaping
 - Pandas: Categoricals","- WM 8.3
 - `Pandas reshaping (with pics!) <https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html>`_
 - `What is goal of reshaping? <https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwifqfmGn6_sAhWfgnIEHQo2AwAQFjACegQIAxAC&url=https%3A%2F%2Fvita.had.co.nz%2Fpapers%2Ftidy-data.pdf&usg=AOvVaw3HDG0hKNeQpAOVcdczJizw>`_
 - Categoricals: WM 12.1
 - **Project Strategy Plan Due**",`Link <exercises/Exercise_reshaping.ipynb>`_
-"Thurs, Oct 15",Speed and Performance in Python,"- `Understanding Performance <performance_understanding.ipynb>`_
+"Tues, Oct 26",Speed and Performance in Python,"- `Understanding Performance <performance_understanding.ipynb>`_
 - `Improving Performance <performance_solutions.ipynb>`_",[finish groupby and reshaping exercises]
-"Tues, Oct 20",Statistics with statsmodels,"- WM Chapter 13, 13.1, 13.2, 13.3
+"Thurs, Oct 28",Statistics with statsmodels,"- WM Chapter 13, 13.1, 13.2, 13.3
 - `Skim ""Linear Models"" <https://www.statsmodels.org/stable/regression.html>`_
 - `Skim ""Discrete Dep Var Models"" <https://www.statsmodels.org/stable/discretemod.html>`_
 - `Patsy: Differences from R <https://patsy.readthedocs.io/en/latest/R-comparison.html>`_",`Link <exercises/Exercise_statsmodels.ipynb>`_
-"Thurs, Oct 22",Machine Learning with sckikit-learn,- JVP pp 331 - 359,`Link <exercises/Exercise_scikit_learn.ipynb>`_
-"Tues, Oct 27",- Defining Your Own Estimators,"- Review linear regression as matrix manipulations. `Here's a nice review. <https://www.stat.purdue.edu/~boli/stat512/lectures/topic3.pdf>`_
+"Tues, Nov 2",Machine Learning with sckikit-learn,- JVP pp 331 - 359,`Link <exercises/Exercise_scikit_learn.ipynb>`_
+"Thurs, Nov 4",- Defining Your Own Estimators,"- Review linear regression as matrix manipulations. `Here's a nice review. <https://www.stat.purdue.edu/~boli/stat512/lectures/topic3.pdf>`_
 - `Review how to define classes <https://realpython.com/python3-object-oriented-programming/>`_",`Link <exercises/Exercise_codeyourownlinearregression.ipynb>`_
-"Thurs, Oct 29","- Data Science: Backwards Design
+"Tues, Nov 9","- Data Science: Backwards Design
 - Regular Expressions","- `Backwards Design <backwards_design.ipynb>`_
 - `Regular Expressions Tutorial <https://scotch.io/tutorials/an-introduction-to-regex-in-python>`_
 - **Opioid Project Rough Draft Due**",
-"Tues, Nov 3","ELECTION DAY, NO CLASS",,
-"Thurs, Nov 5","- Parallelism 
+"Thurs, Nov 11","- Parallelism 
 - Distributed Computing","- `Parallel Computing <parallelism.ipynb>`_
 - `Distributed Computing with dask <distributed_computing.ipynb>`_","`Link 1 <exercises/Exercise_dask.ipynb>`_
 `Link 2 <exercises/Exercise_dask_realdata.ipynb>`_"
-"Tues, Nov 10","Distributed Computing, Azure","- `What is The Cloud <cloud_what_is_it.ipynb>`_
-- `Storage on Azure <cloud_storage_on_azure.ipynb>`_
-- `Setup a VM on Azure <cloud_vm_on_azure.ipynb>`_
-- `Setup a Cluster on Azure <cloud_cluster_on_azure.ipynb>`_
-- `Dask on Azure <cloud_dask.ipynb>`_",`Link <exercises/Exercise_azure_arcos.ipynb>`_
-"Thurs, Nov 12","Distributed Computing, Azure 2","- **OPIOID PROJECT DUE (Extensions available upon request to assigned date for PDS final)**
-- `More Azure Concepts <cloud_authentication.ipynb>`_
-- `Azure from Command Line <cloud_azure_cli.ipynb>`_",
-TBD,Julia,`Julia <https://www.youtube.com/watch?v=C4dMYHzW-SY>`_,
+"Tues, Nov 16",Spatial Data (GIS),"- Spatial Data Types
+- Coordinate Reference Systems",
+"Thurs, Nov 18",Spatial Data (GIS),"- **OPIOID PROJECT DUE (Extensions available upon request to assigned date for PDS final)**
+- Relating Data Spatially
+- Mapping Spatial Data
+",
+"Tues, Nov 23","- LAST CLASS 
+- Spatial Data (GIS)",- Advanced GIS Uses,
+"Wed, Dec 8",(no class),Last date things can be submitted,
