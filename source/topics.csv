@@ -1,0 +1,54 @@
+﻿Topic No.,Topic,Sub-Topics,Tutorials/Exercises
+1,Setting up Data Science Working Environment,"- `Command Line Basics <command_line_part1.ipynb>`_
+- `Installing Python <setup_environment.ipynb>`_
+- `Jupyter Tutorial <jupyter.ipynb>`_
+- `Git and Github <git_and_github.ipynb>`_","- `CLI <exercises/Exercise_CommandLine_1_Basics.ipynb>`_
+- `Advanced CLI <exercises/Exercise_CommandLine_2_Advanced.ipynb>`_
+- `Jupyter <exercises/Exercise_jupyterlab.ipynb>`_
+- `Git Part 1 <exercises/Exercise_git.ipynb>`_
+- `Git Part 2 <exercises/Exercise_git_2.ipynb>`_"
+2,Python Basics,"- Objects v. Variables
+- `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_
+- `Reading Python Errors (Tracebacks) <https://www.youtube.com/watch?v=JD8BrXXNtjA>`_",- `Objects v variables <exercises/Exercise_variables_v_objects.ipynb>`_
+3,Numpy,"- `Numbers in Computers <ints_and_floats.ipynb>`_
+- Numerical Operations",- `numpy <exercises/Exercise_numpy.ipynb>`_
+4,Pandas,"- `Pandas 1: Series <pandas_series.ipynb>`_
+- `Pandas 2: DataFrames <pandas_dataframes.ipynb>`_
+- Indices
+- Missing Data
+- `Views and Copies in Pandas <views_and_copies_in_pandas.ipynb>`_
+- Merging
+- Cleaning Data
+- Reshaping
+- Groupby
+","- `Series <exercises/Exercise_series.ipynb>`_
+- `DataFrames <exercises/Exercise_dataframe.ipynb>`_
+- `Indices <exercises/Exercise_indices.ipynb>`_
+- `Missing Data <exercises/Exercise_missing.ipynb>`_
+- `Data Cleaning <exercises/Exercise_cleaning.ipynb>`_
+- `Data Merging <exercises/Exercise_merging.ipynb>`_
+- `Groupby <exercises/Exercise_groupby.ipynb>`_
+- `Reshaping <exercises/Exercise_reshaping.ipynb>`_"
+5,Plotting,"- `Plotting in Python, Part 1 <plotting_part1.ipynb>`_ 
+- `Plotting in Python, Part 2 <plotting_part2.ipynb>`_","- `Plotting 1 <exercises/Exercise_plotting_part1.ipynb>`_
+- `Plotting 2 <exercises/Exercise_plotting_part2.ipynb>`_"
+6,Modelling,"- statsmodels
+- scikit-learn","- `statsmodels <exercises/Exercise_statsmodels.ipynb>`_
+- `scikitlearn <exercises/Exercise_scikit_learn.ipynb>`_
+- `Writing your own model <exercises/Exercise_codeyourownlinearregression.ipynb>`_"
+7,Working with Big Data,"- `What is Big Data? <what_is_big_data.ipynb>`_
+- `Strategies for Big Data <big_data_strategies.ipynb>`_
+- `Parquet Format <parquet.ipynb>`_
+- `Parallel Computing <parallelism.ipynb>`_
+- `Distributed Computing with dask <distributed_computing.ipynb>`_","- `Big Data <exercises/Exercise_bigdata.ipynb>`_
+- `Dask <exercises/Exercise_dask.ipynb>`_ 
+- `Dask 2 <exercises/Exercise_dask_realdata.ipynb>`_"
+8,Azure,"- `What is The Cloud <cloud_what_is_it.ipynb>`_ 
+- `Storage on Azure <cloud_storage_on_azure.ipynb>`_ 
+- `Setup a VM on Azure <cloud_vm_on_azure.ipynb>`_ 
+- `Setup a Cluster on Azure <cloud_cluster_on_azure.ipynb>`_ 
+- `Dask on Azure <cloud_dask.ipynb>`_
+- `More Azure Concepts <cloud_authentication.ipynb>`_ 
+- `Azure from Command Line <cloud_azure_cli.ipynb>`_",
+9,Optimized Programming,"- `Understanding Performance <performance_understanding.ipynb>`_
+- `Improving Performance <performance_solutions.ipynb>`_",

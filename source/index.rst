@@ -35,6 +35,7 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
    :maxdepth: 1
    :hidden:
 
+   TOPIC LIST <topic_list>
    CLASS SCHEDULE <class_schedule>
 
 .. toctree:: 
