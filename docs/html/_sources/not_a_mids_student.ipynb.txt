@@ -2,7 +2,6 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "# Welcome non-Duke MIDS Students!\n",
     "\n",
@@ -13,11 +12,27 @@
     "- This course assumes a familiarity with (regular) Python. *Guidance for those new to Python below.*\n",
     "- MIDS students have also seen the two Python data science packages we'll use a lot in this course: `numpy`, and `pandas`. As a result, this course is not optimally designed for those who have no exposure to these tools. A person who knows Python but has never seen `numpy` and `pandas` can still learn all they need from the materials in this course, but for reasons discussed below, it may be harder than is really necessary. *Guidance for students in this position below.*\n",
     "- No experience or past exposure is assumed for topic areas other than `numpy` and `pandas`."
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "source": [
+    "## If you've never used python before\n",
+    "\n",
+    "The DataCamp courses listed below include a good introduction to Python, so I'd start by taking those courses.\n",
+    "\n",
+    "- [Introduction to Data Science in Python](https://www.datacamp.com/courses/introduction-to-data-science-in-python) (Takes about 4 hours)\n",
+    "- [Intermediate Python for Data Science](https://www.datacamp.com/courses/intermediate-python-for-data-science) (Takes about 4 hours)\n",
+    "- The Transforming Data chapter from [Data Manipulation With Pandas](https://learn.datacamp.com/courses/data-manipulation-with-pandas)\n",
+    "- The Visualizing and Creating Data Frames chapter from [Data Manipulation With Pandas](https://learn.datacamp.com/courses/data-manipulation-with-pandas)\n",
+    "\n",
+    "**I *think* that the Python covered in those courses will be sufficient to support you in the course.**  However, I will confess that because MIDS students also take a little  Python bootcamp when they arrive, it's hard for me to know if that's quite sufficient... If you take those courses then try to complete the materials in this course, please let me know how it goes either [by email](mailto:nick@nickeubank.com) or by openning an issue on [this site's github repo](https://github.com/nickeubank/practicaldatascience/issues)!)"
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
    "source": [
     "## How python, numpy and pandas are taught\n",
     "\n",
@@ -28,11 +43,11 @@
     "But in teaching, an important concept is the difference between \"the logic of a subject\" and the \"logic of learning\". Subjects often have their own logic, which (once understood) seem to flow from basic ideas (e.g. what is the most basic way to represent data) and then build up to fancy concepts (how to merge datasets and fit models). The problem is that teaching a course by following this \"logic of the subject\" turns out not to be the best way to help people learn. Instead, it's often useful to start from the middle (doing basic data manipulations) so students see the goal of the tools they are learning about before they double back and enrich their understanding by learning about the deep internal logic of a tool. \n",
     "\n",
     "The DataCamp courses that MIDS students completed was a \"start from the middle\" introduction, and so in this course we're not doubling back and teaching the logic of these libraries from the bottom up. That means we will cover everything on needs to know about these libraries, but we may not be doing it in the most efficient way for newcomers. "
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "## If you've never seen numpy or pandas before\n",
     "\n",
@@ -44,29 +59,20 @@
     "- The Visualizing and Creating Data Frames chapter from [Data Manipulation With Pandas](https://learn.datacamp.com/courses/data-manipulation-with-pandas)\n",
     "\n",
     "DataCamp's courses are really well designed, and crucially their entirely interactive (and research shows that *active* learning is the best way to learn). They're a tremendous resource, and you should definitely start there if you can affort their service (\\$30 a month in the US). "
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## If you've never used python before\n",
-    "\n",
-    "The DataCamp courses listed above include a good introduction to Python, so that is definitely where I would start. **I *think* that the Python covered in those courses will be sufficient to support you in the course.** However, I will confess that because MIDS students also take a little  Python bootcamp when they arrive, it's hard for me to know if that's quite sufficient... If you take those courses then try to complete the materials in this course, please let me know how it goes either [by email](mailto:nick@nickeubank.com) or by openning an issue on [this site's github repo](https://github.com/nickeubank/practicaldatascience/issues)!)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "## How other topics are taught\n",
     "\n",
     "While some knowledge is assumed for `python`, `numpy` and `pandas`, no knowledge is assumed in other areas. As a result, all the other resources on this site should be totally accessible to all readers (and if they're not, then please let me know by openning an issue on [this site's github repo](https://github.com/nickeubank/practicaldatascience/issues)!)."
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "## Do the exercises!\n",
     "\n",
@@ -76,7 +82,8 @@
     "\n",
     "- Duke students are using the *exact* same instructional materials you are. You aren't missing lecture materials. \n",
     "- Duke students are being *required* to do the exercises associated with each topic, and they are integral to the course in two ways. First, there are lessons that come up in the exercises that aren't covered (or aren't covered as well as I'd like) in instructional materials. If you don't do the exercises, you will miss important take-aways. And second, programming is a skilled learned by doing. Requiring students to do the exercises in class is a way of making sure that they get appropriate attention. There's no way to make them \"mandatory\" online, but I hope you will take to heart my strong encouragement that you complete the exercises that follow each lesson if you want to get the most out of this site. "
-   ]
+   ],
+   "metadata": {}
   }
  ],
  "metadata": {
