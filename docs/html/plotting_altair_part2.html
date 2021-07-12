@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Plotting with Altair &#8212; Practical Data Science</title>
+    <title>Advanced Plotting with Altair &#8212; Practical Data Science</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
@@ -34,49 +34,18 @@
 
           <div class="body" role="main">
             
-  <section id="Plotting-with-Altair">
-<h1>Plotting with Altair<a class="headerlink" href="#Plotting-with-Altair" title="Permalink to this headline">¶</a></h1>
-<section id="Plotting-Libraries-in-Python">
-<h2>Plotting Libraries in Python<a class="headerlink" href="#Plotting-Libraries-in-Python" title="Permalink to this headline">¶</a></h2>
-<p>The linchpin library for plotting in Python is without a doubt <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>. While infinitely flexible, however, for many applications <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> lacks user-friendly tools for quickly making common types of figures (scatter plots, linear fits, histograms, etc.). With that in mind, several other packages (most of which are actually built on <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>) have been created to provide a more user-friendly interface. Unlike in <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>, where you have to think in terms of the geometric
-objects you want to place on axes, all three of these alternative libraries allow for higher-level, more “declarative” code:</p>
-<p><strong>Imperative:</strong></p>
-<p><strong>Declarative:</strong></p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://altair-viz.github.io/">altair</a>: <code class="docutils literal notranslate"><span class="pre">altair</span></code>, like <code class="docutils literal notranslate"><span class="pre">plotnine</span></code> also has a clear philosophy that underlies its syntax, and seems to be relatively popular among pure python users.</p></li>
-<li><p><a class="reference external" href="https://plotnine.readthedocs.io/en/stable/index.html">plotnine</a> <code class="docutils literal notranslate"><span class="pre">plotnine</span></code> is designed to replicate the syntax of the extremely popular R package <code class="docutils literal notranslate"><span class="pre">ggplot</span></code> in Python. In most cases it works wonderfully. As a result, if you are already familiar with <code class="docutils literal notranslate"><span class="pre">ggplot</span></code>, <code class="docutils literal notranslate"><span class="pre">plotnine</span></code> is hard to beat.</p></li>
-<li><p><a class="reference external" href="https://seaborn.pydata.org/">seaborn</a>: <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> is also a declarative plotting language, although its syntax is a little less modular than <code class="docutils literal notranslate"><span class="pre">plotnine</span></code> or <code class="docutils literal notranslate"><span class="pre">altair</span></code> – e.g. there is a distinct command for plotting histograms, a command for kernel densities, a command for bivariate fits, etc. But still <em>much</em> easier than <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>.</p></li>
-</ul>
+  <section id="Advanced-Plotting-with-Altair">
+<h1>Advanced Plotting with Altair<a class="headerlink" href="#Advanced-Plotting-with-Altair" title="Permalink to this headline">¶</a></h1>
 </section>
-<section id="Grammer-of-Graphics">
-<h2>Grammer of Graphics<a class="headerlink" href="#Grammer-of-Graphics" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>Data</p></li>
-<li><p>Transformations (skip for now?)</p></li>
-<li><p>Mark</p></li>
-<li><p>Encoding</p></li>
-<li><p>Scale</p></li>
-<li><p>Guide</p></li>
-</ul>
+<section id="Hierarchy-of-Marks">
+<h1>Hierarchy of Marks<a class="headerlink" href="#Hierarchy-of-Marks" title="Permalink to this headline">¶</a></h1>
 </section>
-<section id="Building-a-Scatterplot">
-<h2>Building a Scatterplot<a class="headerlink" href="#Building-a-Scatterplot" title="Permalink to this headline">¶</a></h2>
-<section id="Making-Interactive">
-<h3>Making Interactive<a class="headerlink" href="#Making-Interactive" title="Permalink to this headline">¶</a></h3>
+<section id="Faceting">
+<h1>Faceting<a class="headerlink" href="#Faceting" title="Permalink to this headline">¶</a></h1>
 </section>
-<section id="Saving-a-Plot">
-<h3>Saving a Plot<a class="headerlink" href="#Saving-a-Plot" title="Permalink to this headline">¶</a></h3>
-</section>
-</section>
-<section id="What’s-Going-on-Beneath-the-Hood?">
-<h2>What’s Going on Beneath the Hood?<a class="headerlink" href="#What’s-Going-on-Beneath-the-Hood?" title="Permalink to this headline">¶</a></h2>
-<p>Altair –&gt; Vega-Lite –&gt; Vega –&gt; D3 (javascript)</p>
-</section>
-<section id="Exercises!">
-<h2>Exercises!<a class="headerlink" href="#Exercises!" title="Permalink to this headline">¶</a></h2>
-<p><em>If you are enrolled in Practical Data Science at Duke, don’t do these exercises on your own – we’ll do them in class!</em></p>
-<p><a class="reference internal" href="exercises/Exercise_plotting_part1.html"><span class="doc">Plotting Exercises, Part 1</span></a></p>
-</section>
+<section id="Example-Galleries">
+<h1>Example Galleries<a class="headerlink" href="#Example-Galleries" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://altair-viz.github.io/gallery/index.html">https://altair-viz.github.io/gallery/index.html</a></p>
 </section>
 
 
@@ -192,7 +161,7 @@ objects you want to place on axes, all three of these alternative libraries allo
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/plotting_altair_part1.ipynb.txt"
+      <a href="_sources/plotting_altair_part2.ipynb.txt"
           rel="nofollow">Page source</a>
     </div>
 

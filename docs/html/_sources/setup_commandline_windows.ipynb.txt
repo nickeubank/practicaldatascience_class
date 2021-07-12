@@ -23,11 +23,16 @@
    "source": [
     "## Install Cmder\n",
     "\n",
-    "To get a good bash interface in windows, we just need to [install Cmder](https://cmder.net/). Make sure to select the **Full Install** (or you won't get Bash). Note this will also install `git`, which we discuss [elsewhere on this site](git_and_github.ipynb).\n",
+    "To get a good `bash` interface in Windows, begin by [downloading Cmder from their main site](https://cmder.net/). \n",
     "\n",
-    "I recommend unzipping the zipped Cmder file you download into your main User folder (so I unzipped into `C:\\Users\\Nick`). DON'T try and put it in ProgramFiles.\n",
+    "**Make sure to select the *Full Install* (or you won't get Bash)!** \n",
     "\n",
-    "Once installed, you'll have a new program called `Cmder` available! By default, `Cmder` is a kinda of hybrid interface that lets you use most commands people use in `bash` *and* the commands people use when working with the default Windows command line tool (`CMD`). This is nice for people with some windows command line experience, but it does mean that `Cmder` doesn't quite work like `bash`. \n",
+    "Then unzip the downloaded Cmder file and place it *in your user folder* (e.g. `C:\\Users\\[your user name\\Cmder`. Mine is in `C:\\Users\\Nick\\Cmder`). DON'T try and put it in ProgramFiles.\n",
+    "\n",
+    "\n",
+    "## Configure Cmder\n",
+    "\n",
+    "Once installed, you'll find you a new program called `Cmder` available! By default, `Cmder` is a kinda of hybrid interface that lets you use most commands people use in `bash` *and* the commands people use when working with the default Windows command line tool (`CMD`). This is nice for people with some windows command line experience, but it does mean that `Cmder` doesn't quite work like `bash`. \n",
     "\n",
     "With that in mind, we want to set `Cmder` to default to pure `bash` mode by clicking on Settings (the three horizontal bars on the bottom right), then changing the \"startup task\" to `{bash::bash as Admin}` (see pic below).\n",
     "\n",
@@ -38,28 +43,23 @@
   {
    "cell_type": "markdown",
    "source": [
-    "## Create .bash_profile File"
+    "## Create Configuration File"
    ],
    "metadata": {}
   },
   {
    "cell_type": "markdown",
    "source": [
-    "As we'll discuss in our command line exercises, the way you control settings in your Bash session is with a file called `.bash_profile` or `.bashrc`. Cmder won't create this automatically, though, so we'll create an empty file now for later use. "
-   ],
-   "metadata": {}
-  },
-  {
-   "cell_type": "markdown",
-   "source": [
-    "To make this file, in a new Bash session, run the following commands:\n",
+    "When you open a `sh`, `bash`, or `zsh` session, that session begins by running all the code in a special file the helps configure the session. Among the things done in these files, they often define \"environment variables\" -- variables that are visible to any program run from your command line session, with information about things like where to find various programs, like Python. \n",
     "\n",
-    "```bash\n",
-    "cd ~\n",
-    "touch .bash_profile\n",
-    "```\n",
+    "`bash` in particular will run a file located in the `bash`'s home directory (which is include your Cmder folder) called  `.bash_profile`. We don't need to modify this right now, but we do want to create a file there for future use. \n",
     "\n",
-    "That's it for now!"
+    "To do this, open a new `bash` session, then:\n",
+    "\n",
+    "- **run the command `cd ~`:** (`~` is a shortcut for the `bash` home directory, so this makes the current `bash` directory your `bash` home directory.) \n",
+    "- **run the command `touch .bash_profile`**: This will create a file called `.bash_profile` we can use later. \n",
+    "\n",
+    "And we're done!"
    ],
    "metadata": {}
   }

@@ -1,0 +1,42 @@
+{
+    "cells": [
+        {
+            "cell_type": "markdown",
+            "source": [
+                "## Advanced Plotting with Altair"
+            ],
+            "metadata": {}
+        },
+        {
+            "cell_type": "markdown",
+            "source": [
+                "## Hierarchy of Marks"
+            ],
+            "metadata": {}
+        },
+        {
+            "cell_type": "markdown",
+            "source": [
+                "## Faceting"
+            ],
+            "metadata": {}
+        },
+        {
+            "cell_type": "markdown",
+            "source": [
+                "## Example Galleries\n",
+                "\n",
+                "https://altair-viz.github.io/gallery/index.html"
+            ],
+            "metadata": {}
+        }
+    ],
+    "metadata": {
+        "orig_nbformat": 4,
+        "language_info": {
+            "name": "python"
+        }
+    },
+    "nbformat": 4,
+    "nbformat_minor": 2
+}

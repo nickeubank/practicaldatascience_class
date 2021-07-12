@@ -42,21 +42,26 @@ are almost all running on Linux. So when you start doing cloud computing, you’
 <p><strong>But</strong>: <code class="docutils literal notranslate"><span class="pre">bash</span></code> is not the default on Windows (Windows uses <code class="docutils literal notranslate"><span class="pre">PowerShell</span></code> and <code class="docutils literal notranslate"><span class="pre">CMD</span></code> by default), so on this page, I’ll show you how to set up a system that lets you work with <code class="docutils literal notranslate"><span class="pre">bash</span></code> on your Windows computer.</p>
 <section id="Install-Cmder">
 <h2>Install Cmder<a class="headerlink" href="#Install-Cmder" title="Permalink to this headline">¶</a></h2>
-<p>To get a good bash interface in windows, we just need to <a class="reference external" href="https://cmder.net/">install Cmder</a>. Make sure to select the <strong>Full Install</strong> (or you won’t get Bash). Note this will also install <code class="docutils literal notranslate"><span class="pre">git</span></code>, which we discuss <a class="reference internal" href="git_and_github.html"><span class="doc">elsewhere on this site</span></a>.</p>
-<p>I recommend unzipping the zipped Cmder file you download into your main User folder (so I unzipped into <code class="docutils literal notranslate"><span class="pre">C:\Users\Nick</span></code>). DON’T try and put it in ProgramFiles.</p>
-<p>Once installed, you’ll have a new program called <code class="docutils literal notranslate"><span class="pre">Cmder</span></code> available! By default, <code class="docutils literal notranslate"><span class="pre">Cmder</span></code> is a kinda of hybrid interface that lets you use most commands people use in <code class="docutils literal notranslate"><span class="pre">bash</span></code> <em>and</em> the commands people use when working with the default Windows command line tool (<code class="docutils literal notranslate"><span class="pre">CMD</span></code>). This is nice for people with some windows command line experience, but it does mean that <code class="docutils literal notranslate"><span class="pre">Cmder</span></code> doesn’t quite work like <code class="docutils literal notranslate"><span class="pre">bash</span></code>.</p>
+<p>To get a good <code class="docutils literal notranslate"><span class="pre">bash</span></code> interface in Windows, begin by <a class="reference external" href="https://cmder.net/">downloading Cmder from their main site</a>.</p>
+<p><strong>Make sure to select the Full Install (or you won’t get Bash)!</strong></p>
+<p>Then unzip the downloaded Cmder file and place it <em>in your user folder</em> (e.g. <code class="docutils literal notranslate"><span class="pre">C:\Users\[your</span> <span class="pre">user</span> <span class="pre">name\Cmder</span></code>. Mine is in <code class="docutils literal notranslate"><span class="pre">C:\Users\Nick\Cmder</span></code>). DON’T try and put it in ProgramFiles.</p>
+</section>
+<section id="Configure-Cmder">
+<h2>Configure Cmder<a class="headerlink" href="#Configure-Cmder" title="Permalink to this headline">¶</a></h2>
+<p>Once installed, you’ll find you a new program called <code class="docutils literal notranslate"><span class="pre">Cmder</span></code> available! By default, <code class="docutils literal notranslate"><span class="pre">Cmder</span></code> is a kinda of hybrid interface that lets you use most commands people use in <code class="docutils literal notranslate"><span class="pre">bash</span></code> <em>and</em> the commands people use when working with the default Windows command line tool (<code class="docutils literal notranslate"><span class="pre">CMD</span></code>). This is nice for people with some windows command line experience, but it does mean that <code class="docutils literal notranslate"><span class="pre">Cmder</span></code> doesn’t quite work like <code class="docutils literal notranslate"><span class="pre">bash</span></code>.</p>
 <p>With that in mind, we want to set <code class="docutils literal notranslate"><span class="pre">Cmder</span></code> to default to pure <code class="docutils literal notranslate"><span class="pre">bash</span></code> mode by clicking on Settings (the three horizontal bars on the bottom right), then changing the “startup task” to <code class="docutils literal notranslate"><span class="pre">{bash::bash</span> <span class="pre">as</span> <span class="pre">Admin}</span></code> (see pic below).</p>
 <img alt="selectbash" src="_images/cmder_default_to_bash.png" />
 </section>
-<section id="Create-.bash_profile-File">
-<h2>Create .bash_profile File<a class="headerlink" href="#Create-.bash_profile-File" title="Permalink to this headline">¶</a></h2>
-<p>As we’ll discuss in our command line exercises, the way you control settings in your Bash session is with a file called <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> or <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>. Cmder won’t create this automatically, though, so we’ll create an empty file now for later use.</p>
-<p>To make this file, in a new Bash session, run the following commands:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~
-touch .bash_profile
-</pre></div>
-</div>
-<p>That’s it for now!</p>
+<section id="Create-Configuration-File">
+<h2>Create Configuration File<a class="headerlink" href="#Create-Configuration-File" title="Permalink to this headline">¶</a></h2>
+<p>When you open a <code class="docutils literal notranslate"><span class="pre">sh</span></code>, <code class="docutils literal notranslate"><span class="pre">bash</span></code>, or <code class="docutils literal notranslate"><span class="pre">zsh</span></code> session, that session begins by running all the code in a special file the helps configure the session. Among the things done in these files, they often define “environment variables” – variables that are visible to any program run from your command line session, with information about things like where to find various programs, like Python.</p>
+<p><code class="docutils literal notranslate"><span class="pre">bash</span></code> in particular will run a file located in the <code class="docutils literal notranslate"><span class="pre">bash</span></code>’s home directory (which is include your Cmder folder) called <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code>. We don’t need to modify this right now, but we do want to create a file there for future use.</p>
+<p>To do this, open a new <code class="docutils literal notranslate"><span class="pre">bash</span></code> session, then:</p>
+<ul class="simple">
+<li><p><strong>run the command ``cd ~``:</strong> (<code class="docutils literal notranslate"><span class="pre">~</span></code> is a shortcut for the <code class="docutils literal notranslate"><span class="pre">bash</span></code> home directory, so this makes the current <code class="docutils literal notranslate"><span class="pre">bash</span></code> directory your <code class="docutils literal notranslate"><span class="pre">bash</span></code> home directory.)</p></li>
+<li><p><strong>run the command ``touch .bash_profile``</strong>: This will create a file called <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> we can use later.</p></li>
+</ul>
+<p>And we’re done!</p>
 </section>
 </section>
 
