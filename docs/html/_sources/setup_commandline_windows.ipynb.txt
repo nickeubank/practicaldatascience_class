@@ -1,0 +1,82 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "source": [
+    "# The Command Line on Windows / Installing Bash"
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "In our next reading on [Command Line Basics](command_line_part1.ipynb), we'll learn that there are actually several programs available that allow users to interact with their operating system via text commands instead of using their mouse to click on icons (feel free to follow the link and read ahead if you'd like). \n",
+    "\n",
+    "In this course, we'll focus on learning `bash` because it's so ubiquitous in the data science space. Why? Mostly because it is the default command line tool for Linux operating systems, and while you may not know it, *most* of the computers you interact with on a daily basis run Linux. Your personal computer may be a Mac (which also uses `bash` by default) or a Windows computer, but the computers running websites, managing your email, running those ticket kiosk you see at the airport, etc. are almost all running on Linux. So when you start doing cloud computing, you'll *probably* be working with a Linux virtual machine. So if you're going to learn a command line tool as a data scientist, `bash` is the natural choice.\n",
+    "\n",
+    "**But**: `bash` is not the default on Windows (Windows uses `PowerShell` and `CMD` by default), so on this page, I'll show you how to set up a system that lets you work with `bash` on your Windows computer. "
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "## Install Cmder\n",
+    "\n",
+    "To get a good bash interface in windows, we just need to [install Cmder](https://cmder.net/). Make sure to select the **Full Install** (or you won't get Bash). Note this will also install `git`, which we discuss [elsewhere on this site](git_and_github.ipynb).\n",
+    "\n",
+    "I recommend unzipping the zipped Cmder file you download into your main User folder (so I unzipped into `C:\\Users\\Nick`). DON'T try and put it in ProgramFiles.\n",
+    "\n",
+    "Once installed, you'll have a new program called `Cmder` available! By default, `Cmder` is a kinda of hybrid interface that lets you use most commands people use in `bash` *and* the commands people use when working with the default Windows command line tool (`CMD`). This is nice for people with some windows command line experience, but it does mean that `Cmder` doesn't quite work like `bash`. \n",
+    "\n",
+    "With that in mind, we want to set `Cmder` to default to pure `bash` mode by clicking on Settings (the three horizontal bars on the bottom right), then changing the \"startup task\" to `{bash::bash as Admin}` (see pic below).\n",
+    "\n",
+    "![selectbash](images/cmder_default_to_bash.png)"
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "## Create .bash_profile File"
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "As we'll discuss in our command line exercises, the way you control settings in your Bash session is with a file called `.bash_profile` or `.bashrc`. Cmder won't create this automatically, though, so we'll create an empty file now for later use. "
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "To make this file, in a new Bash session, run the following commands:\n",
+    "\n",
+    "```bash\n",
+    "cd ~\n",
+    "touch .bash_profile\n",
+    "```\n",
+    "\n",
+    "That's it for now!"
+   ],
+   "metadata": {}
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Bash",
+   "language": "bash",
+   "name": "bash"
+  },
+  "language_info": {
+   "codemirror_mode": "shell",
+   "file_extension": ".sh",
+   "mimetype": "text/x-sh",
+   "name": "bash"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

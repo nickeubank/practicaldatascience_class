@@ -16,7 +16,7 @@
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Installing Setting Up Your Python Installation" href="setup_environment.html" />
+    <link rel="next" title="Setting up Your Computer for Data Science" href="setting_up_your_computer.html" />
     <link rel="prev" title="Course Topics and Materials" href="topic_list.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -84,13 +84,11 @@
 <li><p><a class="reference external" href="https://github.com/nickeubank/practicaldatascience/raw/master/syllabus/Syllabus_PracticalDataScience.pdf">Read and sign syllabus</a></p></li>
 <li><p><a class="reference external" href="https://uma.pop.umn.edu/usa/user/new">Register with IPUMS</a></p></li>
 <li><p><a class="reference external" href="https://www.datacamp.com/home">Register for DataCamp</a></p></li>
+<li><p><a class="reference internal" href="setting_up_your_computer.html"><span class="doc">Setting Up Your Computer for Data Science</span></a></p></li>
 <li><p><a class="reference internal" href="command_line_part1.html"><span class="doc">Command Line Basics</span></a></p></li>
-<li><p><a class="reference internal" href="setup_environment.html"><span class="doc">Setup Python</span></a></p></li>
-<li><p><a class="reference internal" href="jupyter.html"><span class="doc">Jupyter Tutorial</span></a></p></li>
 </ul>
 </td>
-<td><p><a class="reference internal" href="exercises/Exercise_CommandLine_1_Basics.html"><span class="doc">Link 1</span></a>
-<a class="reference internal" href="exercises/Exercise_jupyterlab.html"><span class="doc">Link 2</span></a></p></td>
+<td><p><a class="reference internal" href="exercises/Exercise_CommandLine_1_Basics.html"><span class="doc">Link 1</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p>Fri, Aug 27</p></td>
 <td><p><strong>SOFTWARE INSTALL DAY</strong></p></td>
@@ -117,12 +115,14 @@
 </td>
 <td><ul class="simple">
 <li><p><a class="reference external" href="https://gke.mybinder.org/v2/gh/ipython/ipython-in-depth/master?filepath=binder/Index.ipynb">Follow this link</a> , then click “Ipython - Beyond plain python” and read that notebook.</p></li>
+<li><p><a class="reference internal" href="jupyter.html"><span class="doc">Jupyter Tutorial</span></a></p></li>
 <li><p><a class="reference internal" href="managing_python_packages.html"><span class="doc">Python packages</span></a></p></li>
 <li><p><a class="reference internal" href="vars_v_objects.html"><span class="doc">variables v objects</span></a></p></li>
 <li><p><a class="reference external" href="https://www.practicaldatascience.org/html/python_v_r.html">Python v. R</a></p></li>
 </ul>
 </td>
-<td><p><a class="reference internal" href="exercises/Exercise_variables_v_objects.html"><span class="doc">Link</span></a></p></td>
+<td><p><a class="reference internal" href="exercises/Exercise_jupyterlab.html"><span class="doc">Link 1</span></a>
+<a class="reference internal" href="exercises/Exercise_variables_v_objects.html"><span class="doc">Link 2</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>Tues, Sep 7</p></td>
 <td><p>Numpy Basics</p></td>
@@ -341,8 +341,11 @@
 <tr class="row-odd"><td><p>Tues, Nov 16</p></td>
 <td><p>Spatial Data (GIS)</p></td>
 <td><ul class="simple">
-<li><p>Spatial Data Types</p></li>
-<li><p>Coordinate Reference Systems</p></li>
+<li><p><a class="reference internal" href="what_is_gis.html"><span class="doc">What is GIS?</span></a></p></li>
+<li><p><a class="reference internal" href="setup_geopandas.html"><span class="doc">Installing Geopandas</span></a></p></li>
+<li><p>Vector Data</p></li>
+<li><p><a class="reference external" href="https://carpentries-incubator.github.io/geospatial-python/01-intro-raster-data/index.html">Raster Data</a></p></li>
+<li><p><a class="reference external" href="https://geopandas.org/docs/user_guide.html">GeoPandas User Guide: Data Structures, Reading and Writing Files, and Indexing and Selecting Data</a></p></li>
 </ul>
 </td>
 <td></td>
@@ -351,8 +354,9 @@
 <td><p>Spatial Data (GIS)</p></td>
 <td><ul class="simple">
 <li><p><strong>OPIOID PROJECT DUE (Extensions available upon request to assigned date for PDS final)</strong></p></li>
-<li><p>Relating Data Spatially</p></li>
-<li><p>Mapping Spatial Data</p></li>
+<li><p>What are Coordinate Reference Systems?</p></li>
+<li><p><a class="reference external" href="https://geopandas.org/docs/user_guide/projections.html">Managing Projections in Geopandas</a></p></li>
+<li><p><a class="reference external" href="https://geopandas.org/docs/user_guide/mapping.html">Mapping Spatial Data in Geopandas</a></p></li>
 </ul>
 </td>
 <td></td>
@@ -364,6 +368,7 @@
 </ul>
 </td>
 <td><ul class="simple">
+<li><p>Relating Data Spatially</p></li>
 <li><p>Advanced GIS Uses</p></li>
 </ul>
 </td>
@@ -405,10 +410,12 @@
 <li class="toctree-l1"><a class="reference internal" href="topic_list.html">TOPIC LIST</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">CLASS SCHEDULE</a></li>
 </ul>
+<p class="caption"><span class="caption-text">ENVIRONMENT SETUP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setting_up_your_computer.html">Setup Computer for Data Science</a></li>
+</ul>
 <p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="setup_environment.html">Setting Up Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="managing_python_packages.html">Managing Packages</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python_v_r.html">Python / R Differences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vars_v_objects.html">Python: Vars v Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ints_and_floats.html">Numbers in Computers</a></li>
@@ -463,7 +470,7 @@
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="topic_list.html" title="previous chapter">Course Topics and Materials</a></li>
-      <li>Next: <a href="setup_environment.html" title="next chapter">Installing Setting Up Your Python Installation</a></li>
+      <li>Next: <a href="setting_up_your_computer.html" title="next chapter">Setting up Your Computer for Data Science</a></li>
   </ul></li>
 </ul>
 </div>
@@ -490,10 +497,10 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2019, Nick Eubank.
+      &copy;2021, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

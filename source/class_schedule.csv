@@ -6,18 +6,18 @@
 - Jupyter Lab / Notebooks","- `Read and sign syllabus <https://github.com/nickeubank/practicaldatascience/raw/master/syllabus/Syllabus_PracticalDataScience.pdf>`_
 - `Register with IPUMS <https://uma.pop.umn.edu/usa/user/new>`_
 - `Register for DataCamp <https://www.datacamp.com/home>`_
-- `Command Line Basics <command_line_part1.ipynb>`_
-- `Setup Python <setup_environment.ipynb>`_
-- `Jupyter Tutorial <jupyter.ipynb>`_","`Link 1 <exercises/Exercise_CommandLine_1_Basics.ipynb>`_
-`Link 2 <exercises/Exercise_jupyterlab.ipynb>`_"
+- `Setting Up Your Computer for Data Science <setting_up_your_computer.ipynb>`_
+- `Command Line Basics <command_line_part1.ipynb>`_",`Link 1 <exercises/Exercise_CommandLine_1_Basics.ipynb>`_
 "Fri, Aug 27",**SOFTWARE INSTALL DAY**,A day of trouble shooting install issues,
 "Tues, Aug 31",- Advanced Command Line,- `Advanced Command Line <command_line_part2.ipynb>`_,`Link <exercises/Exercise_CommandLine_2_Advanced.ipynb>`_
 "Thurs, Sep 2","- IPython
 - Packages
 - Python v. R / variables as pointers","- `Follow this link <https://gke.mybinder.org/v2/gh/ipython/ipython-in-depth/master?filepath=binder/Index.ipynb>`_ , then click ""Ipython - Beyond plain python"" and read that notebook. 
+- `Jupyter Tutorial <jupyter.ipynb>`_
 - `Python packages <managing_python_packages.ipynb>`_
 - `variables v objects <vars_v_objects.ipynb>`_
-- `Python v. R <https://www.practicaldatascience.org/html/python_v_r.html>`_",`Link <exercises/Exercise_variables_v_objects.ipynb>`_
+- `Python v. R <https://www.practicaldatascience.org/html/python_v_r.html>`_","`Link 1 <exercises/Exercise_jupyterlab.ipynb>`_
+`Link 2 <exercises/Exercise_variables_v_objects.ipynb>`_"
 "Tues, Sep 7",Numpy Basics,"- JVP pp 33-77
 - IF did not complete DataCamp: Do Numpy Section
 - `Numbers in Computer <ints_and_floats.ipynb>`_
@@ -77,12 +77,17 @@
 - Distributed Computing","- `Parallel Computing <parallelism.ipynb>`_
 - `Distributed Computing with dask <distributed_computing.ipynb>`_","`Link 1 <exercises/Exercise_dask.ipynb>`_
 `Link 2 <exercises/Exercise_dask_realdata.ipynb>`_"
-"Tues, Nov 16",Spatial Data (GIS),"- Spatial Data Types
-- Coordinate Reference Systems",
+"Tues, Nov 16",Spatial Data (GIS),"- `What is GIS? <what_is_gis.ipynb>`_
+- `Installing Geopandas <setup_geopandas.ipynb>`_
+- Vector Data
+- `Raster Data <https://carpentries-incubator.github.io/geospatial-python/01-intro-raster-data/index.html>`_
+- `GeoPandas User Guide: Data Structures, Reading and Writing Files, and Indexing and Selecting Data <https://geopandas.org/docs/user_guide.html>`_",
 "Thurs, Nov 18",Spatial Data (GIS),"- **OPIOID PROJECT DUE (Extensions available upon request to assigned date for PDS final)**
-- Relating Data Spatially
-- Mapping Spatial Data
+- What are Coordinate Reference Systems?
+- `Managing Projections in Geopandas <https://geopandas.org/docs/user_guide/projections.html>`_
+- `Mapping Spatial Data in Geopandas <https://geopandas.org/docs/user_guide/mapping.html>`_
 ",
 "Tues, Nov 23","- LAST CLASS 
-- Spatial Data (GIS)",- Advanced GIS Uses,
+- Spatial Data (GIS)","- Relating Data Spatially
+- Advanced GIS Uses",
 "Wed, Dec 8",(no class),Last date things can be submitted,

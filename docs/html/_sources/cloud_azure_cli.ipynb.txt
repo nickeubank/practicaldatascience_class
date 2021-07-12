@@ -2,14 +2,13 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "# Azure from the Command Line"
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "In our past tutorials, we mostly manipulated our Azure resources using the Azure web interface, but once you get comfortable with Azure, you'll likely find this a little clunky for some things. \n",
     "\n",
@@ -53,11 +52,11 @@
     "```\n",
     "\n",
     "(Though note that doing so requires adding a \"role\" to your account to authorize this behavior. This is discussed below, and the CLI will also give you directions if you don't have the relevant role)."
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "## Moving Lots of Data?\n",
     "\n",
@@ -66,11 +65,11 @@
     "For example, we often have folders of data we want to mirror on Azure, use for computations, then when we're done running some calculations, we might want to bring the updated version of the folder back to our computer. Rather than moving data file by file with Azure CLI, or even just copying the data all together, we can use `azcopy` to *sync* the two folders -- you just point at the folder you want to sync, and it will synchronize the contents across platforms, transfering only the data that's actually different between two folders (like `rsync`, if you know what that is!)\n",
     "\n",
     "So here's a setup guide for AzCopy, sorry it's kinda annoying. "
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "### Installing azcopy\n",
     "\n",
@@ -91,11 +90,11 @@
     "**Windows**:\n",
     "\n",
     "Similarly, you want to copy the downloaded folder somewhere on your `PATH` variable, so run `echo $PATH`, then put the `azcopy` file in any folder in that list of folders. "
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "### Authorizing azcopy\n",
     "\n",
@@ -113,35 +112,33 @@
     "For me, this looks like:\n",
     "\n",
     "![azure_storageblobdatacontributor](images/azure_storageblobdatacontributor.png)"
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "### Using azcopy"
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "We'll demonstrate using `azcopy` by uploading our Climate Data we used in the [exercise we did in the Big Data section](exercises/Exercise_bigdata.ipynb) where we loaded global temperature data and measure global warming at a number of locations. You can get the data we're using for this [exercise here](https://www.dropbox.com/s/oq36w90hm9ltgvc/global_climate_data.zip?dl=0)). Note I'm decompressing the `ghcnd_daily_30gb.tar.gz` file before upload. "
-   ]
+   ],
+   "metadata": {}
   },
   {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
+   "cell_type": "markdown",
    "source": [
     "cd /users/nick/dropbox/MIDS_Data_Prep/ClimateData/processed_for_students/global_climate_data\n",
     "ls"
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "Now we need to authenticate. To do so, you'll need your Tenant ID -- to get this, got to the Azure Portal and search \"Tenant\" in the search bar and select \"Tenant Properties\". There you'll find a Tenant ID, which you insert below:\n",
     "\n",
@@ -161,11 +158,11 @@
     "```sh\n",
     "INFO: Login succeeded.\n",
     "```\n"
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "Now we'll create a new container into which we can put our data:\n",
     "\n",
@@ -174,22 +171,22 @@
     "```\n",
     "\n",
     "This creates a blob container in my `nce8sa` Storage Account called `globaltemps`. "
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "Now we'll upload! Note that `azcopy` requires quotes around both the upload files and the destination address, even if you don't have any spaces. So this will upload all files within the current directory:\n",
     "\n",
     "```sh\n",
     "azcopy copy \"*\" \"https://nce8sa.blob.core.windows.net/globaltemps/\"\n",
     "```\n"
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "As you can see, the syntax is pretty simple. The URL structure for Azure Blob storage is always:\n",
     "\n",
@@ -204,11 +201,11 @@
     "```\n",
     "\n",
     "Note that you can also add a `--recursive` flag and point to a directory instead of using wildcards. "
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "**Downloading Files with azcopy**\n",
     "\n",
@@ -217,14 +214,15 @@
     "```sh\n",
     "azcopy copy \"https://nce8sa.blob.core.windows.net/temperatures/readme.txt\" \"/users/nick/desktop/readme.txt\"\n",
     "```"
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "Here's the full `azcopy` [documentation](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10). "
-   ]
+   ],
+   "metadata": {}
   }
  ],
  "metadata": {

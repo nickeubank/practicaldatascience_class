@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Projections and Coordinate Reference Systems &#8212; Practical Data Science</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="Projections-and-Coordinate-Reference-Systems">
+<h1>Projections and Coordinate Reference Systems<a class="headerlink" href="#Projections-and-Coordinate-Reference-Systems" title="Permalink to this headline">¶</a></h1>
+<p>Suppose that I gave you a tennis ball and a knife and asked you to cut the tennis ball so that it lays completely flat on the table. What would you do?</p>
+<p>(Seriously. Stop for a minute and think about that before proceeding. I’ll wait.)</p>
+<p>What I just asked you to do is precisely the problem that GIS analysts face any time they try to work with two-dimensional maps. The Earth is round, but we not only plot our data in two dimensions, but we usually also analyze it in two dimensions. But… how? Because as you probably just realized, there’s no way to get a tennis ball to lay perfectly flat just by cutting it – in the end, you’d HAVE to stretch the ball some to get it flat on the table.</p>
+<p>The answer is: just as you would have had to stretch that tennis ball, we have to stretch (distort) the world to work in two dimensions. And it’s up to you, the GIS analyst, to decide how best to stretch the world given the needs of the project you’re working on.</p>
+<section id="The-Projection-Impossibility-Theory">
+<h2>The Projection Impossibility Theory<a class="headerlink" href="#The-Projection-Impossibility-Theory" title="Permalink to this headline">¶</a></h2>
+<p>It turns out that when we project the Earth into two dimensions, we can only ever perfectly preserve <em>two</em> of the following <em>three</em> properties of the real world:</p>
+<ul class="simple">
+<li><p><strong>Area</strong> within polygons</p></li>
+<li><p><strong>Distance</strong> between points</p></li>
+<li><p><strong>Shape</strong> (or, more technically, the angles between intersecting lines)</p></li>
+</ul>
+<p>And so because there’s no way to get a 2-D projection of the world that perfectly preserves all three of these features, GIS professionals have developed <em>hundreds</em> of different projections that strike different balances in how distortions are distributed across these different attributes of a map.</p>
+<p>To be clear, we can only <em>perfectly</em> preserve two of these three, but we can find projections that distribution the distortions across these different features in different ways. For example, one projection may balance all three, distorting each a little, but offering a representation of the world that’s reasonable across all three dimensions. Another may prioritize one, and evenly distribute the residual distortion over the other two.</p>
+<p>Moreover, one can distribute distortions differentially across space – a projection optimized for North America, for example, may minimize distortions for North America by accepting greater distortions in Canada and Mexico.</p>
+</section>
+<section id="Projection-Examples">
+<h2>Projection Examples<a class="headerlink" href="#Projection-Examples" title="Permalink to this headline">¶</a></h2>
+<p>stuff</p>
+<p>Want more? Here are two kinda cool places you can play with projections and see distortions interactively: <a class="reference external" href="https://bl.ocks.org/enjalot/bd552e711b8325c64729">Ian Johnson</a>, <a class="reference external" href="https://demonstrations.wolfram.com/WorldMapProjections/">WolframAlpha</a>.</p>
+</section>
+<section id="Types-of-Projections">
+<h2>Types of Projections<a class="headerlink" href="#Types-of-Projections" title="Permalink to this headline">¶</a></h2>
+<p>While there are an infinite number of projections out there, here are a few keywords to familiarize yourself with:</p>
+<ul class="simple">
+<li><p><strong>Equidistant projections:</strong> Prioritize preserving the distance between points.</p></li>
+<li><p><strong>Equal area projections:</strong> Prioritize preserving the area inside polygons.</p></li>
+<li><p><strong>Conformal:</strong> Prioritize preserving angles of intersecting lines.</p></li>
+</ul>
+<p>In each case, how distortions are distributed over other attributes may vary.</p>
+</section>
+<section id="Coordinate-Reference-Systems-(CRS)">
+<h2>Coordinate Reference Systems (CRS)<a class="headerlink" href="#Coordinate-Reference-Systems-(CRS)" title="Permalink to this headline">¶</a></h2>
+<p>When you receive spatial data in any standard format, it will come to you with included spatial data represented in x-y coordinates (i.e. already in a two-dimensional representation). But alongside the data, you <em>should</em> also receive information about the data’s Coordinate Reference System (CRS), which tells you what those x and y coordinates actually mean (are they the result of a Mercator projection? Maybe a Robinson projection? Are they in feet or meters?). In geopandas, this is accessed
+through the <code class="docutils literal notranslate"><span class="pre">.crs</span></code> attribute, and we’ll talk more about how this works in geopandas in our next reading.</p>
+<p>So is this CRS just telling me the projection used to make my data two-dimensional? <em>Almost</em>. You may have noticed that we keep talking about how to project the Earth onto a two-dimensional plane, and there are actually two important and distinct concepts in that: our model of the Earth, and how we’re projecting the data into two-dimensions.</p>
+<p>Why do we need an explicit model of the Earth? Well, it turns out that the Earth isn’t really a sphere – it’s generally fatter in the middle (an ellipsoid), and of course has differences in elevation throughout. So a CRS actually has to encode <strong>both</strong> the model of the Earth underlying the data <strong>and</strong> how data on that three-dimensional model was projected into two dimensions.</p>
+<p>I tell you this both (a) so you won’t get confused if you look into the details of CRSs more, and (b) because it’s kinda cool. But don’t worry – unlike projections (which you should always be mindful of choosing to suit your task), you generally don’t have to worry about these models of the Earth, just know that they’re part of a CRS.</p>
+<p>(Also: people will colloquially refer to a CRS as a data’s projection – so don’t be surprised if people often use the term “projection” to refer to both the Earth model and the projection used to generate a dataset.)</p>
+</section>
+<section id="A-Special-Note-about-Latitude-and-Longitude-(aka-WGS84)">
+<h2>A Special Note about Latitude and Longitude (aka <code class="docutils literal notranslate"><span class="pre">WGS84</span></code>)<a class="headerlink" href="#A-Special-Note-about-Latitude-and-Longitude-(aka-WGS84)" title="Permalink to this headline">¶</a></h2>
+<p>The last thing to talk about is the WGS84 CRS. Basically, some CRS aren’t really meant to be used as projections (i.e. for analysis of data in 2 dimensions). For example, the CRS you’re probably most familiar with in life is latitude and longitude, usually referred to in GIS circles as WGS84. Latitude and longitude are perfectly valid ways of specifying a spatial location. But it’s almost always a mistake to treat your longitude and latitude coordinates as the x-y coordinates for spatial
+analysis. That’s because, well, they weren’t designed to minimize any of the distortions we described above. So while you <em>can</em> do spatial operations on data with a WGS84 CRS, you will almost always get more accurate results by re-projecting them into a better projection meant for analyzing data in two dimensions.</p>
+</section>
+<section id="Do-I-Have-to-Work-in-Two-Dimensions?">
+<h2>Do I Have to Work in Two-Dimensions?<a class="headerlink" href="#Do-I-Have-to-Work-in-Two-Dimensions?" title="Permalink to this headline">¶</a></h2>
+<p>We’ve talked a lot about the challenge of working in two dimensions, which raises the question: why not just stay in three-dimensions?</p>
+<p>There are settings in which people use three-dimensional models of the Earth for GIS analysis. Airlines, for example, estimate flight distances across a sphere using what are called “great circle” distances. There’s just no single projection that will do a good enjoy job of modeling the Earth at the scale they work, and measuring distances between points on a three-dimensional model is relatively straightforward, especially when they’re through the air.</p>
+<p>But other geometric operations get <em>very</em> slippery once we move to a three-dimensional model. For example, the distance between two points is just <span class="math notranslate nohighlight">\(\sqrt{x^2 + y^2}\)</span> in two dimensions. In three dimensions, we’d first have to define the contour of the surface over which we’re traveling (is the Earth a sphere in this model? Or do we have elevation?), then measure the distance over that contour.</p>
+<p>So no, it’s not strictly necessary. But life in 2-D is much easier.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Practical DS</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="topic_list.html">TOPIC LIST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class_schedule.html">CLASS SCHEDULE</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ENVIRONMENT SETUP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setting_up_your_computer.html">Setup Computer for Data Science</a></li>
+</ul>
+<p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="python_v_r.html">Python / R Differences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vars_v_objects.html">Python: Vars v Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ints_and_floats.html">Numbers in Computers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_series.html">Pandas 1: Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_dataframes.html">Pandas 2: DataFrames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part1.html">Plotting, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_part2.html">Plotting, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="views_and_copies_in_pandas.html">Pandas 3: Views</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cleaning_editingvalues.html">Cleaning: Editing Values</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER TOOLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part1.html">Command Line, Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line_part2.html">Command Line, Advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyter.html">Jupyter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_and_github.html">Git and Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pr_review.html">Reviewing Code on Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parquet.html">Parquet Format</a></li>
+</ul>
+<p class="caption"><span class="caption-text">CLOUD</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cloud_what_is_it.html">What Is The Cloud?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_storage_on_azure.html">Storage on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_vm_on_azure.html">Setup a VM on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_cluster_on_azure.html">Setup a Cluster on Azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_dask.html">Dask on Azure Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_azure_cli.html">Azure Command Line Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_authentication.html">Azure Authentication</a></li>
+</ul>
+<p class="caption"><span class="caption-text">SKILLS</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_help.html">Getting Help Online</a></li>
+<li class="toctree-l1"><a class="reference internal" href="defensive_programming.html">Defensive Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="what_is_big_data.html">What is Big Data?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="big_data_strategies.html">Working with Big Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_understanding.html">Understanding Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance_solutions.html">Solving Performance Probs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed_computing.html">Distributed Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backwards_design.html">Backwards Design</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OTHER</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="buying_datascience_computer.html">Buying a Data Science Computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="not_a_mids_student.html">Not a MIDS Student?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheets.html">Cheat Sheets</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Nick Eubank.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/projections_and_crs.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-133829453-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

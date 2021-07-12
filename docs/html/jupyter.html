@@ -50,7 +50,7 @@ conclusions and, crucially, play with that code to see what happens if the analy
 <p>OK, I know, that all sounds really abstract. What makes Jupyter Notebooks special is their interactivity, so it’s hard to understand their value without seeing them in action.</p>
 <section id="Jupyter-Notebook-Tutorial">
 <h3>Jupyter Notebook Tutorial<a class="headerlink" href="#Jupyter-Notebook-Tutorial" title="Permalink to this headline">¶</a></h3>
-<p>To learn the basics of Jupyter Notebooks, please watch <a class="reference external" href="https://www.youtube.com/watch?v=HW29067qVWk">watch this short tutorial</a>. As you watch the video, follow along yourself – since you’ve installed <a class="reference internal" href="setup_environment.html"><span class="doc">Anaconda</span></a>, you already have Jupyter Notebooks installed, so just running the command <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">notebook</span></code> from your terminal should launch the notebook navigator. We’ll build on the skills from this tutorial in our in-class exercises.</p>
+<p>To learn the basics of Jupyter Notebooks, please watch <a class="reference external" href="https://www.youtube.com/watch?v=HW29067qVWk">watch this short tutorial</a>. As you watch the video, follow along yourself – since you’ve installed <a class="reference external" href="setup_environment.ipynb">Anaconda</a>, you already have Jupyter Notebooks installed, so just running the command <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">notebook</span></code> from your terminal should launch the notebook navigator. We’ll build on the skills from this tutorial in our in-class exercises.</p>
 <p>If you got an error when you tried to run <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">notebook</span></code> like <code class="docutils literal notranslate"><span class="pre">&quot;Error</span> <span class="pre">executing</span> <span class="pre">Jupyter</span> <span class="pre">command</span> <span class="pre">'notebook':</span> <span class="pre">[Errno</span> <span class="pre">2]</span> <span class="pre">No</span> <span class="pre">such</span> <span class="pre">file</span> <span class="pre">or</span> <span class="pre">directory&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">command</span> <span class="pre">not</span> <span class="pre">found:</span> <span class="pre">jupyter</span></code> (this might happen if you didn’t install a new installation of Anaconda because you already had it installed, or if you’re using Minicoda), you can make sure Jupyter Notebooks is installed by running <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">jupyterlab</span></code> from the command line.</p>
 </section>
 </section>
@@ -82,7 +82,7 @@ coming up. And when cleaning data, you are often writing very linear (this-line-
 </section>
 <section id="Setting-Up-R-with-Jupyter">
 <h2>Setting Up R with Jupyter<a class="headerlink" href="#Setting-Up-R-with-Jupyter" title="Permalink to this headline">¶</a></h2>
-<p>When you <a class="reference internal" href="setup_environment.html"><span class="doc">installed Anaconda</span></a>, you actually also installed Jupyter, and you so you can already open up Jupyter and use it with a Python Kernel. However, since most people taking this course are Duke MIDS students who are also doing coursework in R, let’s set up Jupyter to work with R as well.</p>
+<p>When you <a class="reference external" href="setup_environment.ipynb">installed Anaconda</a>, you actually also installed Jupyter, and you so you can already open up Jupyter and use it with a Python Kernel. However, since most people taking this course are Duke MIDS students who are also doing coursework in R, let’s set up Jupyter to work with R as well.</p>
 <ol class="arabic simple">
 <li><p>If you do <em>not</em> have R installed, <a class="reference external" href="https://cloud.r-project.org/">download and install it here</a>. If you have R installed, skip to step 2.</p></li>
 <li><p>Open R by openning your command line tool (Oh-My-Zsh on Mac, Cmder in Windows) and typing <code class="docutils literal notranslate"><span class="pre">R</span></code>. <em>Don’t open it by double clicking its icon!</em></p>
@@ -138,10 +138,12 @@ coming up. And when cleaning data, you are often writing very linear (this-line-
 <li class="toctree-l1"><a class="reference internal" href="topic_list.html">TOPIC LIST</a></li>
 <li class="toctree-l1"><a class="reference internal" href="class_schedule.html">CLASS SCHEDULE</a></li>
 </ul>
+<p class="caption"><span class="caption-text">ENVIRONMENT SETUP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setting_up_your_computer.html">Setup Computer for Data Science</a></li>
+</ul>
 <p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="setup_environment.html">Setting Up Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="managing_python_packages.html">Managing Packages</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python_v_r.html">Python / R Differences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vars_v_objects.html">Python: Vars v Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ints_and_floats.html">Numbers in Computers</a></li>
@@ -230,10 +232,10 @@ coming up. And when cleaning data, you are often writing very linear (this-line-
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2019, Nick Eubank.
+      &copy;2021, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -733,7 +733,7 @@ wc -l ~/files_in_folder.txt
 see and open it.</p>
 <p>If you installed <code class="docutils literal notranslate"><span class="pre">oh-my-zsh</span></code>, then the file will still be located in your home directory but will now be called <code class="docutils literal notranslate"><span class="pre">.zshrc</span></code>.</p>
 <p><strong>Configuration File on Windows</strong></p>
-<p>If you’re using Windows, you should have created a file called <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> when you installed Cmder (instructions <a class="reference internal" href="bash_on_windows.html"><span class="doc">here</span></a>). That’s where you change your PATH variable for using Bash in Cmder.</p>
+<p>If you’re using Windows, you should have created a file called <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> when you installed Cmder (instructions <a class="reference external" href="bash_on_windows.ipynb">here</a>). That’s where you change your PATH variable for using Bash in Cmder.</p>
 <p><strong>Actually Changing your PATH Variable</strong></p>
 <p>When modifying your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> variable, you really don’t want to remove anything already in your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> variable (because who knows what program may need one of those obscure directories). Instead, the best practice is to just prefix the folders you want searched first. If you program isn’t on your PATH, this will add the program; if the wrong version of a program is being used, because you’re adding to the <em>front</em> of the PATH variable, the folder you add will have higher priority.</p>
 <p>So to add a folder to the front of your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> variable while keeping the old folders at the back, we type:</p>
@@ -776,10 +776,12 @@ see and open it.</p>
 <li class="toctree-l1"><a class="reference internal" href="topic_list.html">TOPIC LIST</a></li>
 <li class="toctree-l1"><a class="reference internal" href="class_schedule.html">CLASS SCHEDULE</a></li>
 </ul>
+<p class="caption"><span class="caption-text">ENVIRONMENT SETUP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setting_up_your_computer.html">Setup Computer for Data Science</a></li>
+</ul>
 <p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="setup_environment.html">Setting Up Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="managing_python_packages.html">Managing Packages</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python_v_r.html">Python / R Differences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vars_v_objects.html">Python: Vars v Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ints_and_floats.html">Numbers in Computers</a></li>
@@ -872,10 +874,10 @@ see and open it.</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2019, Nick Eubank.
+      &copy;2021, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

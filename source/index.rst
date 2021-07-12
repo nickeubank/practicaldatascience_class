@@ -41,10 +41,16 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
 .. toctree:: 
    :maxdepth: 2
    :hidden:
+   :caption: ENVIRONMENT SETUP
+
+   Setup Computer for Data Science <setting_up_your_computer>
+
+.. toctree:: 
+   :maxdepth: 2
+   :hidden:
    :caption: PYTHON & PANDAS
 
-   Setting Up Python <setup_environment>
-   Managing Packages <managing_python_packages>
+   
    Python / R Differences <python_v_r>
    Python: Vars v Objects <vars_v_objects>
    Numbers in Computers <ints_and_floats>

@@ -43,7 +43,7 @@
 <p>By default, when git needs you to label a commit, it will open an editor called <a class="reference external" href="https://www.vim.org/">vim</a> that is very hard to work with (it’s not just weird – it’s even hard to get out of once it’s openned!)</p>
 <p>So before you do anything else, first change your default editor. You can do this with the command:</p>
 <p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span> <span class="pre">--global</span> <span class="pre">core.editor</span> <span class="pre">&quot;COMMANDTOLAUNCHYOUREDITOR&quot;</span></code></p>
-<p>If you have Atom installed <em>and the command line tool setup</em> (i.e. you set up VS Code so that if you type <code class="docutils literal notranslate"><span class="pre">code</span></code> in the command line, VS Code opens, <a class="reference internal" href="../setup_environment.html"><span class="doc">as discussed here</span></a>), then I would do:</p>
+<p>If you have Atom installed <em>and the command line tool setup</em> (i.e. you set up VS Code so that if you type <code class="docutils literal notranslate"><span class="pre">code</span></code> in the command line, VS Code opens, <a class="reference external" href="../setup_environment.ipynb">as discussed here</a>), then I would do:</p>
 <p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span> <span class="pre">--global</span> <span class="pre">core.editor</span> <span class="pre">&quot;code&quot;</span></code></p>
 <p>If not, then the best option is probably to use <code class="docutils literal notranslate"><span class="pre">nano</span></code>, which is an in-terminal editor we’ve discussed <a class="reference internal" href="../command_line_part2.html"><span class="doc">before</span></a> that’s much easier to use than vim, and which you should already have if you’re using a bash console:</p>
 <p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span> <span class="pre">--global</span> <span class="pre">core.editor</span> <span class="pre">&quot;nano&quot;</span></code></p>
@@ -143,10 +143,12 @@ you switch:</p>
 <li class="toctree-l1"><a class="reference internal" href="../topic_list.html">TOPIC LIST</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../class_schedule.html">CLASS SCHEDULE</a></li>
 </ul>
+<p class="caption"><span class="caption-text">ENVIRONMENT SETUP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../setting_up_your_computer.html">Setup Computer for Data Science</a></li>
+</ul>
 <p class="caption"><span class="caption-text">PYTHON &amp; PANDAS</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../setup_environment.html">Setting Up Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../managing_python_packages.html">Managing Packages</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../python_v_r.html">Python / R Differences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../vars_v_objects.html">Python: Vars v Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ints_and_floats.html">Numbers in Computers</a></li>
@@ -226,10 +228,10 @@ you switch:</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2019, Nick Eubank.
+      &copy;2021, Nick Eubank.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
