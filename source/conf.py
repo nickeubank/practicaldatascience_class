@@ -75,7 +75,8 @@ language = None
 exclude_patterns = ["_build", "**.ipynb_checkpoints"]
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = None
+# pygments_style = "vs"
+pygments_style = "friendly"
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -83,18 +84,45 @@ pygments_style = None
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "alabaster"
+html_theme = "sphinx_material"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
 html_theme_options = {
-    "analytics_id": "UA-133829453-1",
-    "font_family": "Garamond",
-    "code_font_size": "12px",
-    "font_size": "17px",
+    "base_url": "http://cm4ss.com",
+    "google_analytics_account": "UA-XX133829453-1",
+    "html_minify": True,
+    "css_minify": True,
+    "globaltoc_depth": 1,
+    # If False, expand all TOC entries
+    "globaltoc_collapse": True,
+    # If True, show hidden TOC entries
+    "globaltoc_includehidden": True,
+    "master_doc": False,
+    "theme_color": "#2196f3",
+    "nav_links": [
+        {
+            "href": "index",
+            "internal": True,
+            "title": "Home",
+        },
+        {"href": "class_schedule", "internal": True, "title": "Class Schedule"},
+        {"href": "topic_list", "internal": True, "title": "Topic List"},
+        {
+            "href": "https://www.nickeubank.com",
+            "internal": False,
+            "title": "About The Author",
+        },
+    ],
+    "heroes": {"index": "Welcome to Practical Data Science!"},
 }
+html_show_sourcelink = False
+html_sidebars = {
+    "**": ["logo-text.html", "globaltoc.html", "localtoc.html", "searchbox.html"]
+}
+
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

@@ -1,9 +1,8 @@
+Hello!
+======
 
 
-Welcome to Practical Data Science!
-==================================
-
-*The course site for Duke MIDS Fall 2021 Practical Data Science Course*
+*The course site for Duke MIDS Fall 2021 Practical Data Science (IDS 720) Course*
 
 **If you are not a Duke Masters in Data Science student, please see** `this page <not_a_mids_student.ipynb>`_ **about how best to use this site!**
 
@@ -22,7 +21,14 @@ In the second portion of the class, we will take a step back from the nuts and b
 
 This portion of the course will culminate in students picking a topic, developing an *answerable* question, thinking about what (in very concerte terms) an answer to that question would look like, figuring out what tools they would employ to generate that answer, and developing a plan for finding the data they would need to actually execute their project. 
 
+Syllabus
+--------
+
 `The full syllabus for this course can be downloaded here <https://github.com/nickeubank/practicaldatascience/raw/master/syllabus/Syllabus_PracticalDataScience.pdf>`_. Please note that this syllabus is subject to change up until the first day of class.
+
+
+Class Schedule 
+--------------
 
 `The (tentative) Class Schedule can be found here <class_schedule.rst>`_
 
@@ -35,20 +41,20 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
    :maxdepth: 1
    :hidden:
 
-   TOPIC LIST <topic_list>
-   CLASS SCHEDULE <class_schedule>
+   Class Schedule <class_schedule>
+   Topic List <topic_list>
 
 .. toctree:: 
    :maxdepth: 2
    :hidden:
-   :caption: ENVIRONMENT SETUP
+   :caption: Environment Setup
 
    Setup Computer for Data Science <setting_up_your_computer>
 
 .. toctree:: 
    :maxdepth: 2
    :hidden:
-   :caption: PYTHON & PANDAS
+   :caption: Python & Pandas
 
    
    Python / R Differences <python_v_r>
@@ -64,7 +70,7 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
 .. toctree:: 
    :maxdepth: 2
    :hidden:
-   :caption: OTHER TOOLS
+   :caption: Other Tools
 
    Command Line, Basics <command_line_part1>
    Command Line, Advanced  <command_line_part2>
@@ -76,7 +82,7 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
 .. toctree:: 
    :maxdepth: 2
    :hidden:
-   :caption: CLOUD
+   :caption: Cloud
    
    What Is The Cloud? <cloud_what_is_it>
    Storage on Azure <cloud_storage_on_azure>
@@ -89,7 +95,7 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
 .. toctree:: 
    :maxdepth: 2
    :hidden:
-   :caption: SKILLS
+   :caption: Skills
 
    Getting Help Online <getting_help>
    Defensive Programming <defensive_programming>
@@ -105,7 +111,7 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
 .. toctree::
    :maxdepth: 2
    :hidden: 
-   :caption: OTHER
+   :caption: Other
    
    Buying a Data Science Computer <buying_datascience_computer.ipynb>
    Not a MIDS Student? <not_a_mids_student>

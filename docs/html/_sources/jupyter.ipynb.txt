@@ -2,7 +2,6 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "# The Jupyter Project\n",
     "\n",
@@ -22,11 +21,27 @@
     "\n",
     "OK, I know, that all sounds really abstract. What makes Jupyter Notebooks special is their interactivity, so it's hard to understand their value without seeing them in action.\n",
     "\n",
+    "\n",
     "### Jupyter Notebook Tutorial\n",
     "\n",
     "To learn the basics of Jupyter Notebooks, please watch **[watch this short tutorial](https://www.youtube.com/watch?v=HW29067qVWk)**. As you watch the video, follow along yourself -- since you've installed [Anaconda](setup_environment.ipynb), you already have Jupyter Notebooks installed, so just running the command `jupyter notebook` from your terminal should launch the notebook navigator. We'll build on the skills from this tutorial in our in-class exercises. \n",
     "\n",
     "If you got an error when you tried to run `jupyter notebook` like `\"Error executing Jupyter command 'notebook': [Errno 2] No such file or directory\"` or `command not found: jupyter` (this might happen if you didn't install a new installation of Anaconda because you already had it installed, or if you're using Minicoda), you can make sure Jupyter Notebooks is installed by running `conda install jupyterlab` from the command line. \n",
+    "\n",
+    "\n",
+    "### Jupyter Notebooks for Slides\n",
+    "\n",
+    "slides!\n",
+    "\n",
+    "## Jupyter Consoles\n",
+    "\n",
+    "blah blah"
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
     "\n",
     "## Jupyter Lab\n",
     "\n",
@@ -44,15 +59,15 @@
     "\n",
     "- Make sure you have the most recent version of Jupyter Lab installed (the version that comes with the Anaconda distribution you already installed is a little behind) by running `conda update jupyterlab`.  \n",
     "- Type `jupyter lab` on the command line to start a jupyter lab session!\n"
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "## Is Jupyter the best tool for data science?\n",
     "\n",
-    "Where Jupyter Lab really shines is in it's support for *interactive* programming and data analysis, and in providing a single interface for working in different programming languages. But whether that makes it the *best* tool depends on how you like to work, and what you're doing. The reality is that *every* tool has strengths and weaknesses, so what's best depends on what you are doing *and* your personal preferences. But there are some use cases for which I think Jupyter is really valueable. \n",
+    "Where Jupyter really shines is in it's support for *interactive* programming and data analysis, and in providing a single interface for working in different programming languages. But whether that makes it the *best* tool depends on how you like to work, and what you're doing. The reality is that *every* tool has strengths and weaknesses, so what's best depends on what you are doing *and* your personal preferences. But there are some use cases for which I think Jupyter is really valueable. \n",
     "\n",
     "In the introduction of this course, we talked about the two big branches of data science: the software development branch, and the data analysis branch. \n",
     "\n",
@@ -61,11 +76,11 @@
     "People in the data analysis branch, by contrast, often want to see the result of each line of code they write. That's because when analyzing data for the first time, you may know what your code is doing in an abstract sense (say, calculating the average of a variable), but you don't know what the output of that code will be! Moreover, you never *really* know the structure of real-world your data until you've cleaned the heck out of it, so you want to look at it often to see what issues are coming up. And when cleaning data, you are often writing very linear (this-line-runs-after-the-last-line) scripts where you want to check your efforts to clean your data after each line. When doing this kind of work (especially if you spend a lot of time moving between programming languages), having one program that will work with different kernels and allows for rich, interactive programming like Jupyter can be very valuable. \n",
     "\n",
     "So if you do a lot of interactive data analysis, I would encourage you to give Jupyter Notebooks and Jupyter Labs a try. It might not be the tool you use for everything you do, but its used by enough people and has enough advantages, I think it's a tool most Data Scientists should have a working familiarity with."
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "## Setting Up R with Jupyter \n",
     "\n",
@@ -102,16 +117,17 @@
     "```\n",
     "\n",
     "If that means that R want you to install apple developer tools. Just run the following command at the command line (not in R, in your bash or oh-my-zsh session): `xcode-select --install`, or if that doesn't work, run `sudo xcode-select --reset`. This should lead to a somewhat slow software installation."
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "## Jupyter Lab Exercises!\n",
     "\n",
     "Click here for some [Jupyter Lab exercises](exercises/Exercise_jupyterlab.ipynb)!"
-   ]
+   ],
+   "metadata": {}
   }
  ],
  "metadata": {
