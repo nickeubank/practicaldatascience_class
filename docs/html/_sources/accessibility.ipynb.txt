@@ -14,6 +14,15 @@
   {
    "cell_type": "markdown",
    "source": [
+    "## Experimentation is Key\n",
+    "\n",
+    "- Amazon prime is your friend"
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
     "## Ergonomics\n",
     "\n",
     "### Monitors\n",

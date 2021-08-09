@@ -92,11 +92,6 @@
     "\n"
    ],
    "metadata": {}
-  },
-  {
-   "cell_type": "markdown",
-   "source": [],
-   "metadata": {}
   }
  ],
  "metadata": {
