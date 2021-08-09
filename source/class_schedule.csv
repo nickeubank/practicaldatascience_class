@@ -81,7 +81,7 @@
 - `Installing Geopandas <gis_setup_geopandas.ipynb>`_
 - Vector Data
 - `Raster Data <https://carpentries-incubator.github.io/geospatial-python/01-intro-raster-data/index.html>`_
-- `GeoPandas User Guide: Data Structures, Reading and Writing Files, and Indexing and Selecting Data <https://geopandas.org/docs/user_guide.html>`_",
+- `GeoPandas User Guide: Data Structures, Reading and Writing Files, and Indexing and Selecting Data <https://geopandas.org/docs/user_guide.html>`_",`Link 1 <exercises/Exercise_gis_points.ipynb>`_
 "Thurs, Nov 18",Spatial Data (GIS),"- **OPIOID PROJECT DUE (Extensions available upon request to assigned date for PDS final)**
 - `Projections and Coordinate Reference Systems <projections_and_crs.ipynb>`_
 - `Managing Projections in Geopandas <https://geopandas.org/docs/user_guide/projections.html>`_
