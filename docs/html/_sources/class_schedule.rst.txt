@@ -1,16 +1,18 @@
 Class Schedule
 =============
 
-`Class Zoom Link <https://duke.zoom.us/j/96026191020>`_
+`Class Zoom Link <https://duke.zoom.us/j/97068501770>`_
 
 Office Hours and Links
 --------------------------
 
-`Nick <https://duke.zoom.us/my/nickeubank>`_ : Friday 3pm - 4pm
+`Nick <https://duke.zoom.us/my/nickeubank>`_ : Friday 2:30pm - 3:30pm
 
-`Nathan <https://us02web.zoom.us/j/4551839718?pwd=U2dCdWZlSkY4Ry9QdnFqRkJNaGdQUT09>`_ : Wednesday 12pm-1pm
+`Yi <https://duke.zoom.us/j/91642983704>`_ : Monday 11 am – 12 am; Tuesday 4 pm – 5 pm
 
-`Vanessa <https://duke.zoom.us/j/91722970032>`_ : Monday 4-5pm
+`Zoe <https://duke.zoom.us/j/7716922957>`_ : Wednesday 11 am – 12 am; Thursday 5 pm – 6 pm
+
+ 
 
 Class Time
 ----------
