@@ -7,7 +7,7 @@
     "\n",
     "In this exercise we're going to get some practice navigating and exploring files and folders from the command line by looking at some data from New York City's 311 system. 311 is a citizen hotline set up by the city of New York for reporting non-emergency issues to the city. 311 takes calls about all sorts of issues, from noise complaints to issues with street lights to complaints about restaurant hygeine violations and rodent sightings. \n",
     "\n",
-    "You can find the 311 data we'll be working with in a zipped file called `NYC_311calls_2018.zip` [here](https://github.com/nickeubank/MIDS_Data/blob/master/NYC_311_ServiceRequests/NYC_311calls_2018.zip). Please download the file and place it somewhere easy to remember (desktop, downloads, etc.). "
+    "You can find the 311 data we'll be working with in a zipped file called [NYC_311calls_2018.zip here](https://github.com/nickeubank/MIDS_Data/blob/master/NYC_311_ServiceRequests/NYC_311calls_2018.zip). Please download the file and place it somewhere easy to remember (desktop, downloads, etc.). "
    ],
    "metadata": {}
   },
