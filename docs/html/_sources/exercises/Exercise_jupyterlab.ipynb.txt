@@ -2,27 +2,26 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "# Jupyter Lab Exercises\n",
     "\n",
-    "In these exercises, we'll explore a few ways of working with Jupyter Lab. If you haven't already, make sure you've worked through the tutorials for installing [Python and Anaconda](../setup_environment.ipynb), and for [setting up R](../jupyter.ipynb) to work with Jupyter.\n",
+    "In these exercises, we'll explore a few ways of working with Jupyter Lab. If you haven't already, make sure you've worked through the tutorials for installing [Python and Conda](../setting_up_your_computer.ipynb), and for [setting up R](../jupyter.ipynb) to work with Jupyter.\n",
     "\n",
     "As we work through these exercises, we'll be openning and working with a set of files you can download [here](https://github.com/nickeubank/practicaldatascience/blob/master/Example_Data/jupyter_lab.zip) called `jupyter_lab.zip`. "
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "## Replicating an RStudio Interface\n",
     "\n",
     "At this point, all MIDS students have worked with RStudio, so let's begin by replicating that familiar environment. If you have never used RStudio and don't want to work with R, feel free to skip this exercise. "
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "First, let's open the file `analyze_health_and_income.R` (make sure it's the `.R` file) by navigating to where you downloaded `jupyter_lab` folder using the file navigator on the left hand pane. If the file navigator not immediately visible, you can open it by clicking the folder icon in at the top of the left sidebar. \n",
     "\n",
@@ -41,11 +40,11 @@
     "### Exercise 2 \n",
     "\n",
     "Now run the first few lines of \"analyze_health_and_income.R\" by selecting the text and hitting Shift-Enter."
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "## Replicating Spyder Interface\n",
     "\n",
@@ -60,11 +59,11 @@
     "Then you'll get something like this:\n",
     "\n",
     "![spyder_layout](../images/spyder_layout.png)"
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "## Multiple Kernels\n",
     "\n",
@@ -77,11 +76,11 @@
     "![moving_second_console](../images/moving_second_console.png)\n",
     "\n",
     "![two_tabs](../images/two_tabs.png)"
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "### Exercise 5\n",
     "\n",
@@ -90,18 +89,18 @@
     "(Note that this code uses a package called `plotnine`, so you may need to first install it. At the command line, run `pip install plotnine`. We'll talke more about installing packages in a later lesson). \n",
     "\n",
     "One quirk of Jupyter Lab is that because you can have many open consoles, each text file will only send code to the console specifically created to work with that file. This is different from RStudio, where all executed code runs in one open kernel, and from Spyder, where code runs in whatever session is currently the front-most tab. "
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "### Exercise 6"
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "Jupyter Lab can also be used to manage your Jupyter Notebooks. In order to get some experience working with a Jupyter Notebook, lets move the analysis we do in this `analyze_health_and_income.py` into a Jupyter Notebook.\n",
     "\n",
@@ -110,16 +109,17 @@
     "**Note:** All jupyter notebooks carry the file suffix of `.ipynb`, regardless of what kernel they are running. This is a hangover from the old days when \"jupyter\" was \"ipython\", so all notebooks were IPython Notebooks. But we still use the suffix `.ipynb` even if your notebook is running a non-Python kernel (like R, Julia, etc.). \n",
     "\n",
     "Once downloaded, open the file in Jupyter Lab. "
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "### Exercise 7\n",
     "\n",
     "Once open, follow the directions in the notebook to complete the exercise!"
-   ]
+   ],
+   "metadata": {}
   }
  ],
  "metadata": {
