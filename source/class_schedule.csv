@@ -10,8 +10,7 @@
 "Fri, Aug 27",**SOFTWARE INSTALL DAY**,A day of trouble shooting install issues,
 "Tues, Aug 31","- IPython
 - Packages
-- Python v. R / variables as pointers","- `Follow this link <https://gke.mybinder.org/v2/gh/ipython/ipython-in-depth/master?filepath=binder/Index.ipynb>`_ , then click ""Ipython - Beyond plain python"" and read that notebook. 
-- `Jupyter Tutorial <jupyter.ipynb>`_
+- Python v. R / variables as pointers","- `Jupyter Tutorial <jupyter.ipynb>`_
 - `Python packages <managing_python_packages.ipynb>`_
 - `variables v objects <vars_v_objects.ipynb>`_
 - `Python v. R <https://www.practicaldatascience.org/html/python_v_r.html>`_","- `Link 1 <exercises/Exercise_jupyterlab.ipynb>`_
