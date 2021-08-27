@@ -23,7 +23,7 @@
     "\n",
     "### Jupyter Notebook Tutorial\n",
     "\n",
-    "To learn the basics of Jupyter Notebooks, please watch **[watch this tutorial](https://www.youtube.com/watch?v=HW29067qVWk)**. As you watch the video, follow along yourself -- since you've installed [conda](setting_up_your_computer.ipynb), you can install jupyter with the command `conda install jupyterlab` (no space between `jupyter` and `lab` -- `jupyterlab`) from the command line.\n",
+    "To learn the basics of Jupyter Notebooks, please watch **[watch this tutorial](https://www.youtube.com/watch?v=HW29067qVWk)**. As you watch the video, follow along yourself -- since you've installed [conda](setting_up_your_computer.ipynb), you can install jupyter with the command `conda install jupyter` from the command line.\n",
     "\n",
     "I recognize that there's a lot in here, so please give it your attention -- jupyter notebooks really are a de facto standard in data science, and you'll be using them **a lot** not only in this class, but also your other courses at Duke and in your post-Duke careers!"
    ],
@@ -32,88 +32,11 @@
   {
    "cell_type": "markdown",
    "source": [
+    "## Jupyter Notebooks in VS Code\n",
     "\n",
-    "## Jupyter Lab\n",
+    "In the video you just watched, you were introduced to jupyter notebooks running in a native jupyter interface. In this course, however, we're going to try and focus our attention on a single editor so you have an opportunity to get really good at it: VS Code. And we can do that because VS Code supports jupyter notebooks!\n",
     "\n",
-    "Notebooks have been around since 2014, but while they are great for instructional materials and sharing analyses, they weren't appropriate for managing full projects. In 2018, though, Jupyter launched a new tool: Jupyter Lab. \n",
-    "\n",
-    "Like the jupyter notebook interface you saw in the tutorial you just watched, jupyter lab offers full support for Jupyter Notebooks. But it can *also* support other workflows:\n",
-    "\n",
-    "- Easily run and write Jupyter Notebooks (and do things you couldn't do before, like drag cells from one notebook to another, collapse cells, etc.).\n",
-    "- Work with a text-editor in one pane and an active kernel session in another, just like you do in RStudio or Spyder. \n",
-    "- Edit popular data science file formats with live preview, such as Markdown, JSON, CSV, Vega, VegaLite, and more.\n",
-    "\n",
-    "Again, this is all a little abstract for a tool that's fundamentally about interactivity, so to see Jupyter Lab in action, watch [this video](https://youtu.be/Gzun8PpyBCo?t=542) **starting 9 minutes in** and **stopping 30 minutes in (when they switch speakers)**. Don't worry about absorbing every detail --- we'll get lots of practice with Jupyter Lab below --- the goal is just to give you a sense of how Jupyter Lab works generally. \n",
-    "\n",
-    "To follow along with this video: \n",
-    "\n",
-    "- Make sure you have the most recent version of Jupyter Lab installed (the version that comes with the Anaconda distribution you already installed is a little behind) by running `conda update jupyterlab` (no space between jupyter and lab).  \n",
-    "- Type `jupyter lab` (**with** a space between jupyter and lab this time) on the command line to start a jupyter lab session!\n"
-   ],
-   "metadata": {}
-  },
-  {
-   "cell_type": "markdown",
-   "source": [
-    "## So many terms...\n",
-    "\n",
-    "Yeah, sorry. Let's try and unpack things a little. \n",
-    "\n",
-    "- \"jupyter\": The umbrella name for the organization that aims to provide language-agnostic tools for data science programming.\n",
-    "- \"jupyter notebooks\": Notebooks made up of cells which may either contain text (written in markdown) or actual code which can be executed interactively. Language agnostic. \n",
-    "- The thing that gets launched when you type `jupyter notebook` on the command line: the first interface created for interacting with jupyter notebooks. Very basic, and now basically surpassed by `jupyter lab`.\n",
-    "- \"jupyter lab\": a full editor that allows you to work with jupyter notebooks **or** using text files and an interactive console.\n",
-    "- \"IPython\": an augmented way of interacting with Python that is much more feature rich than the default python console (where each line starts with `>>>`). Supports in-line graphics, interactive widgets, \"magics\", tab completions, etc. When you work with Python in a Jupyter Notebook, or in Jupyter Lab, you're working with an IPython session."
-   ],
-   "metadata": {}
-  },
-  {
-   "cell_type": "markdown",
-   "source": [
-    "## Setting Up R with Jupyter \n",
-    "\n",
-    "When you [installed Anaconda](setup_environment.ipynb), you actually also installed Jupyter, and you so you can already open up Jupyter and use it with a Python Kernel. However, since most people taking this course are Duke MIDS students who are also doing coursework in R, let's set up Jupyter to work with R as well. \n",
-    "\n",
-    "1. If you do *not* have R installed, [download and install it here](https://cloud.r-project.org/). If you have R installed, skip to step 2. \n",
-    "2. Open R by openning your command line tool (Oh-My-Zsh on Mac, Cmder in Windows) and typing `R`. *Don't open it by double clicking its icon!*\n",
-    "    - If you can't open R by just typing `R`, you have to launch it by putting in the absolute path to your R installation. On a Mac, doing this requires typing something like the following into your command line (depending on exactly where R is installed on your system): `/Applications/R.app/Contents/MacOS/R`. Similarly, using Cmder on Windows you need to type something like (depending on installed version): `/c/Program Files/R/R-3.6.0/bin/R.exe`.\n",
-    "3. Run `install.packages(\"IRkernel\")`\n",
-    "4. After installation is complete, execute the command: `IRkernel::installspec()` in R. \n",
-    "\n",
-    "That should be it. To see if R installed correctly, open a new session of Jupyter Lab (open a new console and type `jupyter lab`), and you should see buttons for both \"Python 3\" and \"R\" (though you won't have Bash, Julia, or Stata listed like I do): \n",
-    "\n",
-    "![jupyter_launch_page](images/jupyter_launch_page.png)\n",
-    "\n",
-    "If you don't see a button for `R`, make sure you followed all the steps above!\n",
-    "\n",
-    "**If the command `IRkernel::installspec()` generates this error:**\n",
-    "\n",
-    "```R\n",
-    "Error in IRkernel::installspec() : \n",
-    "  jupyter-client has to be installed but “jupyter kernelspec --version” exited with code 127.\n",
-    "In addition: Warning message:\n",
-    "In system2(\"jupyter\", c(\"kernelspec\", \"--version\"), FALSE, FALSE) :\n",
-    "  error in running command\n",
-    "```\n",
-    "\n",
-    "That means R can't find your installation of jupyter. That probably means anaconda isn't set up with your command line tool, so please go back and see `setup_environment.ipynb`. \n",
-    "\n",
-    "**If the command `IRkernel::installspec()` generates this error:**\n",
-    "\n",
-    "```R\n",
-    " xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun\n",
-    "```\n",
-    "\n",
-    "If that means that R want you to install apple developer tools. Just run the following command at the command line (not in R, in your bash or oh-my-zsh session): `xcode-select --install`, or if that doesn't work, run `sudo xcode-select --reset`. This should lead to a somewhat slow software installation."
-   ],
-   "metadata": {}
-  },
-  {
-   "cell_type": "markdown",
-   "source": [
-    "## Jupyter Lab Exercises!\n",
-    "\n",
-    "Click here for some [Jupyter Lab exercises](exercises/Exercise_jupyterlab.ipynb)!"
+    "So your next \"reading\" is a video that will show you how to access jupyter notebooks and an augmented Python console (brought to you by jupyter) in VS Code!\n"
    ],
    "metadata": {}
   }

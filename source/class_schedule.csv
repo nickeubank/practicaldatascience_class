@@ -8,12 +8,16 @@
 - `Advanced Command Line <command_line_part2.ipynb>`_","- `Link 1 <exercises/Exercise_CommandLine_1_Basics.ipynb>`_
 - `Link 2 <exercises/Exercise_CommandLine_2_Advanced.ipynb>`_"
 "Fri, Aug 27",**SOFTWARE INSTALL DAY**,A day of trouble shooting install issues,
-"Tues, Aug 31","- IPython
+"Tues, Aug 31","- VS Code
 - Packages
-- Python v. R / variables as pointers","- `Jupyter Tutorial <jupyter.ipynb>`_
+- Python v. R / variables as pointers","- `Why VS Code for Data Science? <https://www.youtube.com/watch?v=m5CmZzAc8Yk>`_
+- `Setting Up VS Code with Python <https://www.youtube.com/watch?v=Kqsk-siz9QA>`_
+- `Jupyter Tutorial <jupyter.ipynb>`_
+- `Jupyter in VS Code <https://youtu.be/rXRKpe19rMo>`_
+- `Running R Notebooks <jupyter_r_notebooks.ipynb>`_
 - `Python packages <managing_python_packages.ipynb>`_
 - `variables v objects <vars_v_objects.ipynb>`_
-- `Python v. R <https://www.practicaldatascience.org/html/python_v_r.html>`_","- `Link 1 <exercises/Exercise_jupyterlab.ipynb>`_
+- `Python v. R <https://www.practicaldatascience.org/html/python_v_r.html>`_","- `Link 1 <exercises/Exercise_jupytervscode.ipynb>`_
 - `Link 2 <exercises/Exercise_variables_v_objects.ipynb>`_"
 "Thurs, Sep 2",- Numpy Basics,"- JVP pp 33-77
 - IF did not complete DataCamp: Do Numpy Section
