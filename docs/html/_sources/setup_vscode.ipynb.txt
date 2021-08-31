@@ -2,14 +2,13 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "# Installing Setting Up VS Code"
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "## 1. Installing VS Code\n",
     "\n",
@@ -18,11 +17,11 @@
     "For this purpose I'm going to recommend Visual Studio Code (better known as VSCode). It's a Microsoft project, but it's open source and in addition to being an easy way to edit plaintext files comes with a lot of packages for adding extra functionality. VSCode is definitely not the only good text editor out there, and you'll find that people have very strong opinions about which one to use (some people swear by in-terminal editors like eMacs, or Vim), and personally I used to rely on Atom (since github -- which developed Atom -- was bought by Microsoft, it looks like a lot of the development energy has moved over to VSCode, so I think that's a better place to go now...). If you already have one of these and like it, please feel free to stick with it!\n",
     "\n",
     "So before we install Python, please follow the directions below to install VSCode if you don't already have a good text editor."
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "### Installing VSCode on Macs\n",
     "\n",
@@ -33,11 +32,11 @@
     "### Installing VSCode on Windows\n",
     "\n",
     "Download [installer here](https://code.visualstudio.com/download), and make sure that during install you select the \"Add to PATH\" option."
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "### Installing VSCode on Macs\n",
     "\n",
@@ -48,13 +47,32 @@
     "### Installing VSCode on Windows\n",
     "\n",
     "Download [installer here](https://code.visualstudio.com/download), and make sure that during install you select the \"Add to PATH\" option."
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
-    "## 4. Configure conda to use conda-forge\n",
+    "## 4. Set terminal.integrated.inheritEnv to False\n",
+    "\n",
+    "In order to ensure that the integrated terminal in VS Code works properly with miniconda, we have to modify one setting. To do this, in VS Code go down to the bottom left corner and click on the gear icon, select \"Command Pallet...\", and type \"Preferences: Open Settings (JSON)\" (note the `(JSON)` at the end). That should bring you to a relatively blank document. Between the curly braces, add the following:\n",
+    "\n",
+    "```json\n",
+    "    \"terminal.integrated.inheritEnv\": false,\n",
+    "```\n",
+    "\n",
+    "So that your file looks something like:\n",
+    "\n",
+    "![inheritEnv](images/inheritEnv.png)\n",
+    "\n",
+    "(Note the commas at the end of each line). If you forget the step VS Code will try to prompt you to set it later with a notification, so if you see that notification make sure to select yes."
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "## 5. Configure conda to use conda-forge\n",
     "\n",
     "Conda is a package installer, but it is capable of installing from a number of different package providers (people who prepare packages for installation). By far the best provider of packages in `conda-forge`, so we're gonna set that as your default by running the following two lines of code:\n",
     "\n",
@@ -62,20 +80,21 @@
     "conda config --add channels conda-forge\n",
     "conda config --set channel_priority strict\n",
     "```"
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
-    "## 5. Install some packages!\n",
+    "## 6. Install some packages!\n",
     "\n",
     "As you go along in life, you'll find you need packages from time to time, but here's a good startup installation command for things you'll want in this class:\n",
     "\n",
     "```bash\n",
     "conda install pandas jupyter pip matplotlib\n",
     "```"
-   ]
+   ],
+   "metadata": {}
   }
  ],
  "metadata": {

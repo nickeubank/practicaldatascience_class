@@ -8,7 +8,14 @@
     "As we discussed before, the idea of Jupyter is to separate the interface you are working with from the underlying programming language doing your analysis. This makes it possible to create one interface (a text editor, a window where results are displayed, etc.) that can be used to run your analyses in any number of different programs. In the Jupyter ecosystem, the program being used to actually run your analysis (i.e. Python, R) is referred to as a **kernel**. \n",
     "\n",
     "That means that you can use Jupyter notebooks for more than Python! In this reading, I'll show you how to setup R to work with Jupyter Notebooks. \n",
-    "\n"
+    "\n",
+    "## Install Jupyter with miniconda\n",
+    "\n",
+    "Even though we've been using jupyter notebooks in VS Code so you might think you've already installed jupyter, VS Code is just using a little version of jupyter that comes bundled with the editor. To setup R to work with Jupyter Notebooks, though, we have to do a real jupyter installation. So from the command line, run:\n",
+    "\n",
+    "```bash\n",
+    "conda install jupyter\n",
+    "```"
    ],
    "metadata": {}
   },
@@ -16,6 +23,8 @@
    "cell_type": "markdown",
    "source": [
     "## Setting Up R with Jupyter \n",
+    "\n",
+    "Once that's done, we're ready to setup R to work with Jupyter!\n",
     "\n",
     "1. If you do *not* have R installed, [download and install it here](https://cloud.r-project.org/). If you have R installed, skip to step 2. \n",
     "2. Open R by opening your command line tool (Oh-My-Zsh on Mac, Cmder in Windows) and typing `R`. *Don't open it by double clicking its icon!*\n",
@@ -41,7 +50,7 @@
     "  error in running command\n",
     "```\n",
     "\n",
-    "That means R can't find your installation of jupyter. That probably means conda isn't set up with your command line tool, so please go back and see `setup_environment.ipynb`. \n",
+    "That means R can't find your installation of jupyter. Make sure (a) you installed jupyter as instructed above, and (b) that conda is set up with your command line tool using the directions in [Setting Up Your Environment](setting_up_your_computer.ipynb), especially the last section on augmented command line tools. \n",
     "\n",
     "**If the command `IRkernel::installspec()` generates this error:**\n",
     "\n",
