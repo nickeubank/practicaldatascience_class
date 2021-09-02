@@ -54,8 +54,17 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
 .. toctree:: 
    :maxdepth: 2
    :hidden:
-   :caption: Python & Pandas
+   :caption: Basic Tools
 
+   Command Line, Basics <command_line_part1>
+   Command Line, Advanced <command_line_part2>
+   Jupyter <jupyter>
+
+
+.. toctree:: 
+   :maxdepth: 2
+   :hidden:
+   :caption: Python & Pandas
    
    Python / R Differences <python_v_r>
    Python: Vars v Objects <vars_v_objects>
@@ -66,47 +75,31 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
    Plotting, Advanced <plotting_part2>
    Pandas 3: Views <views_and_copies_in_pandas>
    Cleaning: Editing Values <cleaning_editingvalues>
-
-.. toctree:: 
-   :maxdepth: 2
-   :hidden:
-   :caption: Other Tools
-
-   Command Line, Basics <command_line_part1>
-   Command Line, Advanced  <command_line_part2>
-   Jupyter <jupyter>
-   Git and Github <git_and_github>
-   Reviewing Code on Github <pr_review>
    Parquet Format <parquet>
 
 .. toctree:: 
    :maxdepth: 2
    :hidden:
-   :caption: Cloud
-   
-   What Is The Cloud? <cloud_what_is_it>
-   Storage on Azure <cloud_storage_on_azure>
-   Setup a VM on Azure <cloud_vm_on_azure>
-   Setup a Cluster on Azure <cloud_cluster_on_azure>
-   Dask on Azure Example <cloud_dask>
-   Azure Command Line Tools <cloud_azure_cli>
-   Azure Authentication <cloud_authentication>
+   :caption: DS Concepts
 
-.. toctree:: 
-   :maxdepth: 2
-   :hidden:
-   :caption: Skills
-
-   Getting Help Online <getting_help>
    Defensive Programming <defensive_programming>
    Workflow Management <workflow>
+   Backwards Design <backwards_design>
+   Getting Help Online <getting_help>
    What is Big Data? <what_is_big_data>
    Working with Big Data <big_data_strategies>
    Understanding Performance <performance_understanding>
    Solving Performance Probs <performance_solutions>
    Parallel Computing <parallelism>
    Distributed Computing <distributed_computing>
-   Backwards Design <backwards_design>
+
+.. toctree:: 
+   :maxdepth: 2
+   :hidden:
+   :caption: Git and Github
+
+   Git and Github <git_and_github>
+   Reviewing Code on Github <pr_review>
 
 .. toctree::
    :maxdepth: 2
