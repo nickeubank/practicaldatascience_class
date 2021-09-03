@@ -6,7 +6,7 @@ Class Schedule
 Office Hours and Links
 --------------------------
 
-`Nick <https://duke.zoom.us/my/nickeubank>`_ : Friday 12pm - 1pm
+`Nick <https://duke.zoom.us/my/nickeubank>`_ : Monday 12:30 - 1:30pm
 
 `Yi <https://duke.zoom.us/j/91642983704>`_ : Monday 11 am – 12 am; Tuesday 4 pm – 5 pm
 
