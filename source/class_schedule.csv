@@ -26,14 +26,14 @@
 - `OPTIONAL: How numpy works <https://www.nature.com/articles/s41586-020-2649-2>`_",- `Link <exercises/Exercise_numpy.ipynb>`_
 "Tues, Sep 7",- Pandas: Series,- `Pandas 1: Series <pandas_series.ipynb>`_,- `Link <exercises/Exercise_series.ipynb>`_
 "Thurs, Sep 9",- Pandas: DataFrames,- `Pandas 2: DataFrames <pandas_dataframes.ipynb>`_,- `Link <exercises/Exercise_dataframe.ipynb>`_
-"Tues, Sep 14","- Grammer of Graphics
-- Intro to Plotting with Altair","- `Principles of Data Visualization <https://www.youtube.com/watch?v=vTingdk_pVM>`_
-- `Intro to Altair <plotting_altair_part1.ipynb>`_",- `Link <exercises/Exercise_plotting_part1.ipynb>`_
-"Thurs, Sep 16",- Advanced Plotting,- Advanced Altair <plotting_altair_part2.ipynb>`_,- `Link <exercises/Exercise_plotting_part2.ipynb>`_
-"Tues, Sep 21",- Pandas: Indices & Missing,"- WM pp 136-142
+"Tues, Sep 14",- Pandas: Indices & Missing,"- WM pp 136-142
 - JVP pp 115-139
 - `Views and Copies in Pandas <views_and_copies_in_pandas.ipynb>`_","- `Link 1 <exercises/Exercise_indices.ipynb>`_
 - `Link 2 <exercises/Exercise_missing.ipynb>`_"
+"Thurs, Sep 16","- Grammer of Graphics
+- Intro to Plotting with Altair","- `Principles of Data Visualization <https://www.youtube.com/watch?v=vTingdk_pVM>`_
+- `Intro to Altair <plotting_altair_part1.ipynb>`_",- `Link <exercises/Exercise_plotting_part1.ipynb>`_
+"Tues, Sep 21",- Advanced Plotting,- Advanced Altair <plotting_altair_part2.ipynb>`_,- `Link <exercises/Exercise_plotting_part2.ipynb>`_
 "Thurs, Sep 23","- Pandas: Loading and saving data
 - Pandas: Cleaning","- WM Chapter 6
 - WM Chapter 7
