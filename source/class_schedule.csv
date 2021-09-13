@@ -29,21 +29,21 @@
 "Tues, Sep 14",- Pandas: Indices & Missing,"- WM pp 136-142
 - JVP pp 115-139
 - `Views and Copies in Pandas <views_and_copies_in_pandas.ipynb>`_
-- `VS Code Livesharing <https://www.youtube.com/watch?v=2CTi9THB0b4>`_","- `Link 1 <exercises/Exercise_indices.ipynb>`_
+- `VS Code Livesharing (first half) <https://www.youtube.com/watch?v=2CTi9THB0b4>`_","- `Link 1 <exercises/Exercise_indices.ipynb>`_
 - `Link 2 <exercises/Exercise_missing.ipynb>`_"
-"Thurs, Sep 16","- Grammer of Graphics
-- Intro to Plotting with Altair","- `Principles of Data Visualization <https://www.youtube.com/watch?v=vTingdk_pVM>`_
-- `Intro to Altair <plotting_altair_part1.ipynb>`_",- `Link <exercises/Exercise_plotting_part1.ipynb>`_
-"Tues, Sep 21",- Advanced Plotting,- Advanced Altair <plotting_altair_part2.ipynb>`_,- `Link <exercises/Exercise_plotting_part2.ipynb>`_
-"Thurs, Sep 23","- Pandas: Loading and saving data
-- Pandas: Cleaning","- WM Chapter 6
+"Thurs, Sep 16","- Pandas: Loading and saving data
+- Pandas: Cleaning
+- Tracebacks","- WM Chapter 6
 - WM Chapter 7
 - `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_
 - `Identifying Problems <cleaning_identifying.ipynb>`_
-- `Editing Values <cleaning_editingvalues.ipynb>`_",- `Link <exercises/Exercise_cleaning.ipynb>`_
-"Tues, Sep 28","- Understanding Tracebacks
-- Pandas: Merging","- JVP pp 149 - 157
-- `What are Tracebacks? <https://www.youtube.com/watch?v=JD8BrXXNtjA>`_",- `Link <exercises/Exercise_merging.ipynb>`_
+- `Editing Values <cleaning_editingvalues.ipynb>`_
+- `What are Tracebacks? <https://www.youtube.com/watch?v=JD8BrXXNtjA>`_",- `Link <exercises/Exercise_cleaning.ipynb>`_
+"Tues, Sep 21","- Grammer of Graphics
+- Intro to Plotting with Altair","- `Principles of Data Visualization <https://www.youtube.com/watch?v=vTingdk_pVM>`_
+- `Intro to Altair <plotting_altair_part1.ipynb>`_",- `Link <exercises/Exercise_plotting_part1.ipynb>`_
+"Thurs, Sep 23",- Advanced Plotting,- Advanced Altair <plotting_altair_part2.ipynb>`_,- `Link <exercises/Exercise_plotting_part2.ipynb>`_
+"Tues, Sep 28",- Pandas: Merging,- JVP pp 149 - 157,- `Link <exercises/Exercise_merging.ipynb>`_
 "Thurs, Sep 30","- Big Data: What is it, how do I work with it?","- `What is Big Data? <what_is_big_data.ipynb>`_
 - `Strategies for Big Data <big_data_strategies.ipynb>`_
 - Download the dataset linked at the top of the linked exercise before class.
