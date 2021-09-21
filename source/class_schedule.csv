@@ -42,7 +42,8 @@
 - `Editing Values <cleaning_editingvalues.ipynb>`_",- `Link <exercises/Exercise_cleaning.ipynb>`_
 "Tues, Sep 28","- Grammer of Graphics
 - Intro to Plotting with Altair","- `Principles of Data Visualization <https://www.youtube.com/watch?v=vTingdk_pVM>`_
-- `Intro to Altair <plotting_altair_part1.ipynb>`_",- `Link <exercises/Exercise_plotting_part1.ipynb>`_
+- `Intro to Altair <plotting_altair_part1.ipynb>`_
+- `Altair in Context <plotting_altair_in_context.ipynb>`_",- `Link <exercises/Exercise_plotting_part1.ipynb>`_
 "Thurs, Sep 30",- Advanced Plotting,- Advanced Altair <plotting_altair_part2.ipynb>`_,- `Link <exercises/Exercise_plotting_part2.ipynb>`_
 "Tues, Oct 5",FALL BREAK,,
 "Thurs, Oct 7","- Pandas: Merging
