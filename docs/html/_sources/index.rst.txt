@@ -71,8 +71,8 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
    Numbers in Computers <ints_and_floats>
    Pandas 1: Series <pandas_series>
    Pandas 2: DataFrames <pandas_dataframes>
-   Plotting, Basics <plotting_part1>
-   Plotting, Advanced <plotting_part2>
+   Plotting, Basics <plotting_altair_part1>
+   Plotting, Advanced <plotting_altair_part2>
    Pandas 3: Views <views_and_copies_in_pandas>
    Cleaning: Editing Values <cleaning_editingvalues>
    Parquet Format <parquet>
