@@ -2,40 +2,51 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "# Plotting Exercises, Part 1"
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
+   "source": [
+    "## Datasaurus Exercises"
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
    "source": [
     "### Exercise 1\n",
     "\n",
     "Create a pandas dataframe from the \"Datasaurus.txt\" file using the code: "
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "code",
    "execution_count": 1,
-   "metadata": {},
-   "outputs": [],
    "source": [
     "import pandas as pd\n",
-    "df = pd.read_csv('https://raw.githubusercontent.com/nickeubank/practicaldatascience/master/Example_Data/Datasaurus.txt', delimiter='\\t')"
-   ]
+    "\n",
+    "df = pd.read_csv(\n",
+    "    \"https://raw.githubusercontent.com/nickeubank/practicaldatascience\"\n",
+    "    \"/master/Example_Data/Datasaurus.txt\",\n",
+    "    delimiter=\"\\t\",\n",
+    ")\n"
+   ],
+   "outputs": [],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "Note that the file being downloaded is *not* actually a CSV file. It is tab-delimited, meaning that within each row, columns are separated by tabs rather than commas. We communicate this to pandas with the `delimiter=\"\\t\"` option (`\"\\t\"` is how we write a tab, as we will discuss in future lessons). "
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "### Exercise 2\n",
     "\n",
@@ -55,65 +66,66 @@
     "```\n",
     "\n",
     "(Though you shouldn't get those specific values)"
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "### Exercise 3\n",
     "\n",
     "Based only on these results, discuss what might you conclude about these example datasets with your partner. Write down your thoughts."
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "### Execise 4\n",
     "\n",
-    "Write a loop that iterates over these example datasets, and using the `plotnine` library, plot a simple scatter plot of each dataset with the `x` variable on the x-axis and the `y` variable on the y-axis. Save these plots as PDFs somewhere you can find them. \n",
+    "Write a loop that iterates over these example datasets, and using Altair library, plot a simple scatter plot of each dataset with the `x` variable on the x-axis and the `y` variable on the y-axis.\n",
     "\n",
-    "Hint: When writing this type of code, it is often best to start by writing code to do what you want for the first iteration of the loop. Once you have code that works for the first example dataset, then write the full loop around it. "
-   ]
+    "Hint: When writing this type of code, it is often best to start by writing code to do what you want for the first iteration of the loop. Once you have code that works for the first example dataset, then write the full loop around it. \n",
+    "\n",
+    "Hint 2: To force Jupyter to display your charts when they're generated within a loop, use the method `.display()` (e.g. `my_chart.display()`).\n",
+    "\n",
+    "Hint 3: You will need to change the range of the axes to make the plots look good!"
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
     "### Exercise 5\n",
     "\n",
     "Review you plots. How does your impression of how these datasets differ from what you wrote down in Exercise 3?"
-   ]
+   ],
+   "metadata": {}
   },
   {
    "cell_type": "markdown",
-   "metadata": {},
    "source": [
-    "## Want More Practice?"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "Download the ACS data you were working with in our last exercise (available here), and let's use it to study how the gender wage gap has changed over generations in the United States. Data for that [can be found here](https://github.com/nickeubank/MIDS_Data/tree/master/US_AmericanCommunitySurvey) (`US_ACS_2017_10pct_sample.dta`).\n",
+    "## Economic Development and... Your Choice!\n",
     "\n",
-    "Once you have downloaded the data, plot income among working women and income among working men against age to see how the gender wage gap has evolved from cohort to cohort.\n",
+    "### Exercise 6\n",
     "\n",
-    "Then repeat this analysis by race. Note that in the US Census, \"Hispanic\" is not considered to be a racial category, and so Hispanic Americans are not identified in the `race` variable but instead in the `hispanic` variable. For this analysis, therefore, we want to separate our sample into \"White, Non-Hispanic\", \"White, Hispanic\", \"Black\", and \"Other\". "
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## Absolutely positively need the solutions?\n",
+    "Load the World Development Indicator data used in the [plotting reading](../plotting_altair_part1.ipynb). Rather than picking a single year, pick a single country and look at how GDP per capita and one of the other variables in that dataset have evolved together over time. \n",
     "\n",
-    "*Don't use this link until you've really, really spent time struggling with your code!* Doing so only results in you cheating yourself. \n",
+    "Make any adjustments to the functional forms of your variables and/or axes needed to make the figure legible. \n",
     "\n",
-    "[Link](../solutions_warning.ipynb)"
-   ]
+    "### Exercise 7\n",
+    "\n",
+    "Now add another series to the plot, so you now have two series on the same plot. Make sure to differentiate them so one can see that they are different series!\n",
+    "\n",
+    "Because your two series will probably be on different scales, you can't just layer your plots with the simple `+` operator. Instead, use `alt.layer()` method. \n",
+    "\n",
+    "Rather than telling you exactly how to do it, however, I'll point you to one of the charts in the Altair Example gallery that has overlapping series with different scales: [here](https://altair-viz.github.io/gallery/layered_chart_with_dual_axis.html). Use your detective skills (and some guess and check work) to figure out how to get it to work!\n",
+    "\n",
+    "### Exercise 8\n",
+    "\n",
+    "Give your chart and axes meaningful (and well formatted!) titles."
+   ],
+   "metadata": {}
   }
  ],
  "metadata": {
