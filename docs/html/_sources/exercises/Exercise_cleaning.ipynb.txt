@@ -17,7 +17,7 @@
   {
    "cell_type": "markdown",
    "source": [
-    "**2)** For our exercises today, we'll focus on `age`, `gender`, `sex`, `educ`, and `inctot`. Subset your data to those variables, and quickly look at a sample of 10 rows. "
+    "**2)** For our exercises today, we'll focus on `age`, `sex`, `educ`, and `inctot`. Subset your data to those variables, and quickly look at a sample of 10 rows. "
    ],
    "metadata": {}
   },
