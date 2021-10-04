@@ -47,39 +47,41 @@
 "Thurs, Sep 30",- Advanced Plotting,- `Advanced Altair <plotting_altair_part2.ipynb>`_,"- `Link <exercises/Exercise_plotting_part2.ipynb>`_
 - `Link <exercises/Exercise_plotting_part3.ipynb>`_"
 "Tues, Oct 5",FALL BREAK,,
-"Thurs, Oct 7","- Pandas: Merging
+"Thurs, Oct 7",FALL BREAK,,
+"Tues, Oct 12","- Pandas: Merging
 - Pandas: Loading and saving data","- JVP pp 149 - 157
 - WM Chapter 6",- `Link <exercises/Exercise_merging.ipynb>`_
-"Tues, Oct 12","- Big Data: What is it, how do I work with it?","- `What is Big Data? <what_is_big_data.ipynb>`_
+"Thurs, Oct 14","- Big Data: What is it, how do I work with it?","- `What is Big Data? <what_is_big_data.ipynb>`_
 - `Strategies for Big Data <big_data_strategies.ipynb>`_
 - Download the dataset linked at the top of the linked exercise before class.
 - `Parquet Format <parquet.ipynb>`_",- `Link <exercises/Exercise_bigdata.ipynb>`_
-"Thurs, Oct 14","- Defensive Programming
+"Tues, Oct 19","- Defensive Programming
 - Workflow
+- Backwards Design
 - Getting Help Online","- `Defensive Programming <defensive_programming.ipynb>`_
 - `Iceberg Principle <iceberg_principle.ipynb>`_
 - `Workflow Management <workflow.ipynb>`_
+- `Backwards Design <backwards_design.ipynb>`_
 - `Getting Help <getting_help.ipynb>`_",**Discuss mid-semester project in class**
-"Tues, Oct 19",- Groupby / Split-Apply-Combine,"- WM pp Chpt 10, 10.1, 10.2, 10.3",- `Link <exercises/Exercise_groupby.ipynb>`_
-"Thurs, Oct 21","- Pandas: Reshaping
+"Thurs, Oct 21",- Groupby / Split-Apply-Combine,"- WM pp Chpt 10, 10.1, 10.2, 10.3",- `Link <exercises/Exercise_groupby.ipynb>`_
+"Tues, Oct 26","- Pandas: Reshaping
 - Pandas: Categoricals","- WM 8.3
 - `Pandas reshaping (with pics!) <https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html>`_
 - `What is goal of reshaping? <https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwifqfmGn6_sAhWfgnIEHQo2AwAQFjACegQIAxAC&url=https%3A%2F%2Fvita.had.co.nz%2Fpapers%2Ftidy-data.pdf&usg=AOvVaw3HDG0hKNeQpAOVcdczJizw>`_
 - Categoricals: WM 12.1
 - **Project Strategy Plan Due**",- `Link <exercises/Exercise_reshaping.ipynb>`_
-"Tues, Oct 26",- Speed and Performance in Python,"- `Understanding Performance <performance_understanding.ipynb>`_
+"Thurs, Oct 28",- Speed and Performance in Python,"- `Understanding Performance <performance_understanding.ipynb>`_
 - `Improving Performance <performance_solutions.ipynb>`_",[finish groupby and reshaping exercises]
-"Thurs, Oct 28",- Statistics with statsmodels,"- WM Chapter 13, 13.1, 13.2, 13.3
+"Tues, Nov 2",- Statistics with statsmodels,"- WM Chapter 13, 13.1, 13.2, 13.3
 - `Skim ""Linear Models"" <https://www.statsmodels.org/stable/regression.html>`_
 - `Skim ""Discrete Dep Var Models"" <https://www.statsmodels.org/stable/discretemod.html>`_
 - `Patsy: Differences from R <https://patsy.readthedocs.io/en/latest/R-comparison.html>`_",- `Link <exercises/Exercise_statsmodels.ipynb>`_
-"Tues, Nov 2",- Machine Learning with sckikit-learn,- JVP pp 331 - 359,- `Link <exercises/Exercise_scikit_learn.ipynb>`_
-"Thurs, Nov 4",- Defining Your Own Estimators,"- Review linear regression as matrix manipulations. `Here's a nice review. <https://www.stat.purdue.edu/~boli/stat512/lectures/topic3.pdf>`_
-- `Review how to define classes <https://realpython.com/python3-object-oriented-programming/>`_",- `Link <exercises/Exercise_codeyourownlinearregression.ipynb>`_
-"Tues, Nov 9","- Data Science: Backwards Design
-- Regular Expressions","- `Backwards Design <backwards_design.ipynb>`_
+"Thurs, Nov 4",- Machine Learning with sckikit-learn,- JVP pp 331 - 359,- `Link <exercises/Exercise_scikit_learn.ipynb>`_
+"Tues, Nov 9","- Defining Your Own Estimators
+- Regex","- Review linear regression as matrix manipulations. `Here's a nice review. <https://www.stat.purdue.edu/~boli/stat512/lectures/topic3.pdf>`_
+- `Review how to define classes <https://realpython.com/python3-object-oriented-programming/>`_
 - `Regular Expressions Tutorial <https://scotch.io/tutorials/an-introduction-to-regex-in-python>`_
-- **Opioid Project Rough Draft Due**",
+- **Opioid Project Rough Draft Due**",- `Link <exercises/Exercise_codeyourownlinearregression.ipynb>`_
 "Thurs, Nov 11","- Parallelism 
 - Distributed Computing","- `Parallel Computing <parallelism.ipynb>`_
 - `Distributed Computing with dask <distributed_computing.ipynb>`_","- `Link 1 <exercises/Exercise_dask.ipynb>`_
