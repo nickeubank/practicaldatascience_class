@@ -2,23 +2,25 @@
  "cells": [
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "# Plotting Exercises, Part 1"
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "### Exercise 1\n",
     "\n",
     "Create a pandas dataframe from the \"Datasaurus.txt\" file using the code: "
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
    "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
    "source": [
     "import pandas as pd\n",
     "\n",
@@ -27,19 +29,18 @@
     "    \"/master/Example_Data/Datasaurus.txt\",\n",
     "    delimiter=\"\\t\",\n",
     ")\n"
-   ],
-   "outputs": [],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "Note that the file being downloaded is *not* actually a CSV file. It is tab-delimited, meaning that within each row, columns are separated by tabs rather than commas. We communicate this to pandas with the `delimiter=\"\\t\"` option (`\"\\t\"` is how we write a tab, as we will discuss in future lessons). "
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "### Exercise 2\n",
     "\n",
@@ -59,18 +60,14 @@
     "```\n",
     "\n",
     "(Though you shouldn't get those specific values)"
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
    "execution_count": 2,
-   "source": [
-    "df.head()"
-   ],
+   "metadata": {},
    "outputs": [
     {
-     "output_type": "execute_result",
      "data": {
       "text/html": [
        "<div>\n",
@@ -272,21 +269,21 @@
        "[5 rows x 26 columns]"
       ]
      },
+     "execution_count": 2,
      "metadata": {},
-     "execution_count": 2
+     "output_type": "execute_result"
     }
    ],
-   "metadata": {}
+   "source": [
+    "df.head()"
+   ]
   },
   {
    "cell_type": "code",
    "execution_count": 3,
-   "source": [
-    "df.columns"
-   ],
+   "metadata": {},
    "outputs": [
     {
-     "output_type": "execute_result",
      "data": {
       "text/plain": [
        "Index(['example1_x', 'example1_y', 'example2_x', 'example2_y', 'example3_x',\n",
@@ -298,15 +295,131 @@
        "      dtype='object')"
       ]
      },
+     "execution_count": 3,
      "metadata": {},
-     "execution_count": 3
+     "output_type": "execute_result"
     }
    ],
-   "metadata": {}
+   "source": [
+    "df.columns"
+   ]
   },
   {
    "cell_type": "code",
    "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "DATA SET 1\n",
+      "Mean x: 54.27\n",
+      "Mean y: 47.83\n",
+      "Std Dev x: 16.77\n",
+      "Std Dev y: 26.94\n",
+      "Correlation: -0.06\n",
+      "\n",
+      "\n",
+      "DATA SET 2\n",
+      "Mean x: 54.27\n",
+      "Mean y: 47.83\n",
+      "Std Dev x: 16.77\n",
+      "Std Dev y: 26.94\n",
+      "Correlation: -0.07\n",
+      "\n",
+      "\n",
+      "DATA SET 3\n",
+      "Mean x: 54.27\n",
+      "Mean y: 47.84\n",
+      "Std Dev x: 16.76\n",
+      "Std Dev y: 26.93\n",
+      "Correlation: -0.07\n",
+      "\n",
+      "\n",
+      "DATA SET 4\n",
+      "Mean x: 54.26\n",
+      "Mean y: 47.83\n",
+      "Std Dev x: 16.77\n",
+      "Std Dev y: 26.94\n",
+      "Correlation: -0.06\n",
+      "\n",
+      "\n",
+      "DATA SET 5\n",
+      "Mean x: 54.26\n",
+      "Mean y: 47.84\n",
+      "Std Dev x: 16.77\n",
+      "Std Dev y: 26.93\n",
+      "Correlation: -0.06\n",
+      "\n",
+      "\n",
+      "DATA SET 6\n",
+      "Mean x: 54.26\n",
+      "Mean y: 47.83\n",
+      "Std Dev x: 16.77\n",
+      "Std Dev y: 26.94\n",
+      "Correlation: -0.06\n",
+      "\n",
+      "\n",
+      "DATA SET 7\n",
+      "Mean x: 54.27\n",
+      "Mean y: 47.84\n",
+      "Std Dev x: 16.77\n",
+      "Std Dev y: 26.94\n",
+      "Correlation: -0.07\n",
+      "\n",
+      "\n",
+      "DATA SET 8\n",
+      "Mean x: 54.27\n",
+      "Mean y: 47.84\n",
+      "Std Dev x: 16.77\n",
+      "Std Dev y: 26.94\n",
+      "Correlation: -0.07\n",
+      "\n",
+      "\n",
+      "DATA SET 9\n",
+      "Mean x: 54.27\n",
+      "Mean y: 47.83\n",
+      "Std Dev x: 16.77\n",
+      "Std Dev y: 26.94\n",
+      "Correlation: -0.07\n",
+      "\n",
+      "\n",
+      "DATA SET 10\n",
+      "Mean x: 54.27\n",
+      "Mean y: 47.84\n",
+      "Std Dev x: 16.77\n",
+      "Std Dev y: 26.93\n",
+      "Correlation: -0.06\n",
+      "\n",
+      "\n",
+      "DATA SET 11\n",
+      "Mean x: 54.27\n",
+      "Mean y: 47.84\n",
+      "Std Dev x: 16.77\n",
+      "Std Dev y: 26.94\n",
+      "Correlation: -0.07\n",
+      "\n",
+      "\n",
+      "DATA SET 12\n",
+      "Mean x: 54.27\n",
+      "Mean y: 47.83\n",
+      "Std Dev x: 16.77\n",
+      "Std Dev y: 26.94\n",
+      "Correlation: -0.07\n",
+      "\n",
+      "\n",
+      "DATA SET 13\n",
+      "Mean x: 54.26\n",
+      "Mean y: 47.84\n",
+      "Std Dev x: 16.77\n",
+      "Std Dev y: 26.93\n",
+      "Correlation: -0.07\n",
+      "\n",
+      "\n"
+     ]
+    }
+   ],
    "source": [
     "for i in range(1, 14):\n",
     "    \n",
@@ -323,116 +436,31 @@
     "    print(f\"Mean y: {mean_y:.2f}\")\n",
     "    print(f\"Std Dev x: {std_x:.2f}\")\n",
     "    print(f\"Std Dev y: {std_y:.2f}\")\n",
-    "    print(f\"Correlation: {corr:.2f}\")"
-   ],
-   "outputs": [
-    {
-     "output_type": "stream",
-     "name": "stdout",
-     "text": [
-      "DATA SET 1\n",
-      "Mean x: 54.27\n",
-      "Mean y: 47.83\n",
-      "Std Dev x: 16.77\n",
-      "Std Dev y: 26.94\n",
-      "Correlation: -0.06\n",
-      "DATA SET 2\n",
-      "Mean x: 54.27\n",
-      "Mean y: 47.83\n",
-      "Std Dev x: 16.77\n",
-      "Std Dev y: 26.94\n",
-      "Correlation: -0.07\n",
-      "DATA SET 3\n",
-      "Mean x: 54.27\n",
-      "Mean y: 47.84\n",
-      "Std Dev x: 16.76\n",
-      "Std Dev y: 26.93\n",
-      "Correlation: -0.07\n",
-      "DATA SET 4\n",
-      "Mean x: 54.26\n",
-      "Mean y: 47.83\n",
-      "Std Dev x: 16.77\n",
-      "Std Dev y: 26.94\n",
-      "Correlation: -0.06\n",
-      "DATA SET 5\n",
-      "Mean x: 54.26\n",
-      "Mean y: 47.84\n",
-      "Std Dev x: 16.77\n",
-      "Std Dev y: 26.93\n",
-      "Correlation: -0.06\n",
-      "DATA SET 6\n",
-      "Mean x: 54.26\n",
-      "Mean y: 47.83\n",
-      "Std Dev x: 16.77\n",
-      "Std Dev y: 26.94\n",
-      "Correlation: -0.06\n",
-      "DATA SET 7\n",
-      "Mean x: 54.27\n",
-      "Mean y: 47.84\n",
-      "Std Dev x: 16.77\n",
-      "Std Dev y: 26.94\n",
-      "Correlation: -0.07\n",
-      "DATA SET 8\n",
-      "Mean x: 54.27\n",
-      "Mean y: 47.84\n",
-      "Std Dev x: 16.77\n",
-      "Std Dev y: 26.94\n",
-      "Correlation: -0.07\n",
-      "DATA SET 9\n",
-      "Mean x: 54.27\n",
-      "Mean y: 47.83\n",
-      "Std Dev x: 16.77\n",
-      "Std Dev y: 26.94\n",
-      "Correlation: -0.07\n",
-      "DATA SET 10\n",
-      "Mean x: 54.27\n",
-      "Mean y: 47.84\n",
-      "Std Dev x: 16.77\n",
-      "Std Dev y: 26.93\n",
-      "Correlation: -0.06\n",
-      "DATA SET 11\n",
-      "Mean x: 54.27\n",
-      "Mean y: 47.84\n",
-      "Std Dev x: 16.77\n",
-      "Std Dev y: 26.94\n",
-      "Correlation: -0.07\n",
-      "DATA SET 12\n",
-      "Mean x: 54.27\n",
-      "Mean y: 47.83\n",
-      "Std Dev x: 16.77\n",
-      "Std Dev y: 26.94\n",
-      "Correlation: -0.07\n",
-      "DATA SET 13\n",
-      "Mean x: 54.26\n",
-      "Mean y: 47.84\n",
-      "Std Dev x: 16.77\n",
-      "Std Dev y: 26.93\n",
-      "Correlation: -0.07\n"
-     ]
-    }
-   ],
-   "metadata": {}
+    "    print(f\"Correlation: {corr:.2f}\")\n",
+    "    print(\"\\n\")"
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "### Exercise 3\n",
     "\n",
     "Based only on these results, discuss what might you conclude about these example datasets with your partner. Write down your thoughts."
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
    "execution_count": 5,
+   "metadata": {},
+   "outputs": [],
    "source": [
     "# Sure seem similar!"
-   ],
-   "outputs": [],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "### Execise 4\n",
     "\n",
@@ -443,37 +471,23 @@
     "Hint 2: To force Jupyter to display your charts when they're generated within a loop, use the method `.display()` (e.g. `my_chart.display()`).\n",
     "\n",
     "Hint 3: You will need to change the range of the axes to make the plots look good!"
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
-   "source": [
-    "import altair as alt\n",
-    "\n",
-    "for i in range(1, 14):\n",
-    "    c = (\n",
-    "        alt.Chart(df)\n",
-    "        .mark_point()\n",
-    "        .encode(\n",
-    "            x=alt.X(f\"example{i}_x\", scale=alt.Scale(zero=False)), y=f\"example{i}_y\"\n",
-    "        )\n",
-    "    )\n",
-    "    c.display()\n"
-   ],
+   "execution_count": 6,
+   "metadata": {},
    "outputs": [
     {
-     "output_type": "display_data",
      "data": {
       "text/html": [
        "\n",
-       "<div id=\"altair-viz-5cfe0aa7dc744c9dbfafd139566cd575\"></div>\n",
+       "<div id=\"altair-viz-840e2ff607974065a63f9e86561442d8\"></div>\n",
        "<script type=\"text/javascript\">\n",
        "  (function(spec, embedOpt){\n",
        "    let outputDiv = document.currentScript.previousElementSibling;\n",
-       "    if (outputDiv.id !== \"altair-viz-5cfe0aa7dc744c9dbfafd139566cd575\") {\n",
-       "      outputDiv = document.getElementById(\"altair-viz-5cfe0aa7dc744c9dbfafd139566cd575\");\n",
+       "    if (outputDiv.id !== \"altair-viz-840e2ff607974065a63f9e86561442d8\") {\n",
+       "      outputDiv = document.getElementById(\"altair-viz-840e2ff607974065a63f9e86561442d8\");\n",
        "    }\n",
        "    const paths = {\n",
        "      \"vega\": \"https://cdn.jsdelivr.net/npm//vega@5?noext\",\n",
@@ -522,19 +536,19 @@
        "alt.Chart(...)"
       ]
      },
-     "metadata": {}
+     "metadata": {},
+     "output_type": "display_data"
     },
     {
-     "output_type": "display_data",
      "data": {
       "text/html": [
        "\n",
-       "<div id=\"altair-viz-8e4dbe49991e47078522faadc6245bb9\"></div>\n",
+       "<div id=\"altair-viz-78cafea3a2e94095b4c0796be37df412\"></div>\n",
        "<script type=\"text/javascript\">\n",
        "  (function(spec, embedOpt){\n",
        "    let outputDiv = document.currentScript.previousElementSibling;\n",
-       "    if (outputDiv.id !== \"altair-viz-8e4dbe49991e47078522faadc6245bb9\") {\n",
-       "      outputDiv = document.getElementById(\"altair-viz-8e4dbe49991e47078522faadc6245bb9\");\n",
+       "    if (outputDiv.id !== \"altair-viz-78cafea3a2e94095b4c0796be37df412\") {\n",
+       "      outputDiv = document.getElementById(\"altair-viz-78cafea3a2e94095b4c0796be37df412\");\n",
        "    }\n",
        "    const paths = {\n",
        "      \"vega\": \"https://cdn.jsdelivr.net/npm//vega@5?noext\",\n",
@@ -583,19 +597,19 @@
        "alt.Chart(...)"
       ]
      },
-     "metadata": {}
+     "metadata": {},
+     "output_type": "display_data"
     },
     {
-     "output_type": "display_data",
      "data": {
       "text/html": [
        "\n",
-       "<div id=\"altair-viz-2bf50c4550ac4c1c98f7c8bca898911e\"></div>\n",
+       "<div id=\"altair-viz-94ead3e650e5458289961f4941a027ac\"></div>\n",
        "<script type=\"text/javascript\">\n",
        "  (function(spec, embedOpt){\n",
        "    let outputDiv = document.currentScript.previousElementSibling;\n",
-       "    if (outputDiv.id !== \"altair-viz-2bf50c4550ac4c1c98f7c8bca898911e\") {\n",
-       "      outputDiv = document.getElementById(\"altair-viz-2bf50c4550ac4c1c98f7c8bca898911e\");\n",
+       "    if (outputDiv.id !== \"altair-viz-94ead3e650e5458289961f4941a027ac\") {\n",
+       "      outputDiv = document.getElementById(\"altair-viz-94ead3e650e5458289961f4941a027ac\");\n",
        "    }\n",
        "    const paths = {\n",
        "      \"vega\": \"https://cdn.jsdelivr.net/npm//vega@5?noext\",\n",
@@ -644,19 +658,19 @@
        "alt.Chart(...)"
       ]
      },
-     "metadata": {}
+     "metadata": {},
+     "output_type": "display_data"
     },
     {
-     "output_type": "display_data",
      "data": {
       "text/html": [
        "\n",
-       "<div id=\"altair-viz-d4e1aa25bbb74f94a36a26f6e46f6ff7\"></div>\n",
+       "<div id=\"altair-viz-871eede7954b4530a1a40b0166375c94\"></div>\n",
        "<script type=\"text/javascript\">\n",
        "  (function(spec, embedOpt){\n",
        "    let outputDiv = document.currentScript.previousElementSibling;\n",
-       "    if (outputDiv.id !== \"altair-viz-d4e1aa25bbb74f94a36a26f6e46f6ff7\") {\n",
-       "      outputDiv = document.getElementById(\"altair-viz-d4e1aa25bbb74f94a36a26f6e46f6ff7\");\n",
+       "    if (outputDiv.id !== \"altair-viz-871eede7954b4530a1a40b0166375c94\") {\n",
+       "      outputDiv = document.getElementById(\"altair-viz-871eede7954b4530a1a40b0166375c94\");\n",
        "    }\n",
        "    const paths = {\n",
        "      \"vega\": \"https://cdn.jsdelivr.net/npm//vega@5?noext\",\n",
@@ -705,19 +719,19 @@
        "alt.Chart(...)"
       ]
      },
-     "metadata": {}
+     "metadata": {},
+     "output_type": "display_data"
     },
     {
-     "output_type": "display_data",
      "data": {
       "text/html": [
        "\n",
-       "<div id=\"altair-viz-b82705fab67e4e53bf128bff4c958d88\"></div>\n",
+       "<div id=\"altair-viz-d0b23bbf55154c9ba93f5cf3137970f9\"></div>\n",
        "<script type=\"text/javascript\">\n",
        "  (function(spec, embedOpt){\n",
        "    let outputDiv = document.currentScript.previousElementSibling;\n",
-       "    if (outputDiv.id !== \"altair-viz-b82705fab67e4e53bf128bff4c958d88\") {\n",
-       "      outputDiv = document.getElementById(\"altair-viz-b82705fab67e4e53bf128bff4c958d88\");\n",
+       "    if (outputDiv.id !== \"altair-viz-d0b23bbf55154c9ba93f5cf3137970f9\") {\n",
+       "      outputDiv = document.getElementById(\"altair-viz-d0b23bbf55154c9ba93f5cf3137970f9\");\n",
        "    }\n",
        "    const paths = {\n",
        "      \"vega\": \"https://cdn.jsdelivr.net/npm//vega@5?noext\",\n",
@@ -766,19 +780,19 @@
        "alt.Chart(...)"
       ]
      },
-     "metadata": {}
+     "metadata": {},
+     "output_type": "display_data"
     },
     {
-     "output_type": "display_data",
      "data": {
       "text/html": [
        "\n",
-       "<div id=\"altair-viz-4e13c7b110784e748f8cf9022d549a21\"></div>\n",
+       "<div id=\"altair-viz-b1ae2af922b34719b3830f6244cc18a8\"></div>\n",
        "<script type=\"text/javascript\">\n",
        "  (function(spec, embedOpt){\n",
        "    let outputDiv = document.currentScript.previousElementSibling;\n",
-       "    if (outputDiv.id !== \"altair-viz-4e13c7b110784e748f8cf9022d549a21\") {\n",
-       "      outputDiv = document.getElementById(\"altair-viz-4e13c7b110784e748f8cf9022d549a21\");\n",
+       "    if (outputDiv.id !== \"altair-viz-b1ae2af922b34719b3830f6244cc18a8\") {\n",
+       "      outputDiv = document.getElementById(\"altair-viz-b1ae2af922b34719b3830f6244cc18a8\");\n",
        "    }\n",
        "    const paths = {\n",
        "      \"vega\": \"https://cdn.jsdelivr.net/npm//vega@5?noext\",\n",
@@ -827,19 +841,19 @@
        "alt.Chart(...)"
       ]
      },
-     "metadata": {}
+     "metadata": {},
+     "output_type": "display_data"
     },
     {
-     "output_type": "display_data",
      "data": {
       "text/html": [
        "\n",
-       "<div id=\"altair-viz-882807257d2f4e7eadc07e15d4b80a23\"></div>\n",
+       "<div id=\"altair-viz-6fb6e1f00757498bb8d5c6ac1ab23801\"></div>\n",
        "<script type=\"text/javascript\">\n",
        "  (function(spec, embedOpt){\n",
        "    let outputDiv = document.currentScript.previousElementSibling;\n",
-       "    if (outputDiv.id !== \"altair-viz-882807257d2f4e7eadc07e15d4b80a23\") {\n",
-       "      outputDiv = document.getElementById(\"altair-viz-882807257d2f4e7eadc07e15d4b80a23\");\n",
+       "    if (outputDiv.id !== \"altair-viz-6fb6e1f00757498bb8d5c6ac1ab23801\") {\n",
+       "      outputDiv = document.getElementById(\"altair-viz-6fb6e1f00757498bb8d5c6ac1ab23801\");\n",
        "    }\n",
        "    const paths = {\n",
        "      \"vega\": \"https://cdn.jsdelivr.net/npm//vega@5?noext\",\n",
@@ -888,19 +902,19 @@
        "alt.Chart(...)"
       ]
      },
-     "metadata": {}
+     "metadata": {},
+     "output_type": "display_data"
     },
     {
-     "output_type": "display_data",
      "data": {
       "text/html": [
        "\n",
-       "<div id=\"altair-viz-6ddd6b5ab4ae424b9265f5d888b51290\"></div>\n",
+       "<div id=\"altair-viz-49c89cdb22a84cfc91c843080188f727\"></div>\n",
        "<script type=\"text/javascript\">\n",
        "  (function(spec, embedOpt){\n",
        "    let outputDiv = document.currentScript.previousElementSibling;\n",
-       "    if (outputDiv.id !== \"altair-viz-6ddd6b5ab4ae424b9265f5d888b51290\") {\n",
-       "      outputDiv = document.getElementById(\"altair-viz-6ddd6b5ab4ae424b9265f5d888b51290\");\n",
+       "    if (outputDiv.id !== \"altair-viz-49c89cdb22a84cfc91c843080188f727\") {\n",
+       "      outputDiv = document.getElementById(\"altair-viz-49c89cdb22a84cfc91c843080188f727\");\n",
        "    }\n",
        "    const paths = {\n",
        "      \"vega\": \"https://cdn.jsdelivr.net/npm//vega@5?noext\",\n",
@@ -949,19 +963,19 @@
        "alt.Chart(...)"
       ]
      },
-     "metadata": {}
+     "metadata": {},
+     "output_type": "display_data"
     },
     {
-     "output_type": "display_data",
      "data": {
       "text/html": [
        "\n",
-       "<div id=\"altair-viz-306ee92005cd49a78c7bffa20de8218e\"></div>\n",
+       "<div id=\"altair-viz-49d09a53dad64b02b2ff1fbd38e4ef55\"></div>\n",
        "<script type=\"text/javascript\">\n",
        "  (function(spec, embedOpt){\n",
        "    let outputDiv = document.currentScript.previousElementSibling;\n",
-       "    if (outputDiv.id !== \"altair-viz-306ee92005cd49a78c7bffa20de8218e\") {\n",
-       "      outputDiv = document.getElementById(\"altair-viz-306ee92005cd49a78c7bffa20de8218e\");\n",
+       "    if (outputDiv.id !== \"altair-viz-49d09a53dad64b02b2ff1fbd38e4ef55\") {\n",
+       "      outputDiv = document.getElementById(\"altair-viz-49d09a53dad64b02b2ff1fbd38e4ef55\");\n",
        "    }\n",
        "    const paths = {\n",
        "      \"vega\": \"https://cdn.jsdelivr.net/npm//vega@5?noext\",\n",
@@ -1010,19 +1024,19 @@
        "alt.Chart(...)"
       ]
      },
-     "metadata": {}
+     "metadata": {},
+     "output_type": "display_data"
     },
     {
-     "output_type": "display_data",
      "data": {
       "text/html": [
        "\n",
-       "<div id=\"altair-viz-f5fe5dbfa1414d949a2b2e65a9877052\"></div>\n",
+       "<div id=\"altair-viz-4457de8597284ef38e4902130c4f368c\"></div>\n",
        "<script type=\"text/javascript\">\n",
        "  (function(spec, embedOpt){\n",
        "    let outputDiv = document.currentScript.previousElementSibling;\n",
-       "    if (outputDiv.id !== \"altair-viz-f5fe5dbfa1414d949a2b2e65a9877052\") {\n",
-       "      outputDiv = document.getElementById(\"altair-viz-f5fe5dbfa1414d949a2b2e65a9877052\");\n",
+       "    if (outputDiv.id !== \"altair-viz-4457de8597284ef38e4902130c4f368c\") {\n",
+       "      outputDiv = document.getElementById(\"altair-viz-4457de8597284ef38e4902130c4f368c\");\n",
        "    }\n",
        "    const paths = {\n",
        "      \"vega\": \"https://cdn.jsdelivr.net/npm//vega@5?noext\",\n",
@@ -1071,19 +1085,19 @@
        "alt.Chart(...)"
       ]
      },
-     "metadata": {}
+     "metadata": {},
+     "output_type": "display_data"
     },
     {
-     "output_type": "display_data",
      "data": {
       "text/html": [
        "\n",
-       "<div id=\"altair-viz-2fdc6d4effd6497b9a0770b92f1a35c5\"></div>\n",
+       "<div id=\"altair-viz-c18b23b76d6c4948975f36a216657788\"></div>\n",
        "<script type=\"text/javascript\">\n",
        "  (function(spec, embedOpt){\n",
        "    let outputDiv = document.currentScript.previousElementSibling;\n",
-       "    if (outputDiv.id !== \"altair-viz-2fdc6d4effd6497b9a0770b92f1a35c5\") {\n",
-       "      outputDiv = document.getElementById(\"altair-viz-2fdc6d4effd6497b9a0770b92f1a35c5\");\n",
+       "    if (outputDiv.id !== \"altair-viz-c18b23b76d6c4948975f36a216657788\") {\n",
+       "      outputDiv = document.getElementById(\"altair-viz-c18b23b76d6c4948975f36a216657788\");\n",
        "    }\n",
        "    const paths = {\n",
        "      \"vega\": \"https://cdn.jsdelivr.net/npm//vega@5?noext\",\n",
@@ -1132,19 +1146,19 @@
        "alt.Chart(...)"
       ]
      },
-     "metadata": {}
+     "metadata": {},
+     "output_type": "display_data"
     },
     {
-     "output_type": "display_data",
      "data": {
       "text/html": [
        "\n",
-       "<div id=\"altair-viz-0b5102aa8a8f49729f5af61a7abb1c9d\"></div>\n",
+       "<div id=\"altair-viz-5f92ddf67578454f9bbe802915fa6e9d\"></div>\n",
        "<script type=\"text/javascript\">\n",
        "  (function(spec, embedOpt){\n",
        "    let outputDiv = document.currentScript.previousElementSibling;\n",
-       "    if (outputDiv.id !== \"altair-viz-0b5102aa8a8f49729f5af61a7abb1c9d\") {\n",
-       "      outputDiv = document.getElementById(\"altair-viz-0b5102aa8a8f49729f5af61a7abb1c9d\");\n",
+       "    if (outputDiv.id !== \"altair-viz-5f92ddf67578454f9bbe802915fa6e9d\") {\n",
+       "      outputDiv = document.getElementById(\"altair-viz-5f92ddf67578454f9bbe802915fa6e9d\");\n",
        "    }\n",
        "    const paths = {\n",
        "      \"vega\": \"https://cdn.jsdelivr.net/npm//vega@5?noext\",\n",
@@ -1193,19 +1207,19 @@
        "alt.Chart(...)"
       ]
      },
-     "metadata": {}
+     "metadata": {},
+     "output_type": "display_data"
     },
     {
-     "output_type": "display_data",
      "data": {
       "text/html": [
        "\n",
-       "<div id=\"altair-viz-650eb2c90374427291b24338523496c5\"></div>\n",
+       "<div id=\"altair-viz-e03023311ff942ebba9b6275138b8dea\"></div>\n",
        "<script type=\"text/javascript\">\n",
        "  (function(spec, embedOpt){\n",
        "    let outputDiv = document.currentScript.previousElementSibling;\n",
-       "    if (outputDiv.id !== \"altair-viz-650eb2c90374427291b24338523496c5\") {\n",
-       "      outputDiv = document.getElementById(\"altair-viz-650eb2c90374427291b24338523496c5\");\n",
+       "    if (outputDiv.id !== \"altair-viz-e03023311ff942ebba9b6275138b8dea\") {\n",
+       "      outputDiv = document.getElementById(\"altair-viz-e03023311ff942ebba9b6275138b8dea\");\n",
        "    }\n",
        "    const paths = {\n",
        "      \"vega\": \"https://cdn.jsdelivr.net/npm//vega@5?noext\",\n",
@@ -1254,31 +1268,45 @@
        "alt.Chart(...)"
       ]
      },
-     "metadata": {}
+     "metadata": {},
+     "output_type": "display_data"
     }
    ],
-   "metadata": {}
+   "source": [
+    "import altair as alt\n",
+    "\n",
+    "for i in range(1, 14):\n",
+    "    c = (\n",
+    "        alt.Chart(df)\n",
+    "        .mark_point()\n",
+    "        .encode(\n",
+    "            x=alt.X(f\"example{i}_x\", scale=alt.Scale(zero=False)), y=f\"example{i}_y\"\n",
+    "        )\n",
+    "    )\n",
+    "    c.display()\n"
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "### Exercise 5\n",
     "\n",
     "Review you plots. How does your impression of how these datasets differ from what you wrote down in Exercise 3?"
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [],
    "source": [
     "# Hmmm... almost like summary statistics don't fully characterize data! Maybe I should always plot!"
-   ],
-   "outputs": [],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "## Economic Development and... Your Choice!\n",
     "\n",
@@ -1287,31 +1315,28 @@
     "Load the World Development Indicator data used in the [plotting reading](../plotting_altair_part1.ipynb). Rather than picking a single year, pick a single country and look at how GDP per capita and one of the other variables in that dataset have evolved together over time. \n",
     "\n",
     "Make any adjustments to the functional forms of your variables and/or axes needed to make the figure legible. "
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 12,
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [],
    "source": [
     "wdi = pd.read_csv(\n",
     "    \"https://raw.githubusercontent.com/nickeubank/\"\n",
     "    \"practicaldatascience/master/Example_Data/wdi_plotting.csv\"\n",
     ")"
-   ],
-   "outputs": [],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 13,
-   "source": [
-    "for c in wdi.columns: print(c)"
-   ],
+   "execution_count": 9,
+   "metadata": {},
    "outputs": [
     {
-     "output_type": "stream",
      "name": "stdout",
+     "output_type": "stream",
      "text": [
       "Year\n",
       "Country Name\n",
@@ -1327,38 +1352,25 @@
      ]
     }
    ],
-   "metadata": {}
+   "source": [
+    "for c in wdi.columns: print(c)"
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 29,
-   "source": [
-    "india = wdi[wdi[\"Country Name\"] == \"India\"]\n",
-    "base = (\n",
-    "    alt.Chart(india)\n",
-    "    .mark_point(color=\"red\")\n",
-    "    .encode(\n",
-    "        x=alt.X(\"Year\", scale=alt.Scale(zero=False)),\n",
-    "        y=alt.Y(\n",
-    "            \"CO2 emissions (metric tons per capita)\",\n",
-    "            axis=alt.Axis(title=\"CO2 Emissions per Capita\", titleColor=\"red\"),\n",
-    "        ),\n",
-    "    )\n",
-    ")\n",
-    "base\n"
-   ],
+   "execution_count": 10,
+   "metadata": {},
    "outputs": [
     {
-     "output_type": "execute_result",
      "data": {
       "text/html": [
        "\n",
-       "<div id=\"altair-viz-10df5766c5c145e4baaf0f579d985b20\"></div>\n",
+       "<div id=\"altair-viz-7e6cf056975d4718856e1139a11ed687\"></div>\n",
        "<script type=\"text/javascript\">\n",
        "  (function(spec, embedOpt){\n",
        "    let outputDiv = document.currentScript.previousElementSibling;\n",
-       "    if (outputDiv.id !== \"altair-viz-10df5766c5c145e4baaf0f579d985b20\") {\n",
-       "      outputDiv = document.getElementById(\"altair-viz-10df5766c5c145e4baaf0f579d985b20\");\n",
+       "    if (outputDiv.id !== \"altair-viz-7e6cf056975d4718856e1139a11ed687\") {\n",
+       "      outputDiv = document.getElementById(\"altair-viz-7e6cf056975d4718856e1139a11ed687\");\n",
        "    }\n",
        "    const paths = {\n",
        "      \"vega\": \"https://cdn.jsdelivr.net/npm//vega@5?noext\",\n",
@@ -1407,14 +1419,30 @@
        "alt.Chart(...)"
       ]
      },
+     "execution_count": 10,
      "metadata": {},
-     "execution_count": 29
+     "output_type": "execute_result"
     }
    ],
-   "metadata": {}
+   "source": [
+    "india = wdi[wdi[\"Country Name\"] == \"India\"]\n",
+    "base = (\n",
+    "    alt.Chart(india)\n",
+    "    .mark_point(color=\"red\")\n",
+    "    .encode(\n",
+    "        x=alt.X(\"Year\", scale=alt.Scale(zero=False)),\n",
+    "        y=alt.Y(\n",
+    "            \"CO2 emissions (metric tons per capita)\",\n",
+    "            axis=alt.Axis(title=\"CO2 Emissions per Capita\", titleColor=\"red\"),\n",
+    "        ),\n",
+    "    )\n",
+    ")\n",
+    "base\n"
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "### Exercise 7\n",
     "\n",
@@ -1423,38 +1451,23 @@
     "Because your two series will probably be on different scales, you can't just layer your plots with the simple `+` operator. Instead, use `alt.layer()` method. \n",
     "\n",
     "Rather than telling you exactly how to do it, however, I'll point you to one of the charts in the Altair Example gallery that has overlapping series with different scales: [here](https://altair-viz.github.io/gallery/layered_chart_with_dual_axis.html). Use your detective skills (and some guess and check work) to figure out how to get it to work!\n"
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 30,
-   "source": [
-    "base2 = (\n",
-    "    alt.Chart(india)\n",
-    "    .mark_point(color=\"blue\")\n",
-    "    .encode(\n",
-    "        x=alt.X(\"Year\", scale=alt.Scale(zero=False)),\n",
-    "        y=alt.Y(\n",
-    "            \"GDP per capita (constant 2010 US$)\",\n",
-    "            axis=alt.Axis(title=\"GDP per Capita\", titleColor=\"blue\"),\n",
-    "        ),\n",
-    "    )\n",
-    ")\n",
-    "base2\n"
-   ],
+   "execution_count": 11,
+   "metadata": {},
    "outputs": [
     {
-     "output_type": "execute_result",
      "data": {
       "text/html": [
        "\n",
-       "<div id=\"altair-viz-efc5c3a06ed3482688f477e6db2829c9\"></div>\n",
+       "<div id=\"altair-viz-d8a8bdfea3204497887807c79aa1be07\"></div>\n",
        "<script type=\"text/javascript\">\n",
        "  (function(spec, embedOpt){\n",
        "    let outputDiv = document.currentScript.previousElementSibling;\n",
-       "    if (outputDiv.id !== \"altair-viz-efc5c3a06ed3482688f477e6db2829c9\") {\n",
-       "      outputDiv = document.getElementById(\"altair-viz-efc5c3a06ed3482688f477e6db2829c9\");\n",
+       "    if (outputDiv.id !== \"altair-viz-d8a8bdfea3204497887807c79aa1be07\") {\n",
+       "      outputDiv = document.getElementById(\"altair-viz-d8a8bdfea3204497887807c79aa1be07\");\n",
        "    }\n",
        "    const paths = {\n",
        "      \"vega\": \"https://cdn.jsdelivr.net/npm//vega@5?noext\",\n",
@@ -1503,31 +1516,41 @@
        "alt.Chart(...)"
       ]
      },
+     "execution_count": 11,
      "metadata": {},
-     "execution_count": 30
+     "output_type": "execute_result"
     }
    ],
-   "metadata": {}
+   "source": [
+    "base2 = (\n",
+    "    alt.Chart(india)\n",
+    "    .mark_point(color=\"blue\")\n",
+    "    .encode(\n",
+    "        x=alt.X(\"Year\", scale=alt.Scale(zero=False)),\n",
+    "        y=alt.Y(\n",
+    "            \"GDP per capita (constant 2010 US$)\",\n",
+    "            axis=alt.Axis(title=\"GDP per Capita\", titleColor=\"blue\"),\n",
+    "        ),\n",
+    "    )\n",
+    ")\n",
+    "base2\n"
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "source": [
-    "alt.layer(base, base2).resolve_scale(\n",
-    "    y = 'independent'\n",
-    ")"
-   ],
+   "execution_count": 12,
+   "metadata": {},
    "outputs": [
     {
      "data": {
       "text/html": [
        "\n",
-       "<div id=\"altair-viz-10b81e07db8f4061bf0cbdcef0f11f92\"></div>\n",
+       "<div id=\"altair-viz-ff319f3dde18439694b95ec052b84e9b\"></div>\n",
        "<script type=\"text/javascript\">\n",
        "  (function(spec, embedOpt){\n",
        "    let outputDiv = document.currentScript.previousElementSibling;\n",
-       "    if (outputDiv.id !== \"altair-viz-10b81e07db8f4061bf0cbdcef0f11f92\") {\n",
-       "      outputDiv = document.getElementById(\"altair-viz-10b81e07db8f4061bf0cbdcef0f11f92\");\n",
+       "    if (outputDiv.id !== \"altair-viz-ff319f3dde18439694b95ec052b84e9b\") {\n",
+       "      outputDiv = document.getElementById(\"altair-viz-ff319f3dde18439694b95ec052b84e9b\");\n",
        "    }\n",
        "    const paths = {\n",
        "      \"vega\": \"https://cdn.jsdelivr.net/npm//vega@5?noext\",\n",
@@ -1576,49 +1599,41 @@
        "alt.LayerChart(...)"
       ]
      },
+     "execution_count": 12,
      "metadata": {},
-     "output_type": "display_data"
+     "output_type": "execute_result"
     }
    ],
-   "metadata": {}
+   "source": [
+    "alt.layer(base, base2).resolve_scale(\n",
+    "    y = 'independent'\n",
+    ")"
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "### Exercise 8\n",
     "\n",
     "Give your chart and axes meaningful (and well formatted!) titles."
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "source": [
-    "base = (\n",
-    "    alt.Chart(india, title=\"CO2 and GDP per Cap\")\n",
-    "    .mark_point(color=\"red\")\n",
-    "    .encode(\n",
-    "        x=alt.X(\"Year\", scale=alt.Scale(zero=False)),\n",
-    "        y=alt.Y(\n",
-    "            \"CO2 emissions (metric tons per capita)\",\n",
-    "            axis=alt.Axis(title=\"CO2 Emissions per Capita\", titleColor=\"red\"),\n",
-    "        ),\n",
-    "    )\n",
-    ")\n",
-    "alt.layer(base, base2).resolve_scale(y=\"independent\")"
-   ],
+   "execution_count": 13,
+   "metadata": {},
    "outputs": [
     {
      "data": {
       "text/html": [
        "\n",
-       "<div id=\"altair-viz-2d4b46f0452e45fc830bc4f18d371036\"></div>\n",
+       "<div id=\"altair-viz-5c4ab1b2e70342478654ecd583952189\"></div>\n",
        "<script type=\"text/javascript\">\n",
        "  (function(spec, embedOpt){\n",
        "    let outputDiv = document.currentScript.previousElementSibling;\n",
-       "    if (outputDiv.id !== \"altair-viz-2d4b46f0452e45fc830bc4f18d371036\") {\n",
-       "      outputDiv = document.getElementById(\"altair-viz-2d4b46f0452e45fc830bc4f18d371036\");\n",
+       "    if (outputDiv.id !== \"altair-viz-5c4ab1b2e70342478654ecd583952189\") {\n",
+       "      outputDiv = document.getElementById(\"altair-viz-5c4ab1b2e70342478654ecd583952189\");\n",
        "    }\n",
        "    const paths = {\n",
        "      \"vega\": \"https://cdn.jsdelivr.net/npm//vega@5?noext\",\n",
@@ -1667,37 +1682,48 @@
        "alt.LayerChart(...)"
       ]
      },
+     "execution_count": 13,
      "metadata": {},
-     "output_type": "display_data"
+     "output_type": "execute_result"
     }
    ],
-   "metadata": {}
+   "source": [
+    "base = (\n",
+    "    alt.Chart(india, title=\"CO2 and GDP per Cap\")\n",
+    "    .mark_point(color=\"red\")\n",
+    "    .encode(\n",
+    "        x=alt.X(\"Year\", scale=alt.Scale(zero=False)),\n",
+    "        y=alt.Y(\n",
+    "            \"CO2 emissions (metric tons per capita)\",\n",
+    "            axis=alt.Axis(title=\"CO2 Emissions per Capita\", titleColor=\"red\"),\n",
+    "        ),\n",
+    "    )\n",
+    ")\n",
+    "alt.layer(base, base2).resolve_scale(y=\"independent\")"
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "Or..."
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "code",
-   "execution_count": 35,
-   "source": [
-    "alt.layer(base, base2).resolve_scale(y=\"independent\").properties(title=\"Income and CO2\")"
-   ],
+   "execution_count": 14,
+   "metadata": {},
    "outputs": [
     {
-     "output_type": "execute_result",
      "data": {
       "text/html": [
        "\n",
-       "<div id=\"altair-viz-49eaffa6e8184091bfa178eabfcb34f7\"></div>\n",
+       "<div id=\"altair-viz-24a930c2bdf34e7dae8ae06eb7d8f449\"></div>\n",
        "<script type=\"text/javascript\">\n",
        "  (function(spec, embedOpt){\n",
        "    let outputDiv = document.currentScript.previousElementSibling;\n",
-       "    if (outputDiv.id !== \"altair-viz-49eaffa6e8184091bfa178eabfcb34f7\") {\n",
-       "      outputDiv = document.getElementById(\"altair-viz-49eaffa6e8184091bfa178eabfcb34f7\");\n",
+       "    if (outputDiv.id !== \"altair-viz-24a930c2bdf34e7dae8ae06eb7d8f449\") {\n",
+       "      outputDiv = document.getElementById(\"altair-viz-24a930c2bdf34e7dae8ae06eb7d8f449\");\n",
        "    }\n",
        "    const paths = {\n",
        "      \"vega\": \"https://cdn.jsdelivr.net/npm//vega@5?noext\",\n",
@@ -1739,24 +1765,30 @@
        "        .catch(showError)\n",
        "        .then(() => displayChart(vegaEmbed));\n",
        "    }\n",
-       "  })({\"config\": {\"view\": {\"continuousWidth\": 400, \"continuousHeight\": 300}}, \"layer\": [{\"mark\": {\"type\": \"point\", \"color\": \"red\"}, \"encoding\": {\"x\": {\"type\": \"quantitative\", \"field\": \"Year\", \"scale\": {\"zero\": false}}, \"y\": {\"type\": \"quantitative\", \"axis\": {\"title\": \"CO2 Emissions per Capita\", \"titleColor\": \"red\"}, \"field\": \"CO2 emissions (metric tons per capita)\"}}}, {\"mark\": {\"type\": \"point\", \"color\": \"blue\"}, \"encoding\": {\"x\": {\"type\": \"quantitative\", \"field\": \"Year\", \"scale\": {\"zero\": false}}, \"y\": {\"type\": \"quantitative\", \"axis\": {\"title\": \"GDP per Capita\", \"titleColor\": \"blue\"}, \"field\": \"GDP per capita (constant 2010 US$)\"}}}], \"data\": {\"name\": \"data-2ee72f921faba9e98a4caf25deaa968e\"}, \"resolve\": {\"scale\": {\"y\": \"independent\"}}, \"title\": \"Income and CO2\", \"$schema\": \"https://vega.github.io/schema/vega-lite/v4.8.1.json\", \"datasets\": {\"data-2ee72f921faba9e98a4caf25deaa968e\": [{\"Year\": 1971, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 393.5312722, \"Population, total\": 567868021.0, \"CO2 emissions (metric tons per capita)\": 0.362529742, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 48.398, \"Mortality rate, under-5 (per 1,000 live births)\": 209.9, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1972, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 382.4508956, \"Population, total\": 581087255.0, \"CO2 emissions (metric tons per capita)\": 0.374899181, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 49.061, \"Mortality rate, under-5 (per 1,000 live births)\": 206.6, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1973, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 385.9662847, \"Population, total\": 594770136.0, \"CO2 emissions (metric tons per capita)\": 0.377193439, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 49.722, \"Mortality rate, under-5 (per 1,000 live births)\": 202.9, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1974, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 381.5395893, \"Population, total\": 608802595.0, \"CO2 emissions (metric tons per capita)\": 0.381064005, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 50.374, \"Mortality rate, under-5 (per 1,000 live births)\": 199.0, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1975, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 406.8925331, \"Population, total\": 623102900.0, \"CO2 emissions (metric tons per capita)\": 0.404751113, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 51.012, \"Mortality rate, under-5 (per 1,000 live births)\": 194.5, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1976, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 404.2351334, \"Population, total\": 637630085.0, \"CO2 emissions (metric tons per capita)\": 0.413696987, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 51.63, \"Mortality rate, under-5 (per 1,000 live births)\": 189.6, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1977, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 423.7401958, \"Population, total\": 652408766.0, \"CO2 emissions (metric tons per capita)\": 0.427724734, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 52.222, \"Mortality rate, under-5 (per 1,000 live births)\": 184.4, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1978, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 437.8191732, \"Population, total\": 667499815.0, \"CO2 emissions (metric tons per capita)\": 0.424114076, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 52.786, \"Mortality rate, under-5 (per 1,000 live births)\": 178.9, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1979, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 405.4726461, \"Population, total\": 682995348.0, \"CO2 emissions (metric tons per capita)\": 0.434690107, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 53.319, \"Mortality rate, under-5 (per 1,000 live births)\": 173.3, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1980, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 422.9038434, \"Population, total\": 698952837.0, \"CO2 emissions (metric tons per capita)\": 0.449266666, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 53.814, \"Mortality rate, under-5 (per 1,000 live births)\": 167.9, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1981, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 438.0069056, \"Population, total\": 715384997.0, \"CO2 emissions (metric tons per capita)\": 0.473644451, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 54.268, \"Mortality rate, under-5 (per 1,000 live births)\": 162.8, \"Literacy rate, youth female (% of females ages 15-24)\": 40.32152176}, {\"Year\": 1982, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 442.7985056, \"Population, total\": 732239498.0, \"CO2 emissions (metric tons per capita)\": 0.477490561, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 54.686, \"Mortality rate, under-5 (per 1,000 live births)\": 158.0, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1983, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 464.1769727, \"Population, total\": 749428958.0, \"CO2 emissions (metric tons per capita)\": 0.50527683, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 55.074, \"Mortality rate, under-5 (per 1,000 live births)\": 153.6, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1984, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 470.9742316, \"Population, total\": 766833411.0, \"CO2 emissions (metric tons per capita)\": 0.506132025, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 55.441, \"Mortality rate, under-5 (per 1,000 live births)\": 149.5, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1985, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 484.6437012, \"Population, total\": 784360012.0, \"CO2 emissions (metric tons per capita)\": 0.543976973, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 55.801, \"Mortality rate, under-5 (per 1,000 live births)\": 145.6, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1986, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 496.6394389, \"Population, total\": 801975250.0, \"CO2 emissions (metric tons per capita)\": 0.57055617, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 56.169, \"Mortality rate, under-5 (per 1,000 live births)\": 141.7, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1987, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 505.1790887, \"Population, total\": 819682095.0, \"CO2 emissions (metric tons per capita)\": 0.595939661, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 56.553, \"Mortality rate, under-5 (per 1,000 live births)\": 137.8, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1988, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 542.0542289, \"Population, total\": 837468938.0, \"CO2 emissions (metric tons per capita)\": 0.629950476, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 56.963, \"Mortality rate, under-5 (per 1,000 live births)\": 133.8, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1989, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 562.2965739, \"Population, total\": 855334675.0, \"CO2 emissions (metric tons per capita)\": 0.676937713, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 57.4, \"Mortality rate, under-5 (per 1,000 live births)\": 130.0, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1990, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 581.2182616, \"Population, total\": 873277799.0, \"CO2 emissions (metric tons per capita)\": 0.644102026, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 57.865, \"Mortality rate, under-5 (per 1,000 live births)\": 126.2, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1991, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 575.5015517, \"Population, total\": 891273202.0, \"CO2 emissions (metric tons per capita)\": 0.681429666, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 58.353, \"Mortality rate, under-5 (per 1,000 live births)\": 122.7, \"Literacy rate, youth female (% of females ages 15-24)\": 49.34918976}, {\"Year\": 1992, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 595.013461, \"Population, total\": 909307018.0, \"CO2 emissions (metric tons per capita)\": 0.693121231, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 58.851, \"Mortality rate, under-5 (per 1,000 live births)\": 119.4, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1993, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 611.1188528, \"Population, total\": 927403866.0, \"CO2 emissions (metric tons per capita)\": 0.703544619, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 59.349, \"Mortality rate, under-5 (per 1,000 live births)\": 116.1, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1994, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 639.268756, \"Population, total\": 945601828.0, \"CO2 emissions (metric tons per capita)\": 0.727526089, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 59.84, \"Mortality rate, under-5 (per 1,000 live births)\": 112.8, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1995, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 674.6195597, \"Population, total\": 963922586.0, \"CO2 emissions (metric tons per capita)\": 0.768837675, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 60.32, \"Mortality rate, under-5 (per 1,000 live births)\": 109.5, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1996, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 711.92883, \"Population, total\": 982365248.0, \"CO2 emissions (metric tons per capita)\": 0.790663149, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 60.783, \"Mortality rate, under-5 (per 1,000 live births)\": 106.1, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1997, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 727.0431823, \"Population, total\": 1000900028.0, \"CO2 emissions (metric tons per capita)\": 0.82074131, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 61.233, \"Mortality rate, under-5 (per 1,000 live births)\": 102.6, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1998, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 757.934109, \"Population, total\": 1019483586.0, \"CO2 emissions (metric tons per capita)\": 0.823779815, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 61.669, \"Mortality rate, under-5 (per 1,000 live births)\": 99.0, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1999, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 810.2172848, \"Population, total\": 1038058154.0, \"CO2 emissions (metric tons per capita)\": 0.870943498, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 62.093, \"Mortality rate, under-5 (per 1,000 live births)\": 95.4, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2000, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 826.5924939, \"Population, total\": 1056575548.0, \"CO2 emissions (metric tons per capita)\": 0.88982752, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 62.505, \"Mortality rate, under-5 (per 1,000 live births)\": 91.8, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2001, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 851.6165622, \"Population, total\": 1075000094.0, \"CO2 emissions (metric tons per capita)\": 0.887330155, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 62.907, \"Mortality rate, under-5 (per 1,000 live births)\": 88.2, \"Literacy rate, youth female (% of females ages 15-24)\": 67.74658203}, {\"Year\": 2002, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 869.201389, \"Population, total\": 1093317187.0, \"CO2 emissions (metric tons per capita)\": 0.903241998, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 63.304, \"Mortality rate, under-5 (per 1,000 live births)\": 84.6, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2003, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 922.1679584, \"Population, total\": 1111523146.0, \"CO2 emissions (metric tons per capita)\": 0.913962074, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 63.699, \"Mortality rate, under-5 (per 1,000 live births)\": 81.2, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2004, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 979.283839, \"Population, total\": 1129623466.0, \"CO2 emissions (metric tons per capita)\": 0.962435743, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 64.095, \"Mortality rate, under-5 (per 1,000 live births)\": 77.8, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2005, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1040.312316, \"Population, total\": 1147609924.0, \"CO2 emissions (metric tons per capita)\": 0.991399583, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 64.5, \"Mortality rate, under-5 (per 1,000 live births)\": 74.5, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2006, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1106.92647, \"Population, total\": 1165486291.0, \"CO2 emissions (metric tons per capita)\": 1.041839796, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 64.918, \"Mortality rate, under-5 (per 1,000 live births)\": 71.2, \"Literacy rate, youth female (% of females ages 15-24)\": 74.35572815}, {\"Year\": 2007, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1173.875311, \"Population, total\": 1183209471.0, \"CO2 emissions (metric tons per capita)\": 1.129216789, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 65.35, \"Mortality rate, under-5 (per 1,000 live births)\": 67.9, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2008, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1192.511735, \"Population, total\": 1200669762.0, \"CO2 emissions (metric tons per capita)\": 1.185904772, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 65.794, \"Mortality rate, under-5 (per 1,000 live births)\": 64.7, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2009, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1268.249208, \"Population, total\": 1217726217.0, \"CO2 emissions (metric tons per capita)\": 1.288080997, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 66.244, \"Mortality rate, under-5 (per 1,000 live births)\": 61.4, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2010, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1357.563727, \"Population, total\": 1234281163.0, \"CO2 emissions (metric tons per capita)\": 1.349214466, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 66.693, \"Mortality rate, under-5 (per 1,000 live births)\": 58.2, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2011, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1410.426797, \"Population, total\": 1250287939.0, \"CO2 emissions (metric tons per capita)\": 1.408315593, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 67.13, \"Mortality rate, under-5 (per 1,000 live births)\": 55.1, \"Literacy rate, youth female (% of females ages 15-24)\": 81.84980774}, {\"Year\": 2012, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1469.180566, \"Population, total\": 1265780243.0, \"CO2 emissions (metric tons per capita)\": 1.507820975, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 67.545, \"Mortality rate, under-5 (per 1,000 live births)\": 52.0, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2013, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1544.624083, \"Population, total\": 1280842119.0, \"CO2 emissions (metric tons per capita)\": 1.535560059, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 67.931, \"Mortality rate, under-5 (per 1,000 live births)\": 49.1, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2014, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1640.185025, \"Population, total\": 1295600768.0, \"CO2 emissions (metric tons per capita)\": 1.649327519, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 68.286, \"Mortality rate, under-5 (per 1,000 live births)\": 46.2, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2015, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1751.664449, \"Population, total\": 1310152392.0, \"CO2 emissions (metric tons per capita)\": 1.641198393, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 68.607, \"Mortality rate, under-5 (per 1,000 live births)\": 43.5, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2016, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1875.721312, \"Population, total\": 1324517250.0, \"CO2 emissions (metric tons per capita)\": 1.648359053, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": 184.3, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 68.897, \"Mortality rate, under-5 (per 1,000 live births)\": 40.9, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2017, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1981.995576, \"Population, total\": 1338676779.0, \"CO2 emissions (metric tons per capita)\": 1.7191902, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 69.165, \"Mortality rate, under-5 (per 1,000 live births)\": 38.5, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2018, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 2089.678931, \"Population, total\": 1352642283.0, \"CO2 emissions (metric tons per capita)\": 1.799825446, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 69.416, \"Mortality rate, under-5 (per 1,000 live births)\": 36.3, \"Literacy rate, youth female (% of females ages 15-24)\": 90.16941071}, {\"Year\": 2019, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 2152.216009, \"Population, total\": 1366417756.0, \"CO2 emissions (metric tons per capita)\": null, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 69.656, \"Mortality rate, under-5 (per 1,000 live births)\": 34.3, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2020, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1961.298711, \"Population, total\": 1380004385.0, \"CO2 emissions (metric tons per capita)\": null, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": null, \"Mortality rate, under-5 (per 1,000 live births)\": null, \"Literacy rate, youth female (% of females ages 15-24)\": null}]}}, {\"mode\": \"vega-lite\"});\n",
+       "  })({\"config\": {\"view\": {\"continuousWidth\": 400, \"continuousHeight\": 300}}, \"layer\": [{\"mark\": {\"type\": \"point\", \"color\": \"red\"}, \"encoding\": {\"x\": {\"type\": \"quantitative\", \"field\": \"Year\", \"scale\": {\"zero\": false}}, \"y\": {\"type\": \"quantitative\", \"axis\": {\"title\": \"CO2 Emissions per Capita\", \"titleColor\": \"red\"}, \"field\": \"CO2 emissions (metric tons per capita)\"}}, \"title\": \"CO2 and GDP per Cap\"}, {\"mark\": {\"type\": \"point\", \"color\": \"blue\"}, \"encoding\": {\"x\": {\"type\": \"quantitative\", \"field\": \"Year\", \"scale\": {\"zero\": false}}, \"y\": {\"type\": \"quantitative\", \"axis\": {\"title\": \"GDP per Capita\", \"titleColor\": \"blue\"}, \"field\": \"GDP per capita (constant 2010 US$)\"}}}], \"data\": {\"name\": \"data-2ee72f921faba9e98a4caf25deaa968e\"}, \"resolve\": {\"scale\": {\"y\": \"independent\"}}, \"title\": \"Income and CO2\", \"$schema\": \"https://vega.github.io/schema/vega-lite/v4.8.1.json\", \"datasets\": {\"data-2ee72f921faba9e98a4caf25deaa968e\": [{\"Year\": 1971, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 393.5312722, \"Population, total\": 567868021.0, \"CO2 emissions (metric tons per capita)\": 0.362529742, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 48.398, \"Mortality rate, under-5 (per 1,000 live births)\": 209.9, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1972, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 382.4508956, \"Population, total\": 581087255.0, \"CO2 emissions (metric tons per capita)\": 0.374899181, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 49.061, \"Mortality rate, under-5 (per 1,000 live births)\": 206.6, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1973, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 385.9662847, \"Population, total\": 594770136.0, \"CO2 emissions (metric tons per capita)\": 0.377193439, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 49.722, \"Mortality rate, under-5 (per 1,000 live births)\": 202.9, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1974, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 381.5395893, \"Population, total\": 608802595.0, \"CO2 emissions (metric tons per capita)\": 0.381064005, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 50.374, \"Mortality rate, under-5 (per 1,000 live births)\": 199.0, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1975, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 406.8925331, \"Population, total\": 623102900.0, \"CO2 emissions (metric tons per capita)\": 0.404751113, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 51.012, \"Mortality rate, under-5 (per 1,000 live births)\": 194.5, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1976, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 404.2351334, \"Population, total\": 637630085.0, \"CO2 emissions (metric tons per capita)\": 0.413696987, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 51.63, \"Mortality rate, under-5 (per 1,000 live births)\": 189.6, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1977, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 423.7401958, \"Population, total\": 652408766.0, \"CO2 emissions (metric tons per capita)\": 0.427724734, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 52.222, \"Mortality rate, under-5 (per 1,000 live births)\": 184.4, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1978, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 437.8191732, \"Population, total\": 667499815.0, \"CO2 emissions (metric tons per capita)\": 0.424114076, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 52.786, \"Mortality rate, under-5 (per 1,000 live births)\": 178.9, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1979, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 405.4726461, \"Population, total\": 682995348.0, \"CO2 emissions (metric tons per capita)\": 0.434690107, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 53.319, \"Mortality rate, under-5 (per 1,000 live births)\": 173.3, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1980, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 422.9038434, \"Population, total\": 698952837.0, \"CO2 emissions (metric tons per capita)\": 0.449266666, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 53.814, \"Mortality rate, under-5 (per 1,000 live births)\": 167.9, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1981, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 438.0069056, \"Population, total\": 715384997.0, \"CO2 emissions (metric tons per capita)\": 0.473644451, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 54.268, \"Mortality rate, under-5 (per 1,000 live births)\": 162.8, \"Literacy rate, youth female (% of females ages 15-24)\": 40.32152176}, {\"Year\": 1982, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 442.7985056, \"Population, total\": 732239498.0, \"CO2 emissions (metric tons per capita)\": 0.477490561, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 54.686, \"Mortality rate, under-5 (per 1,000 live births)\": 158.0, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1983, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 464.1769727, \"Population, total\": 749428958.0, \"CO2 emissions (metric tons per capita)\": 0.50527683, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 55.074, \"Mortality rate, under-5 (per 1,000 live births)\": 153.6, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1984, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 470.9742316, \"Population, total\": 766833411.0, \"CO2 emissions (metric tons per capita)\": 0.506132025, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 55.441, \"Mortality rate, under-5 (per 1,000 live births)\": 149.5, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1985, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 484.6437012, \"Population, total\": 784360012.0, \"CO2 emissions (metric tons per capita)\": 0.543976973, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 55.801, \"Mortality rate, under-5 (per 1,000 live births)\": 145.6, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1986, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 496.6394389, \"Population, total\": 801975250.0, \"CO2 emissions (metric tons per capita)\": 0.57055617, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 56.169, \"Mortality rate, under-5 (per 1,000 live births)\": 141.7, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1987, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 505.1790887, \"Population, total\": 819682095.0, \"CO2 emissions (metric tons per capita)\": 0.595939661, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 56.553, \"Mortality rate, under-5 (per 1,000 live births)\": 137.8, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1988, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 542.0542289, \"Population, total\": 837468938.0, \"CO2 emissions (metric tons per capita)\": 0.629950476, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 56.963, \"Mortality rate, under-5 (per 1,000 live births)\": 133.8, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1989, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 562.2965739, \"Population, total\": 855334675.0, \"CO2 emissions (metric tons per capita)\": 0.676937713, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 57.4, \"Mortality rate, under-5 (per 1,000 live births)\": 130.0, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1990, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 581.2182616, \"Population, total\": 873277799.0, \"CO2 emissions (metric tons per capita)\": 0.644102026, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 57.865, \"Mortality rate, under-5 (per 1,000 live births)\": 126.2, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1991, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 575.5015517, \"Population, total\": 891273202.0, \"CO2 emissions (metric tons per capita)\": 0.681429666, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 58.353, \"Mortality rate, under-5 (per 1,000 live births)\": 122.7, \"Literacy rate, youth female (% of females ages 15-24)\": 49.34918976}, {\"Year\": 1992, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 595.013461, \"Population, total\": 909307018.0, \"CO2 emissions (metric tons per capita)\": 0.693121231, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 58.851, \"Mortality rate, under-5 (per 1,000 live births)\": 119.4, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1993, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 611.1188528, \"Population, total\": 927403866.0, \"CO2 emissions (metric tons per capita)\": 0.703544619, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 59.349, \"Mortality rate, under-5 (per 1,000 live births)\": 116.1, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1994, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 639.268756, \"Population, total\": 945601828.0, \"CO2 emissions (metric tons per capita)\": 0.727526089, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 59.84, \"Mortality rate, under-5 (per 1,000 live births)\": 112.8, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1995, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 674.6195597, \"Population, total\": 963922586.0, \"CO2 emissions (metric tons per capita)\": 0.768837675, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 60.32, \"Mortality rate, under-5 (per 1,000 live births)\": 109.5, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1996, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 711.92883, \"Population, total\": 982365248.0, \"CO2 emissions (metric tons per capita)\": 0.790663149, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 60.783, \"Mortality rate, under-5 (per 1,000 live births)\": 106.1, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1997, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 727.0431823, \"Population, total\": 1000900028.0, \"CO2 emissions (metric tons per capita)\": 0.82074131, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 61.233, \"Mortality rate, under-5 (per 1,000 live births)\": 102.6, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1998, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 757.934109, \"Population, total\": 1019483586.0, \"CO2 emissions (metric tons per capita)\": 0.823779815, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 61.669, \"Mortality rate, under-5 (per 1,000 live births)\": 99.0, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 1999, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 810.2172848, \"Population, total\": 1038058154.0, \"CO2 emissions (metric tons per capita)\": 0.870943498, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 62.093, \"Mortality rate, under-5 (per 1,000 live births)\": 95.4, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2000, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 826.5924939, \"Population, total\": 1056575548.0, \"CO2 emissions (metric tons per capita)\": 0.88982752, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 62.505, \"Mortality rate, under-5 (per 1,000 live births)\": 91.8, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2001, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 851.6165622, \"Population, total\": 1075000094.0, \"CO2 emissions (metric tons per capita)\": 0.887330155, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 62.907, \"Mortality rate, under-5 (per 1,000 live births)\": 88.2, \"Literacy rate, youth female (% of females ages 15-24)\": 67.74658203}, {\"Year\": 2002, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 869.201389, \"Population, total\": 1093317187.0, \"CO2 emissions (metric tons per capita)\": 0.903241998, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 63.304, \"Mortality rate, under-5 (per 1,000 live births)\": 84.6, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2003, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 922.1679584, \"Population, total\": 1111523146.0, \"CO2 emissions (metric tons per capita)\": 0.913962074, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 63.699, \"Mortality rate, under-5 (per 1,000 live births)\": 81.2, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2004, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 979.283839, \"Population, total\": 1129623466.0, \"CO2 emissions (metric tons per capita)\": 0.962435743, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 64.095, \"Mortality rate, under-5 (per 1,000 live births)\": 77.8, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2005, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1040.312316, \"Population, total\": 1147609924.0, \"CO2 emissions (metric tons per capita)\": 0.991399583, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 64.5, \"Mortality rate, under-5 (per 1,000 live births)\": 74.5, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2006, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1106.92647, \"Population, total\": 1165486291.0, \"CO2 emissions (metric tons per capita)\": 1.041839796, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 64.918, \"Mortality rate, under-5 (per 1,000 live births)\": 71.2, \"Literacy rate, youth female (% of females ages 15-24)\": 74.35572815}, {\"Year\": 2007, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1173.875311, \"Population, total\": 1183209471.0, \"CO2 emissions (metric tons per capita)\": 1.129216789, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 65.35, \"Mortality rate, under-5 (per 1,000 live births)\": 67.9, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2008, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1192.511735, \"Population, total\": 1200669762.0, \"CO2 emissions (metric tons per capita)\": 1.185904772, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 65.794, \"Mortality rate, under-5 (per 1,000 live births)\": 64.7, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2009, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1268.249208, \"Population, total\": 1217726217.0, \"CO2 emissions (metric tons per capita)\": 1.288080997, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 66.244, \"Mortality rate, under-5 (per 1,000 live births)\": 61.4, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2010, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1357.563727, \"Population, total\": 1234281163.0, \"CO2 emissions (metric tons per capita)\": 1.349214466, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 66.693, \"Mortality rate, under-5 (per 1,000 live births)\": 58.2, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2011, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1410.426797, \"Population, total\": 1250287939.0, \"CO2 emissions (metric tons per capita)\": 1.408315593, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 67.13, \"Mortality rate, under-5 (per 1,000 live births)\": 55.1, \"Literacy rate, youth female (% of females ages 15-24)\": 81.84980774}, {\"Year\": 2012, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1469.180566, \"Population, total\": 1265780243.0, \"CO2 emissions (metric tons per capita)\": 1.507820975, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 67.545, \"Mortality rate, under-5 (per 1,000 live births)\": 52.0, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2013, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1544.624083, \"Population, total\": 1280842119.0, \"CO2 emissions (metric tons per capita)\": 1.535560059, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 67.931, \"Mortality rate, under-5 (per 1,000 live births)\": 49.1, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2014, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1640.185025, \"Population, total\": 1295600768.0, \"CO2 emissions (metric tons per capita)\": 1.649327519, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 68.286, \"Mortality rate, under-5 (per 1,000 live births)\": 46.2, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2015, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1751.664449, \"Population, total\": 1310152392.0, \"CO2 emissions (metric tons per capita)\": 1.641198393, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 68.607, \"Mortality rate, under-5 (per 1,000 live births)\": 43.5, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2016, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1875.721312, \"Population, total\": 1324517250.0, \"CO2 emissions (metric tons per capita)\": 1.648359053, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": 184.3, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 68.897, \"Mortality rate, under-5 (per 1,000 live births)\": 40.9, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2017, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1981.995576, \"Population, total\": 1338676779.0, \"CO2 emissions (metric tons per capita)\": 1.7191902, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": 100.0, \"Life expectancy at birth, total (years)\": 69.165, \"Mortality rate, under-5 (per 1,000 live births)\": 38.5, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2018, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 2089.678931, \"Population, total\": 1352642283.0, \"CO2 emissions (metric tons per capita)\": 1.799825446, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 69.416, \"Mortality rate, under-5 (per 1,000 live births)\": 36.3, \"Literacy rate, youth female (% of females ages 15-24)\": 90.16941071}, {\"Year\": 2019, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 2152.216009, \"Population, total\": 1366417756.0, \"CO2 emissions (metric tons per capita)\": null, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": 69.656, \"Mortality rate, under-5 (per 1,000 live births)\": 34.3, \"Literacy rate, youth female (% of females ages 15-24)\": null}, {\"Year\": 2020, \"Country Name\": \"India\", \"Country Code\": \"IND\", \"GDP per capita (constant 2010 US$)\": 1961.298711, \"Population, total\": 1380004385.0, \"CO2 emissions (metric tons per capita)\": null, \"Mortality rate attributed to household and ambient air pollution, age-standardized (per 100,000 population)\": null, \"PM2.5 air pollution, population exposed to levels exceeding WHO guideline value (% of total)\": null, \"Life expectancy at birth, total (years)\": null, \"Mortality rate, under-5 (per 1,000 live births)\": null, \"Literacy rate, youth female (% of females ages 15-24)\": null}]}}, {\"mode\": \"vega-lite\"});\n",
        "</script>"
       ],
       "text/plain": [
        "alt.LayerChart(...)"
       ]
      },
+     "execution_count": 14,
      "metadata": {},
-     "execution_count": 35
+     "output_type": "execute_result"
     }
    ],
-   "metadata": {}
+   "source": [
+    "alt.layer(base, base2).resolve_scale(y=\"independent\").properties(title=\"Income and CO2\")"
+   ]
   }
  ],
  "metadata": {
+  "interpreter": {
+   "hash": "3e0a5228cb9726a24d36227c69ed0d3aac98cecda769d1c9adb080711d57f90d"
+  },
   "kernelspec": {
-   "name": "python3",
-   "display_name": "Python 3.9.7 64-bit ('base': conda)"
+   "display_name": "Python 3.9.7 64-bit ('base': conda)",
+   "name": "python3"
   },
   "language_info": {
    "codemirror_mode": {
@@ -1769,9 +1801,6 @@
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
    "version": "3.9.7"
-  },
-  "interpreter": {
-   "hash": "f06fa9c80cc08d4d343f66ad24a278ad0285590eac640a80c32c9d748f33a802"
   }
  },
  "nbformat": 4,

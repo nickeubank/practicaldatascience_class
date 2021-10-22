@@ -2,15 +2,22 @@
  "cells": [
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "# Solutions"
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
-   "source": [],
-   "metadata": {}
+   "metadata": {},
+   "source": [
+    "- [Series Exercise Solutions](exercises/Solutions_series.ipynb)\n",
+    "- [DataFrame Exercise Solutions](exercises/Solutions_dataframe.ipynb)\n",
+    "- [Indices Solutions](exercises/Solutions_indices.ipynb)\n",
+    "- [Missing Data Solutions](exercises/Solutions_missing.ipynb)\n",
+    "- [Cleaning Solutions](exercises/Solutions_cleaning.ipynb)\n",
+    "- [Plotting, Basic Solutions](exercises/Solutions_plotting_part1.ipynb)"
+   ]
   }
  ],
  "metadata": {

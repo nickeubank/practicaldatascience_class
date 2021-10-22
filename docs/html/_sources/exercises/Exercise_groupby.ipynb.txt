@@ -14,7 +14,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "**(1)** Download the raw California arrest data from the State Attorney General's office [here](https://openjustice.doj.ca.gov/data) by scrolling down to the \"Arrests\" category and downloading the \"Arrests - CSV, 5.8 MB\" file. "
+    "**(1)** Download the raw California arrest data from the State Attorney General's office [here](https://openjustice.doj.ca.gov/data) by scrolling down to the \"Arrests\" category and downloading the \"Arrests - CSV, 6.1 MB\" file (note the file size may change over time... that was the size in 2021). "
    ]
   },
   {
