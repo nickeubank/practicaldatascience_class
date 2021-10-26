@@ -71,7 +71,8 @@
 - Categoricals: WM 12.1
 - **Project Strategy Plan Due**",- `Link <exercises/Exercise_reshaping.ipynb>`_
 "Thurs, Oct 28",- Speed and Performance in Python,"- `Understanding Performance <performance_understanding.ipynb>`_
-- `Improving Performance <performance_solutions.ipynb>`_",[finish groupby and reshaping exercises]
+- `Improving Performance <performance_solutions.ipynb>`_
+- `Code Reviews <pr_review.ipynb>`_",[finish groupby and reshaping exercises]
 "Tues, Nov 2",- Statistics with statsmodels,"- WM Chapter 13, 13.1, 13.2, 13.3
 - `Skim ""Linear Models"" <https://www.statsmodels.org/stable/regression.html>`_
 - `Skim ""Discrete Dep Var Models"" <https://www.statsmodels.org/stable/discretemod.html>`_
