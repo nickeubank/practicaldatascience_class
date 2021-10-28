@@ -76,6 +76,8 @@
 "Tues, Nov 2",- Statistics with statsmodels,"- WM Chapter 13, 13.1, 13.2, 13.3
 - `Skim ""Linear Models"" <https://www.statsmodels.org/stable/regression.html>`_
 - `Skim ""Discrete Dep Var Models"" <https://www.statsmodels.org/stable/discretemod.html>`_
+- `Regression Diagnostics <https://www.statsmodels.org/stable/examples/notebooks/generated/regression_diagnostics.html>`_
+- `Regression Plots <https://www.statsmodels.org/stable/examples/notebooks/generated/regression_plots.html>`_
 - `Patsy: Differences from R <https://patsy.readthedocs.io/en/latest/R-comparison.html>`_",- `Link <exercises/Exercise_statsmodels.ipynb>`_
 "Thurs, Nov 4",- Machine Learning with sckikit-learn,- JVP pp 331 - 359,- `Link <exercises/Exercise_scikit_learn.ipynb>`_
 "Tues, Nov 9","- Defining Your Own Estimators
