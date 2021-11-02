@@ -37,6 +37,13 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
+    "NOTE: You will likely have a problem because of the name of one of your columns. You should probably be able to guess the problem given your experience with Python."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
     "**CONTINUE TO USE THIS SUBSET THROUGHOUT THE EXERCISE**"
    ]
   },
@@ -53,7 +60,7 @@
    "source": [
     "**(3)** Now check this relationship using `statsmodels`. Regress birthweight on gestational period and whether the infant's mother smoked. \n",
     "\n",
-    "NOTE: you may hit a problem because of the name of one of your columns. You should probably be able to guess the problem given your experience with Python. "
+    "NOTE: if you didn't hit a problem because of the name of one of your columns before, you likely will now. You should probably be able to guess the problem given your experience with Python. "
    ]
   },
   {
