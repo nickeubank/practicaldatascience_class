@@ -30,7 +30,14 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "**(2)** Start by plotting the relationship between infant weight at birth and gestation (length of pregnancy (in days) at time of birth) for both children who smoke and those who do not. Limit attention to children who reach at least 225 days of gestation (there aren't really any observations for parents who smoke for less than that, so we don't get common support). Does it seem like birthweights tend to be lower for the children of parents who smoke at a given gestational period?"
+    "**(2)** Start by plotting the relationship between infant weight at birth and gestation (length of pregnancy (in days) at time of birth) for both mothers who smoke and those who do not. Limit attention to children who reach at least 225 days of gestation (there aren't really any observations for parents who smoke for less than that, so we don't get common support). Does it seem like birthweights tend to be lower for the children of parents who smoke at a given gestational period?"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**CONTINUE TO USE THIS SUBSET THROUGHOUT THE EXERCISE**"
    ]
   },
   {
@@ -185,9 +192,11 @@
   }
  ],
  "metadata": {
+  "interpreter": {
+   "hash": "3e0a5228cb9726a24d36227c69ed0d3aac98cecda769d1c9adb080711d57f90d"
+  },
   "kernelspec": {
-   "display_name": "Python 3",
-   "language": "python",
+   "display_name": "Python 3.9.7 64-bit ('base': conda)",
    "name": "python3"
   },
   "language_info": {
@@ -200,7 +209,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.7.8"
+   "version": "3.9.7"
   }
  },
  "nbformat": 4,
