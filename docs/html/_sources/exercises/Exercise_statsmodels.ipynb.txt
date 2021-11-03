@@ -102,13 +102,6 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "The reduction in birth weight associated with smoking for white mothers appears to be about 40% that of the penalty of black mothers."
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
     "**(7)** Now let's use this model to predict some values. Let's generate some hypothetical newborns:\n",
     "\n",
     "```python\n",
@@ -118,7 +111,9 @@
     "                         'mpregwt': [132, 129, 140, 139]})\n",
     "```\n",
     "\n",
-    "Using the model you ran above with gestation, smoke, mpregwt, white, and the interaction of white and smoke, predict birth weights for these newborns. "
+    "Using the model you ran above with gestation, smoke, mpregwt, white, and the interaction of white and smoke, predict birth weights for these newborns. \n",
+    "\n",
+    "Note that if you have different data types from those in this hypothetical dataset, or different column names, you'll get an error -- just adjust the column names / data types to match the data you used to fit your model."
    ]
   },
   {
@@ -147,7 +142,9 @@
    "source": [
     "**(8)** Now, using statsmodels, evaluate the impact of smoking on the likelihood a child is born prematurely (where \"premature\" is defined as gestation of less than 252 days).\n",
     "\n",
-    "For obvious reasons, **DO NOT USE OUR SUBSET FOR GESTATION GREATER THAN 225 DAYS** from above for this section."
+    "For obvious reasons, **DO NOT USE OUR SUBSET FOR GESTATION GREATER THAN 225 DAYS** from above for this section.\n",
+    "\n",
+    "For this model, please include mother's pre-pregnancy weight, smoking status, and whether the mother is White (if you use all the racial categories, the model won't converge). Please don't include the interaction we used in the last question."
    ]
   },
   {
