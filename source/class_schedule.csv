@@ -85,22 +85,21 @@
 - `Review how to define classes <https://realpython.com/python3-object-oriented-programming/>`_
 - `Regular Expressions Tutorial <https://scotch.io/tutorials/an-introduction-to-regex-in-python>`_
 - **Opioid Project Rough Draft Due**",- `Link <exercises/Exercise_codeyourownlinearregression.ipynb>`_
-"Thurs, Nov 11","- Parallelism 
+"Thurs, Nov 11",More time on defining classes,,
+"Tues, Nov 16","- Parallelism 
 - Distributed Computing","- `Parallel Computing <parallelism.ipynb>`_
 - `Distributed Computing with dask <distributed_computing.ipynb>`_
 (Note reading includes a 45 minute video to watch)","- `Link 1 <exercises/Exercise_dask.ipynb>`_
 - `Link 2 <exercises/Exercise_dask_realdata.ipynb>`_"
-"Tues, Nov 16",- Spatial Data (GIS),"- `What is GIS? <gis_what_is_gis.ipynb>`_
+"Thurs, Nov 18",- Spatial Data (GIS),"- `What is GIS? <gis_what_is_gis.ipynb>`_
 - `Installing Geopandas <gis_setup_geopandas.ipynb>`_
 - `Geopandas / Vector Data <gis_geopandas.ipynb>`_
 - `GeoPandas User Guide: Data Structures, Reading and Writing Files, and Indexing and Selecting Data <https://geopandas.org/docs/user_guide.html>`_",- `Link 1 <exercises/Exercise_gis_points.ipynb>`_
-"Thurs, Nov 18",- Spatial Data (GIS),"- **OPIOID PROJECT DUE (Extensions available upon request to assigned date for PDS final)**
+"Tues, Nov 23","- Spatial Data (GIS)
+- LAST CLASS","- **OPIOID PROJECT DUE (Extensions available upon request to assigned date for PDS final)**
 - `Projections and Coordinate Reference Systems <projections_and_crs.ipynb>`_
 - `Managing Projections in Geopandas <https://geopandas.org/docs/user_guide/projections.html>`_
 - `Mapping with Geopandas <gis_plotting.ipynb>`_
 - `Mapping Spatial Data in Geopandas <https://geopandas.org/docs/user_guide/mapping.html>`_
 ",
-"Tues, Nov 23","- LAST CLASS 
-- Spatial Data (GIS)","- Relating Data Spatially
-- Advanced GIS Uses",
 "Wed, Dec 8",(no class),Last date things can be submitted,

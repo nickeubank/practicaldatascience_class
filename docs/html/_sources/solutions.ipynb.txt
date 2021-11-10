@@ -17,8 +17,9 @@
     "- [Missing Data Solutions](exercises/Solutions_missing.ipynb)\n",
     "- [Cleaning Solutions](exercises/Solutions_cleaning.ipynb)\n",
     "- [Plotting, Basic Solutions](exercises/Solutions_plotting_part1.ipynb)\n",
-    "- [Reshaping](exercises/Solutions_reshaping.ipynb)\n",
-    "- [Groupby](exercises/Solutions_groupby.ipynb)"
+    "- [Merging](exercises/Solutions_merging.ipynb)\n",
+    "- [Groupby](exercises/Solutions_groupby.ipynb)\n",
+    "- [Reshaping](exercises/Solutions_reshaping.ipynb)"
    ]
   }
  ],
