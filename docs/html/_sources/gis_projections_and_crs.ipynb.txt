@@ -1,0 +1,115 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "source": [
+    "# Projections and Coordinate Reference Systems\n",
+    "\n",
+    "Suppose that I gave you a tennis ball and a knife and asked you to cut the tennis ball so that it lays completely flat on the table. What would you do? \n",
+    "\n",
+    "(Seriously. Stop for a minute and think about that before proceeding. I'll wait.)\n",
+    "\n",
+    "What I just asked you to do is precisely the problem that GIS analysts face any time they try to work with two-dimensional maps. The Earth is round, but we not only plot our data in two dimensions, but we usually also analyze it in two dimensions. But... how? Because as you probably just realized, there's no way to get a tennis ball to lay perfectly flat just by cutting it -- in the end, you'd HAVE to stretch the ball some to get it flat on the table. \n",
+    "\n",
+    "The answer is: just as you would have had to stretch that tennis ball, we have to stretch (distort) the world to work in two dimensions. And it's up to you, the GIS analyst, to decide how best to stretch the world given the needs of the project you're working on. \n",
+    "\n",
+    "## The Projection Impossibility Theory\n",
+    "\n",
+    "It turns out that when we project the Earth into two dimensions, we can only ever perfectly preserve *two* of the following *three* properties of the real world:\n",
+    "\n",
+    "- **Area** within polygons\n",
+    "- **Distance** between points\n",
+    "- **Shape** (or, more technically, the angles between intersecting lines)\n",
+    "\n",
+    "And so because there's no way to get a 2-D projection of the world that perfectly preserves all three of these features, GIS professionals have developed *hundreds* of different projections that strike different balances in how distortions are distributed across these different attributes of a map. \n",
+    "\n",
+    "To be clear, we can only *perfectly* preserve two of these three, but we can find projections that distribution the distortions across these different features in different ways. For example, one projection may balance all three, distorting each a little, but offering a representation of the world that's reasonable across all three dimensions. Another may prioritize one, and evenly distribute the residual distortion over the other two. \n",
+    "\n",
+    "Moreover, one can distribute distortions differentially across space -- a projection optimized for North America, for example, may minimize distortions for North America by accepting greater distortions in Canada and Mexico.\n",
+    "\n",
+    "## Projection Examples\n",
+    "\n",
+    "stuff\n",
+    "\n",
+    "Want more? Here are two kinda cool places you can play with projections and see distortions interactively: [Ian Johnson](https://bl.ocks.org/enjalot/bd552e711b8325c64729), [WolframAlpha](https://demonstrations.wolfram.com/WorldMapProjections/).\n"
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "\n",
+    "## Types of Projections\n",
+    "\n",
+    "While there are an infinite number of projections out there, here are a few keywords to familiarize yourself with:\n",
+    "\n",
+    "- **Equidistant projections:** Prioritize preserving the distance between points.\n",
+    "- **Equal area projections:** Prioritize preserving the area inside polygons. \n",
+    "- **Conformal:** Prioritize preserving angles of intersecting lines. \n",
+    "\n",
+    "In each case, how distortions are distributed over other attributes may vary.\n"
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "## Coordinate Reference Systems (CRS)\n",
+    "\n",
+    "When you receive spatial data in any standard format, it will come to you with included spatial data represented in x-y coordinates (i.e. already in a two-dimensional representation). But alongside the data, you *should* also receive information about the data's Coordinate Reference System (CRS), which tells you what those x and y coordinates actually mean (are they the result of a Mercator projection? Maybe a Robinson projection? Are they in feet or meters?). In geopandas, this is accessed through the `.crs` attribute, and we'll talk more about how this works in geopandas in our next reading. \n",
+    "\n",
+    "So is this CRS just telling me the projection used to make my data two-dimensional? *Almost*. You may have noticed that we keep talking about how to project the Earth onto a two-dimensional plane, and there are actually two important and distinct concepts in that: our model of the Earth, and how we're projecting the data into two-dimensions. \n",
+    "\n",
+    "Why do we need an explicit model of the Earth? Well, it turns out that the Earth isn't really a sphere -- it's generally fatter in the middle (an ellipsoid), and of course has differences in elevation throughout. So a CRS actually has to encode **both** the model of the Earth underlying the data **and** how data on that three-dimensional model was projected into two dimensions.\n",
+    "\n",
+    "I tell you this both (a) so you won't get confused if you look into the details of CRSs more, and (b) because it's kinda cool. But don't worry -- unlike projections (which you should always be mindful of choosing to suit your task), you generally don't have to worry about these models of the Earth, just know that they're part of a CRS. \n",
+    "\n",
+    "(Also: people will colloquially refer to a CRS as a data's projection -- so don't be surprised if people often use the term \"projection\" to refer to both the Earth model and the projection used to generate a dataset.)\n"
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "\n",
+    "\n",
+    "## A Special Note about Latitude and Longitude (aka `WGS84`)\n",
+    "\n",
+    "The last thing to talk about is the WGS84 CRS. Basically, some CRS aren't really meant to be used as projections (i.e. for analysis of data in 2 dimensions). For example, the CRS you're probably most familiar with in life is latitude and longitude, usually referred to in GIS circles as WGS84. Latitude and longitude are perfectly valid ways of specifying a spatial location. But it's almost always a mistake to treat your longitude and latitude coordinates as the x-y coordinates for spatial analysis. That's because, well, they weren't designed to minimize any of the distortions we described above. So while you *can* do spatial operations on data with a WGS84 CRS, you will almost always get more accurate results by re-projecting them into a better projection meant for analyzing data in two dimensions. \n"
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "\n",
+    "## Do I Have to Work in Two-Dimensions?\n",
+    "\n",
+    "We've talked a lot about the challenge of working in two dimensions, which raises the question: why not just stay in three-dimensions?\n",
+    "\n",
+    "There are settings in which people use three-dimensional models of the Earth for GIS analysis. Airlines, for example, estimate flight distances across a sphere using what are called \"great circle\" distances. There's just no single projection that will do a good enjoy job of modeling the Earth at the scale they work, and measuring distances between points on a three-dimensional model is relatively straightforward, especially when they're through the air. \n",
+    "\n",
+    "But other geometric operations get *very* slippery once we move to a three-dimensional model. For example, the distance between two points is just $\\sqrt{x^2 + y^2}$ in two dimensions. In three dimensions, we'd first have to define the contour of the surface over which we're traveling (is the Earth a sphere in this model? Or do we have elevation?), then measure the distance over that contour. \n",
+    "\n",
+    "So no, it's not strictly necessary. But life in 2-D is much easier. \n"
+   ],
+   "metadata": {}
+  }
+ ],
+ "metadata": {
+  "interpreter": {
+   "hash": "f06fa9c80cc08d4d343f66ad24a278ad0285590eac640a80c32c9d748f33a802"
+  },
+  "kernelspec": {
+   "display_name": "Python 3.9.1 64-bit ('base': conda)",
+   "name": "python3"
+  },
+  "language_info": {
+   "name": "python",
+   "version": ""
+  },
+  "orig_nbformat": 4
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

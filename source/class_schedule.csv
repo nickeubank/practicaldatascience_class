@@ -94,10 +94,10 @@
 "Thurs, Nov 18",- Spatial Data (GIS),"- `What is GIS? <gis_what_is_gis.ipynb>`_
 - `Installing Geopandas <gis_setup_geopandas.ipynb>`_
 - `Geopandas / Vector Data <gis_geopandas.ipynb>`_
-- `GeoPandas User Guide: Data Structures, Reading and Writing Files, and Indexing and Selecting Data <https://geopandas.org/docs/user_guide.html>`_",- `Link 1 <exercises/Exercise_gis_points.ipynb>`_
+- `GeoPandas User Guide: Data Structures, Reading and Writing Files, and Indexing and Selecting Data <https://geopandas.org/docs/user_guide.html>`_
+- **OPIOID PROJECT DUE NOV 21st at 11:59pm (Extensions available upon request to assigned date for PDS final)**",- `Link 1 <exercises/Exercise_gis_points.ipynb>`_
 "Tues, Nov 23","- Spatial Data (GIS)
-- LAST CLASS","- **OPIOID PROJECT DUE (Extensions available upon request to assigned date for PDS final)**
-- `Projections and Coordinate Reference Systems <projections_and_crs.ipynb>`_
+- LAST CLASS","- `Projections and Coordinate Reference Systems <gis_projections_and_crs.ipynb>`_
 - `Managing Projections in Geopandas <https://geopandas.org/docs/user_guide/projections.html>`_
 - `Mapping with Geopandas <gis_plotting.ipynb>`_
 - `Mapping Spatial Data in Geopandas <https://geopandas.org/docs/user_guide/mapping.html>`_
