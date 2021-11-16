@@ -2,13 +2,14 @@
  "cells": [
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "# Installing Geopandas"
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "Early in the semester, I told you that conda was generally preferred over pip by data scientists because it could install more than just python packages? Well here's an example of a place that pays off big!\n",
     "\n",
@@ -20,7 +21,7 @@
     "\n",
     "## conda Environments\n",
     "\n",
-    "It's extremely common and software engineering and data science to need different sets of packages and potentially different versions of Python for different projects. To make this easier, conda is capable of creating isolated \"environments\", each with their own version of Python and related packages.\n",
+    "It's extremely common in software engineering and data science to need different sets of packages (and potentially different versions of Python) for different projects. To make this easier, conda is capable of creating isolated \"environments\", each with their own version of Python and related packages.\n",
     "\n",
     "### Create a New Environment\n",
     "\n",
@@ -90,8 +91,7 @@
     "\n",
     "![conda_env_vscode_jupyter](images/conda_env_vscode_jupyter.png)\n",
     "\n"
-   ],
-   "metadata": {}
+   ]
   }
  ],
  "metadata": {
