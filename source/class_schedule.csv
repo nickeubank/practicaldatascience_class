@@ -93,8 +93,9 @@
 - `Link 2 <exercises/Exercise_dask_realdata.ipynb>`_"
 "Thurs, Nov 18",- Spatial Data (GIS),"- `What is GIS? <gis_what_is_gis.ipynb>`_
 - `Installing Geopandas <gis_setup_geopandas.ipynb>`_
-- `Geopandas / Vector Data <gis_geopandas.ipynb>`_
-- `GeoPandas User Guide: Data Structures, Reading and Writing Files, and Indexing and Selecting Data <https://geopandas.org/docs/user_guide.html>`_
+- `Geopandas <gis_geopandas.ipynb>`_
+- `Merging Data with Geopandas <gis_relating_data.ipynb>`_
+- `Geospatial Data Formats <gis_data_formats.ipynb>`_
 - **OPIOID PROJECT DUE NOV 21st at 11:59pm (Extensions available upon request to assigned date for PDS final)**",- `Link 1 <exercises/Exercise_gis_points.ipynb>`_
 "Tues, Nov 23","- Spatial Data (GIS)
 - LAST CLASS","- `Projections and Coordinate Reference Systems <gis_projections_and_crs.ipynb>`_
