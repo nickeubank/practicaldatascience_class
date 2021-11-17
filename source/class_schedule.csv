@@ -96,7 +96,7 @@
 - `Geopandas <gis_geopandas.ipynb>`_
 - `Merging Spatial Data <gis_spatial_joins.ipynb>`_
 - `Geospatial Data Formats  and Sources <gis_data.ipynb>`_
-- **OPIOID PROJECT DUE NOV 21st at 11:59pm (Extensions available upon request to assigned date for PDS final)**",- `Link 1 <exercises/Exercise_gis_points.ipynb>`_
+- **OPIOID PROJECT DUE NOV 21st at 11:59pm (Extensions available upon request to assigned date for PDS final)**",- `Link <exercises/Exercise_gis_siting.ipynb>`_
 "Tues, Nov 23","- Spatial Data (GIS)
 - LAST CLASS","- `Projections and Coordinate Reference Systems <gis_projections.ipynb>`_
 - `Mapping with Python <gis_mapping.ipynb>`_",
