@@ -1,5 +1,5 @@
 Class Schedule
-=============
+==============
 
 `Class Zoom Link <https://duke.zoom.us/j/97068501770>`_
 
