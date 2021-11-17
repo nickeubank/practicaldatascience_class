@@ -94,13 +94,11 @@
 "Thurs, Nov 18",- Spatial Data (GIS),"- `What is GIS? <gis_what_is_gis.ipynb>`_
 - `Installing Geopandas <gis_setup_geopandas.ipynb>`_
 - `Geopandas <gis_geopandas.ipynb>`_
-- `Merging Data with Geopandas <gis_relating_data.ipynb>`_
-- `Geospatial Data Formats <gis_data_formats.ipynb>`_
+- `Merging Spatial Data <gis_spatial_joins.ipynb>`_
+- `Geospatial Data Formats  & Sources <gis_data.ipynb>`_
 - **OPIOID PROJECT DUE NOV 21st at 11:59pm (Extensions available upon request to assigned date for PDS final)**",- `Link 1 <exercises/Exercise_gis_points.ipynb>`_
 "Tues, Nov 23","- Spatial Data (GIS)
 - LAST CLASS","- `Projections and Coordinate Reference Systems <gis_projections_and_crs.ipynb>`_
 - `Managing Projections in Geopandas <https://geopandas.org/docs/user_guide/projections.html>`_
-- `Mapping with Geopandas <gis_plotting.ipynb>`_
-- `Mapping Spatial Data in Geopandas <https://geopandas.org/docs/user_guide/mapping.html>`_
-",
+- `Mapping with Python <gis_mapping.ipynb>`_",
 "Wed, Dec 8",(no class),Last date things can be submitted,
