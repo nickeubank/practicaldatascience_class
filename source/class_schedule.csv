@@ -100,5 +100,6 @@
 "Tues, Nov 23","- Spatial Data (GIS)
 - LAST CLASS","- `Projections and Coordinate Reference Systems <gis_projections.ipynb>`_
 - `Managing Projections in Geopandas <gis_crs_geopandas.ipynb>`_
-- `Mapping with Python <gis_mapping.ipynb>`_",
+- `Mapping with Python <gis_mapping.ipynb>`_
+**EXERCISE OPTIONAL**",- `Link <exercises/Exercise_gis_points.ipynb>`_
 "Wed, Dec 8",(no class),Last date things can be submitted,
