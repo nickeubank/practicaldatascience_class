@@ -61,7 +61,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "**(2)** Our goal today is going to be to find the pharmaceutical company that has shipped the most pills (`DOSAGE_UNIT`) in the US. \n",
+    "**(2)** Our goal today is going to be to find the pharmaceutical company that has shipped the most opioids (`MME_Conversion_Factor * CALC_BASE_WT_IN_GM`) in the US. \n",
     "\n",
     "When working with large datasets, it is good practice to begin by prototyping your code with a subset of your data. So begin by using `pandas` to read in the first 100,000 lines of the ARCOS data and write pandas code to compute the shipments from each shipper (the group that reported the shipment). "
    ]

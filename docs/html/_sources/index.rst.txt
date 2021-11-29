@@ -101,6 +101,21 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
    Git and Github <git_and_github>
    Reviewing Code on Github <pr_review>
 
+.. toctree:: 
+   :maxdepth: 2
+   :hidden:
+   :caption: GIS
+
+   What is GIS? <gis_what_is_gis>
+   Installing Geopandas <gis_setup_geopandas>
+   Geopandas <gis_geopandas>
+   Merging Spatial Data <gis_spatial_joins>
+   Spatial Data Formats <gis_data>
+   Spatial Projections <gis_projections>
+   Managing Projections in Geopandas <gis_crs_geopandas>
+   Mapping with Geopandas <gis_mapping>
+
+
 .. toctree::
    :maxdepth: 2
    :hidden: 

@@ -30,7 +30,7 @@
     "\n",
     "Similarly, you can write a geodataframe (`gdf`) to a shapefile with the command `gdf.to_file(\"my_shapefile.shp\")`. You'll just find that more than one file has been created.\n",
     "\n",
-    "The one thing to be aware of about shapefiles is that they have some restrictions on column names, so long column names or names with punctuation will get truncated on write. \n",
+    "The one thing to be aware of about shapefiles is that they have odd restriction. For example, column names cannot be longer than 10 characters, so long column names or names with punctuation will get truncated on write. And string values in your data cannot be longer than 255 characters.\n",
     "\n",
     "### GeoJSON\n",
     "\n",
