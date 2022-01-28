@@ -8,18 +8,15 @@ Hello!
 
 Data Science is an intrinsically applied field, and yet all too often students are taught the advanced math and statistics behind data science tools, but are left to fend for themselves when it comes to learning the tools we use to do data science on a day-to-day basis or how to manage actual projects. This course is designed to fill that gap.
 
-This course will be divided into two parts:
+Practical Data Science is a flipped-classroom, exercise and project-focused course. It is designed to give students practical experience manipulating and analyzing manipulating real (often messy, error ridden, and poorly documented) data using the full range of bread-and-butter Python data science tools (like the command line, git, python (especially numpy and pandas), jupyter notebooks, and more). By the end of the course, students will be able to:
 
-- **Part 1: Data Wrangling**: In Part 1 of this course, students will develop hands-on experience manipulating real world data using a range of data science tools (including the command line, python, jupyter, git, and github). In addition, students will also learn best practices for managing workflows, collaborating with peers, and using defensive programming techniques. This portion of the course will take up about 3/4 of the semester. 
-- **Part 2: Answering Questions**: This course adopts the view that Data Science is about **answering important questions using quantitative data**. In Part 2 of this course, students will learn to develop data science projects that achieve this goal via backwards design, and learn tips for managing projects from inception to presentation of results.
+- Manipulate and analyze data in any format, including cleaning, merging, and summarizing all standard tabular formats and levels of cleanliness, as well as large datasets and GIS data,
+- Identify and resolve data issues using defensive programming practices,
+- Setup and manage a data science programming environment on their own computers, including installing Python, managing packages with pip and conda, setting PATH variables, and working with VS Code,
+- Collaborate with colleagues effectively using git and github,
+- Plan and execute a full data science project from planning data manipulations through analysis and presentation of findings.
 
-The first portion of the course will provide students with extensive hands-on experience manipulating real (often messy, error ridden, and poorly documented) data using the a range of bread-and-butter data science tools (like the command line, git, python (especially numpy and pandas), jupyter notebooks, and more). The goal of these exercises is to ensure students are comfortable working with data in most any form. In addition to being of intrinsic value, developing these skills will also ensure that in advanced statistics or machine learning courses, students can focus on understanding the concepts being taught rather than having to split their attention between concepts and the nuts and bolts of data manipulation required to complete assignments.
 
-The first portion of the course will culminate in students completing the full data manipulation and analysis component of a data science project (the goal of the project will be provided). This will include everything from gathering data from third parties, cleaning and merging different data sources, and analyzing the resultant data. These projects will be completed in teams using Git and Github to give students experience managing github working flows. 
-
-In the second portion of the class, we will take a step back from the nuts and bolts of data manipulation and talk about how to approach the central task of data science: answering questions about the world. In particular, we'll discuss how to use backwards design to plan data science projects, how to refine questions to ensure they are answerable, how to evaluate whether you've actually answered the question you set out to answer, and how to pick the **most appropriate** data science tool based on the question you seek to answer (this will be a bit of preview of material we will engage with even more in `Unifying Data Science <http://www.unifyingdatascience.org>`_). 
-
-This portion of the course will culminate in students picking a topic, developing an *answerable* question, thinking about what (in very concerte terms) an answer to that question would look like, figuring out what tools they would employ to generate that answer, and developing a plan for finding the data they would need to actually execute their project. 
 
 Syllabus
 --------
