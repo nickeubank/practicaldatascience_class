@@ -31,7 +31,7 @@
     "To learn about floating point numbers, please: \n",
     "\n",
     "- [Watch this video](https://www.youtube.com/watch?v=pQs_wx8eoQ8)\n",
-    "- [Read this short note](https://docs.python.org/3/tutorial/floatingpoint.html#tut-fp-issues)\n",
+    "- [Read This](https://ciechanow.ski/exposing-floating-point/) \n",
     "\n",
     "\n",
     "## Numeric Hazards in Python, Numpy, and Pandas\n",

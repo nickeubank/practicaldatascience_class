@@ -28,6 +28,7 @@
 "Thurs, Sep 9",- Pandas: DataFrames,- `Pandas 2: DataFrames <pandas_dataframes.ipynb>`_,- `Link <exercises/Exercise_dataframe.ipynb>`_
 "Tues, Sep 14",- Pandas: Indices & Missing,"- WM pp 136-142
 - JVP pp 115-139
+- `Views and Copies in Numpy <views_and_copies_numpy_review.ipynb>`_
 - `Views and Copies in Pandas <views_and_copies_in_pandas.ipynb>`_
 - `VS Code Livesharing (first half) <https://www.youtube.com/watch?v=2CTi9THB0b4>`_","- `Link 1 <exercises/Exercise_indices.ipynb>`_
 - `Link 2 <exercises/Exercise_missing.ipynb>`_"

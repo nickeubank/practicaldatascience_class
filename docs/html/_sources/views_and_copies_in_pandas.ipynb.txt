@@ -4,23 +4,37 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "# Views and Copies in `pandas`"
+    "# Views and Copies in pandas"
    ]
   },
   {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "In our `numpy` [exercises](exercises/exercise_numpy.ipynb), we discussed in detail how, when one takes a slice of an array, what one gets is not an entirely new array, but rather a *view* of the original array. Views share the underlying data of the array from which they were spawned, meaning changes to one impact the other. `pandas` also often exhibits this behavior, but in some much more nuanced and often deeply problematic ways."
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "Subsetting Series or DataFrames in `pandas` will also *sometimes* generate views, but will also sometimes not. This differs from how views work in `numpy`: in `numpy`, the rules for when you get views and when you don't are a little complicated, but they are consistent: certain behaviors (like a basic slice) will *always* return a view, and others (fancy slicing) will *never* return a view. \n",
+    "As we reviewed in [our last reading](views_and_copies_numpy_review.ipynb), when we subset a numpy array, the result is not always a new array; sometimes what numpy returns is a *view* of the data in the original array. \n",
     "\n",
-    "But in `pandas`, whether you get a view or not depends on the structure of the DataFrame and, if you are trying to modify a slice, the nature of the modification. To illustrate, here is an example where a slice returns a view, such that changes in the original dataframe `df` propagate to `my_slice`:"
+    "Since pandas Series and DataFrames are backed by numpy arrays, it will probably come as no surprise that something similar sometimes happens in pandas. Unfortunately, while this behavior is relatively straightforward in numpy, in pandas there's just no getting around the fact that it's a hot mess. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## The View/Copy Headache in pandas"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "In `numpy`, the rules for when you get views and when you don't are a little complicated, but they are consistent: certain behaviors (like simple indexing) will *always* return a view, and others (fancy indexing) will *never* return a view.\n",
+    "\n",
+    "But in `pandas`, whether you get a view or not—and whether changes made to a view will propagate back to the original DataFrame—depends on the structure and data types in the original DataFrame.\n",
+    "\n",
+    "\n",
+    "### An Illustration of The Problem\n",
+    "\n",
+    "To illustrate, here is an example where a slice returns a view, such that changes in the original DataFrame `df` propagate to `my_slice`:"
    ]
   },
   {
@@ -94,8 +108,9 @@
    "source": [
     "import pandas as pd\n",
     "import numpy as np\n",
-    "df = pd.DataFrame({'a':np.arange(4), 'b':np.arange(4)})\n",
-    "df"
+    "\n",
+    "df = pd.DataFrame({\"a\": np.arange(4), \"b\": np.arange(4)})\n",
+    "df\n"
    ]
   },
   {
@@ -155,8 +170,10 @@
     }
    ],
    "source": [
-    "my_slice = df.iloc[1:3,]\n",
-    "my_slice"
+    "my_slice = df.iloc[\n",
+    "    1:3,\n",
+    "]\n",
+    "my_slice\n"
    ]
   },
   {
@@ -228,8 +245,8 @@
     }
    ],
    "source": [
-    "df.iloc[1,1] = -1\n",
-    "df"
+    "df.iloc[1, 1] = -1\n",
+    "df\n"
    ]
   },
   {
@@ -289,16 +306,14 @@
     }
    ],
    "source": [
-    "my_slice"
+    "my_slice\n"
    ]
   },
   {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "But here, even though I'm doing the same operation, the changes I make to `df` no longer propagate to`my_slice`. \n",
-    "\n",
-    "(Why this happens isn't actually important to understand, but for those who are interested: this is because in the first modification, I replaced one integer with another, so that operation could be done in the existing integer array; in the second, I try to put a floating point number into an integer array. This can't be done, so a new floating point array was created, and that new array replaced the old one as column `a` in the original DataFrame, breaking the \"view\" connection.)"
+    "Now observe as we do the same operation, but now the changes we make to `df` no longer propagate to`my_slice`:"
    ]
   },
   {
@@ -370,8 +385,8 @@
     }
    ],
    "source": [
-    "df.iloc[1,0] = 3.14\n",
-    "df"
+    "df.iloc[1, 0] = 3.14\n",
+    "df\n"
    ]
   },
   {
@@ -431,7 +446,14 @@
     }
    ],
    "source": [
-    "my_slice"
+    "my_slice\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "(Why this happens isn't actually important to understand, but for those who are interested: this is because in the first modification, I replaced one integer with another, so that operation could be done in the existing integer array; in the second, I try to put a floating point number into an integer array. This can't be done, so a new floating point array was created, and that new array replaced the old one as column `a` in the original DataFrame, breaking the \"view\" connection.)"
    ]
   },
   {
@@ -510,7 +532,7 @@
     }
    ],
    "source": [
-    "df"
+    "df\n"
    ]
   },
   {
@@ -535,14 +557,14 @@
    ],
    "source": [
     "# This initial change propagates\n",
-    "column_a = df['a']\n",
-    "df.iloc[0,0] = -42\n",
-    "column_a"
+    "column_a = df[\"a\"]\n",
+    "df.iloc[0, 0] = -42\n",
+    "column_a\n"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
+   "execution_count": 23,
    "metadata": {},
    "outputs": [
     {
@@ -574,44 +596,38 @@
        "    <tr>\n",
        "      <th>0</th>\n",
        "      <td>a</td>\n",
-       "      <td>0</td>\n",
+       "      <td>new entry</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>1</th>\n",
-       "      <td>3.14</td>\n",
-       "      <td>-1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>3</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>2</th>\n",
-       "      <td>2</td>\n",
-       "      <td>2</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>3</th>\n",
-       "      <td>3</td>\n",
-       "      <td>3</td>\n",
+       "      <td>4</td>\n",
+       "      <td>5</td>\n",
        "    </tr>\n",
        "  </tbody>\n",
        "</table>\n",
        "</div>"
       ],
       "text/plain": [
-       "      a  b\n",
-       "0     a  0\n",
-       "1  3.14 -1\n",
-       "2     2  2\n",
-       "3     3  3"
+       "   a          b\n",
+       "0  a  new entry\n",
+       "1  2          3\n",
+       "2  4          5"
       ]
      },
-     "execution_count": 9,
+     "execution_count": 23,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
     "# But this does not\n",
-    "df.iloc[0,0] = \"a\"\n",
-    "df"
+    "df.iloc[0, 0] = \"a\"\n",
+    "df\n"
    ]
   },
   {
@@ -635,7 +651,7 @@
     }
    ],
    "source": [
-    "column_a"
+    "column_a\n"
    ]
   },
   {
@@ -644,112 +660,76 @@
    "source": [
     "## How to deal with views in pandas\n",
     "\n",
-    "I won't mince words: I think this behavior deeply problematic, and I've long advocated for it to be changed. There is a plan to *eventually* fix this behavior, but that plan has been on the shelf for years now, so who knows when it might arrive. \n",
+    "I won't mince words: I think this behavior deeply problematic, and I've long advocated for it to be changed. And indeed, there *is* a push to fix this behavior, but that plan has been on the shelf for years now, [so who knows when it might arrive](https://github.com/pandas-dev/pandas/issues/36195#issuecomment-1137706149).\n",
     "\n",
     "### The Good News\n",
     "\n",
-    "To help address this issue, `pandas` has a built in alert system to inform you if you try to modify something that might be a view. For example:"
+    "To help address this issue, `pandas` has a built-in alert system that will **sometimes** warning you when you're in a situation that may cause problems, called the `SettingWithCopyWarning`, which you can see here:"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
+   "execution_count": 26,
    "metadata": {},
    "outputs": [
     {
      "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>a</th>\n",
-       "      <th>b</th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>1</th>\n",
-       "      <td>1</td>\n",
-       "      <td>x</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2</th>\n",
-       "      <td>2</td>\n",
-       "      <td>y</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
       "text/plain": [
-       "   a  b\n",
-       "1  1  x\n",
-       "2  2  y"
+       "0    0\n",
+       "1    1\n",
+       "2    2\n",
+       "3    3\n",
+       "Name: a, dtype: int64"
       ]
      },
-     "execution_count": 11,
+     "execution_count": 26,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "df = pd.DataFrame({'a':np.arange(4), 'b':['w', 'x', 'y', 'z']})\n",
-    "my_slice = df.iloc[1:3,]\n",
-    "my_slice"
+    "df = pd.DataFrame({\"a\": np.arange(4), \"b\": [\"w\", \"x\", \"y\", \"z\"]})\n",
+    "my_slice = df[\"a\"]\n",
+    "my_slice\n",
+    "\n"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 12,
+   "execution_count": 27,
    "metadata": {},
    "outputs": [
     {
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "/Users/Nick/anaconda3/lib/python3.7/site-packages/pandas/core/indexing.py:543: SettingWithCopyWarning: \n",
-      "A value is trying to be set on a copy of a slice from a DataFrame.\n",
-      "Try using .loc[row_indexer,col_indexer] = value instead\n",
+      "/var/folders/tj/s8f2_ks15h315z5thvtnhz8r0000gp/T/ipykernel_49229/1176285234.py:1: SettingWithCopyWarning: \n",
+      "A value is trying to be set on a copy of a slice from a DataFrame\n",
       "\n",
-      "See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy\n",
-      "  self.obj[item] = s\n"
+      "See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy\n",
+      "  my_slice.iloc[1] = 2\n"
      ]
     }
    ],
    "source": [
-    "my_slice.iloc[0,1] = 2"
+    "my_slice.iloc[1] = 2\n"
    ]
   },
   {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "This alert works really well, and is meant to alert you whenever you're making a modification to something that *might* (or might not) be a view. Generally speaking, whenever you see this warning, the solution is simple: make a copy of the thing that *might* be a view so that you know that it is not:"
+    "Any time you see a `SettingWithCopyWarning`, go up to where the possible view was created (in this case, `my_slice = df[\"a\"]`) and add a `.copy()`:"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 13,
+   "execution_count": 28,
    "metadata": {},
    "outputs": [],
    "source": [
-    "my_slice = my_slice.copy()\n",
-    "my_slice.iloc[0,1] = 2"
+    "my_slice = df[\"a\"].copy()\n",
+    "my_slice.iloc[1] = 2\n"
    ]
   },
   {
@@ -758,206 +738,18 @@
    "source": [
     "### The Bad News\n",
     "\n",
-    "But this is only a partial fix, because while this warns you when you are modifying something that may be a few, there is no system for alerting you to the possibility that changes to your *original* DataFrame may impact slices you may have saved. "
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 14,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>a</th>\n",
-       "      <th>b</th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>1</th>\n",
-       "      <td>1</td>\n",
-       "      <td>x</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2</th>\n",
-       "      <td>2</td>\n",
-       "      <td>y</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "   a  b\n",
-       "1  1  x\n",
-       "2  2  y"
-      ]
-     },
-     "execution_count": 14,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "df = pd.DataFrame({'a':np.arange(4), 'b':['w', 'x', 'y', 'z']})\n",
-    "my_slice = df.iloc[1:3,]\n",
-    "my_slice"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 15,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>a</th>\n",
-       "      <th>b</th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>1</th>\n",
-       "      <td>1</td>\n",
-       "      <td>-1</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2</th>\n",
-       "      <td>2</td>\n",
-       "      <td>y</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "   a   b\n",
-       "1  1  -1\n",
-       "2  2   y"
-      ]
-     },
-     "execution_count": 15,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "df.iloc[1,1] = -1\n",
-    "my_slice"
+    "The bad news is that the `SettingWithCopyWarning` will only flag one pattern where the copy-view problem crops up. Indeed, if you follow the link provided in the warning, you'll see it wasn't designed to address the copy-view problem *writ large*, but rather a more narrow behavior where the user tries to change a subset of a DataFrame incorrectly (we'll talk more about that in our coming readings). Indeed, you'll notice we didn't get a single `SettingWithCopyWarning` until the section where we started talking about that warning in particular (and I created an example designed to set it off). \n",
+    "\n",
+    "So: if you see a `SettingWithCopyWarning` do **not** ignore it—find where you may have created a view or may have created a copy and add a `.copy()` so the error goes away. **But just because you don't see that warning doesn't mean you're in the clear!** \n",
+    "\n",
+    "Which leads me to what I will admit is an infuriating piece of advice to have to offer: **if you take a subset for any purpose other than immediately analyzing, you should add .copy() to that subsetting.** Seriously. Just when in doubt, `.copy()`."
    ]
   },
   {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "So, what can you do about this? Honestly, I think the only reasonable answer is **\"if you make a slice for any purpose other than immediately analyzing, you should add .copy() to that slice.** It's ugly, it shouldn't be necessary, but it's the only way to always be safe. "
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 17,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>a</th>\n",
-       "      <th>b</th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>1</th>\n",
-       "      <td>1</td>\n",
-       "      <td>x</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2</th>\n",
-       "      <td>2</td>\n",
-       "      <td>y</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "   a  b\n",
-       "1  1  x\n",
-       "2  2  y"
-      ]
-     },
-     "execution_count": 17,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "df = pd.DataFrame({'a':np.arange(4), 'b':['w', 'x', 'y', 'z']})\n",
-    "my_slice = df.iloc[1:3,].copy()\n",
-    "my_slice"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## No, the problem doesn't *only* emerge when you change a columns type\n",
+    "## An Aside: No, the problem doesn't *only* emerge when you change the data type of a column\n",
     "\n",
     "Some readers may have noticed a pattern in the illustrations I've presented, and from them developed an intuition that a column will only lose it's \"view-ness\" when one changes the datatype of that column. Though this will always cause problems, it is not the only place problems can arise. What follows isn't something you *need* to know, but may be useful if you're deeply interested. \n",
     "\n",
@@ -968,7 +760,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 19,
+   "execution_count": 29,
    "metadata": {},
    "outputs": [
     {
@@ -979,19 +771,19 @@
        "       [4, 5]])"
       ]
      },
-     "execution_count": 19,
+     "execution_count": 29,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "my_matrix = np.arange(6).reshape(3,2)\n",
-    "my_matrix"
+    "my_matrix = np.arange(6).reshape(3, 2)\n",
+    "my_matrix\n"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 20,
+   "execution_count": 30,
    "metadata": {},
    "outputs": [
     {
@@ -1046,19 +838,19 @@
        "2  4  5"
       ]
      },
-     "execution_count": 20,
+     "execution_count": 30,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "df = pd.DataFrame(my_matrix, columns=['a', 'b'])\n",
-    "df"
+    "df = pd.DataFrame(my_matrix, columns=[\"a\", \"b\"])\n",
+    "df\n"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 21,
+   "execution_count": 31,
    "metadata": {},
    "outputs": [
     {
@@ -1070,21 +862,21 @@
        "Name: a, dtype: int64"
       ]
      },
-     "execution_count": 21,
+     "execution_count": 31,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
     "# Column_a starts of it's life as a view\n",
-    "column_a = df['a']\n",
+    "column_a = df[\"a\"]\n",
     "df.iloc[0, 0] = -42\n",
-    "column_a"
+    "column_a\n"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 22,
+   "execution_count": 32,
    "metadata": {},
    "outputs": [
     {
@@ -1139,20 +931,20 @@
        "2   4          5"
       ]
      },
-     "execution_count": 22,
+     "execution_count": 32,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
     "# But if I make a change to column b...\n",
-    "df.loc[0, 'b'] = \"new entry\"\n",
-    "df"
+    "df.loc[0, \"b\"] = \"new entry\"\n",
+    "df\n"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 24,
+   "execution_count": 33,
    "metadata": {},
    "outputs": [
     {
@@ -1164,7 +956,7 @@
        "Name: a, dtype: int64"
       ]
      },
-     "execution_count": 24,
+     "execution_count": 33,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1173,8 +965,8 @@
     "# Then the same type of change to column a of `df` will no longer\n",
     "# be shared\n",
     "\n",
-    "df.iloc[0, 0] = 42\n",
-    "column_a"
+    "df.iloc[0, 0] = 999999\n",
+    "column_a\n"
    ]
   },
   {
@@ -1183,18 +975,11 @@
    "source": [
     "So, as noted before: it is best to never to try and infer whether a subset of a DataFrame if a view or a copy until you have *explicitly* made a copy with `.copy()`."
    ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": []
   }
  ],
  "metadata": {
   "kernelspec": {
-   "display_name": "Python 3",
+   "display_name": "Python 3.9.7 ('base')",
    "language": "python",
    "name": "python3"
   },
@@ -1208,7 +993,12 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.7.3"
+   "version": "3.9.7"
+  },
+  "vscode": {
+   "interpreter": {
+    "hash": "3e0a5228cb9726a24d36227c69ed0d3aac98cecda769d1c9adb080711d57f90d"
+   }
   }
  },
  "nbformat": 4,
