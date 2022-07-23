@@ -62,7 +62,21 @@
     "\n",
     "### Go to an Education Store\n",
     "\n",
-    "Most computer companies offer discounts for students! Hop on over to the [Duke Technology store link](https://www.dukestores.duke.edu/cpustore/) to get access to education stores for Apple, Dell, Lenovo, etc.\n"
+    "Most computer companies offer discounts for students! Hop on over to the [Apple Education Store](https://www.apple.com/us-edu/store), or go to the [Duke Technology store link](https://www.dukestores.duke.edu/cpustore/) for some deals on Dell, Lenovo, etc.\n",
+    "\n",
+    "Note the [Duke Store offers payment plans to help students](https://www.dukestores.duke.edu/compstore/purchase_plan.php) with the cost of computers!\n",
+    "\n",
+    "## Specific Suggestions\n",
+    "\n",
+    "If I, in July 2022, were getting a Mac and were trying to get the best value on a budget for a computer I hoped would last for the duration of my two-year Masters program, I'd probably get:\n",
+    "\n",
+    "- An M1 Macbook Air with 16gb RAM and 2x the storage I currently use on my current computer. With 1TB drive, that's about $1,439 before taxes with education discount. \n",
+    "\n",
+    "If I were to splurg a little and wanted more ports, I'd get:\n",
+    "\n",
+    "- A 14 inch Macbook Pro with base M1 Pro with 16GB RAM. With 1 TB drive, that's about $2,029 before taxes with education discount. And if I could possibly afford it, I'd get 32 GB RAM for $2,389. (*Avoid the 13\" Macbook Pro—[no one likes that computer](https://www.theverge.com/23177674/apple-macbook-pro-m2-2022-review-price-specs-features).*)\n",
+    "\n",
+    "I don't know Windows *nearly* as well as Apple, so... I'm not gonna weigh in there! :)"
    ]
   }
  ],
