@@ -47,6 +47,7 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
    :caption: Environment Setup
 
    Setup Computer for Data Science <setting_up_your_computer>
+   Using VS Code For Data Science <vscode>
 
 .. toctree:: 
    :maxdepth: 2
