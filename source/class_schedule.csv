@@ -38,10 +38,12 @@
 "Tues, Sep 21",- Git and Github 2,,- `Link <exercises/Exercise_git_2.ipynb>`_
 "Thurs, Sep 23","- Pandas: Cleaning
 - Tracebacks","- `What are Tracebacks? <https://www.youtube.com/watch?v=JD8BrXXNtjA>`_
-- WM Chapter 7
-- `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_
 - `Identifying Problems <cleaning_identifying.ipynb>`_
-- `Editing Values <cleaning_editingvalues.ipynb>`_",- `Link <exercises/Exercise_cleaning.ipynb>`_
+- `Editing Values Globally <cleaning_editing_globally.ipynb>`_
+- `Editing Locations <cleaning_editing_specific_locations.ipynb>`_
+- `Cleaning Data Types <cleaning_datatypes.ipynb>`_
+- `Missing Data <cleaning_missing_data.ipynb>`_
+- `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_",- `Link <exercises/Exercise_cleaning.ipynb>`_
 "Tues, Sep 28","- Grammer of Graphics
 - Intro to Plotting with Altair","- `Principles of Data Visualization <https://www.youtube.com/watch?v=vTingdk_pVM>`_
 - `Intro to Altair <plotting_altair_part1.ipynb>`_
