@@ -1,0 +1,155 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Setting Up Data Storage on Azure"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "No matter what kind of data science you're doing on Azure, you're probably gonna want a place to put and access... data. :) So let's start our introduction to Azure by setting up storage!\n",
+    "\n",
+    "As we discussed in our [Cloud Overview](cloud_what_is_it.ipynb), when working on the cloud your \"compute\" resources and your \"storage\" resources are sold (mostly) separately. This isn't entirely true -- your VM has some harddrive space -- but that memory is tied to that compute, and so when you shut down your compute, anything saved on those harddrives goes away. So normally we need to get some persistent storage for our data and results. Here we'll set up storage in 3 easy steps (one of which is getting an azure account, so many of you may only have 2 steps!)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 1. Get an Azure Subscription\n",
+    "\n",
+    "Unsurprisingly, we have to start by signing up with Azure. There are two ways to do this that will get you free credits:\n",
+    "\n",
+    "- If you are a student, you can [go here](https://azure.microsoft.com/en-us/free/students/) and sign up for a free student account. It'll only get you 100 dollars, and it doesn't require a credit card. It also has fewer restrictions than the next option, so its better even if there's less mony.  \n",
+    "- Create a new regular account (with 200 dollars free credit to use in your first 30 days!) by creating a standard new account [here](https://azure.microsoft.com/en-us/). Note you will need a credit card to verify your account if you go this route.\n",
+    "\n",
+    "Note that if you have already gotten an account and used your free credits... try and make a new account with a new email address? For example, most universities give you a short-hand email, but you can also get a \"vanity\" long name (e.g. my email is both nce8@duke.edu and nick.eubank@duke.edu). And gmail address are easy to make. \n",
+    "\n",
+    "If you do so, your Azure account will also be associated with a free-money *Subscription*. A Subscription is the name Azure has for the person responsible for paying the bills, and everything you do will have to be under a subscription. If you start using Azure for a company or other large organization (like Duke), your account will get connected to the institution's subscription so your bills go to them. But for now, I think it makes more sense for you to set up your own account, both you can enjoy Microsoft's free money, but also (and more importantly) so you feel like you have your own cloud account that isn't dependent on someone else's support. As we've discussed repeatedly, one goal of this class is to ensure that you don't feel stranded when you leave this class (as sometimes happens when you learn on pre-configured VMs). The cloud is available to everyone, and by creating your own account, you now have access for yourself any time you want!\n",
+    "\n",
+    "Once you have an account, you should end up at the Azure Portal page. This is your home for Azure, and you'll come back here all the time. \n",
+    "\n",
+    "![azure_portal](images/azure_portal.png)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 2. Create a Resource Group\n",
+    "\n",
+    "In Azure, all the concrete things you want to use -- a virtual machine, a distributed cluster, a network storage drive -- are called *Resources*, and every resource has to live in a *Resource Group*. I *think* the goal of this is that if all the Resources for a project live in one Resource Group, then when you finish the project you can easily delete them all, and I think they're useful for corporations to manage billing. Personally, I find it's just kinda annoying. :) \n",
+    "\n",
+    "So to create a Storage Account (a Resource), we first need to create a Resource Group. Well, actually, that's not quite true -- you can create one *in the process* of creating a Storage Account -- but let's be explicit and create one ourselves first. Go to your Portal, search for Resource Group, and create a new one. \n",
+    "\n",
+    "Note you're gonna have to name a LOT of stuff, so I recommend a common name for your project (I'll use my Duke id here: `nce8`) followed by a shorthand for the specific thing you're creating. So for my Resource Group, I call it `nce8rg`. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 3. Create A Storage Account\n",
+    "\n",
+    "To store data, we first need to create a Storage Account! To do so, go to your \"Storage Accounts\" page (you can go back to your Portal and search for it if you need to). \n",
+    "\n",
+    "Then on the top right, click on the `+ Add` button:\n",
+    "\n",
+    "![azure_addstorageaccount](images/azure_addstorageaccount.png)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Then put it in the Resource Group you already have, give it a good name (I used `nce8sa`), and just accept the defaults. Congratulations! You have a Storage Account!"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Containers"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "While you might *think* that Storage Accounts are where we put our data, though, that's not quite right. Storage Accounts can hold 4 different kinds of things: Blob Containers, File Shares, Tables, and Queues. UGH. \n",
+    "\n",
+    "The good news is that, at this point in your life, you only need to worry about Blob Containers. As we mentioned in our \"What is the Cloud\" tutorial, Cloud storage comes in different flavors, and Blob is the most flexible, as it can hold anything (BLOB standands for **B**inary **L**arge **OB**ject storage). So unless you have reason to do otherwise, just use Blob Containers. \n",
+    "\n",
+    "Other types on Azure, just so you know them, are:\n",
+    "\n",
+    "- **File storage**: similar to Blob. File storage supports certain file sharing protocols that people may have been using before they came to the cloud, so makes life easy for people moving to the cloud. But fewer features than BLOB, so almost surely not for you. *Sounds* like the storage that'd be most familiar to a normal computer user, but it's a trick. Use BLOB. \n",
+    "- **Queue storage**: specialized storage for messaging services. \n",
+    "- **Table storage**: What's known as a NoSQL database system.\n",
+    "\n",
+    "And lest this whole \"Storage Account\" / Blob Containers / Files thing is getting confusing (I *know*, so many nested groups!!!), it looks something like this:\n",
+    "\n",
+    "![azure_blob_containers](images/azure_blob_containers.png)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 4. Create Container and Add Data\n",
+    "\n",
+    "So let's add some data! Navigate to your Storage Accounts page, and click on the Storage Account you just created. Then on the left menu, and click on `Containers` under Blob Services. \n",
+    "\n",
+    "But now we can create a new Container for our data! So click the `+ Container` button, pick a name, and click `Create`. Congrats! You have a blob!\n",
+    "\n",
+    "We'll talk more about managing data using Python or the command line later, but for the moment, let's just upload an easy file. Click on your new Container, click `Upload` in the top left, and upload a file!"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### More Efficient Data Uploading\n",
+    "\n",
+    "For this, we just used the web browser to upload data to get started, but there are also command line tools we'll learn about later that are more efficient. If you want to jump ahead, [you can read about them here](cloud_azure_cli.ipynb)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 5. Bringing It Together\n",
+    "\n",
+    "I know that's been a LOT of different things you've been creating, so here's an overview of what all we've created. Note that if you were a giant corportation, each of these would have more forks (your subscription would have lots of Resource Groups, etc.), but this accurately shows how these different organizational structures are nested within one another. \n",
+    "\n",
+    "![azure_structure.png](images/azure_structure.png)\n",
+    "\n",
+    "Note that your Workspace isn't in this picture! That's because it doesn't fit into this organizational hierarchy -- it's off to the side, a way of taggint certain Resource Groups and Resource as being related to a single project. But you can use the same Resource Group in multiple Workspaces, and Resources from multiple Resource Groups in a single Workspace."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

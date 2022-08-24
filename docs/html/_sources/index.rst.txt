@@ -46,8 +46,10 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
    :hidden:
    :caption: Environment Setup
 
-   Setup Computer for Data Science <setting_up_your_computer>
-   Using VS Code For Data Science <vscode>
+   Setup Python and miniconda <setup_python>
+   Setup VS Code <setup_vscode>
+   Setup Command Line <setup_augmented_commandline>
+   Setup Jupyter <jupyter>
 
 .. toctree:: 
    :maxdepth: 2
@@ -56,8 +58,6 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
 
    Command Line, Basics <command_line_part1>
    Command Line, Advanced <command_line_part2>
-   Jupyter <jupyter>
-
 
 .. toctree:: 
    :maxdepth: 2

@@ -1,0 +1,137 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "source": [
+    "# The Python (Data Science) Plotting Ecosystem\n",
+    "\n",
+    "In our previous reading, we learned about the Altair plotting library. Altair is far from the only Python plotting library, however, and is not even the most popular! So in this reading, I'll introduce some other popular libraries, discuss their strengths and weaknesses, and finally detail why I've decided to use Altair in this course. \n",
+    "\n",
+    "## matplotlib\n",
+    "\n",
+    "If you've heard about any plotting library in Python, it is almost certainly `matplotlib`. matplotlib is not only the library most people see first when learning to plot in Python, but it also does the actually hard work of creating of an image behind the scenes for many other popular libraries. \n",
+    "\n",
+    "While very flexible, however, matplotlib is not the most user-friendly. Most of its focus is on the lower-level aspects of actually implementing visualizations from a programming perspective, and it lacks easy to use tools for quickly making common the types of figures (scatter plots, linear fits, histograms, etc.) that are so often needed by data scientists.\n",
+    "\n",
+    "To illustrate, here's the code needed to plot a scatter plot of points along with a linear regression fit overlay in matplotlib:\n",
+    "\n",
+    "```python\n",
+    "import matplotlib.pyplot as plt\n",
+    "import numpy as np\n",
+    "\n",
+    "# Initialize layout\n",
+    "fig, ax = plt.subplots(figsize = (9, 9))\n",
+    "\n",
+    "# Add scatterplot\n",
+    "ax.scatter(x, y, s=60, alpha=0.7, edgecolors=\"k\")\n",
+    "\n",
+    "# Fit linear regression via least squares with numpy.polyfit\n",
+    "# It returns an slope (b) and intercept (a)\n",
+    "# deg=1 means linear fit (i.e. polynomial of degree 1)\n",
+    "b, a = np.polyfit(x, y, deg=1)\n",
+    "\n",
+    "# Create sequence of 100 numbers from 0 to 100 \n",
+    "xseq = np.linspace(0, 10, num=100)\n",
+    "\n",
+    "# Plot regression line\n",
+    "ax.plot(xseq, a + b * xseq, color=\"k\", lw=2.5);\n",
+    "```\n",
+    "\n",
+    "to generate:\n",
+    "\n",
+    "![linear_regression_matplotlib](images/linear_regression_matplotlib.png)"
+   ],
+   "metadata": {
+    "deletable": true,
+    "editable": true
+   }
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "\n",
+    "## matplotlib Alternatives\n",
+    "\n",
+    "With that in mind, several other packages have been created to make plotting in Python easier for data scientists. Unlike in matplotlib, where you have to think in terms of what geometric objects and axes, these alternative libraries allow for higher-level, more \"declarative\" code to make scatter plots, histograms, kernel densities, etc.\n",
+    "\n",
+    "#### seaborn\n",
+    "\n",
+    "The first of these is [seaborn](https://seaborn.pydata.org/). seaborn is built on top of matplotlib, and provides simple declarative functions for generating data science figures, such as `regplot` to plot a linear regression fit, or `histplot` to plot a histogram.\n",
+    "\n",
+    "To illustrate, here's a linear regression fit overlaying a scatter plot:\n",
+    "\n",
+    "```python\n",
+    "import seaborn as sns\n",
+    "sns.regplot(x=\"total_bill\", y=\"tip\", data=our_data)\n",
+    "```\n",
+    "\n",
+    "![linear_regression_seaborn](images/linear_regression_seaborn.png)\n",
+    "\n",
+    "Unlike Altair, however, seaborn is not a particularly *composable* library -- if what you need is covered by a function is provides, it's great, but it offers less freedom to build up figures by putting together smaller building blocks as is the case in Altair. \n",
+    "\n",
+    "#### plotnine (e.g. ggplot2 in Python)\n",
+    "\n",
+    "plotnine is a wonderful library that re-implements almost the entire API of the much loved ggplot2 plotting library from R. Like seaborn, plotnine is actually built on matplotlib, and like seaborn it provides a much more user-friendly experience for data scientists.\n",
+    "\n",
+    "Like Altair, plotnine (and ggplot2) embodies the logic of how we use visualizations to communicate information about our data in how it works. As a result, plotnine syntax seems a little more verbose than that of seaborn, but I would argue that in the long run it's much more powerful.\n",
+    "\n",
+    "To plot our simple linear regression figure in plotnine, we'd run:\n",
+    "\n",
+    "```python\n",
+    "import plotnine as p9\n",
+    "\n",
+    "(p9.ggplot(mtcars, p9.aes('wt', 'mpg'))\n",
+    " + p9.geom_point()\n",
+    " + p9.stat_smooth(method='lm')\n",
+    ")\n",
+    "```\n",
+    "\n",
+    "![linear_regression_plotnine](images/linear_regression_plotnine.png)\n",
+    "\n",
+    "As you can see, the `aes()` function takes the place of the `encode` method in Altair, and plotnine allows different geoms to be combined within a plot, instead of requiring plots to be built separately then combined. But it is very similar to Altair in philosophy. "
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "\n",
+    "## Altair\n",
+    "\n",
+    "So given these other choices, why use Altair?\n",
+    "\n",
+    "Like seaborn and plotnine, Altair is a library designed to make plotting in Python a more intuitive experience for data scientists than one gets with matplotlib. And like plotnine, altair's design is meant to embody one model of the logic of how we communicate with visualizations (the *grammer of graphics*). \n",
+    "\n",
+    "But altair also has some substantive differences from the libraries discussed above. First, it has no connection to matplotlib, unlike seaborn or plotnine. Altair actually generates javascript-based visualizations, which means that it is web native and creates interactive visualizations very easily. \n",
+    "\n",
+    "Moreover, in my experience the documentation for and community around Altair is more robust and helpful than what you find with plotnine, which is actually what I taught in this class up until this year.\n",
+    "\n",
+    "With that said, there are some tradeoffs with altair. It doesn't come with *quite* as much in-built support for easy statistical modelling. As we'll discuss below, because the figures it generates are inherently implemented in javascript, they can be a little more finicky to work with. "
+   ],
+   "metadata": {}
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "name": "python3",
+   "display_name": "Python 3.9.7 64-bit ('base': conda)"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.7"
+  },
+  "interpreter": {
+   "hash": "f06fa9c80cc08d4d343f66ad24a278ad0285590eac640a80c32c9d748f33a802"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

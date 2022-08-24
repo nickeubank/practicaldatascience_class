@@ -1,0 +1,80 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "source": [
+    "# Accessibility Tech for Data Science \n",
+    "# (AKA Programming with a Disability) \n",
+    "# (AKA Taking Care of Your Body)\n",
+    "\n",
+    "**DISCLOSURE:** I am not a medical professional. I've done my best to base all the following recommendations on rigorous scientific research and the advice of medical professionals, but please be aware that this is all secondhand, and if you're dealing with really serious medical constraints, consider talking to a certified Occupational Therapist!\n"
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "## Experimentation is Key\n",
+    "\n",
+    "- Amazon prime is your friend"
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "## Ergonomics\n",
+    "\n",
+    "### Monitors\n",
+    "\n",
+    "### Keyboards and Mice"
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "## Aids to Avoid Typing\n",
+    "\n",
+    "### Basic Dictation\n",
+    "\n",
+    "### Dictation for Programming with Talon\n",
+    "\n",
+    "https://www.youtube.com/watch?v=YKuRkGkf5HU\n",
+    "\n",
+    "### Eye Tracking"
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "## Caring for Your Vision / Vision Problems\n",
+    "\n",
+    "- Buy a monitor\n",
+    "- **Use Light Mode themes:** (at least in application where you do the most work) https://www.youtube.com/watch?v=bCaFRN3aaP8\n",
+    "- Use larger fonts\n",
+    "\n",
+    "More: https://www.aoa.org/healthy-eyes/eye-and-vision-conditions/computer-vision-syndrome?sso=y"
+   ],
+   "metadata": {}
+  },
+  {
+   "cell_type": "markdown",
+   "source": [
+    "## Other Aids\n",
+    "\n",
+    "### Speech to Text"
+   ],
+   "metadata": {}
+  }
+ ],
+ "metadata": {
+  "orig_nbformat": 4,
+  "language_info": {
+   "name": "python"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

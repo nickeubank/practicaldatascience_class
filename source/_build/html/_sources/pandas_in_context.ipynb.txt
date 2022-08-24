@@ -1,0 +1,26 @@
+{
+    "cells": [
+        {
+            "cell_type": "markdown",
+            "source": [
+                "# Pandas in Context\n",
+                "\n",
+                "I'm a pretty firm believer that in many ways pandas is terrible. It is clearly the lingua franca of data science, so in the same way that learning English is really important if you want to work in the United States, it's really important to learn. But if you find it unintuitive or annoying, I think you're perceiving it accurately. Python was never actually designed to support data science -- it was basically meant to be a language that was a little bit more advanced than tools for doing basic scripting. So when people decided they wanted to do data science and that they then had to create an entirely new language that lives within Python for doing numerical computing with arrays -- numpy. They wrote it in FORTRAN and basically shoehorned it into the Python ecosystem, but for all intents and purposes it's kind of a second language that lives inside a Python. But then data science evolved away from working with clean arrays of floating-point numbers to working with tabular data where different columns had different types (strings, integers, arbitrary objects, etc.), said then people had created another language that lived on top of numpy (pandas). And that library was originally developed by a single person who, while incredibly impressive in many ways, I think made a number of design decisions that even he probably wouldn't make again. By the time that was realized the library had started being used by a lot of people because it was the best available, and nobody wanted to change those features because it would break peoples existing code, so now we have pandas."
+            ],
+            "metadata": {}
+        },
+        {
+            "cell_type": "markdown",
+            "source": [],
+            "metadata": {}
+        }
+    ],
+    "metadata": {
+        "orig_nbformat": 4,
+        "language_info": {
+            "name": "python"
+        }
+    },
+    "nbformat": 4,
+    "nbformat_minor": 2
+}

@@ -1,0 +1,2238 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Merging Data to Understand the Relationship between Drug Legalization and Violent Crime\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "In recent years, many US states have decided to legalize the use of marijuana. \n",
+    "\n",
+    "When these ideas were first proposed, there were many theories about the relationship between crime and the \"War on Drugs\" (the term given to US efforts to arrest drug users and dealers over the past several decades). \n",
+    "\n",
+    "In this exercise, we're going to test a few of those theories using drug arrest data from the state of California. \n",
+    "\n",
+    "Though California has passed a number of laws lessening penalities for marijuana possession over the years, arguably the biggest changes were in  2010, when the state changed the penalty for possessing a small amount of marijuana from a criminal crime to a \"civil\" penality (meaning those found guilty only had to pay a fine, not go to jail), though possessing, selling, or producing larger quantities remained illegal. Then in 2016, the state fully legalized marijuana for recreational use, not only making possession of small amounts legal, but also creating a regulatory system for producing marijuana for sale. \n",
+    "\n",
+    "Proponents of drug legalization have long argued that the war on drugs contributes to violent crime by creating an opportunity for drug dealers and organized crime to sell and distribute drugs, a business which tends to generate violence when gangs battle over territory. According to this theory, with drug legalization, we should see violent crime decrease after legalization in places where drug arrests had previously been common. \n",
+    "\n",
+    "**To be clear,** this is far from the only argument for drug legalization! It is simply the argument we are well positioned to analyze today. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Pre-Legalization Analysis\n",
+    "\n",
+    "**(1)** We will begin by examining [county-level data on arrests from California in 2009](https://github.com/nickeubank/practicaldatascience/tree/master/Example_Data/ca), which is derived from data provided by the Office of the California State Attorney General [here](https://openjustice.doj.ca.gov/data). Download and import the file `ca_arrests_2009.csv`. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "\n",
+    "arrests_2009 = pd.read_csv(\n",
+    "    \"https://raw.githubusercontent.com/nickeubank/practicaldatascience\"\n",
+    "    \"/master/Example_Data/ca/ca_arrests_2009.csv\"\n",
+    ")\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(2)** Use your data exploration skills to get a feel for this data. If you need to, you can find the [original codebook here](https://data-openjustice.doj.ca.gov/sites/default/files/dataset/2019-07/Arrests%20Context_062119.pdf) (This data is similar, but has been collapsed to one observation per county.)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Unnamed: 0</th>\n",
+       "      <th>COUNTY</th>\n",
+       "      <th>VIOLENT</th>\n",
+       "      <th>PROPERTY</th>\n",
+       "      <th>F_DRUGOFF</th>\n",
+       "      <th>F_SEXOFF</th>\n",
+       "      <th>F_ALLOTHER</th>\n",
+       "      <th>F_TOTAL</th>\n",
+       "      <th>M_TOTAL</th>\n",
+       "      <th>S_TOTAL</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1682</td>\n",
+       "      <td>Alameda County</td>\n",
+       "      <td>4318</td>\n",
+       "      <td>4640</td>\n",
+       "      <td>5749</td>\n",
+       "      <td>260</td>\n",
+       "      <td>3502</td>\n",
+       "      <td>18469</td>\n",
+       "      <td>37247</td>\n",
+       "      <td>431</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1683</td>\n",
+       "      <td>Alpine County</td>\n",
+       "      <td>8</td>\n",
+       "      <td>4</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>16</td>\n",
+       "      <td>83</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>1684</td>\n",
+       "      <td>Amador County</td>\n",
+       "      <td>100</td>\n",
+       "      <td>59</td>\n",
+       "      <td>101</td>\n",
+       "      <td>5</td>\n",
+       "      <td>199</td>\n",
+       "      <td>464</td>\n",
+       "      <td>801</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>1685</td>\n",
+       "      <td>Butte County</td>\n",
+       "      <td>641</td>\n",
+       "      <td>602</td>\n",
+       "      <td>542</td>\n",
+       "      <td>34</td>\n",
+       "      <td>429</td>\n",
+       "      <td>2248</td>\n",
+       "      <td>9026</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>1686</td>\n",
+       "      <td>Calaveras County</td>\n",
+       "      <td>211</td>\n",
+       "      <td>83</td>\n",
+       "      <td>123</td>\n",
+       "      <td>14</td>\n",
+       "      <td>70</td>\n",
+       "      <td>501</td>\n",
+       "      <td>968</td>\n",
+       "      <td>3</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   Unnamed: 0            COUNTY  VIOLENT  PROPERTY  F_DRUGOFF  F_SEXOFF  \\\n",
+       "0        1682    Alameda County     4318      4640       5749       260   \n",
+       "1        1683     Alpine County        8         4          2         1   \n",
+       "2        1684     Amador County      100        59        101         5   \n",
+       "3        1685      Butte County      641       602        542        34   \n",
+       "4        1686  Calaveras County      211        83        123        14   \n",
+       "\n",
+       "   F_ALLOTHER  F_TOTAL  M_TOTAL  S_TOTAL  \n",
+       "0        3502    18469    37247      431  \n",
+       "1           1       16       83        0  \n",
+       "2         199      464      801        2  \n",
+       "3         429     2248     9026        1  \n",
+       "4          70      501      968        3  "
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "arrests_2009.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(3)** Figuring out what county has the most violent arrests isn't very meaningful if we don't normalize for size. A county with 10 people and 10 arrests for violent crimes is obviously worse than a county with 1,000,000 people an 11 arrests for violent crime. \n",
+    "\n",
+    "To address this, also import `nhgis_county_populations.csv` from [the directory we're working from](https://github.com/nickeubank/practicaldatascience/tree/master/Example_Data/ca)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Unnamed: 0</th>\n",
+       "      <th>YEAR</th>\n",
+       "      <th>STATE</th>\n",
+       "      <th>COUNTY</th>\n",
+       "      <th>total_population</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>0</td>\n",
+       "      <td>2005-2009</td>\n",
+       "      <td>Alabama</td>\n",
+       "      <td>Autauga County</td>\n",
+       "      <td>49584</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1</td>\n",
+       "      <td>2005-2009</td>\n",
+       "      <td>Alabama</td>\n",
+       "      <td>Baldwin County</td>\n",
+       "      <td>171997</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>2</td>\n",
+       "      <td>2005-2009</td>\n",
+       "      <td>Alabama</td>\n",
+       "      <td>Barbour County</td>\n",
+       "      <td>29663</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>3</td>\n",
+       "      <td>2005-2009</td>\n",
+       "      <td>Alabama</td>\n",
+       "      <td>Bibb County</td>\n",
+       "      <td>21464</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>4</td>\n",
+       "      <td>2005-2009</td>\n",
+       "      <td>Alabama</td>\n",
+       "      <td>Blount County</td>\n",
+       "      <td>56804</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   Unnamed: 0       YEAR    STATE          COUNTY  total_population\n",
+       "0           0  2005-2009  Alabama  Autauga County             49584\n",
+       "1           1  2005-2009  Alabama  Baldwin County            171997\n",
+       "2           2  2005-2009  Alabama  Barbour County             29663\n",
+       "3           3  2005-2009  Alabama     Bibb County             21464\n",
+       "4           4  2005-2009  Alabama   Blount County             56804"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "pop = pd.read_csv(\n",
+    "    \"https://raw.githubusercontent.com/nickeubank/practicaldatascience/\"\n",
+    "    \"master/Example_Data/ca/nhgis_county_populations.csv\"\n",
+    ")\n",
+    "pop.head()\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(4)** Use your data exploration skills to get used to this data, and figure out how it relates to your 2009 arrest data. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# They're both a the county-state level, but the sample of population is all states, not just CA."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(5)** Once you feel like you have a good sense of the relation between our arrest and population data, merge the two datasets. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# This is a bad merge, but what most people will likely do:\n",
+    "\n",
+    "merged = pd.merge(arrests_2009, pop, on='COUNTY')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(6)** When you merge data, you have to make some assumptions about the nature of the data you're working with. For example, you have to assume it's OK to connect variables that share the same value of your merging variables. Similarly, you have to make assumptions about whether your merge a 1-to-1 merge (meaning there is only one observation of the variable you're merging on in both datasets), a 1-to-many merge (meaning there is only one observation of the variable you're merging on in the first dataset, but multiple observations in the second). So before running a merge, answer the following questions:\n",
+    "\n",
+    "a) What variable do you think will be consistent across these two datasets you can use for merging?\n",
+    "\n",
+    "b) Do you think there will be exactly 1 observation for each value in your arrest data?\n",
+    "\n",
+    "c) Do you think there will be exactly 1 observation for each value in your population data?\n",
+    "\n",
+    "Being correct in your assumptions about these things is *very* important. If you think there's only one observation per value of your merging variable in each dataset, but there are in fact 2, you'll end up with two observations for each value after the merge. Moreover, not only is the structure of your data now a mess, but the fact you were wrong means you didn't understand something about your data. \n",
+    "\n",
+    "Because of the importance of this, `pandas` provides a utility for *testing* these assumptions when you do a merge: the `validate` keyword! Validate will accept `\"1:1\"`, `\"1:m\"`, `\"m:1\"`, and `\"m:m\"`. It will then check to make sure your merge matches the type of merge you think it is. I *highly* recommend always using this option (...and not just because I'm the one who added `validate` to pandas).\n",
+    "\n",
+    "Repeat the merge you conducted above, but this time use the `validate` to make sure your assumptions about the data were correct. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "MergeError",
+     "evalue": "Merge keys are not unique in right dataset; not a one-to-one merge",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mMergeError\u001b[0m                                Traceback (most recent call last)",
+      "\u001b[0;32m/var/folders/tj/s8f2_ks15h315z5thvtnhz8r0000gp/T/ipykernel_56762/2273082375.py\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      2\u001b[0m \u001b[0;31m# because county names repeat across states, AND because we have multiple years in the\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      3\u001b[0m \u001b[0;31m# data:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 4\u001b[0;31m \u001b[0mmerged\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mpd\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mmerge\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0marrests_2009\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mpop\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mon\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'COUNTY'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mvalidate\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'1:1'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;32m~/opt/miniconda3/lib/python3.9/site-packages/pandas/core/reshape/merge.py\u001b[0m in \u001b[0;36mmerge\u001b[0;34m(left, right, how, on, left_on, right_on, left_index, right_index, sort, suffixes, copy, indicator, validate)\u001b[0m\n\u001b[1;32m    105\u001b[0m     \u001b[0mvalidate\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mstr\u001b[0m \u001b[0;34m|\u001b[0m \u001b[0;32mNone\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    106\u001b[0m ) -> DataFrame:\n\u001b[0;32m--> 107\u001b[0;31m     op = _MergeOperation(\n\u001b[0m\u001b[1;32m    108\u001b[0m         \u001b[0mleft\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    109\u001b[0m         \u001b[0mright\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m~/opt/miniconda3/lib/python3.9/site-packages/pandas/core/reshape/merge.py\u001b[0m in \u001b[0;36m__init__\u001b[0;34m(self, left, right, how, on, left_on, right_on, axis, left_index, right_index, sort, suffixes, copy, indicator, validate)\u001b[0m\n\u001b[1;32m    708\u001b[0m         \u001b[0;31m# are in fact unique.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    709\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0mvalidate\u001b[0m \u001b[0;32mis\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 710\u001b[0;31m             \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_validate\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mvalidate\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    711\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    712\u001b[0m     \u001b[0;32mdef\u001b[0m \u001b[0mget_result\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;34m->\u001b[0m \u001b[0mDataFrame\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m~/opt/miniconda3/lib/python3.9/site-packages/pandas/core/reshape/merge.py\u001b[0m in \u001b[0;36m_validate\u001b[0;34m(self, validate)\u001b[0m\n\u001b[1;32m   1423\u001b[0m                 )\n\u001b[1;32m   1424\u001b[0m             \u001b[0;32melif\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0mright_unique\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 1425\u001b[0;31m                 raise MergeError(\n\u001b[0m\u001b[1;32m   1426\u001b[0m                     \u001b[0;34m\"Merge keys are not unique in right dataset; not a one-to-one merge\"\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1427\u001b[0m                 )\n",
+      "\u001b[0;31mMergeError\u001b[0m: Merge keys are not unique in right dataset; not a one-to-one merge"
+     ]
+    }
+   ],
+   "source": [
+    "# First, we repeat our bad merge, which will now throw an error \n",
+    "# because county names repeat across states, AND because we have multiple years in the\n",
+    "# data:\n",
+    "merged = pd.merge(arrests_2009, pop, on='COUNTY', validate='1:1')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pop2009 = pop[pop[\"YEAR\"] == \"2005-2009\"].copy()\n",
+    "ca_pop2009 = pop2009[pop2009.STATE == \"California\"].copy()\n",
+    "merged_2009 = pd.merge(arrests_2009, ca_pop2009, on=\"COUNTY\", validate=\"1:1\")\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(7)** Checking whether you are doing a 1-to-1, many-to-1, 1-to-many, or many-to-many merge is only the first type of diagnostic test you should run on *every* merge you conduct. The second test is to see if you data merged successfully!\n",
+    "\n",
+    "To help with this, the `merge` function in pandas offers a keyword option called `indicator`. If you set `indicator` to `True`, then pandas will add a column to the result of your merge called `_merge`. This variable will tell you, for each observation in your merged data, whether:  (a) that observation came from a successful merge of both datasets, (b) if that observation was in the left dataset (the first one you passed) but not the right dataset, or (c) if that observation was in the right dataset but not the left). This allows you to quickly identify failed merges!\n",
+    "\n",
+    "For example, suppose you had the following data:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>key</th>\n",
+       "      <th>df1_var</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>key1</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>key2</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "    key  df1_var\n",
+       "0  key1        1\n",
+       "1  key2        2"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df1 = pd.DataFrame({'key':['key1', 'key2'], 'df1_var':[1, 2]})\n",
+    "df1"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>key</th>\n",
+       "      <th>df2_var</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>key1</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Key2</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "    key df2_var\n",
+       "0  key1       a\n",
+       "1  Key2       b"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df2 = pd.DataFrame({'key':['key1', 'Key2'], 'df2_var':['a', 'b']})\n",
+    "df2"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now suppose you *expected* that all observations should merge when you merge these datasets (because you hadn't noticed the typo in `df2` where `key2` has a capital `Key2`. If you just run a merge, it works without any problems:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "new_data = pd.merge(df1, df2, on='key', how='outer')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "And so you might carry on in life unaware your data is now corrupted: instead of two merged rows, you now have 3, only 1 of which merged correctly!"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>key</th>\n",
+       "      <th>df1_var</th>\n",
+       "      <th>df2_var</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>key1</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>key2</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Key2</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "    key  df1_var df2_var\n",
+       "0  key1      1.0       a\n",
+       "1  key2      2.0     NaN\n",
+       "2  Key2      NaN       b"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "new_data"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "When what you really wanted was: "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>key</th>\n",
+       "      <th>df1_var</th>\n",
+       "      <th>df2_var</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>key1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>a</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>key2</td>\n",
+       "      <td>2</td>\n",
+       "      <td>b</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "    key  df1_var df2_var\n",
+       "0  key1        1       a\n",
+       "1  key2        2       b"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df2_correct = df2.copy()\n",
+    "df2_correct.loc[df2.key == \"Key2\", \"key\"] = 'key2'\n",
+    "pd.merge(df1, df2_correct, on='key', how='outer')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "(in a small dataset, you'd quickly see you have 1 row instead of 2, but if you have millions of rows, a couple missing won't be evident). \n",
+    "\n",
+    "But now suppose we use the `indicator` function:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "left_only     1\n",
+       "right_only    1\n",
+       "both          1\n",
+       "Name: _merge, dtype: int64"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "new_data = pd.merge(df1, df2, on='key', how='outer', indicator=True)\n",
+    "new_data._merge.value_counts()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We could immediately see that only one observation merged correct, and that one row from each dataset failed to merge!\n",
+    "\n",
+    "Moreover, we can look at the failed merges:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>key</th>\n",
+       "      <th>df1_var</th>\n",
+       "      <th>df2_var</th>\n",
+       "      <th>_merge</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>key2</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>left_only</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Key2</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>b</td>\n",
+       "      <td>right_only</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "    key  df1_var df2_var      _merge\n",
+       "1  key2      2.0     NaN   left_only\n",
+       "2  Key2      NaN       b  right_only"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "new_data[new_data._merge != \"both\"]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Allowing us to easily diagnose the problem. \n",
+    "\n",
+    "**Note:** The `pandas` merge function allows users to decide whether to keep only observations that merge (`how='inner'`), all the observations from the first dataset pasted to merge (`how='left'`), all the observations from the second dataset passed to merge (`how='right'`), or all observations (`how='outer'`):\n",
+    "\n",
+    "![join_types](../images/join-or-merge-in-python-pandas.png)\n",
+    "\n",
+    "But one danger to using the more restrictive options (like the default, `how='inner'`) is that the merge throws away all the observations that fail to merge, and while this may be the *eventual* goal of your analysis, it means that you don't get to see all the observations that failed to merge that maybe you thought *would* merge. In other words, it throws away the errors so you can't look at them!  \n",
+    "\n",
+    "So to use `indicator` effectively, you have to:\n",
+    "\n",
+    "- Not use `how=\"inner\"`, and\n",
+    "- Check the values of `_merge` after your merge. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(8)** Now repeat your previous merge using *both* the `validate` keyword *and* the `indicator` keyword with `how='outer'`. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "both          56\n",
+       "left_only      2\n",
+       "right_only     2\n",
+       "Name: _merge, dtype: int64"
+      ]
+     },
+     "execution_count": 15,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "merged_2009 = pd.merge(\n",
+    "    arrests_2009, ca_pop2009, on=\"COUNTY\", validate=\"1:1\", indicator=True, how=\"outer\"\n",
+    ")\n",
+    "merged_2009._merge.value_counts()\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(9)** You *should* be able to get to the point that all counties in our arrest data merge with population data. Can you figure out why that did not happen? Can you fix the data so that they all merge to population data?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>COUNTY</th>\n",
+       "      <th>_merge</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>Del Norte County</td>\n",
+       "      <td>left_only</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>13</th>\n",
+       "      <td>Inyo County</td>\n",
+       "      <td>left_only</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>58</th>\n",
+       "      <td>DelNorte County</td>\n",
+       "      <td>right_only</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>59</th>\n",
+       "      <td>Injo County</td>\n",
+       "      <td>right_only</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "              COUNTY      _merge\n",
+       "7   Del Norte County   left_only\n",
+       "13       Inyo County   left_only\n",
+       "58   DelNorte County  right_only\n",
+       "59       Injo County  right_only"
+      ]
+     },
+     "execution_count": 16,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "merged_2009.loc[merged_2009._merge != \"both\", [\"COUNTY\", \"_merge\"]]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "both          58\n",
+       "left_only      0\n",
+       "right_only     0\n",
+       "Name: _merge, dtype: int64"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "ca_pop2009.loc[ca_pop2009.COUNTY == \"DelNorte County\", 'COUNTY'] = 'Del Norte County'\n",
+    "ca_pop2009.loc[ca_pop2009.COUNTY == \"Injo County\", 'COUNTY'] = 'Inyo County'\n",
+    "merged_2009 = pd.merge(arrests_2009, ca_pop2009, on='COUNTY', validate='1:1', indicator=True, how='outer')\n",
+    "merged_2009._merge.value_counts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# We can write this as a test!\n",
+    "assert (merged_2009._merge == \"both\").all()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Comparing Arrest Rates\n",
+    "\n",
+    "**(10)** Now that we have arrest counts and population data, we can calculate arrest *rates*. For each county, create a new variable called `violent_arrest_rate_2009` that is the number of violent arrests for 2009 divided by the population of the county from 2005-2009, and an analogous variable for drug offenses (`F_DRUGOFF`). "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Unnamed: 0_x</th>\n",
+       "      <th>COUNTY</th>\n",
+       "      <th>VIOLENT</th>\n",
+       "      <th>PROPERTY</th>\n",
+       "      <th>F_DRUGOFF</th>\n",
+       "      <th>F_SEXOFF</th>\n",
+       "      <th>F_ALLOTHER</th>\n",
+       "      <th>F_TOTAL</th>\n",
+       "      <th>M_TOTAL</th>\n",
+       "      <th>S_TOTAL</th>\n",
+       "      <th>Unnamed: 0_y</th>\n",
+       "      <th>YEAR</th>\n",
+       "      <th>STATE</th>\n",
+       "      <th>total_population</th>\n",
+       "      <th>_merge</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1682</td>\n",
+       "      <td>Alameda County</td>\n",
+       "      <td>4318</td>\n",
+       "      <td>4640</td>\n",
+       "      <td>5749</td>\n",
+       "      <td>260</td>\n",
+       "      <td>3502</td>\n",
+       "      <td>18469</td>\n",
+       "      <td>37247</td>\n",
+       "      <td>431</td>\n",
+       "      <td>186</td>\n",
+       "      <td>2005-2009</td>\n",
+       "      <td>California</td>\n",
+       "      <td>1457095</td>\n",
+       "      <td>both</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1683</td>\n",
+       "      <td>Alpine County</td>\n",
+       "      <td>8</td>\n",
+       "      <td>4</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>16</td>\n",
+       "      <td>83</td>\n",
+       "      <td>0</td>\n",
+       "      <td>187</td>\n",
+       "      <td>2005-2009</td>\n",
+       "      <td>California</td>\n",
+       "      <td>1153</td>\n",
+       "      <td>both</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>1684</td>\n",
+       "      <td>Amador County</td>\n",
+       "      <td>100</td>\n",
+       "      <td>59</td>\n",
+       "      <td>101</td>\n",
+       "      <td>5</td>\n",
+       "      <td>199</td>\n",
+       "      <td>464</td>\n",
+       "      <td>801</td>\n",
+       "      <td>2</td>\n",
+       "      <td>188</td>\n",
+       "      <td>2005-2009</td>\n",
+       "      <td>California</td>\n",
+       "      <td>38039</td>\n",
+       "      <td>both</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>1685</td>\n",
+       "      <td>Butte County</td>\n",
+       "      <td>641</td>\n",
+       "      <td>602</td>\n",
+       "      <td>542</td>\n",
+       "      <td>34</td>\n",
+       "      <td>429</td>\n",
+       "      <td>2248</td>\n",
+       "      <td>9026</td>\n",
+       "      <td>1</td>\n",
+       "      <td>189</td>\n",
+       "      <td>2005-2009</td>\n",
+       "      <td>California</td>\n",
+       "      <td>217917</td>\n",
+       "      <td>both</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>1686</td>\n",
+       "      <td>Calaveras County</td>\n",
+       "      <td>211</td>\n",
+       "      <td>83</td>\n",
+       "      <td>123</td>\n",
+       "      <td>14</td>\n",
+       "      <td>70</td>\n",
+       "      <td>501</td>\n",
+       "      <td>968</td>\n",
+       "      <td>3</td>\n",
+       "      <td>190</td>\n",
+       "      <td>2005-2009</td>\n",
+       "      <td>California</td>\n",
+       "      <td>46548</td>\n",
+       "      <td>both</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   Unnamed: 0_x            COUNTY  VIOLENT  PROPERTY  F_DRUGOFF  F_SEXOFF  \\\n",
+       "0          1682    Alameda County     4318      4640       5749       260   \n",
+       "1          1683     Alpine County        8         4          2         1   \n",
+       "2          1684     Amador County      100        59        101         5   \n",
+       "3          1685      Butte County      641       602        542        34   \n",
+       "4          1686  Calaveras County      211        83        123        14   \n",
+       "\n",
+       "   F_ALLOTHER  F_TOTAL  M_TOTAL  S_TOTAL  Unnamed: 0_y       YEAR       STATE  \\\n",
+       "0        3502    18469    37247      431           186  2005-2009  California   \n",
+       "1           1       16       83        0           187  2005-2009  California   \n",
+       "2         199      464      801        2           188  2005-2009  California   \n",
+       "3         429     2248     9026        1           189  2005-2009  California   \n",
+       "4          70      501      968        3           190  2005-2009  California   \n",
+       "\n",
+       "   total_population _merge  \n",
+       "0           1457095   both  \n",
+       "1              1153   both  \n",
+       "2             38039   both  \n",
+       "3            217917   both  \n",
+       "4             46548   both  "
+      ]
+     },
+     "execution_count": 19,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "merged_2009.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "merged_2009['violent_arrest_rate_2009'] = merged_2009['VIOLENT'] / merged_2009['total_population']\n",
+    "merged_2009['drug_arrest_rate_2009'] = merged_2009['F_DRUGOFF'] / merged_2009['total_population']"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(11)** Make a scatter plot that shows the relationship between each county's violent arrest rate and it's drug arrest rate. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "image/png": "iVBORw0KGgoAAAANSUhEUgAAAkwAAAGvCAYAAACpXIpyAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlcnNpb24zLjQuMywgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy/MnkTPAAAACXBIWXMAAA9hAAAPYQGoP6dpAAB370lEQVR4nO3deVyU5f4//tc9K/vmBsjmLqCSmpaaaaipZG65VFrWafGTpdWxzLRSK+ucrMzUysqjnTL39Jgt5pKW5pZLyeoGKIsCAgLDwGz37w+/3D/HAQaGYRZ4PR8PHjr3XHPP+74YZt5zrYIoiiKIiIiIqEYyZwdARERE5OqYMBERERFZwYSJiIiIyAomTERERERWMGEiIiIisoIJExEREZEVTJiIiIiIrGDCRERERGSFwtkBNBUFBQV2O5cgCPD09IRWq4W7rSuqUqmg0+mcHUa9sL4dy13rm3XtWKxvx2rO9d2yZcs6lWMLkwuSyWTw8vKCTOZ+vx61Wu3sEOqN9e1Y7lrfrGvHYn07Fuu7Ds/nkGchIiIicmNMmIiIiIisYMJEREREZAUTJiIiIiIrmDARERERWcGEiYiIiMgKJkxEREREVjBhIiIiIrKCCRMRERGRFYLobuu3u6iSkhK7rZQqCIK0TL27/XoUCgUMBoOzw6gX1rdjuWt9s64di/XtWM25vuv62c295OxEp9PZbR8euVwOlUoFjUYDo9Fol3M6iq+vL0pLS50dRr2wvh3LXeubde1YrG/Has71XdeEiV1yREQ2MBqNqKiocHYYROQgTJiIiOrBYDBg/vz5CAsLQ3h4OIYNG4asrCxnh0VEjYwJExFRPbz//vv4z3/+I433SExMxMSJE+3WJU9ErokJExFRPWzYsMFscKzBYMD58+eRlpbmxKiIqLExYSIiqgd3m/1ERPbBhImIqB4mTpwIpVIp3VYoFIiKikKXLl2cGBURNTYmTERE9TB37lxMmTIFMtmNt88uXbpgy5YtUKlUTo6MiBoT12EiIqoHhUKBJUuW4J133kFlZSV8fHycHRIROQATJiIiGyiVSrOuOSJq2tglR0RERGQFEyYiIiIiK5gwEREREVnBhImIiIjICiZMRERERFYwYSIiIiKyggkTERERkRVMmIiIiIisYMJEREREZAUTJiIiIiIrmDARERERWcGEiYiIiMgKJkxEREREVjBhIiIiIrKCCRMRERGRFUyYiIiIiKxgwkRERERkBRMmIiIiIiuYMBERERFZwYSJiIiIyAomTERERERWMGEiIiIisoIJExEREZEVTJiIiIiIrGDCRERERGQFEyYiIiIiK5gwEREREVnBhImIiIjICiZMRERERFYwYSIiIiKyggkTERERkRVMmIiIiIisYMJEREREZAUTJiIiIiIrmDARERERWcGEiYiIiMgKJkxEREREVjBhIiIiIrKCCRMRERGRFQpnB0BE7k0URWzZsgUHDx6Ej48PHnnkEXTt2tXZYRER2ZXLJExlZWVYuXIlTp48CU9PT0yaNAkJCQnVlk1MTMRnn32GK1euICoqCrNmzUJERIR0/86dO7FlyxZotVr07t0bzz33HLy8vAAAzz77LPLz86Wyer0eYWFhWL58OQBg3rx5SEtLg1wul8ps2rSpMS6ZqEl444038MUXX8BkMkEul2Pt2rXYsWMHevfu7ezQiIjsxmUSplWrVsFoNGLNmjXIzc3FG2+8gbCwMPTo0cOsXElJCRYvXozp06djwIAB2L59O95++218+umnkMvlOHXqFDZs2IA333wTwcHBWLp0KVatWoUXX3wRALBy5Uqz87300kvo06eP2bEnn3wSI0eObNwLJmoCMjMz8dlnn0m3DQYDZDIZ5s+fj59//tmJkRER2ZdLjGGqqKjAoUOHMHXqVHh5eaFDhw6Ij4/Hnj17LMoePnwYoaGhGDx4MJRKJcaPHw+tVovExEQAwL59+zBkyBC0b98eXl5emDJlCg4ePIjKykqLc126dAnnz59HfHx8o18jUVOUk5NjccxkMiE7O9sJ0RARNR6XaGGqenO9uVutffv22L59u0XZS5cuoV27dtJtuVyOyMhIZGZmIi4uDpmZmWZdAZGRkTCZTMjJyTF7HADs2bMHcXFxaNWqldnxdevW4ZtvvkFwcDAmT56Mvn37WsSRm5uL3Nxc6bZarUZoaGj9LrwGVd2BN3cLugtBENwubta37Tp27AiZTAaTySQdUygU6NKlS41xuWt9O7uubeGudQ2wvh2N9W2dSyRMFRUV8PT0NDvm7e0NrVZrUVar1cLHx6fGshUVFfD29pbuEwQBXl5eFucyGo3Yv38/nnrqKbPj06ZNQ3h4OJRKJY4fP44lS5Zg8eLF6Ny5s1m5VatWYdGiRdLtefPmYfHixfW4auv8/Pzsej5HUalUzg7BJqzv+gsMDMTy5cvx3HPPQa1Ww2Qywc/PD6tXr0ZgYGCtj3XH+uZr27FY347F+q6dSyRMHh4eFgmNRqOxSKIAwNPTE+Xl5WbHysvLpbIeHh613l/l+PHjMBgMuPPOO82Od+nSRfp///79cfToURw+fNgiYZo+fTpGjx4t3Var1SgqKrJ2qXUil8vh5+eHkpISGI1Gu5zTUby9vaHRaJwdRr2wvhvmoYceQseOHXH48GF4e3tj9OjRCAoKqvHvwV3r2xXqur7cta4B1rejNef6tvblropLJExt27YFAFy+fBnh4eEAgPT0dERGRlqUjYiIwO7du6XbJpMJGRkZmDBhAoAbXXDp6ekYNGgQgBuDUmUymUV32Z49e3D33XdDqVTWGptMJoMoihbHQ0JCEBISIt0uKCiw+x+I0Wh0uz86URTdLuYqrG/b9erVC7169ZJu1yUmd6tvV6lrW7hbXQOsb0djfVvnEoO+PTw8MGDAAKxbtw7l5eVIT0/H3r17MWTIEIuy/fr1Q3Z2Ng4cOAC9Xo9t27bB09MT3bp1AwDEx8dj7969SE9PR3l5OdatW4e77roLarVaOkdxcTFOnDiBYcOGmZ27rKwMJ06cQGVlJYxGI44ePYqDBw9WO4aJiIiImg+XaGECbnRxrVixAo899pg0uy0uLg4AMGnSJCxYsACxsbHw8/PDvHnz8Nlnn2H58uWIiorCa6+9Jg366tmzJyZPnoxFixahvLwcvXv3xvTp082e69dff0VERAQ6dOhgdtxoNOLbb79FVlYWBEFASEgIXnzxRcTExDimEoiIiMglCWJ1/U1UbwUFBXY7l1wuR2BgIIqKityuidTX1xelpaXODqNeWN+O5a71zbp2LNa3YzXn+m7ZsmWdyrlElxwRERGRK2PCRERERGQFEyYiIiIiK5gwEREREVnBhImIiIjICiZMRERERFYwYSIiIiKyggkTERERkRVMmIiIiIisYMJEREREZAUTJiIiIiIrmDARERERWcGEiYiIiMgKJkxEREREVjBhIiIiIrKCCRMRERGRFUyYiIiIiKxgwkRERERkBRMmIiIiIiuYMBERERFZwYSJiIiIyAomTERERERWMGEiIiIisoIJExEREZEVTJiIiIiIrGDCRERERGQFEyYiIiIiKxT1fYDRaMThw4eRkpKCwsJCyGQyBAcH484770SnTp0aI0YiIiIip6pXwvTJJ59g4cKFuHbtGkRRhCAIACD9f+DAgfjss8/QtWvXRgmWiIiIyBnq3CW3YsUKPP/885g8eTJ27NiBX375BQsXLkRQUBBWrlyJo0ePIjIyEv3798fZs2cbM2YiIiIih6pzC9OyZcswf/58LFy4UDo2dOhQ9OrVCw899BCuXr2Kr776CuPGjcPcuXPx3XffNUa8RERERA5X5xamy5cv46677rI4PmDAAJSVleHixYsAgKlTp2L//v12C5CIiIjI2eqcMLVr1w4//vijxfGffvoJMpkMISEhAICgoCDo9Xr7RUhERETkZHXukpszZw6eeOIJZGVl4d5774VKpcKxY8ewZs0aTJkyBUFBQQCApKQkdOzYsdECJiIiInK0OidMjz/+OLy9vbFgwQJs3boVoiiiZcuWmDNnDubOnSuV69ixI5YsWdIowRIRERE5Q72WFZg0aRImTZoErVaLyspKBAQEWJQZMWKEvWIjIiIicgn1XrgSADw9PeHp6WnvWIiIiIhcUr0Tpl9++QU//PCDtNK3IAgIDAxEdHQ0Ro0ahWHDhjVGnEREREROU+dZckVFRRg0aBBGjBiB77//HiqVCtHR0ejSpQtUKhW+//57DB8+HIMHD0ZRUVFjxkxERETkUHVuYXrhhReQlZWFQ4cOoV+/ftWWOXLkCKZOnYoXX3wRa9eutVeMRETNTllZGX7//XdUVFSgd+/eiIiIcHZIRM1anROmHTt2YPXq1TUmSwBw55134r333sMTTzxhl+CIiJqj3NxcjBo1Cjk5OZDJZBBFEWvXrsW9997r7NCImq06d8mZTCaoVCqr5ZRKJURRbFBQRETN2fPPP4/c3FwYDAbodDro9Xo8+eSTKC0tdXZoRM1WnROmESNGYO7cuUhNTa2xTFpaGubNm8elBYiIGuD06dMWOyZotVppCyoicrw6d8l9/PHHGD58OGJjY9GjRw9ER0cjICAAgiCgqKgIKSkpOHPmDLp3745ly5Y1ZsxERE1aixYtqp0806JFCydEQ0RAPVqY2rRpgxMnTuDbb79FXFwcLly4gD179mD37t24cOEC4uLi8O233+LPP/9EmzZtGjNmIqIm7fXXX4cgCNJthUKBBx98EGFhYU6Miqh5q9c6THK5HJMnT8bkyZMbKx4iomYvISEBGzZswJdffgmNRoOhQ4dixowZzg6LqFmzaaXvKmVlZRAEAd7e3vaKh4iIAMTHxyM+Pt7ZYRDR/1PnLjkAyMvLw7x58xAXFwcPDw/4+/vDz88PHh4eiIuLw/z585GXl9dYsRIRERE5RZ1bmM6cOYMhQ4ZAFEXcf//9eOSRRxAYGAhRFFFcXIzk5GR8/vnn+OKLL7Bv3z5069atMeMmIiIicpg6J0zPP/88brvtNnz33Xfw8fGptkxZWRkeeOABPP/889i7d6/dgiQiIiJyJkGs4yqT3t7e2LFjB4YMGVJrud27d2Ps2LHQaDR2CdBdlJSUQK1W2+VcgiBApVJBp9O53SKgCoUCBoPB2WHUC+vbsdy1vlnXjsX6dqzmXN91/eyucwuTv78/MjMzrZa7dOkS/P3963raJkOn00Gn09nlXHK5HCqVChqNBkaj0S7ndBRfX1+3W42Y9e1Y7lrfrGvHYn07VnOub7snTNOmTcM///lP6PV6TJ48GQEBAWb3FxcXY9OmTXjllVfwzDPP1CtYIiIiIldW54TprbfeQmlpKZ577jnMmDEDbdq0MVvpOy8vD4Ig4P/+7//w5ptvNmbMRERERA5V54RJoVBgxYoVmDdvHnbt2oXU1FRp6f7AwEBER0fj3nvvRWhoaKMFS0REROQM9V64MjQ0FI8//nhjxEJERETkkuq1cCURERFRc1SvhOn06dN44oknMHLkSMyePRsXL16stkz79u3tFiARERGRs9U5YTp16hT69euHn3/+GXq9HmvXrkW3bt2watUqs3KVlZV1Wn6AiIiIyF3UOWGaN28eBg4ciIsXL2LPnj24fPkypk+fjmeeeQavvvpqY8ZIRERE5FR1HvR94sQJrF27VlrgycvLC0uXLkWfPn3wj3/8Azk5OfjPf/7TaIESEREROUudEya9Xg+lUmlx/OGHH0arVq3wwAMPoKCgAC+99JJdAyQiIiJytjp3yXXp0gW///57tfcNGzYMe/bswbFjxzB16lS7BUdERETkCuqcMI0YMQKrV69GRUVFtff37dsXv/32G+Ryud2CIyIiInIFde6Smz17NiZOnFjrjsDR0dE4ceIEkpOT7RIcERERkSuocwuTr68vYmNj4enpWWu5Vq1aYdCgQdJtk8mE+Ph4nDt3zvYoiYiIiJyo0Vf6FkUR+/fvR2lpaWM/FRE50eXLl3HmzBloNBpnh0JEZHfcGoWIGkSv1+PJJ59Er169EB8fj27duuHgwYPODouIyK6YMBFRgyxZsgQ//vijdLusrAxTpkxBfn6+E6MiIrIvJkxE1CC7d++GXq83O1ZZWYnTp087JyAiokbAhImIGqS6iSAmkwleXl5OiIaImhqDwQCj0ejsMJgwEVHD/N///R8EQZBuK5VKdOrUCbfffrsToyIid2YymVBWVobc3FxcvnwZlZWVzg6JCRMRNczo0aOxcuVKREZGIjAwEPfccw+2bdsm7TtJRFRXWq0W+fn5uHTpEvLz82tcLNsZ6rxwZU1EUURubi5at24NhcLydHK5HOnp6QgNDW3oUxGRi5o4cSImTpzo7DCIyA3pdDqUlZVBo9HAYDA4O5wa2dzCtGvXLtx5553w8PBAREQE/v77bwDA008/jXXr1pmVjYyMrHbjXiIiImp+jEYjSkpKkJ2djezsbFy/ft2lkyXAxoRp/fr1SEhIQGRkJD7++GOYTCbpvg4dOmDNmjV2C5CIiIjcnyiK0Gg0uHr1Ki5duoRr165Bp9M5O6w6sylheuutt/DCCy9g48aNePLJJ83ui42NRWJiol2CIyIiIvdWUVGBgoICXLp0CXl5eSgvL3d2SDaxaQzTxYsXkZCQUO193t7euH79eoOCIiIiIvdlMBhQVlaGsrIyi3Xa3JVNLUzBwcFITU2t9r6///4bkZGRDQqKiIiI3IvJZEJpaam0FEBRUVGTSZYAG1uYHn74YSxcuBBdu3bF4MGDAQCCICAxMRHvvfcennnmGXvGSERERC5IFEVotVqUlZWhvLwcoig6O6RGY1PCtHDhQiQlJWHYsGFo0aIFAGDkyJHIz8/HqFGjMHfuXLsGSURERK6jaimAsrIyl1iF2xFsSphUKhX+97//4ddff8Xu3btRUFCAoKAgDB06FEOHDrV3jERERORkRqNRSpLcaXabvdiUMF26dAkhISG45557cM8995jdZzAYkJOTg4iICLsESERERM5RtRRAWVkZtFqts8NxKpsGfbdr1w6nTp2q9r6//voL7dq1a1BQRERE5DxarVZaCiA/P7/ZJ0uAjS1MtQ3qqqys5B5SREREbkav10tdbq6+6rYz1DlhSk1NRXJysnR7//79yMrKMitTUVGB9evXo3379vaLkIiIiBqF0WiERqNBUVERiouLnR2OS6tzwrRx40YsWrQIwI0lBGqaCRcQEMCtUYiIiFyUKIooLy+XlgIAAA8PDydH5frqnDC98MILeOyxxyCKItq3b4/vvvsOPXv2NCujUqkQHBwMQRDsHigRERHZrqKiAmVlZdBoNGZ7wFLd1Dlh8vf3h7+/PwAgPT0dISEhUKlUjRYYERERNUzVuCSNRtOkVt12BpsGfd+89Ul5eTkqKiosygQFBdkeFREREdnEZDJBo9GgtLQUlZWVzg6nybB5ltzixYvx2WefITc3t9oyzWXlTyIiImdrTluUOItNCdPSpUvxwQcfYM6cOZg/fz5ee+01yOVybNiwATqdDvPnz7d3nERERHSLyspKaSkAjktqXDYtXLl69WosWrQIc+bMAQCMHTsWCxYsQFJSEqKjo3H+/Hm7BklEREQ3GAwGFBcXIysrCzk5OSgpKWGy5AA2JUwZGRm47bbbIJfLoVQqpbUbZDIZnn32Waxdu9aOIRIRETVvJpMJpaWlyM3NxeXLl1FUVMRB3A5mU8LUokULlJWVAQAiIiJw8uRJ6b78/HxpXQciIiKyTdV6SXl5ebh06RIKCgqqnWRFjmHTGKYBAwbg+PHjSEhIwMMPP4yFCxfiypUrUCqV+OKLLzBkyBB7x0lERNQscFySa7IpYVq4cCGys7MBAPPmzUNxcTHWr18PrVaLYcOGYfny5XYNkoiIqCkzGAxSksSuNtdU74RJFEW0bNkSERERAAC1Wo1ly5Zh2bJldg+OiIioqapaL6msrIxdbW6g3mOYDAYDgoODsW/fvsaIh4iIqMniuCT3Ve+ESalUom3btlyYkojIQQwGA958801ER0ejS5cumDt3Lj9k3UxFRQWuXbuGS5cu4erVq9BoNFxc0s3YNIbpueeew9KlSzF8+HCo1Wq7BFJWVoaVK1fi5MmT8PT0xKRJk5CQkFBt2cTERHz22We4cuUKoqKiMGvWLKmLEAB27tyJLVu2QKvVonfv3njuuefg5eUFAPj222+xefNmKJVKqfyCBQsQGxsL4MYsv+XLlyMlJQWBgYF47LHH0L9/f7tcIxGRLd544w2sXbtWGtvy3//+F9evX8enn37q5MioNtzHrWmxKWHKzMxEWloaIiIiMHjwYLRu3RqCIEj3C4JQ7zFNq1atgtFoxJo1a5Cbm4s33ngDYWFh6NGjh1m5kpISLF68GNOnT8eAAQOwfft2vP322/j0008hl8tx6tQpbNiwAW+++SaCg4OxdOlSrFq1Ci+++KJ0jv79++Pll1+uNo73338f7du3x/z585GcnIx//etfiIyMRNu2bet1PURE9mAymcySJeDGB/GWLVvwwQcfSF8GyTUYjUaUlJTg+vXr3MetibFpHaadO3dCrVbDy8sLx44dw86dO/H999+b/dRHRUUFDh06hKlTp8LLywsdOnRAfHw89uzZY1H28OHDCA0NxeDBg6FUKjF+/HhotVokJiYCAPbt24chQ4agffv28PLywpQpU3Dw4ME6vXBzcnJw7tw5TJkyBWq1Gj179sRtt92GX3/9tV7XQ0RkLyaTCQaDodr7dDqdg6Oh6oiiCI1GgytXruDcuXMoKChgstQE2dTClJ6ebtcgqpYouLlbrX379ti+fbtF2UuXLqFdu3bSbblcjsjISGRmZiIuLg6ZmZno3bu3dH9kZCRMJhNycnKkx504cQJTpkyBv78/hgwZgnHjxkEmkyEzMxOtWrWCj4+P9Ph27drh4sWLdr1eIqK6UigU6NevH44fPy61MikUCnTu3BkBAQHODa6Z02q10Gg00Gg0MJlMkMlkbPFrwmxKmOrDZDKhY8eO+P7776VxQreqqKiAp6en2TFvb29otVqLslqt1iyhubVsRUUFvL29pfsEQYCXl5d0/1133YXhw4cjMDAQFy9exHvvvQeZTIZx48ZZPBYAfHx8qo0jNzcXubm50m21Wo3Q0NDaqqLO5HK52b/uRBAEt4ub9e1Y7lrfzqzr1atXY/Lkyfj7778BAFFRUVi/fr3VeNy1rgHXfW3rdDppvaSbW/5kMpk0NEUQBMhkNnXgOJUrxyyXyy1eD45+fTd6wiSKIjIyMmptnvTw8LBISjQajUUSBQCenp4WW6+Ul5dLZT08PGq9/+ZWrI4dO2LSpEn4+eefMW7cuGofW1Mcq1atwqJFi6Tb8+bNw+LFi2u8Rlv4+fnZ9XyOolKpnB2CTVjfjuWO9e2sug4MDMTJkydx8eJFmEwmdOjQAQpF3d++3bGuAdd5bRsMBmlcUtXsRJVKVWN81X1muIP6vKYczd/f36KxpIqjXt8uUTtVA6ovX76M8PBwADe6/SIjIy3KRkREYPfu3dJtk8mEjIwMTJgwAcCNLrj09HQMGjQIwI0B6jKZrMbWn5sHq0dGRiIvLw8ajUZqaUpPTzdLsqpMnz4do0ePlm6r1WoUFRXV67prIpfL4efnh5KSErdbvsHb2xsajcbZYdQL69ux3LW+XaGuW7ZsCQAoLS2tU3l3rWvA+fV986KS1fUyVEcQBHh6ekKr1brdkgEqlcqlx8Rdv37dYqahvV7fgYGBdSrnEgmTh4cHBgwYgHXr1mHWrFm4evUq9u7dizlz5liU7devH9auXYsDBw6gf//+2LFjBzw9PdGtWzcAQHx8PD788EMMGjQIbdq0wbp163DXXXdJyx8cOXIEsbGx8PX1RXp6OjZv3oyhQ4cCAEJDQ9GxY0d8++23ePTRR5GamopTp07hkUcesYgjJCQEISEh0u2CggK7vyEZjUa3e5MTRdHtYq7C+nYsd6tv1rVjOaO+RVGEVqtFWVkZysvL6530VHVpiaLolnvAuXLMtb2GHfX6domECbjRYrNixQo89thj0uy2uLg4AMCkSZOktZL8/Pwwb948fPbZZ1i+fDmioqLw2muvSX2YPXv2xOTJk7Fo0SKUl5ejd+/emD59uvQ8Bw8exPLly6HX6xEQEIChQ4di3Lhx0v0vv/wyPv74Y0yZMgWBgYF4/vnnuaQAEVETVrXZrUajcbvEkhxHEBu53dBoNEKpVOLPP/9Er169GvOpnKqgoMBu55LL5QgMDERRUZHb/fH6+vrWubvAVbC+Hctd65t17ViNXd+Nsahk1Sy58vJyl26tqY6Hh4dLrx7fpk0bixmI9np9V3V1W+OQFqabxwkRERE5g9FolMYlcZ0kqi+HJEzuNviNiIiaBpPJZDYuichWNi26EB8fj9TU1GrvO3v2LOLj46XbcrkcJpOpSXfHERGR66gavJ2fn4/Lly8jLy+PyRI1mE0tTPv370dJSUm195WUlOC3335rUFBERET1VVlZKXW5uduYLXJ9NnfJ1TQu6Y8//kDr1q1tDoiIiKiuGmPwNlF16pwwvfvuu3j33XcB3EiW7rnnHotl1CsrK2EwGDBjxgz7RklERPT/cPA2OUOdE6b+/ftj9uzZEEURb775Jh566CGEhYWZlVGpVIiOjsb9999v90CJiKj5MplMKC8vr9fK20T2VOeEadCgQdJ2I4Ig4Mknn+SCjkRE1GgauvI2kT3ZNIZpwYIFFscyMjJw/vx59OrVC0FBQQ0OjIiImqeKigpotVrk5eW53QKQ1HTZlDDNnj0bRqMRH330EQBg27ZtePDBB6HX6xEYGIhffvkFvXv3tmecRETUhOl0OmnwtsFggIeHB5Mlcik2rcO0bds23H777dLtefPmISEhAX///Tf69u2L1157zW4BEhFR02QwGFBcXIzs7GxkZ2fj+vXrMBgMzg6LXExxcbFLJM82tTDl5uYiIiICAHDhwgWkpaXhm2++Qbdu3TBr1iw8+uijdg2SiBqfXq/He++9h++//x4qlQqPP/44HnvsMW5tRHbFGW5Um4qKCpw9exZJSUnST3Z2Nvbu3YsePXo4NTabEiZ/f3/k5eUBAHbv3o2goCCpC06lUnEGA5EbevHFF/Hdd99Ja9m8+uqr0Gq1XCakgbRaLVJTU6FUKtG1a1coFA7ZkcqlcIYbVcdoNCIjIwPJyclISkpCcnIyzp07V+2io3/99Zd7Jkx333033njjDVy9ehXvv/8+xo4dK92XlpYmtT4RkXsoKirCxo0bzY4ZjUYsXbqUCVMDpKamYsKECbh69SoAICYmBps3b24Wi/uKoojy8nJoNBrOcCMAwNWrV6XkKCkpCampqdBoNDWWDw0NRbdu3RATE+MS26vZlDAtXboUjzzyCObOnYtevXph8eLF0n1ff/01Bg4caLcAiajxlZWVVXuc+2/Zzmg04sEHH0RBQYF07Ny5c5gxYwa2bNnixMgajyiKqKiogEajgUajcYlxJ+QcZWVlSElJQXJyMhITE5GcnIz8/Pway/v5+SE2NhYxMTGIjY1FbGwsAgMDpfvbtGnjiLBrZVPC1LZtW+zbt6/a+3bt2gUPD48GBUVEjhUSEoLg4GCzadwKhQJ9+/Z1cmTuKzc3F9nZ2WbH9Ho9Dh8+7KSIGs/NSRL3cGt+9Ho9zp07Z9a1lpGRUWOrokqlQufOnaXEKDY2FmFhYS4/XrLBnemXL1/G5cuXERcXB29vb/j5+dkjLiJyIIVCgXXr1mHSpEkoLCyEKIqIiorCp59+6uzQ3JaXl1e1xz09PR0cSeO4dRkAah5EUURWVpbZoOyzZ89Cp9NVW14QBERFRZm1HnXs2BFKpdLBkTeczQnT559/jkWLFiE3NxeCIOD48ePo1asXxo0bh8GDB+P555+3Z5xE1Mh69OiB48eP48yZM1AqlejRowfUarWzw6qzyspKLF68GD/99BPUajWeeuopPProo0771hoUFISxY8fihx9+kAbSKxQKtx4TptfrpZakmj4gqWkpLCyUWo2q/i0pKamxfKtWraRWo5iYGERHR8PHx8eBETcemxKmjz76CK+88gpeeOEFxMfHY+TIkdJ9gwcPxqZNm5gwEbkhX19f9O/f39lh2GTGjBn46aefpOTklVdeQWVlJZ5++mmnxbRixQq0bt0aP/zwA5RKJR5//HE888wzTovHFgaDQUqSuAxA01ZRUYHU1FSz1qPc3Nway3t7eyM6OlpKjmJiYlxirFFjsSlhWr58OV5//XW89tprFv3VXbp0QVpaml2CIyKqiytXrmDHjh1mx4xGI5YtW1ZtwpSVlYWdO3eisrISgwcPRlxcXKPEpVarsXjxYrOJMe6gaq0kjUaDiooKZ4dDjcBoNCI9PV1qNUpOTsb58+drHIMml8vRqVMns661qKgoyGQ2rX/tlmxKmLKzs2v8FqpUKmudJkhEZG81vedUN8vvr7/+wpgxY6DX6yEIAt555x188skneOCBBxo7zHo5d+4cPvroI+Tm5uL222/HCy+8UOO4KHswmUxSksS1kpoWURSRl5eHpKQkacZaSkpKrb/nsLAwsxlrnTt3bvYTumxKmCIjI3Hs2DHEx8db3Hf06FF07ty5wYEREdVVeHg4WrVqhWvXrkmz/JRKJe644w6LsrNmzYJWqzWb8j5r1iyMGDEC3t7eDou5NufOncOQIUOg0+lgNBpx5MgR/P7779ixY4ddB8tWLShZlSRxraSmobS01GzMUVJSEq5du1ZjeX9/f3Tv3t2sey0gIMBxAbsJmxKmp556CgsXLkSrVq0wfvx4ADcGA/7www9YsmSJ2zU/E5F7U6lU+PbbbzFp0iQUFxdDFEV07NgRy5cvtyh78eJFi/WBdDodcnNz0bFjR0eFXKsPP/xQSpaAG++vp06dwq+//op77723QefmgpJNi06nw/nz55GYmCglSJmZmTWWV6vV6Nq1q1nrUWhoKDw9Pdn9aoVNCdNLL72ES5cu4emnn8b06dMBAAMGDABwY+ClO88CISL3dNttt+HEiRNISkqCWq1Gt27dqm2NCQkJQXp6utkxmUzmUqtvX7lyxWIsiUKhqHXhv9rcmiRxQUn3ZDKZcPnyZWlAdnJyMs6ePStNdLiVIAho166d2XpHHTp0aJbb89iDzbX28ccf44UXXsCePXtQUFCAoKAgDBkyBJ06dbJnfEREdebr64s777yz1jLvvfceHnzwQQiCAFEUIYoiXn/9dZdaQ65Xr144evSo2QehTqdDt27d6nyOqiRJq9Xi6tWrbrNWktFoRGlpKVq0aOHsUJzu2rVrZslRcnIySktLayzfpk0bs0HZXbt2dZlu5qag3glTRUUFWrdujW+++QajR4926pRdIqL6Gjx4MHbt2oVNmzZBp9NhyJAhGDFihLPDMjN79mwcPHgQf/31FxQKBXQ6HV599VWrs/lu3ZoEuLGApru0KCUnJ+Obb75BZWUlBEHA/fffj0GDBjk7LIcoLy9Hamqq2VYiV65cqbG8t7e3xVYiLVu2dGDEzU+9EyYPDw94e3tDpVI1RjxERI0uLi6u0ZYSsAcvLy/s3LkT+/btQ35+Prp3715jvDcnSeXl5WZdee405TsvLw9r166V4hdFEd9//z0CAwOdvku9vRkMBly8eNFsI9rqxtZVUSgU0pT+qp+IiAi3+v02BTZ1yU2bNg2rV692uW9lRERNhVKpxPDhw6u9r7YkyVWJoijNYmzRogXkcrnZ/WfPnrVYlV0URSQmJrp1wiSKInJzc81mrKWmptY6wDoiIsKs5ahTp05utep+U2VTwhQYGIg//vgDcXFxGDFiBFq3bm32QhcEAS+++KLdgiQiau6qkqSqwdvukCRV0Wg0+PLLL3Hp0iUAQIsWLfD000+bdSHJZLJqZ+y5WyvK9evX8eeff5rNWissLKyxfGBgoFnLUXR0NPz9/R0YMdWVTQnTq6++CuDGbtxnzpyxuJ8JExFRw7lzknSz9evXIzs7W7pdWFiIL7/8Eq+88or0ZTsmJgbff/89TCaTWeJ0++23OzzeuqqsrMTZs2fN1jyqSgqr4+Hhga5du0pjj7p164bg4GCn7XdI9WNTwuQuAwiJiNyNO3a3WXP27Fmz6xBFEfn5+SgpKZFaUwICAjBjxgysW7cOBQUF8Pb2xrhx41xmbSyTyYRLly5JA7KTkpJw7ty5GmcfymQytG/f3mwj2vbt23NKvxuzaZZc3759sWTJkhr714mIqO5EUYRWq5Vakpral1K5XF5t4nfrOlnh4eGYO3cuRFF0+kKKBQUFZpvQJicn17rtV0hICGJjYxEXF4cuXbqgS5cu8PT0dGDE1NhsmiWXk5NjMWCPiIjqripJag6LSd51113Yv3+/dI1yuRzR0dE17o3n6C4qjUaDlJQUs4HZeXl5NZb39fVFTEyM1K0WHR2Nli1bQiaTwcvLq8n/Ppsrm9oGx48fjy1btmDo0KH2joeIyCaFhYX4/fffYTKZ0K9fPwQHBzs7JAsmk0lKkm7dz64pGzlyJGQyGY4cOQKTyYRu3bph3LhxTonFYDDgwoULZq1H6enpNW4Ro1Qq0blzZ7OutfDwcLcbjE4NZ1PCNGDAAMybNw85OTkYOXKkxSw5ANIec0REjS01NRVjxoxBaWkpBEGAQqHAxo0bra767QhVG9xW/bj73m1GoxEHDhxARkYGfH19MWjQIKvbyshkMowcORIjR450UJQ3iKKInJwcs+QoLS0NlZWVNT4mMjLSbNZap06d7LrhMbkvmxKmxx9/HACwc+dO7Ny50+J+QRCaxEBFInIPTz31FK5fv262We1jjz2G5ORkp7QEGI1GaTxSRUWF2ydJVURRxOrVq3H+/HkYjUYIgoATJ07ghRdecIkWveLiYrMZa0lJSSguLq6xfFBQELp162bWtebr6+u4gMmt2JQw3bpxJRGRs5hMJqSlpZklJVWLJObl5Tnsg9xgMEjjkZrqru8XLlzA2bNnpboWRREGgwG7du3CtGnTHBpLRUUFzp49azYoOysrq8bynp6eiI6ONlsQsk2bNpzST3VmU8IUGRlp7ziIiGwik8ng6+uLkpISi+MBAQGN+tw6nU5qSdLpdI36XK6gtLQUMpnMYomA2lpx7MFoNCIzM9Nsn7Vz587V2JMhl8vRoUMHs/WOoqKiOFmJGqTBC0LU9G0qKCiooacmsruCggKsWbMG+fn5iI2NxdSpU/km2gQsWLAAL7/8stksrBdffBEeHh52f66qhSTLy8uh1+vtfv76uHr1Kq5fv45WrVohMDCw0Z+vTZs2FkmKXC5HWFiYXZ/n6tWrOHfuHE6fPi1tJVLblP7Q0FCzlqOuXbs2yu+emjebEiZRFLF48WJ89tlnyM3NrbYMxzCRq7l69Sri4+NRXFwMg8EAmUyG3bt3Y926dc4OjRro0UcfRUBAANavXw+DwYDRo0dj6tSpdjn3zdP/r1275hLvbaIoYvPmzTh69CiAG+NGx4wZg4EDBzbq84aGhmLkyJH46aefoFAoIIoiWrRogYSEBJvPWVZWJk3pr+pay8/Pr7G8n5+f2Yy1mJgYfkEnh7ApYVq6dCk++OADzJkzB/Pnz8drr70GuVyODRs2QKfTYf78+faOk6jBPvzwQxQVFUmtAiaTCXv27MHevXsxadIkJ0dHDTV69GiMHj3aLueqGrRdXl4OrVYLURTh4eHhEskSABw9ehTHjx+XbouiiO3btyMiIqLRh0wMHToUnTp1wuXLl+Ht7Y3Y2FioVKo6PVav1+P8+fNmyVFGRkaNg+JVKhW6dOli1rXWtm1bjjsip7ApYVq9ejUWLVqEZ599FvPnz8fYsWPRq1cvvP766xg9ejTOnz9v7ziJGiwjI8OiC0WpVNY6UJSaD71eL41Hqm3auSu4cOGCxRpOCoUCGRkZDhljGhkZafV5RFFEVlaW2Yy1tLS0Gsd6CYKAqKgoKTnq1asXwsPDOaWfXIZNCVNGRgZuu+02yOVyKJVKacCfTCbDs88+iyeeeALvvPOOPeMkarDOnTvj999/N0uadDod2rdv78SoyFmq9myr2pLE2eOR6sPDwwOCIFjMDFSr1U6LqaioyCw5SkpKshiIf7NWrVqZda1FR0fDx8dHut/Dw6PJzjYk92RTwtSiRQuUlZUBACIiInDy5EnEx8cDAPLz81FeXm6/CInsZPbs2fj555+Rk5MD4Ea3y8SJE3H33Xc7OTJyFKPRKCVI7rzS9oABA3D06FGYTCaIoihtydGjRw+HPH9FRQXS0tLMNqKt+ruqjpeXF6Kjo80WhLS22CWRq7F5pe/jx48jISEBDz/8MBYuXIgrV65AqVTiiy++wJAhQ+wdJ1GDBQQE4Ndff8XGjRuRl5eH2NhY3H///RwP0cRVTf3XarVNpsUiODgYM2fOxI4dO1BcXIyQkBCMHz++xr3ZGsJoNCI9Pd2s9ejChQu1Tunv1KkToqOjpUUhOaWfmgKbEqaFCxciOzsbADBv3jwUFxdj/fr10Gq1GDZsGJYvX27XIInsxcfHB0888YSzw6BGZDKZpKn/Wq0WBoPB2SE1ivDwcDz77LN2PacoisjLy0NiYqKUIKWkpECr1db4mLZt25q1HHXu3JlT+qlJsilh6tKlC7p06QIAUKvVWLZsGZYtW1Zj+d9++w29e/eGt7e3bVESEdVCp9NBq9VKrUhNZSuSxlZaWmqxlci1a9dqLO/v72+xlUhjLw5K5CoavHClNUajEffccw+OHz+OXr16NfbTUTNWWFiIOXPm4Pjx4wgMDMSrr76K4cOHOzsst2I0Gt2i66S5tCLZk06nw/nz581ajzIzM2ssr1ar0bVrV2lByJiYGE7pp2at0RMmAPy2R42usrISY8aMwYULF6DX65GTk4NHHnkE69ev55i6Ojh9+jSefvppZGRkICAgAO+88w4mTJjg7LDMVFZWmrUiUc1MJhMuX76MlJQUpKWl4fTp0zh79myNMwEFQUD79u3NVsvu0KEDFAqHfEQQuQX+NVCTcOTIEZw9e9Zs1pMoili5ciUTJityc3Mxbtw4lJeXQxRFFBUVYcaMGWjRogXuuecep8VlMBikBMmdZ7Q5wrVr18ym8ycnJ6O0tLTG8q1btzZbDLJr164cMkFkBRMmO1GpVHZbA6Wqydvb29vtWucUCgV8fX0d/rxVXUm3fqhqNBqr8TT3+t60aRP0er1F3W3bts1uK2ffrKb6vnnKf3l5udkCh3VdSboxyWQylxjMXF5eLm1CW/VT25R+Hx8fxMTEoHv37ujevTu6devmFlP6XaW+beEKr9f6cvX69vHxsUjqHf3ezYTJTnQ6nd12K5fL5VCpVNBoNC6zFUNd+fr61vrNtrF07drVYmyFUqnEoEGDrMbT3Ou7unXTqhZ1bIzfZVV9l5WVQaPRSF1srr66tjMWUjQYDNKU/qqfixcv1tjaplAo0KlTJ6n1qEePHujatSsqKirMHuMOXZruuHClTCaDQqGATqdzuxZRV6/vsrIyizq113t3XRs7mDBRkxAaGorVq1fjySeflD54hwwZgpdeegmlpaU4fPgwjEYj+vTpg5YtWzo5WtcyaNAgi29nMpkMo0aNsuvziKKIyspK6HQ6lJaWoqCgwO0S1MYkiiJyc3PNZqylpqbW+iEWHh5uNqW/U6dOZm/+MpkMMpnMEeETNXlMmKjJGDFiBP7++2+kpaUhMDAQXbp0wcWLFzFmzBgUFBRAEAR4enpi8+bN6N27t7PDdRnt2rXDunXr8OSTT+L69euQy+VYsGBBg7vjqhKkiooK6efmVandrfvT3q5fv47k5GSzaf2FhYU1lg8MDDTbSiQmJgb+/v4OjJioeWv0hEkmk2HatGn8Vk8OERQUhH79+km3n3rqKbOWjLKyMjzyyCNITEzkN++bDB48GGlpacjPz0dgYKBN4/GquvGqfiorK5t9UlSlsrIS586dM+tau3z5co3lPTw80LVrV7OB2cHBwZzST+RENiVMly5dqvE+mUwGf39/aSCqIAhYs2aNbdERNYAoikhKSrKYOZefn4+8vDwEBwc7MTrXI5fL61UnRqPRrAVJp9MxQcKNKf2ZmZlmXWvnzp2rca0omUwmTemvWhSyffv2nNJP5GJs+ouMioqy+k0nKioKL7zwAmbOnGlTYEQNJQgCfHx8LHZMFwQBfn5+TorKfen1eqnlqKKiosY1fZqbgoICs5aj5ORkaDSaGsuHhISY7bMWHR0NT09PB0ZMRLawKWFas2YNXn/9dXTo0AFjxoxB69atkZeXh23btiE9PR0vv/wyjh49ihdffBEAmDSR08ybNw/z5s2TWpkUCgWmT5/eKJuUNiUmkwmVlZVSclRZWel2s34aQ3l5OVJSUqTEKDExEXl5eTWW9/HxMRuUHR0dzeEJRG7KpoTp4MGDGD58OL744guz4y+88AKefPJJnD59Gt988w38/f3xySefMGEip3niiSfg7++Pr7/+GgaDAWPGjMFTTz3l7LBciiiK0Ov1UoJUNZPNVleuXMGOHTtw7do1tGnTBmPHjkVQUJAdI3YMg8GACxcuSC1HKSkptU7pVyqV6Ny5s9lq2eHh4RwrR9RE2JQwbd68GZs3b672vsmTJ2PSpElYvXo1Ro0ahdWrVzcoQKKGmjBhQrXbfBQXF2Pr1q24fv06Bg8ejD59+jghOserSo50Op3dxx5du3YNy5Ytg16vhyiKKCwsRGZmJl5++WX4+PjY5TkagyiKyMnJMetWS01NrXVtqMjISLN91jp37uyWCxYSUd3YlDDJ5XL89ddfGDZsmMV9p0+flr5RyeVydn2QS7py5QqGDx8uLTfw73//Gy+88AJeffVVZ4dmVzcnR1X/NmbX2pEjR2A0GqUEzGQyQavV4uTJk7j77rsb7Xnrq7i42Gw6f1JSEoqLi2ssHxQUJC0C2a1bN0RHRztlRXsich6bEqYpU6bg9ddfh06nw/33349WrVohPz8f//vf//D2229j+vTpAIATJ04gOjrargET2cObb76J/Px8s4HLH374IUaPHo3Y2FgnRmYbURSl1eZvTo4cPWvt1hWlgRuD7J25gnBFRQXOnj1r1nqUlZVVY3lPT09ER0dLrUdVW4l4enq69ErIRNS4bEqYPvjgAygUCrz99tt4/fXXpeNqtRrPPvss/v3vfwMABgwYgOHDh9snUiI7Sk1NtZjlpVQqceHCBZdPmAwGg5QYlZWV4fr163bblqehoqKicPjwYbNjBoMBUVFRDnl+k8mEjIwMs+To3LlzNa4oLpfL0b59e2nGWrdu3RAVFQW5XO6QeInIfdiUMCmVSnz44Yd4/fXXcebMGeTm5iIkJATdu3dHYGCgVM6VmuCJbhYZGYmUlBSztXEMBgPCwsKcGJU5o9EInU4HvV5v9u/NLTgeHh4ukywBQK9evZCRkYE//vgDgiBAFEWMGDECnTt3bpTny8vLM5uxlpqaanVKf1VyFBsbi65du7r0hqNEzUHVFj63/giCIP3fFcYHNmhltMDAQCZF5JZee+01HDhwABUVFTAajZDJZBg/fjx69uzp8FgMBgP0er1ZYqTX691ynzVBEPDAAw9gwIABKCoqQsuWLdGqVSu7nLusrAwpKSlmY49qm9Lv5+dnNmMtJibGLWfrEbmqmpIba8nPrcfdhU0J03//+1+rZR599FFbTk3kEB06dMCBAwewZs0aXL9+HQMHDsS4ceMabcxP1dT96n6a4vpGwcHBDVpJXa/X4/z582aDsjMyMmr8/ahUKnTu3NksOQoPD3erN2MiR7k5ean6v4+PDxQKRb2SneZGEG34hKipom5+c3LHb8cNUVBQYLdzyeVyBAYGoqioyO3q0dfXF6Wlpc4Oo17sVd+iKJq1FlX9GAyGGrfFaCgPDw+3G4hctflueXk5TCYTRFFEVlaWWXKUlpZWY1ejIAiIiooyaz3q2LEjlEplo8bdFOranbC+q1ddsiOXy+vc0lNTq05zfu+u62KyNrUw5efnWxwrLCzEL7/8gk8//RRff/21Laclcnkmk0lKgm79t7GSIluZTCYcPXoU2dnZ8PX1Rf/+/V1iKnxRURGOHz+OkydPIjExEUlJSRbb19ysZcuWZvusxcTEuPSaTkS1sZbM3JrY3JwMuVsXVlNjU8LUokWLao916tQJBoMBr776Kn7++ecGB0fkaCaTSUp+qn5uTojc5Vu6KIpYu3YtUlJSIIoiZDIZ/vjjD/zzn/+Ev79/g89fVFSE06dPQ6/Xo1OnTmjXrl215SoqKpCWlobExESp9SgnJ6fG83p5eSE6OtpsO5HWrVs3OF4ie6ktwVEqlQgICEBZWZn0d3drCxC5L7tvhx0bG4v58+fb+7REdmE0Gi0SIpPJhOLiYhQXF7tcK5Gtzp49i+TkZGnMj9FoRHl5OXbv3l3tquf1kZ2djRUrVsBoNEIQBOzatQsTJkxA3759kZ6ebta1duHChVqn9Hfq1Mmsay0yMpJT+qlR1dRldWtLTnX3C4JQawtPVReRIAhuN5yCrLNrwlReXo4vvvgCbdu2tedpieqkKhm6OSm69f/VDdmr+tbnLq1HdVFUVAS5XG6WAJpMJruMtdu8ebO0OGZJSQnKysrwxhtvSBv11iQsLEzqWuvduzciIyNdYqowuadbE5zqEp6akiAiW9iUMHXv3t0iy9bpdMjKyoJWq63TLDqiujKZTGbJ0K2JUdW/9P9r2bKlRZ3I5XK0adPGpvOVlpYiJSUFSUlJ2L17N4qLiy0W/ryZv7+/2XpHMTExCAgIAODeA5HJvqobtFz1f19fX1RUVNSYABE5mk0JU+/evS0SJg8PD4SFhWH8+PHcDoXqpCr5ufXn1sTIEdt7XL9+HevXr0d2djb8/f1x//33u3VLaYcOHdC3b18cP34ccrkcoijC39+/Tivv63Q6aUp/VfdaRkZGjeWrpiQPGzYMPXv2RGxsLEJDQzk4tZm5OaGp6d/qWn1q4o6ztqhpq3fCJIoiPvjgA3h6enJjXbJQtTq10WiUBlBX/f/WZMhVaLVavP/++7h+/TqMRiPy8/Px8ccf48UXX2zQWkLOJAgCJk2ahOjoaOTk5MDHxwd9+vSBWq02K2cymXD58mVpzFFSUhLOnj1bY+uRIAho27YtDAYDfH194evrC09PT4waNQpDhgxxxKWRA9ya7FhLhDjujJqDeidMBoMBwcHB2L59O+67777GiIlcSFWiU/Vv1c+tt6t+3HHtlL///ltKloAbXwqMRiMOHTqEBx54wMnR2U4QBPTo0QM9evSQjl27ds0sOUpOTq71W3zr1q3NZqx17doV3t7euHLlCo4fPw69Xo8uXbq4/P57zVnV1PSqRQlvTYCq+z9bB4ks1TthUiqVaNu2rUu1EFDd3Zzs3Jz01JQQOXq3e2eoqKiw+IAQRRHl5eVOisg+tFqtxVYiubm5NZb39va22Eqkpm1NgoODcf/99zdW6GRFVRJU009VAqRSqdCyZUu3XASXyNXYNIbpueeew9KlSzF8+HCLJn5yDFEUzRKfW5Og6pIhDrCtXmRkpMUAaZlMVuPaQq7IYDDg4sWLZq1HFy9erPF3XjWl/+aB2ZGRkRxM60TWkqBbE6K6YFcZkf3YlDBlZmYiLS0NERERGDx4MFq3bm32DV0QBCxbtsxuQTZnpaWl0gaxtyZIZB9RUVGYOHEiNm/eDEEQIIoi4uLiMGDAAGeHVi1RFHHlyhUkJSUhNTUVf//9N1JTU2vtCg0PDzdrOercuTO/7DjIzYmQQqEw+/fm40xWiVybTQnTzp07pTfbY8eOWdzPhMl+tFotNBqNs8No8oYOHYrOnTvjypUr8PPzQ9u2bV1mHEdJSYnFuKPCwsIaywcGBlp0rdljdW+yVFsipFAomAgRNSE2JUzp6en2joPI6Vq2bImgoCCnxlBZWYlz585JiVFiYiIuX75cY3kPDw906dLFbJ81Tum3D5lMJiU9crkc/v7+qKysNEuGWM9EzUedE6b6LEYpCAIeeeQRmwIiai5MJhMuXboktRwlJSXh3LlzNS7CWTWuKjY21ixB4qKdtrk58anu59aWIa4LRNS81Tlheuyxx8xuV32zunkW1c3ftpgwEZkrKCgwS45SUlJQVlZWY/ng4GCzrrWuXbtarH2mUCiYMNWgqoVIqVSaJUJVt5ty65BGo8GyZctw5swZtGvXDs888wzCw8OdHRaRW6tzwpSfny/9//z583jwwQfx8MMPY8KECWjTpg2uXr2KzZs3Y/369diwYUOjBEvkLjQaDVJTU8261vLy8mos7+PjI403qvq3ZcuWDozYsYxGI4qKiuDp6dmg/eSqWomUSqWUCFX921xniOl0OowdOxZJSUnQ6/VQKBTYsGEDfv31V0RGRjo7PCK3VeeEqUWLFtL/H3zwQTz99NN49dVXpWOhoaHo2bMnfHx8MG/ePOzdu9e+kRK5qKop/YmJiVKClJ6eXuNMRqVSic6dO0tdat26dUN4eHizGRx89uxZrF27FlqtFoIgYPjw4Rg6dGiNLT4ymUxKiG5NjJpLndXHrl27kJiYKLU8GgwGaLVarFixAkuWLHFydETuy6ZB33/88QfmzJlT7X233347Fi9e3KCgiFyVKIrIyckxm7GWmpqKysrKGh8TGRlp1rXWqVOnBrWquLPCwkJ88cUX0oe5KIrYtWsXAgIC0K9fP6hUKovkqLm2FNkqLy/PoqvWYDAgJyfHiVERuT+bEqbWrVtj48aNGDZsmMV9GzZsqHF1YKLGYjQasXv3bpw5cwZyuRz9+/fHHXfc0eBxKsXFxUhJSUFiYqI0tb+4uLjG8kFBQWZbicTExMDX17dBMTQl58+fR3l5OUpKSlBeXg6NRoPy8nJ4eXlh0qRJzg7PJSUnJ+PVV19FZmYmOnbsiH/961/o2LFjjeVjY2MtEnilUonbbrutkSMlatpsSpjmzZuH6dOn48KFCxg7dixat26NvLw8bNu2Db/99htWrVpl7ziJarV582acPHlS2v5hy5Yt0Ol0uPvuuwEAZWVlKC8vR0BAQI2tOxUVFUhNTZXGHCUnJyMrK6vG5/T09ER0dLTUetStWzeLRVybs6puM5VKJbUcCYKAU6dOQafTmZVVKpVOitK1ZWZmYuTIkaisrITRaMSVK1cwYsQI/P777wgJCan2MXfeeSdmzpyJ5cuXQ61Ww2Aw4LbbbsPMmTMdHD1R02JTwvTUU08hJCQEixcvxssvvwyDwQCFQoFevXrhf//7H/eYIocqLy/H8ePHzY6Joojdu3dj4MCB2L59Ow4ePAgAUKvVmDZtGjp16oSMjAwkJycjOTkZKSkpSE1NrXG/Lblcjvbt25ttJRIVFQWFwqY/oSZFEAQolUqo1WopMVKr1dWOL7rnnnvg5eUlbdtT9fiHHnrI0WG7hfXr10Ov10t1ZTQaodVqsWXLlloToNdffx3Dhw9HWloa2rdvj/79+zORJ2ogm9/tR40ahVGjRsFkMiE/Px+tWrXiAExyipq2BNHpdDh48CD++OMPVFZWorS0FKWlpZg5cyZ0Ol2tm+uGhISYdat17doVnp6ejXUJbkMmk0GlUknJ0c0tR3XRqlUr7Ny5E9OnT0dKSgoCAwPx5ptvVtu9Tze2RqpuA+y6rAfVt29f9OvXD4GBgdx8l8gOGvz1WCaToU2bNvaIhcgm/v7+8PHxgUajgSiKMBgM0Gg0UCgUWLZsGa5cuWLRBXQzPz8/9OjRA9HR0ejatStiY2OdvuK3K5DJZFJidHPrUUPFxMQgMTERhYWF3BPRiv79++PLL780O6bX69GvXz8nRUTUfLE/gdyaXq/H+fPnERYWhh9++AFFRUXQarU1lhcEAT4+PujTpw8GDx6M2NhYREREwNvbG+Xl5c32A1wQBCkxqvpp7HFF7CKy7r777sOsWbPw0UcfSfU1b9483HPPPU6OjKj5YcJEbkMURWRlZZktBnn27NkaW48EQUBwcDCMRiN8fX2lHz8/P8yZM0fqYmuOH9xV44yqflQqVbOsB3cwf/58TJ06FVlZWYiIiKjXit25ubmYP38+UlJS0KVLF7z00ksICAhovGCJmjAmTOSyioqKpKn8VT8lJSU1lm/ZsqXZlP7o6Gj4+Pjg1KlT2LlzJ8rLyxEaGoqHH364WY1HEgQBarUaHh4e0r8cb+heIiMj671Kd15eHgYPHozi4mLo9XocOnQIv/zyC/bt2wcfH59GipSo6WLCRC6hoqICaWlpZq1HtS205+XlhejoaLOB2TWNpevZsyd69uzZWKG7HIVCYZYgsfWoeVqzZg2uX78OvV4P4Eb3dXZ2NjZv3ozHH3/cydERuR8mTORwRqMRGRkZZi1HFy5cqHVKf6dOncz2WYuKiuIK0P+PUqmEh4eH9MOlDgi40cJ068bMgiCgoKDASRERuTe+s1KjEkUReXl5ZluJpKSk1Dqlv23btmYtR126dIGHh4cDo3ZtKpVKSo5atWpVa11S89WtWzfI5XKziQwGgwGxsbFOjIrIfTFhIrsqLS3FqVOnzBKk2r7RKhQKBAUFYeTIkejZsydiYmI4KPUWVQmSp6enxfgjtrI51q+//oqXX34ZV65cQVRUFFasWOGyW448+uij2Lt3L/bs2QOlUgmdToeHHnoII0eOdHZoRG6JCRPZTK/X49y5c2bJUUZGRo3l1Wo1IiIiUF5eDh8fH/j6+kpdSOHh4ejfv7/jgndhSqVSSo48PDyYFLmIkydP4qGHHpK6js+dO4cxY8bg4MGD9Zq55ihyuRzr1q3D8ePHkZKSgnbt2mHAgAEcz0ZkIyZMVCeiKOLSpUvSrLXk5GSkpaVJA0pvJQgC2rVrJ3WrdevWDR06dMCxY8fwv//9z2xshdFoxNWrVx11KS5HoVCYtSBxDJJr+vbbb82SDZPJBIPBgJ07d+KZZ55xYmQ1k8lkGDFiBO644w6u9E3UQHxnpmpdu3bNbEp/cnJyrdsxtG7dGrGxsYiLi0Pnzp0RHR0Nb29vi3KBgYEWb9wymQwtW7ZscMxarRabN29GSkoK5HI5+vXrh5EjR7rEFPqSkhJkZWVBrVajXbt28PHxgaenJzw9Pe26QKQoivj444+xYsUKaLVa9O/fHytXrkSrVq3s9hzNlU6ns1jYVBAEVFZWOikiInIkJkwErVaL1NRUs+QoNze3xvLe3t5mM9ZiY2OlD2QPD48a93YDgK5duyI6OhqpqakQRREymQxeXl4YOnRog65BFEWsXbsW6enpUkK2f/9+ADdWS3amlJQULF++HAUFBSgsLER4eDi2bdsGPz8/uz/XqlWr8O6770p1cPDgQUycOBF79uxhy1UDDR8+vNptSrjqNlHz4DLvoGVlZVi5ciVOnjwJT09PTJo0CQkJCdWWTUxMxGeffSYNvJw1axYiIiKk+3fu3IktW7ZAq9Wid+/eeO655+Dl5QXgxtokx44dQ2FhIfz9/XHfffdhzJgx0mPnzZuHtLQ0s3EjmzZtaqSrrpvKykp89913OHfuHNRqNeLj49GnTx+bzmUwGJCenm623tHFixdr3BJELpejc+fOUmIUGxuLyMhIm1ttBEHA448/jqNHjyInJwe+vr7o379/gxfSKykpwfnz582OmUwmHD582CkJk0KhgKenJ/R6PZ599lmUlZVJ9509exavvPIKPv/8c7s/7+rVq81a8PR6PZKSkpCSkoLu3bvb/fmak/vuuw8LFy7EwoULYTKZoFKp8PHHHyMuLs7ZoRGRA7hMwrRq1SoYjUasWbMGubm5eOONNxAWFoYePXqYlSspKcHixYsxffp0DBgwANu3b8fbb7+NTz/9FHK5HKdOncKGDRvw5ptvIjg4GEuXLsWqVavw4osvArgxoPbVV19FWFgYsrKysGDBAgQFBWHgwIHSczz55JMuM5NEFEV88cUXuHTpkvRBuHHjRgCwmjSJoogrV66YrXeUmppaawtQeHi4NOYoJiYGnTt3hlqtrvV5kpOTcfz4cYiiiN69e1v9YJbJZHbfPLSm8Rk3HzcYDKioqIC3t7fdB74KgiCNQ/L09IRKpQIAHD161CxZAm4kMUeOHLHr89987urcuh4P2eaZZ57B1KlTkZeXh5CQEOmLGBE1fS6RMFVUVODQoUP46KOP4OXlhQ4dOiA+Ph579uyxSJgOHz6M0NBQDB48GAAwfvx47NixA4mJiYiLi8O+ffswZMgQtG/fHgAwZcoUzJ49GzNmzIBarcbUqVOlc0VERKBv375ITk42S5hcSWZmJtLT082OiaKIffv2WSRMJSUlOHjwII4cOYLLly8jOzsbxcXFNZ47MDDQbL2j6Ojoek/pP3bsmJTAATda/xISEhAfH1+v8zRUQEAAWrVqhYKCAoiiCOBG61hMTIxUXz/99BNEUYSPjw+mTZsmvUZsVdWK5OXlVeN2I/7+/tU+NjAwsEHPXZNRo0bhP//5j5Q4VY0P69KlS6M8X3NUtSchETUvLpEwZWdnA4BZt1r79u2xfft2i7KXLl1Cu3btpNtyuRyRkZHIzMxEXFwcMjMz0bt3b+n+yMhImEwm5OTkmD0OuNFlk5ycbNFls27dOnzzzTcIDg7G5MmT0bdvX4s4cnNzzcb5qNVqhIaG1u/Ca1DVHSiXy2vcWFar1UpdalWtR5cuXarxnGq1WtpKpFu3boiNjUVISEiDW1p27NhhdlsURfz4448YNGiQ3Xe7/+uvv7Bnzx5otVp07twZo0ePlha0lMlkePrpp/H5558jPz8fANChQwdMmjQJJ0+elJIl4Eb37xdffIG5c+ciMDBQqgNBEKx2NXp4eMDLywteXl5SK1JtYmJiMGzYMOzfv19KYgRBwJw5c+yyXIAgCGbnWbhwIa5evSr97YSEhGDjxo0u9QF/8+vbndxa1+7AXesaYH07GuvbOpdImCoqKiw2Q/X29oZWq7Uoq9VqLca73Fy2qsuliiAI8PLyqvZca9asgVwux5AhQ6Rj06ZNQ3h4OJRKJY4fP44lS5Zg8eLF6Ny5s9ljV61ahUWLFkm3582bh8WLF9fjqq3z8/NDbGwsPDw8UFhYiNLSUpSWlqKsrAwajQY//vhjjY/18vKCn58foqKi8PLLL6NTp052H/RrMpmqrdeqxOTm7gpRFKHRaGyeNn/y5El89dVX0rmPHTuGgoICzJ49W0p4IiIi8NZbb6GwsBAKhQJ+fn4QBAFnzpyRHlfFaDTi8uXLaNu2rXSsug155XI5fHx84OPjA29vb5v+MHfs2IHXX38dv/zyC/z8/PDyyy9j9OjR9T5PTW5N3LZt24aCggKUlZUhPDzcZd8EG2PQe2OrS5LsityxrgHWt6OxvmvnEgmTh4eHxQevRqOp9gPM09PTYiuI8vJyqayHh0et91fZtGkT/vzzT7zzzjtmLSE3d130798fR48exeHDhy0SpunTp5t96KnVahQVFdXlcq2Sy+Xw8/NDSUkJXnnlFRw6dKjW7S+Cg4PRvn175ObmSgtCVn1IqtVqREZGQqfT1dha1RC3doMBNxIluVwuxZyTk4PVq1ejsLAQADBo0CCMHj26XgPHd+7cafYcRqMR586dw9mzZy0WDaz6XVe9pmoa0K7X61FeXg5BEODp6QmtVgtRFKFSqaRWJLVaDUEQYDQaUVJSUud4bzVv3jzMmzdPum2v14q3tzc0Go3FcblcDn9//wbF3Fhufn2709pANdW1K3PXugZY347WnOu7rkMkXCJhqvqWf/nyZenDLz09HZGRkRZlIyIisHv3bum2yWRCRkYGJkyYAOBGF1x6ejoGDRoE4MYYIJlMZtZdtmXLFuzZswfvvvuu1YqSyWQWrRPAja6OkJAQ6XZBQYHd/0CMRiMqKirMkiVvb2+zxSBjYmLQsmVLlJSUmLV4VfHz86sxYbCHqVOn4tNPPzUbMzNt2jQAN343FRUV+PTTT83+EH///Xf4+PjUa5xTdS1ZVcetXd/tt9+OpKQk6bYgCFCpVOjYsSNMJhNkMhm8vb2rXTiyMeuuNmlpafj444+Rn5+PPn36YObMmdXupyeKotu9MVcxGo1uFTvr2rFY347F+rbOJRImDw8PDBgwAOvWrcOsWbNw9epV7N27F3PmzLEo269fP6xduxYHDhxA//79sWPHDnh6eqJbt24AgPj4eHz44YcYNGgQ2rRpg3Xr1uGuu+6SZnpt3boVP//8M9555x20aNHC7NxlZWVIS0tDt27doFAo8Oeff+LgwYPVJiKOEh8fDx8fHyk5Cg8PN2uZMRqN+O6773D48GGzx1V1U40dO7ZR4wsLC8Mrr7yCtLQ0iKKI2NhYsy7Ry5cvW8wSM5lMOHnyZL0Spk6dOuHPP/80+6NQKpVmSWtNevTogQkTJuD7779HZWUlWrRogWnTpkmznHx8fNCiRQsUFRW5xBtGSkoK7r33Xuj1ehiNRhw8eBAHDx7Ed99957Lda0RETZ0gVtd84gRlZWVYsWIFTp48CS8vL7N1mCZNmoQFCxZIu2yfOXMGn332Ga5evVrrOkzl5eXo3bs3Zs6cKY2nGT16NBQKhVkrwuDBgzFjxgxcv34db775JrKysiAIAkJCQjBx4sQ67XFW2waz9SWXyxEYGIiioiLk5ubW2kz6ww8/4MCBA9IHfVXrSffu3dGvXz9ERUXZLa66uHXhyvPnz+PTTz+1KNe2bVv885//rPN5Kysr8fnnn0t71SmVSjz++OP1mv2lUCigVqulPeyqksqb69sVEqYnnngCO3fuNGvdkslk2LRpk9RyWsXX17fWFdhdkavVd12xrh2L9e1Yzbm+67rThEu0MAGAj48P5s6dW+19ty4c2b17d6xcubLGc40aNQqjRo2q9r5bZ3XdzN/fHx988EEdonUdx48fN3uhiKKIyspK3HPPPQgODnZiZDeEh4cjICAA169fl7o2BUGoduZhbdRqNZ599llkZ2ejsrISwcHBdVrsUqVSwdvbu86z2lzBlStXLLoCFQqFXZNyIiKqH5dJmKhpUqvVeOaZZ/DVV18hJycHCoUCQ4cOxYABA+p9LplMVqdd4T08PKQkyVnbgSQlJeGvv/5CYGAg4uPjrS7+ebOePXvi1KlTZotQ6vV6REdHN0aoRERUB0yY3FyvXr1w8OBBqZVJJpOhRYsWLrXZasuWLTF79mwYjUbIZLJGWWXb09NTGrjt7HE+X375JebNmweVSgWDwYAuXbrg+++/r/PU17lz5+LQoUNITU2V1uJ64403EBMT08iRExFRTZgwubmEhARUVFTg6NGjAG7M3nvsscecnjRUx54xVW3a6+XlBU9PT5v3trO38+fPY/78+VLXKACcO3cOb731FpYsWVKnc/j4+ODnn3/G3r17ce3aNfTo0YP7lbmpqlmYROT+mDC5OYVCgUmTJmH8+PEwGo316vpxN3K53CxJsndLlT0kJydDLpebjUHS6/U4ceJEvc6jVqtr3HyaXN/Fixfx1FNPITExEd7e3pgzZw6mT5/ukq9ZIqobJkxNxK0z/5oKhUIBLy8veHt7S4tIurKWLVtabHQrk8lcYgA+OUZZWRnGjh2LvLw8mEwmlJaWYsGCBfD398dDDz3k7PCIyEZsKyaXo1Ao4O/vj9DQUISHh6NFixZmywC4Kq1Wi8uXL6Ndu3ZS96NMJoNcLscrr7zi5OjIUY4dO4a8vDyz2asmkwnffPONE6MiooZqek0S5JaUSqU0s80duxVLSkqQkJCAixcvQiaTwWQyISwsDH379sXMmTOlhVWp6bu1hdHacSJyD0yYyGmq9mzz9vZ2mzWSarJkyRJcvHjRbCmA7OxsPPXUU0yWmpnbb78dPj4+KC0tlcayKRQKjBs3zsmREVFDMGFyA3l5edi5cycKCwsREhKCUaNGwd/f39lh2aQpJUk3S0xMNEuWgBvXmpaWhttvv91JUZEzBAUFYcuWLZg6dSquXr0KQRDw5JNP4umnn3Z2aETUAEyYXNzVq1fx0UcfQafTQRRF5OXl4cKFC3j55Zfh6enp7PDqpGq1bW9vbyiVSmeH0yjCw8OhUCjMul0MBgMHezdTt912G/7++2/k5+fD19dX2pqJiNwXB327uF27dsFgMEjbihiNRpSVleHkyZNOjqx2KpUKgYGBCAsLQ9u2bREQENBkkyUAmD17ttnK4kqlEnfddRfuueceJ0dGziKTydCmTRsmS0RNBFuYXFxZWZnFpoKCIECr1TopopqpVCq0aNECgiA06eSoOpGRkdi/fz9WrVqFvLw8xMXF4emnn+aihURETQQTJhfXqVMnJCYmmi2EaDQaERER4cSo/n9VY5J8fHygVCrdcsdrewkPD8fbb7/t7DAaRUVFBd5//30cPnwYQUFBeOGFF9C7d29nh0VE5DBMmFzc0KFDkZGRgRMnTkAul8NoNGLo0KHo3LmzXZ9Hp9Ph+vXr8PX1hYeHR61lq5YAaGoDt6l6JpMJDz30EI4ePQq9Xg+ZTIbdu3djx44d6Nu3r7PDIyJyCCZMLk4QBDz00EMYOHAgiouL0apVK7sPJD516hQ2bNgAg8EAQRCQkJCA+Ph4szJMkpqvY8eO4dChQ9I4uqr90ZYsWYLNmzc7OToiIsdgwuQGBEFAeHg4wsPD7X7u7OxsrFu3TvowFEURP/zwA1q1aoWePXtKSZI7LiZJ9lFYWAi5XG42A9BkMiE/P9+JURERORZHpDZzZ8+elbbxAIDKykrk5OTg0KFDCA8PR1BQEJOlZi4mJsZsDB1wY+xanz59nBQREZHjMWFq5uRyOfR6PXJycvDXX3/h2LFjyMjIcHZY5EKioqLw4YcfQiaTQaVSQS6Xo0uXLnjjjTecHZpb0el02LlzJ9asWYM///zT2eEQUT2xS66Zkslk8PLywsCBA7FgwQJotVqpFUEURUyePNkhcezfvx+vv/468vLyEBMTg48++giRkZEOeW6quylTpuCOO+7A33//DX9/fwwcOJBj2eqhrKwMY8eORVJSEhQKBSorK/HSSy9hzpw5zg6NiOqILUzNiCAI8Pb2RuvWrREREYFWrVqhffv22LFjB7p06QK1Wo2IiAh8++236NWrV6PHc+zYMUyePBmpqakoLCzEkSNHkJCQgOLi4kZ/bqq/jh07Yvz48RgyZIjbJUuiKErj9Jzhww8/RHJyMgwGAyoqKiCKIt5//32cPn3aaTERUf0wYXJRWq0W3377LbZt24aUlBSb3+wFQYCXlxdatWqFiIgItG7dGt7e3hAEQSrTo0cP/Pbbb8jKysKJEycwZMgQe11GrdauXWt2XQaDAUVFRfjll18c8vzU9Gk0GjzzzDPSpIlZs2Y5ZdHX06dPV7vXYFJSksNjISLbsEvOBZWWluLuu+9GWloaunTpgqCgIPTr1w8PPPBAnc/h6ekpzXBz1dWmy8rKLBJBuVzukquYk3t67rnnsGvXLilZ2bJlCwwGAz755BOHxhESEiKto1bFYDCgdevWDo2DiGznmp+kzdzSpUtx9uxZ6PV66PV6iKKIw4cP4/z587U+Tq1Wo0WLFoiIiEBwcDB8fX1dNlkCgCFDhpjN0AMAvV6PO++800kR1c5gMGDz5s147733sGHDBosWA3ItFRUV2Llzp9nvSa/XY+vWrWZLJDjCP//5T6jVaun1rlQq0adPH+41SORG2MLkgpKSkqDT6cyOyeVy5OXloWPHjmbHVSoVvL294ePjI2386i4effRRpKam4ssvvwRw41pWrFiBLl26ODkySwaDAZMnT8Yff/wBuVwOk8mEb775Bt99953bjedpLmpKipwxnqlDhw7Yt28fVqxYgStXrqBXr16YOXOm2/3NEjVn/Gt1QeHh4VAqlWbfjI1GI/z9/QEACoUCPj4+br/qtiAIePfddzFz5kzk5eUhKioKAQEBzg6rWhs3bsThw4dhMBikD+KTJ0/i66+/xhNPPOHk6Kg6Pj4+uOOOO3Dy5Enpb0mpVGLAgAFO2Ry6Q4cOWLp0qcOfl4jsw3X7a5qxf/7zn/D395fe1OVyOaKionDHHXcgJCQE4eHhCAwMdOtk6WahoaG47bbbXDZZAoALFy6YDZQHbqx2feHCBSdFRHXxn//8Bz169JBu9+7dG6tWrXJiRERUHwcPHsTYsWNx9913Y86cOSgrK3NaLGxhckGhoaH466+/8O9//xvFxcXo3LkzHn/88SaTILmjtm3bVjtAPSwszEkRUV20bt0aP/30EwoKCiAIAlq0aGGR+BKRazp06BAeeOABqRv9/Pnz+Pvvv7Fz506ndGczYXJRoaGhWLhwodmsGnKehx9+GF9//TXOnTsHvV4PpVKJyMhITJs2zdmhkRWCIKBVq1bODoOI6mnp0qVmYw71ej1OnjyJo0ePYsCAAQ6PhwkTUR14enrixx9/xJdffomMjAyEh4fjqaeegre3t7NDIyJqkgoLC6tt2S8pKXFKPEyYiOrIy8sLs2bNcnYYRETNQv/+/ZGammqxhEu3bt2cEg8HfRMREZHLmTdvHnr37g3gRsuSQqHAJ598gvDwcKfEwxYmIiIicjleXl7Yvn07Tpw4geLiYsTGxqJt27ZOi4cJExEREbkkuVyOvn37OjsMAOySIyIiIrKKCRMRERGRFUyYiIiIiKxgwkRERERkBRMmIiIiIiuYMBERERFZwYSJiIiIyAomTERERERWMGEiIiIisoIJE7kNrVYLg8Hg7DCIiKgZYsJELi8rKwvDhg1DREQEwsLC8MorrzBxIiIih2LCRC5Nr9dj4sSJSExMBAAYjUZ8/fXX+Ne//uXkyIiIqDlhwkQu7fz58zh//rxZi5Jer8emTZucGBURETU3TJjILYmi6OwQiIioGWHCRC6tY8eO6NixIxQKhXRMqVRi0qRJToyKiIiaGyZM5NKUSiU2b96MmJgYAIBMJsOUKVMwd+5cJ0dGRETNicJ6ESLnCgsLw969e6HRaKBSqaBUKp0dEhERNTOCyMEgdlFSUgK1Wm2XcwmCAJVKBZ1O53ZjdRQKhdtN+Wd9O5a71jfr2rFY347VnOu7rp/dbGGyE51OB51OZ5dzyeVyqFQqaDQaGI1Gu5zTUXx9fVFaWursMOqF9e1Y7lrfrGvHYn07VnOu77omTBzDRERERGQFW5iIiAiVlZU4ePAgSkpKEBcXh/bt2zs7JCKXwoSJiKiZu379OsaMGYOUlBQoFAoYjUYsX74cEydOdHZoRC6DXXJERM3cggULcPbsWZhMJuh0OhiNRsyaNQvZ2dnODo3IZTBhomajvLzc7WauEDnCsWPHoNfrzY6JooiUlBQnRUTkepgwUZN3/PhxxMXFITIyElFRUfj666+dHRKRS2nZsiUEQTA7ZjQa0aJFCydFROR6mDBRk5adnY0JEybgypUrAG60Ms2ePRu7du1ycmRErmPu3LkQBEFKmpRKJe655x7ExcU5OTIi18GEiZq0ffv2wWAwwGQyScdEUcR3333nxKiIXEv//v2xY8cODBs2DH369MFzzz2Hr7/+GjIZPyKIqnCWHDV5t3Y1AOBYJqJb3HHHHVi3bp2zwyByWfz6QE3a4MGDzboagBsJ1NixY50XFBERuR0mTNSkhYeHY9OmTWjZsiWAG0vg/+tf/0JCQoKTIyMiInfCLjlq8vr164ekpCSUlpbCx8eH4zKIiKjemDBRsyAIAvz8/JwdBhERuSl+1SYiIiKyggkTERERkRVMmIiIiIisYMJEREREZAUTJiIiIiIrmDARERERWcGEiYiIiMgKJkxEREREVjBhIiIiIrKCCRMRERGRFUyYiIiIiKxgwkRERERkhSCKoujsIMhcbm4uVq1ahenTpyMkJMTZ4TR5rG/HYn07DuvasVjfjuXo+mYLkwvKzc3FokWLkJub6+xQmgXWt2Oxvh2Hde1YrG/HcnR9M2EiIiIisoIJExEREZEVTJhcUEhICBYsWMA+cAdhfTsW69txWNeOxfp2LEfXNwd9ExEREVnBFiYiIiIiK5gwEREREVmhcHYATVVZWRlWrlyJkydPwtPTE5MmTUJCQkK1ZRMTE/HZZ5/hypUriIqKwqxZsxARESHdv3PnTmzZsgVarRa9e/fGc889By8vLwDAmjVrcOzYMRQWFsLf3x/33XcfxowZ45BrdCWOqu9vv/0We/fuRVlZGTw9PTFw4EBMmzYNCkXz+lNyVH1X0ev1mDVrFjQaDf773/826rW5Ike+vjdv3gylUimVX7BgAWJjYxv3Al2II1/biYmJWLNmDS5fvgxPT09MnDgRo0aNavRrdCWOqu9nn30W+fn5Ulm9Xo+wsDAsX7687sGK1Cjef/99cfHixaJGoxHPnz8vPvzww+Jff/1lUe769evigw8+KP7666+iTqcTN23aJD711FOiwWAQRVEUT548KU6ZMkW8cOGCqNFoxLffflv88MMPpcd//fXXYmZmpmg0GsXMzEzxscceE3/77TeHXaercFR9Z2dnixqNRjrXvHnzxK1btzrmIl2Io+q7yrp168R58+aJjzzySKNfmytyVH2vW7dOfO+99xx2Xa7IUXV9+fJlcerUqeKxY8dEvV4vlpWViZcuXXLYdboKR7+XVJk9e7a4YcOGesXKLrlGUFFRgUOHDmHq1Knw8vJChw4dEB8fjz179liUPXz4MEJDQzF48GAolUqMHz8eWq0WiYmJAIB9+/ZhyJAhaN++Pby8vDBlyhQcPHgQlZWVAICpU6ciIiICMpkMERER6Nu3L5KTkx16vc7myPoODQ01+4YoCAJycnIcc6EuwpH1DQDZ2dk4dOgQxo8f77BrdCWOru/mzJF1vXHjRtx7773o06cPFAoFvL29ER4e7tDrdTZnvbYvXbqE8+fPIz4+vl7xMmFqBNnZ2QBg1lTYvn17ZGZmWpS9dOkS2rVrJ92Wy+WIjIyUymZmZprdHxkZCZPJVO2HtMlkQnJyMiIjI+12Le7A0fX9448/YvLkyZg6dSrS09MxcuRIu1+TK3N0fX/yySf4xz/+AZVKZfdrcQeOru8TJ05gypQpmDFjBrZu3QqTyWT3a3JVjqzrtLQ0CIKAmTNn4pFHHsE777yDgoKCRrkuV+Wsz8o9e/YgLi4OrVq1qle8zWvghYNUVFTA09PT7Ji3tze0Wq1FWa1WCx8fnxrLVlRUwNvbW7pPEAR4eXlVe641a9ZALpdjyJAh9rgMt+Ho+k5ISEBCQgKysrKwb98+BAUF2fNyXJ4j63vv3r3w8fFB7969cebMGXtfiltwZH3fddddGD58OAIDA3Hx4kW89957kMlkGDdunL0vyyU5sq4LCgqwb98+LFq0CK1bt8aqVavwwQcf4N1337X3ZbksZ3xWGo1G7N+/H0899VS942ULUyPw8PCw+CVpNBqLFwYAeHp6ory83OxYeXm5VNbDw6PW+6ts2rQJf/75JxYsWGA2YLM5cEZ9A0BYWBjCw8Px2WefNfQS3Iqj6ru0tBTr16/Hk08+aecrcC+OfH1HRESgRYsWkMlk6NixIyZNmoRDhw7Z83JcmiPrWq1WIz4+HuHh4VCr1ZgyZQqSkpKqTRaaKme8dx8/fhwGgwF33nlnveNlwtQI2rZtCwC4fPmydCw9Pb3arrKIiAhkZGRIt00mEzIyMqSykZGRSE9Pl+7PzMyETCZDaGiodGzLli3Ys2cP3n77bQQGBtr7clyeo+v7ZkajsdlttOmo+s7IyEBhYSFeeOEFTJkyBYsXL8b169cxZcqUapvsmypnvr4FQbDHJbgNR9Z1ZGSkRf2yvhv/tb1nzx7cfffdNjUsMGFqBB4eHhgwYADWrVuH8vJypKenY+/evdV2lfXr1w/Z2dk4cOAA9Ho9tm3bBk9PT3Tr1g0AEB8fj7179yI9PR3l5eVYt24d7rrrLqjVagDA1q1b8fPPP+Ptt99GixYtHHqdrsKR9f3TTz+hpKQEoigiIyMDW7duRVxcnEOv19kcVd9du3bF559/jmXLlmHZsmV47rnn4Ofnh2XLlklvtM2BI1/fR44cQWlpKYAbH1ybN2+26Zu4u3JkXd97773Yt28fcnJyoNfrsWHDBnTv3r3a1pWmypH1DQDFxcU4ceIEhg0bZlO83BqlkZSVlWHFihU4efIkvLy8zNaWmDRpktnaJmfOnMFnn32Gq1ev1rq2RHl5OXr37o2ZM2dKM7VGjx4NhUJhtg7Q4MGDMWPGDAderfM5qr7feecdJCcno7KyEgEBAbjrrrvw8MMPN7tuUEfV983OnDmDJUuWNNt1mBxR3++//z5OnToFvV6PgIAADB06FA888ADkcrnjL9pJHPna3rhxI3bu3Amj0Yhu3bph+vTpze6LryPre9u2bdi/fz+WLVtmU6xMmIiIiIisYJccERERkRVMmIiIiIisYMJEREREZAUTJiIiIiIrmDARERERWcGEiYiIiMgKJkxEREREVjBhIiIiIrKCCRMRERGRFUyYiNzIwoUL4ePjU+/HDR48GKNGjWqEiIDTp09j4cKFFjuFu7O1a9fi22+/dehzNmY9nj17FjNnzkRMTAy8vb0RGRmJJ554AleuXLEoe+XKFUyePBl+fn4ICAjAo48+isLCQotyx44dw4ABA+Dp6YmwsDAsWrQIJpPJrIxOp8Mrr7yC0NBQeHp6om/fvti7d6/dr4/IEZgwEbmRJ598Er/++quzwzBz+vRpLFq0iAlTAzVmPf7yyy84cOAAnn76afzwww9YvHgxDhw4gH79+qGsrEwqZzAYMGLECJw5cwZff/01vvzySxw8eBBjxozBzbtoXbx4EUOHDkWLFi2wc+dOzJ07F//+97/xxhtvmD3vCy+8gJUrV+KVV17B9u3b0b59eyQkJODkyZN2v0aixqawXoSIXEVYWBjCwsKcHYZTabXaand0r+m4M7lKTA8++CCeffZZCIIgHevRowfi4uKwdetWTJs2DQCwdetW/PXXX0hMTJQ2PA0NDcWAAQOwa9cujBgxAgCwZMkSBAQEYPPmzVCr1RgyZAhKSkrw1ltv4aWXXkJAQACys7Px+eefY+nSpZg5cyYA4N5770VcXBwWLVqE//3vfw6uBaKGYQsTkYtYu3YtFAoFrl69ana8sLAQKpUKn3zySbVdcpcuXcLEiRMREBAALy8vxMfH488//7T6fCkpKRgzZgz8/f3h7e2N++67DxcuXDArIwgC3nvvPSxYsABt2rRBy5Yt8fjjj0Oj0UgxP/744wCAVq1aQRAEREVF1el6f/jhBwwbNgytW7eGn58f7rjjDvz8888WdSIIAg4fPoxhw4bB29sbL730Evbv3w9BEPDDDz9gwoQJ8PPzw8SJEwEAxcXFmDFjBkJCQqBWq9G7d2/88ssvZuc9dOgQ7r77bvj7+8PX1xfdu3fHV199BeBG9+WBAwfwww8/QBAECIKAhQsXWr2ejIwMCIKAtWvX4qmnnkKLFi3Qp0+fOl2rtXrMysrC1KlT0bJlS3h6euLuu+/GiRMn6lTPANCyZUuzZAkAunfvDrlcjpycHOnYjz/+iB49ekjJEgD0798fUVFR+OGHH8zKjRs3Dmq1Wjo2ZcoUVFRUSF1uf//9N4xGI4YPHy6VEQQB9957L3bt2gWdTlfn+IlcARMmIhcxfvx4KJVKbN682ez41q1bIYqilBDcrLS0FIMGDcLx48excuVKrF+/HpWVlRg8eDBSU1NrfK6LFy+if//+KCwslLqf8vPzMWTIEFRWVpqVXbFiBc6fP4+vvvoKr7/+Or799lu89dZbAID77rsPr732GgDg559/xuHDh7Ft27Y6XW96ejruv/9+fP3119i6dSsGDBiAhIQE7N+/36LslClTMGTIEOzcuROPPPKIdHz69Ono2LEjtm3bhtmzZ0On02HYsGHYuXMnFi9ejB07diAmJgb33Xcfzpw5AwAoKSnBfffdBz8/P6xfvx7bt2/H008/jeLiYgDAJ598gp49e2LAgAE4fPgwDh8+jCeffLJO1wQAr776KgRBwPr167FkyZI6XWtt9VhUVIS77roLp0+fxvLly7F161Z4e3sjPj4eeXl5dY7rVocPH4bRaER0dLR0LCUlxex2lZiYGKSkpAAANBoNLl26ZFEuMjISXl5eUrmKigoAgEqlMiunVqtRWVmJ9PR0m2MncgqRiFzG+PHjxf79+5sdu+eee8Thw4eLoiiKCxYsEL29vaX7li1bJgqCICYmJkrHSktLxaCgIHHatGnSsUGDBon33XefdPvRRx8V27VrJ2q1WulYXl6e6O3tLa5cuVI6BkDs06ePWTxTpkwRO3ToIN1es2aNCEDMz8+38apF0Wg0inq9Xrz33nvFhx56yOLc7733nln5X3/9VQQgzpgxw+z4f/7zH1GhUIhJSUlmx/v27StOnDhRFEVRPH78uAhA/Pvvv2uM59b6qov09HQRgJiQkFBrOWvXems9vvHGG6K/v7949epV6VhFRYUYFhYmvvzyy/WKsYpOpxP79OkjdunSRdTr9dLxjh07itOnT7coP2XKFLFnz56iKIpiVlaWCEBcv369Rbm2bduKL774oiiKopiYmCgCEDdu3GhWJj4+XgQg/vHHHzbFTuQsbGEiciEPPfQQDh8+jEuXLgG4MWPpwIEDePjhh6st//vvvyM2NtasC8XHxwf3338/fv/99xqf55dffsGYMWOgUChgMBhgMBgQGBiIuLg4HD9+3Kzsvffea3Y7JiYGWVlZtl6iJCsrC9OmTUPbtm2hUCigVCrxyy+/4OzZsxZlExISqj3Hrcd/+eUXdO/eHZ07d5auy2AwYMiQIdJ1dejQAX5+fnjmmWewadMm5OfnN/harMVan2u91S+//IJ77rkHQUFB0vXI5XIMHDjQ4ndVV8899xwSExPxzTffQKEwH8p6a9cdAIiiaHHcWrnY2FgMHjwYr7zyCv744w9cu3YN77//Pg4cOAAAkMn48UPuha9YIhcyatQo+Pr6YsOGDQCAjRs3QqVSYezYsdWWLyoqQnBwsMXx4ODgaqeCVykoKMBHH30EpVJp9vPHH3/g8uXLZmUDAgLMbqtUKotuu/oymUwYPXo0Dh48iDfffBO//vorjh8/jpEjR0pdOTdr3bp1tee59XhBQQFOnTplcV3vvvuudF2BgYHYvXs3fH198cgjjyA4OBiDBw+Wuuwa6taY6nuttyooKMD27dstrmn9+vUWv6u6WLRoEVavXo0NGzbg9ttvN7svMDAQRUVFFo8pLi5GYGCgVAaA1XLAjbFZrVq1woABA9CyZUusWLFCmklX3euWyJVxlhyRC/Hw8MDYsWOxYcMGzJkzBxs2bJDG21QnKCio2rFKV65cQVBQUI3PExQUhPvuuw8zZsywuM/X19f2C6ij8+fP49SpU9i+fTvGjBkjHddqtdWWr641o7rjQUFB6NGjB1avXl3r8/ft2xc//fQTtFotfv31V7z00ksYO3asxaB3W9waU32v9VZBQUEYMWKENG7sZjcPuq6LqokDq1atwujRoy3uj46OxunTpy2OJycnS+t4eXl5ISIiQhqrVCUzMxPl5eVmY5siIyNx7NgxZGRkoLy8HF26dMGHH36IkJAQREZG1it2ImdjwkTkYh566CH897//xa5du3DkyBFs3bq1xrJ33XUXtmzZguTkZMTExAC4MSh3586dtS5UOXToUCQmJqJnz56Qy+UNirdqUG9dWkuqVCULNw8IzszMxKFDh9C5c2ebYxk6dCh+/PFHhIaGIjQ01Gp5T09PJCQk4MKFC3j++edRUVEBDw8PqFSqel1Pbep6rTXV49ChQ/HNN98gOjoa3t7eNsexYcMGzJw5E2+++SaefvrpasskJCTg66+/Nhv8feTIEWRkZOC+++4zK7d9+3YsWbJEinv9+vXw8PDAkCFDLM5bNeNPq9Vi9erV9RpET+QqmDARuZihQ4eiVatW+Mc//gE/P78ax+8AwOOPP46lS5di1KhRePvtt+Hj44P33nsPWq0Wc+fOrfFxixYtQp8+fTB8+HA8/fTTaNOmjTReauDAgXjooYfqHG/VB+vKlSsxduxYeHl5oXv37rU+pmvXrggLC8PcuXNhNBqh0WiwYMECtG3bts7PW51HH30Uq1atwuDBg/HSSy+hc+fOKC4uxqlTp6DT6fDuu+/ihx9+wOrVqzFu3DhERETgypUrWL58OQYMGAAPDw/pmr766it8//33CAkJqXMC1pBrrake//nPf2LdunUYNGgQnn/+eURERCA/Px9Hjx5FaGgoXnzxRasxHDhwAI8++igGDhyIYcOG4ciRI9J9rVq1QocOHQAADzzwAHr06IEJEybg3XffhcFgwMsvv4y77rrLbHmAl19+GevWrcOkSZMwc+ZMpKWl4a233sLs2bPNunBXrFgBf39/hIeHIyMjAx9++CE8PDzwyiuv2FSXRE7l7FHnRGRpxowZIgCzmW6iaDlLThRFMTMzU5wwYYLo5+cnenp6ioMHDxaPHTtmVqa6WV9nz54VJ02aJLZo0UJUq9ViVFSU+Oijj5rNuAMgLlmyxOxxS5YsEW9961i4cKEYFhYmymQyMTIysk7XeOzYMbFPnz6ih4eH2KlTJ/Grr74Sp02bJsbGxkplapo5VjVL7vjx4xbnvX79uvjiiy+KERERolKpFENCQsSEhARx586doiiKYmpqqvjAAw+I4eHhokqlEkNDQ8XHHntMzM3Nlc6RlZUlJiQkiAEBASIAccGCBVavp2qW3ObNm226VlGsuR5zc3PFJ554QgwJCRFVKpUYFhYmTpgwQTx06JDVuETxxusGQLU/t77GcnJyxIkTJ4q+vr6in5+fOHXqVLGgoMDinEeOHBH79esnqtVqMTQ0VFywYIFoMBjMyrz//vti+/btRZVKJYaEhIjPPvusWFhYWKeYiVyNIIo3rXdPRERERBY4S46IiIjICo5hIiK7MxqNqK3x+ta1f1ydKIowGo013i+TyZy2rpArx0bUlPCviIjsrkOHDhbrBt38424OHDhQ6/X84x//cFpsX331Va2xvfnmm06Ljagp4RgmIrK7M2fO1Lq45a0LJrq60tJSpKWl1Xh/y5Yt67zpsL1du3at1n3ZGjLDj4j+f0yYiIiIiKxglxwRERGRFUyYiIiIiKxgwkRERERkBRMmIiIiIiuYMBERERFZwYSJiIiIyAomTERERERW/H+P0/tfmLA8GwAAAABJRU5ErkJggg==",
+      "text/plain": [
+       "<Figure size 640x480 with 1 Axes>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "<ggplot: (442237064)>"
+      ]
+     },
+     "execution_count": 21,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "from plotnine import *\n",
+    "(ggplot(merged_2009, aes(x='violent_arrest_rate_2009', y='drug_arrest_rate_2009')) +\n",
+    "        geom_point() + geom_smooth(method='lm')\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Comparing with 2018 Arrests\n",
+    "\n",
+    "And now the part that will likely be homework!\n",
+    "\n",
+    "Showing that drug arrests and violent crime arrests tend to be positively correlated does not tell us much about whether they are *causally* relation. It *could* be the case that people dealing drugs *causes* more violent crime, but it could also be that certain communities, for some other reason, tend to have *both* more drug sales *and* more violent crime. \n",
+    "\n",
+    "So to test for this, we went to see if the same communities that had violent crime in 2009 *also* have violent crime in 2019 (after marijuana legalization). If these communities have just as much crime in 2018, that would suggest that violent crime is being driven by a third factor, and not drug sales of marijuana. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(12)** Just as we created violent arrest rates and drug arrest rates for 2009, now we want to do it for 2018. Using the data on 2018 arrests (also in the [same repository](https://github.com/nickeubank/practicaldatascience/tree/master/Example_Data/ca) we used before) and the same dataset of population data (you'll have to use population from 2013-2017, as 2018 population data has yet to be released), create a dataset of arrest rates. \n",
+    "\n",
+    "As before, *be careful with your merges!!!*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "arrests_2018 = pd.read_csv(\n",
+    "    \"https://raw.githubusercontent.com/nickeubank/practicaldatascience/\"\n",
+    "    \"master/Example_Data/ca/ca_arrests_2018.csv\"\n",
+    ")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Unnamed: 0</th>\n",
+       "      <th>YEAR</th>\n",
+       "      <th>STATE</th>\n",
+       "      <th>COUNTY</th>\n",
+       "      <th>total_population</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>3565</th>\n",
+       "      <td>344</td>\n",
+       "      <td>2013-2017</td>\n",
+       "      <td>Florida</td>\n",
+       "      <td>Hendry County</td>\n",
+       "      <td>39064</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1480</th>\n",
+       "      <td>1480</td>\n",
+       "      <td>2005-2009</td>\n",
+       "      <td>Mississippi</td>\n",
+       "      <td>Winston County</td>\n",
+       "      <td>19543</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1255</th>\n",
+       "      <td>1255</td>\n",
+       "      <td>2005-2009</td>\n",
+       "      <td>Michigan</td>\n",
+       "      <td>Genesee County</td>\n",
+       "      <td>432720</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1340</th>\n",
+       "      <td>1340</td>\n",
+       "      <td>2005-2009</td>\n",
+       "      <td>Minnesota</td>\n",
+       "      <td>Hennepin County</td>\n",
+       "      <td>1136224</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>485</th>\n",
+       "      <td>485</td>\n",
+       "      <td>2005-2009</td>\n",
+       "      <td>Georgia</td>\n",
+       "      <td>Meriwether County</td>\n",
+       "      <td>22858</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2918</th>\n",
+       "      <td>2918</td>\n",
+       "      <td>2005-2009</td>\n",
+       "      <td>Virginia</td>\n",
+       "      <td>Buena Vista city</td>\n",
+       "      <td>6285</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3012</th>\n",
+       "      <td>3012</td>\n",
+       "      <td>2005-2009</td>\n",
+       "      <td>West Virginia</td>\n",
+       "      <td>Kanawha County</td>\n",
+       "      <td>191624</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3049</th>\n",
+       "      <td>3049</td>\n",
+       "      <td>2005-2009</td>\n",
+       "      <td>Wisconsin</td>\n",
+       "      <td>Ashland County</td>\n",
+       "      <td>16307</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4392</th>\n",
+       "      <td>1171</td>\n",
+       "      <td>2013-2017</td>\n",
+       "      <td>Louisiana</td>\n",
+       "      <td>Washington Parish</td>\n",
+       "      <td>46449</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1385</th>\n",
+       "      <td>1385</td>\n",
+       "      <td>2005-2009</td>\n",
+       "      <td>Minnesota</td>\n",
+       "      <td>Sibley County</td>\n",
+       "      <td>15001</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "      Unnamed: 0       YEAR          STATE             COUNTY  \\\n",
+       "3565         344  2013-2017        Florida      Hendry County   \n",
+       "1480        1480  2005-2009    Mississippi     Winston County   \n",
+       "1255        1255  2005-2009       Michigan     Genesee County   \n",
+       "1340        1340  2005-2009      Minnesota    Hennepin County   \n",
+       "485          485  2005-2009        Georgia  Meriwether County   \n",
+       "2918        2918  2005-2009       Virginia   Buena Vista city   \n",
+       "3012        3012  2005-2009  West Virginia     Kanawha County   \n",
+       "3049        3049  2005-2009      Wisconsin     Ashland County   \n",
+       "4392        1171  2013-2017      Louisiana  Washington Parish   \n",
+       "1385        1385  2005-2009      Minnesota      Sibley County   \n",
+       "\n",
+       "      total_population  \n",
+       "3565             39064  \n",
+       "1480             19543  \n",
+       "1255            432720  \n",
+       "1340           1136224  \n",
+       "485              22858  \n",
+       "2918              6285  \n",
+       "3012            191624  \n",
+       "3049             16307  \n",
+       "4392             46449  \n",
+       "1385             15001  "
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "pop = pd.read_csv(\n",
+    "    \"https://raw.githubusercontent.com/nickeubank/practicaldatascience\"\n",
+    "    \"/master/Example_Data/ca/nhgis_county_populations.csv\"\n",
+    ")\n",
+    "pop.sample(10)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Unnamed: 0_x</th>\n",
+       "      <th>COUNTY</th>\n",
+       "      <th>VIOLENT</th>\n",
+       "      <th>PROPERTY</th>\n",
+       "      <th>F_DRUGOFF</th>\n",
+       "      <th>F_SEXOFF</th>\n",
+       "      <th>F_ALLOTHER</th>\n",
+       "      <th>F_TOTAL</th>\n",
+       "      <th>M_TOTAL</th>\n",
+       "      <th>S_TOTAL</th>\n",
+       "      <th>Unnamed: 0_y</th>\n",
+       "      <th>YEAR</th>\n",
+       "      <th>STATE</th>\n",
+       "      <th>total_population</th>\n",
+       "      <th>_merge</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>34</th>\n",
+       "      <td>2238</td>\n",
+       "      <td>San Benito County</td>\n",
+       "      <td>179</td>\n",
+       "      <td>51</td>\n",
+       "      <td>46</td>\n",
+       "      <td>16</td>\n",
+       "      <td>120</td>\n",
+       "      <td>412</td>\n",
+       "      <td>1286</td>\n",
+       "      <td>2</td>\n",
+       "      <td>220</td>\n",
+       "      <td>2013-2017</td>\n",
+       "      <td>California</td>\n",
+       "      <td>58671</td>\n",
+       "      <td>both</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>26</th>\n",
+       "      <td>2230</td>\n",
+       "      <td>Monterey County</td>\n",
+       "      <td>1244</td>\n",
+       "      <td>743</td>\n",
+       "      <td>292</td>\n",
+       "      <td>76</td>\n",
+       "      <td>878</td>\n",
+       "      <td>3233</td>\n",
+       "      <td>9543</td>\n",
+       "      <td>81</td>\n",
+       "      <td>212</td>\n",
+       "      <td>2013-2017</td>\n",
+       "      <td>California</td>\n",
+       "      <td>433168</td>\n",
+       "      <td>both</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>43</th>\n",
+       "      <td>2247</td>\n",
+       "      <td>Santa Cruz County</td>\n",
+       "      <td>773</td>\n",
+       "      <td>547</td>\n",
+       "      <td>174</td>\n",
+       "      <td>39</td>\n",
+       "      <td>770</td>\n",
+       "      <td>2303</td>\n",
+       "      <td>8594</td>\n",
+       "      <td>10</td>\n",
+       "      <td>229</td>\n",
+       "      <td>2013-2017</td>\n",
+       "      <td>California</td>\n",
+       "      <td>273263</td>\n",
+       "      <td>both</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>46</th>\n",
+       "      <td>2250</td>\n",
+       "      <td>Siskiyou County</td>\n",
+       "      <td>179</td>\n",
+       "      <td>101</td>\n",
+       "      <td>71</td>\n",
+       "      <td>8</td>\n",
+       "      <td>226</td>\n",
+       "      <td>585</td>\n",
+       "      <td>1643</td>\n",
+       "      <td>0</td>\n",
+       "      <td>232</td>\n",
+       "      <td>2013-2017</td>\n",
+       "      <td>California</td>\n",
+       "      <td>43530</td>\n",
+       "      <td>both</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>40</th>\n",
+       "      <td>2244</td>\n",
+       "      <td>San Mateo County</td>\n",
+       "      <td>1415</td>\n",
+       "      <td>874</td>\n",
+       "      <td>228</td>\n",
+       "      <td>64</td>\n",
+       "      <td>910</td>\n",
+       "      <td>3491</td>\n",
+       "      <td>13494</td>\n",
+       "      <td>43</td>\n",
+       "      <td>226</td>\n",
+       "      <td>2013-2017</td>\n",
+       "      <td>California</td>\n",
+       "      <td>763450</td>\n",
+       "      <td>both</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "    Unnamed: 0_x             COUNTY  VIOLENT  PROPERTY  F_DRUGOFF  F_SEXOFF  \\\n",
+       "34          2238  San Benito County      179        51         46        16   \n",
+       "26          2230    Monterey County     1244       743        292        76   \n",
+       "43          2247  Santa Cruz County      773       547        174        39   \n",
+       "46          2250    Siskiyou County      179       101         71         8   \n",
+       "40          2244   San Mateo County     1415       874        228        64   \n",
+       "\n",
+       "    F_ALLOTHER  F_TOTAL  M_TOTAL  S_TOTAL  Unnamed: 0_y       YEAR  \\\n",
+       "34         120      412     1286        2           220  2013-2017   \n",
+       "26         878     3233     9543       81           212  2013-2017   \n",
+       "43         770     2303     8594       10           229  2013-2017   \n",
+       "46         226      585     1643        0           232  2013-2017   \n",
+       "40         910     3491    13494       43           226  2013-2017   \n",
+       "\n",
+       "         STATE  total_population _merge  \n",
+       "34  California             58671   both  \n",
+       "26  California            433168   both  \n",
+       "43  California            273263   both  \n",
+       "46  California             43530   both  \n",
+       "40  California            763450   both  "
+      ]
+     },
+     "execution_count": 24,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "pop2017 = pop[pop[\"YEAR\"] == \"2013-2017\"]\n",
+    "ca_pop2017 = pop2017[pop2017.STATE == \"California\"].copy()\n",
+    "\n",
+    "ca_pop2017.loc[ca_pop2017.COUNTY == \"DelNorte County\", \"COUNTY\"] = \"Del Norte County\"\n",
+    "ca_pop2017.loc[ca_pop2017.COUNTY == \"Injo County\", \"COUNTY\"] = \"Inyo County\"\n",
+    "\n",
+    "merged_2018 = pd.merge(\n",
+    "    arrests_2018, ca_pop2017, on=\"COUNTY\", validate=\"1:1\", indicator=True, how=\"outer\"\n",
+    ")\n",
+    "merged_2018.sample(5)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Unnamed: 0_x</th>\n",
+       "      <th>COUNTY</th>\n",
+       "      <th>VIOLENT</th>\n",
+       "      <th>PROPERTY</th>\n",
+       "      <th>F_DRUGOFF</th>\n",
+       "      <th>F_SEXOFF</th>\n",
+       "      <th>F_ALLOTHER</th>\n",
+       "      <th>F_TOTAL</th>\n",
+       "      <th>M_TOTAL</th>\n",
+       "      <th>S_TOTAL</th>\n",
+       "      <th>Unnamed: 0_y</th>\n",
+       "      <th>YEAR</th>\n",
+       "      <th>STATE</th>\n",
+       "      <th>total_population</th>\n",
+       "      <th>_merge</th>\n",
+       "      <th>violent_arrest_rate_2018</th>\n",
+       "      <th>drug_arrest_rate_2018</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>2204</td>\n",
+       "      <td>Alameda County</td>\n",
+       "      <td>4132</td>\n",
+       "      <td>3051</td>\n",
+       "      <td>1062</td>\n",
+       "      <td>173</td>\n",
+       "      <td>2619</td>\n",
+       "      <td>11037</td>\n",
+       "      <td>28305</td>\n",
+       "      <td>82</td>\n",
+       "      <td>186</td>\n",
+       "      <td>2013-2017</td>\n",
+       "      <td>California</td>\n",
+       "      <td>1629615</td>\n",
+       "      <td>both</td>\n",
+       "      <td>0.002536</td>\n",
+       "      <td>0.000652</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2205</td>\n",
+       "      <td>Alpine County</td>\n",
+       "      <td>5</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>3</td>\n",
+       "      <td>11</td>\n",
+       "      <td>41</td>\n",
+       "      <td>0</td>\n",
+       "      <td>187</td>\n",
+       "      <td>2013-2017</td>\n",
+       "      <td>California</td>\n",
+       "      <td>1203</td>\n",
+       "      <td>both</td>\n",
+       "      <td>0.004156</td>\n",
+       "      <td>0.000831</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>2206</td>\n",
+       "      <td>Amador County</td>\n",
+       "      <td>72</td>\n",
+       "      <td>40</td>\n",
+       "      <td>31</td>\n",
+       "      <td>3</td>\n",
+       "      <td>142</td>\n",
+       "      <td>288</td>\n",
+       "      <td>701</td>\n",
+       "      <td>1</td>\n",
+       "      <td>188</td>\n",
+       "      <td>2013-2017</td>\n",
+       "      <td>California</td>\n",
+       "      <td>37306</td>\n",
+       "      <td>both</td>\n",
+       "      <td>0.001930</td>\n",
+       "      <td>0.000831</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>2207</td>\n",
+       "      <td>Butte County</td>\n",
+       "      <td>785</td>\n",
+       "      <td>437</td>\n",
+       "      <td>229</td>\n",
+       "      <td>47</td>\n",
+       "      <td>741</td>\n",
+       "      <td>2239</td>\n",
+       "      <td>8853</td>\n",
+       "      <td>1</td>\n",
+       "      <td>189</td>\n",
+       "      <td>2013-2017</td>\n",
+       "      <td>California</td>\n",
+       "      <td>225207</td>\n",
+       "      <td>both</td>\n",
+       "      <td>0.003486</td>\n",
+       "      <td>0.001017</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>2208</td>\n",
+       "      <td>Calaveras County</td>\n",
+       "      <td>147</td>\n",
+       "      <td>42</td>\n",
+       "      <td>29</td>\n",
+       "      <td>6</td>\n",
+       "      <td>96</td>\n",
+       "      <td>320</td>\n",
+       "      <td>897</td>\n",
+       "      <td>0</td>\n",
+       "      <td>190</td>\n",
+       "      <td>2013-2017</td>\n",
+       "      <td>California</td>\n",
+       "      <td>45057</td>\n",
+       "      <td>both</td>\n",
+       "      <td>0.003263</td>\n",
+       "      <td>0.000644</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   Unnamed: 0_x            COUNTY  VIOLENT  PROPERTY  F_DRUGOFF  F_SEXOFF  \\\n",
+       "0          2204    Alameda County     4132      3051       1062       173   \n",
+       "1          2205     Alpine County        5         2          1         0   \n",
+       "2          2206     Amador County       72        40         31         3   \n",
+       "3          2207      Butte County      785       437        229        47   \n",
+       "4          2208  Calaveras County      147        42         29         6   \n",
+       "\n",
+       "   F_ALLOTHER  F_TOTAL  M_TOTAL  S_TOTAL  Unnamed: 0_y       YEAR       STATE  \\\n",
+       "0        2619    11037    28305       82           186  2013-2017  California   \n",
+       "1           3       11       41        0           187  2013-2017  California   \n",
+       "2         142      288      701        1           188  2013-2017  California   \n",
+       "3         741     2239     8853        1           189  2013-2017  California   \n",
+       "4          96      320      897        0           190  2013-2017  California   \n",
+       "\n",
+       "   total_population _merge  violent_arrest_rate_2018  drug_arrest_rate_2018  \n",
+       "0           1629615   both                  0.002536               0.000652  \n",
+       "1              1203   both                  0.004156               0.000831  \n",
+       "2             37306   both                  0.001930               0.000831  \n",
+       "3            225207   both                  0.003486               0.001017  \n",
+       "4             45057   both                  0.003263               0.000644  "
+      ]
+     },
+     "execution_count": 25,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "merged_2018['violent_arrest_rate_2018'] = merged_2018['VIOLENT'] / merged_2018['total_population']\n",
+    "merged_2018['drug_arrest_rate_2018'] = merged_2018['F_DRUGOFF'] / merged_2018['total_population']\n",
+    "merged_2018.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(13)** Now merge the two county-level datasets so you have one row for every county, and variables for violent arrest rates in 2018, violent arrest rates in 2009, felony drug arrest rates in 2018, and felony drug arrest rates in 2009. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "both          58\n",
+       "left_only      0\n",
+       "right_only     0\n",
+       "Name: _merge, dtype: int64"
+      ]
+     },
+     "execution_count": 26,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "merged_thinned_2009 = merged_2009[\n",
+    "    [\"COUNTY\", \"violent_arrest_rate_2009\", \"drug_arrest_rate_2009\", \"total_population\"]\n",
+    "]\n",
+    "merged_thinned_2018 = merged_2018[\n",
+    "    [\"COUNTY\", \"violent_arrest_rate_2018\", \"drug_arrest_rate_2018\", \"total_population\"]\n",
+    "]\n",
+    "\n",
+    "merged_thinned_2009 = merged_thinned_2009.rename(\n",
+    "    {\"total_population\": \"total_population_2009\"}, axis=\"columns\"\n",
+    ")\n",
+    "merged_thinned_2018 = merged_thinned_2018.rename(\n",
+    "    {\"total_population\": \"total_population_2018\"}, axis=\"columns\"\n",
+    ")\n",
+    "\n",
+    "all_years = pd.merge(\n",
+    "    merged_thinned_2009,\n",
+    "    merged_thinned_2018,\n",
+    "    on=\"COUNTY\",\n",
+    "    validate=\"1:1\",\n",
+    "    indicator=True,\n",
+    ")\n",
+    "all_years._merge.value_counts()\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>COUNTY</th>\n",
+       "      <th>violent_arrest_rate_2009</th>\n",
+       "      <th>drug_arrest_rate_2009</th>\n",
+       "      <th>total_population_2009</th>\n",
+       "      <th>violent_arrest_rate_2018</th>\n",
+       "      <th>drug_arrest_rate_2018</th>\n",
+       "      <th>total_population_2018</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>41</th>\n",
+       "      <td>Santa Barbara County</td>\n",
+       "      <td>0.003214</td>\n",
+       "      <td>0.002179</td>\n",
+       "      <td>402025</td>\n",
+       "      <td>0.002948</td>\n",
+       "      <td>0.001167</td>\n",
+       "      <td>442996</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>27</th>\n",
+       "      <td>Napa County</td>\n",
+       "      <td>0.002777</td>\n",
+       "      <td>0.002459</td>\n",
+       "      <td>132173</td>\n",
+       "      <td>0.002525</td>\n",
+       "      <td>0.000596</td>\n",
+       "      <td>141005</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>13</th>\n",
+       "      <td>Inyo County</td>\n",
+       "      <td>0.004645</td>\n",
+       "      <td>0.002236</td>\n",
+       "      <td>17438</td>\n",
+       "      <td>0.005881</td>\n",
+       "      <td>0.000714</td>\n",
+       "      <td>18195</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>49</th>\n",
+       "      <td>Stanislaus County</td>\n",
+       "      <td>0.004377</td>\n",
+       "      <td>0.004373</td>\n",
+       "      <td>505165</td>\n",
+       "      <td>0.004385</td>\n",
+       "      <td>0.001650</td>\n",
+       "      <td>535684</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>36</th>\n",
+       "      <td>San Diego County</td>\n",
+       "      <td>0.003284</td>\n",
+       "      <td>0.002560</td>\n",
+       "      <td>2987543</td>\n",
+       "      <td>0.002611</td>\n",
+       "      <td>0.000638</td>\n",
+       "      <td>3283665</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                  COUNTY  violent_arrest_rate_2009  drug_arrest_rate_2009  \\\n",
+       "41  Santa Barbara County                  0.003214               0.002179   \n",
+       "27           Napa County                  0.002777               0.002459   \n",
+       "13           Inyo County                  0.004645               0.002236   \n",
+       "49     Stanislaus County                  0.004377               0.004373   \n",
+       "36      San Diego County                  0.003284               0.002560   \n",
+       "\n",
+       "    total_population_2009  violent_arrest_rate_2018  drug_arrest_rate_2018  \\\n",
+       "41                 402025                  0.002948               0.001167   \n",
+       "27                 132173                  0.002525               0.000596   \n",
+       "13                  17438                  0.005881               0.000714   \n",
+       "49                 505165                  0.004385               0.001650   \n",
+       "36                2987543                  0.002611               0.000638   \n",
+       "\n",
+       "    total_population_2018  \n",
+       "41                 442996  \n",
+       "27                 141005  \n",
+       "13                  18195  \n",
+       "49                 535684  \n",
+       "36                3283665  "
+      ]
+     },
+     "execution_count": 27,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "all_years = all_years.drop('_merge', axis='columns')\n",
+    "all_years.sample(5)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(14)** Did drug arrests go down from 2009 to 2018? (they sure better! This is what's called a \"sanity check\" of your data and analysis. If you find drug arrests went *up*, you know something went wrong with your code or your understanding of the situations. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "-0.0022133472788366236"
+      ]
+     },
+     "execution_count": 28,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "all_years[\"change_in_drug_2018_2009\"] = (\n",
+    "    all_years.drug_arrest_rate_2018 - all_years.drug_arrest_rate_2009\n",
+    ")\n",
+    "all_years[\"change_in_drug_2018_2009\"].mean()\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "So rates declined by 0.0022 arrests per capita. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(15)** Now we want to look at whether violent crime decreased following drug legalization. Did the average violent arrest rate decrease? By how much? (Note: We're assuming that arrest rates are proportionate to crime rates. If policing increased so that there were more arrests per crime committed, that would impact our interpretation of these results. But this is just an exercise, so...)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "all_years[\"change_in_violent_2018_2009\"] = (\n",
+    "    all_years.violent_arrest_rate_2018 - all_years.violent_arrest_rate_2009\n",
+    ")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "-0.00028268480439183743"
+      ]
+     },
+     "execution_count": 30,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "all_years['change_in_violent_2018_2009'].mean()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "So rates declined by 0.00028 arrests per capita. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(16)** So we've determined that both drug arrests and violent crime arrests were decreasing over this period. But maybe *all* crime was just falling, and this isn't about drug legalization. \n",
+    "\n",
+    "This is the problem with a \"pre-to-post\" analysis: yes, our results are *consistent* with the idea that drug legalization reduced violent crime, but lots of things happened between 2009 and 2018, not just drug legalization, so we don't know that drug legalization *caused* the decline in violent crime. \n",
+    "\n",
+    "So let's do a kind of difference-in-difference analysis. We know that drug legalization should have had a bigger effect on counties that had higher drug arrest rates prior to drug legalization. After all, in a county that had no drug arrests, legalization wouldn't do anything, would it? \n",
+    "\n",
+    "So let's split our sample into two groups: high drug arrests in 2009, and low drug arrests in 2009 (cut the sample at the average drug arrest rate in 2009). \n",
+    "\n",
+    "Now we can ask: did violent crime fall *more* from 2009 to 2018 in the counties that had lots of drug arrests in 2009 (where legalization likely had more of an effect) than in counties with fewer drug arrests in 2009 (where legalization likely mattered less)? Calculate this difference-in-differences:\n",
+    "\n",
+    "(the change in violent crime rate for counties with lots of drug arrests in 2009) - (the change in violent crime rate for counties with few drug arrests in 2009)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 31,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "count    58.000000\n",
+       "mean      0.003191\n",
+       "std       0.001448\n",
+       "min       0.001017\n",
+       "25%       0.002311\n",
+       "50%       0.002800\n",
+       "75%       0.003944\n",
+       "max       0.008613\n",
+       "Name: drug_arrest_rate_2009, dtype: float64"
+      ]
+     },
+     "execution_count": 31,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "all_years.drug_arrest_rate_2009.describe()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 32,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "all_years[\"high_drug_2009\"] = (\n",
+    "    all_years.drug_arrest_rate_2009 > all_years.drug_arrest_rate_2009.mean()\n",
+    ")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 33,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "-0.00043197415958967417"
+      ]
+     },
+     "execution_count": 33,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "change_from_09_to_18_in_high_drug_arrest_counties = all_years.loc[\n",
+    "    all_years.high_drug_2009, \"change_in_violent_2018_2009\"\n",
+    "].mean()\n",
+    "change_from_09_to_18_in_high_drug_arrest_counties\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 34,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "-0.00018458037097611614"
+      ]
+     },
+     "execution_count": 34,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "change_from_09_to_18_in_low_drug_arrest_counties = all_years.loc[\n",
+    "    ~all_years.high_drug_2009, \"change_in_violent_2018_2009\"\n",
+    "].mean()\n",
+    "change_from_09_to_18_in_low_drug_arrest_counties\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dif_in_dif = (\n",
+    "    change_from_09_to_18_in_high_drug_arrest_counties\n",
+    "    - change_from_09_to_18_in_low_drug_arrest_counties\n",
+    ")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 36,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "-0.000247393788613558"
+      ]
+     },
+     "execution_count": 36,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dif_in_dif"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "So arrest rates declined by 0.000247 arrests per capita *more* in counties that had previously had high drug arrest rates than in counties that had previously had low drug arrest rates. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**(17)** Hmmm... we showed that there was a greater *absolute* decline in violent arrest rates in counties more impacted by drug legalization. But was there also a greater *proportionate* decline?\n",
+    "\n",
+    "Calculate:\n",
+    "\n",
+    "(the percentage change in violent crime rate for counties with lots of drug arrests in 2009) - (the percentage change in violent crime rate for counties with few drug arrests in 2009)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 37,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# We could also do in percentage terms\n",
+    "all_years[\"pct_change_in_violent_2018_2009\"] = (\n",
+    "    all_years.violent_arrest_rate_2018 - all_years.violent_arrest_rate_2009\n",
+    ") / all_years.violent_arrest_rate_2009\n",
+    "pct_change_from_09_to_18_in_high_drug_arrest_counties = all_years.loc[\n",
+    "    all_years.high_drug_2009, \"pct_change_in_violent_2018_2009\"\n",
+    "].mean()\n",
+    "pct_change_from_09_to_18_in_low_drug_arrest_counties = all_years.loc[\n",
+    "    ~all_years.high_drug_2009, \"pct_change_in_violent_2018_2009\"\n",
+    "].mean()\n",
+    "pct_dif_in_dif = (\n",
+    "    pct_change_from_09_to_18_in_high_drug_arrest_counties\n",
+    "    - pct_change_from_09_to_18_in_low_drug_arrest_counties\n",
+    ")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "-0.04913794186222824"
+      ]
+     },
+     "execution_count": 38,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "pct_dif_in_dif"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "So arrest rates declined by an additional 4.9% in arrests per capita in counties that had previously had high drug arrest rates than in counties that had previously had low drug arrest rates. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 39,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "all_years.to_parquet(\n",
+    "    \"/users/nick/desktop/arrest_rates_and_population.parquet\", engine=\"fastparquet\"\n",
+    ")\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "interpreter": {
+   "hash": "3e0a5228cb9726a24d36227c69ed0d3aac98cecda769d1c9adb080711d57f90d"
+  },
+  "kernelspec": {
+   "display_name": "Python 3.9.7 64-bit ('base': conda)",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
