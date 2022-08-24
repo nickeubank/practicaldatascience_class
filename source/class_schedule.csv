@@ -1,20 +1,20 @@
 ﻿"Date, Rm",Topic,Do Before Class,In-Class Exercise
 "Tues, Aug 30","- Class Introduction
 - Welcome to VS Code","- **SETUP 1:** `Installing Python and miniconda <setup_python.ipynb>`_
-- **SETUP 2:** `Installing and Configuring VS Code <setup_vscode.ipynb>`_",- What is Data Science?
+- **SETUP 2:** `Installing and Configuring VS Code <setup_vscode.ipynb>`_",
 "Thurs, Sep 1",- Command Line Basics,"- **SETUP 3:** `Setup Augmented Command Line <setup_augmented_commandline.ipynb>`_
 - `Command Line Basics <command_line_part1.ipynb>`_
 - `Read and sign syllabus <https://github.com/nickeubank/practicaldatascience/raw/master/syllabus/Syllabus_PracticalDataScience.pdf>`_
 - `Register with IPUMS <https://uma.pop.umn.edu/usa/user/new>`_
 - `Register for DataCamp <https://www.datacamp.com/home>`_
-",- `Exercise <exercises/Exercise_CommandLine_1_Basics.ipynb>`_
-"Fri, Sep 2",**SOFTWARE INSTALL DAY**,A day of trouble shooting install issues,- `R in VS Code <jupyter_r_notebooks.ipynb>`_
+",- `Ex <exercises/Exercise_CommandLine_1_Basics.ipynb>`_
+"Fri, Sep 2",**SOFTWARE INSTALL DAY**,A day of trouble shooting install issues,
 "Tues, Sep 6","- Advanced Command Line
 - Jupyter
 - Packages","- `Advanced Command Line <command_line_part2.ipynb>`_
 - `Jupyter in VS Code <jupyter.ipynb>`_
-- `Python packages <managing_python_packages.ipynb>`_","- `Exercise 1 <exercises/Exercise_CommandLine_2_Advanced.ipynb>`_
-- `Exercise 2 <exercises/Exercise_jupytervscode.ipynb>`_"
+- `Python packages <managing_python_packages.ipynb>`_","- `Ex 1 <exercises/Exercise_CommandLine_2_Advanced.ipynb>`_
+- `Ex 2 <exercises/Exercise_jupytervscode.ipynb>`_"
 "Thurs, Sep 8","- Python Debugger
 - R / Python Differences
 - Packages","- `Python Debugger in VS Code <debugger_vscode.ipynb>`_
