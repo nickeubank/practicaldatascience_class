@@ -1,7 +1,7 @@
 ﻿"Date, Rm",Topic,Do Before Class,In-Class Exercise
 "Tues, Aug 30","- Class Introduction
-- Welcome to VS Code","- **SETUP 1:**`Installing Python and miniconda <setup_python.ipynb>`_
-- **SETUP 2:**`Installing and Configuring VS Code <setup_vscode.ipynb>`_",- What is Data Science?
+- Welcome to VS Code","- **SETUP 1:** `Installing Python and miniconda <setup_python.ipynb>`_
+- **SETUP 2:** `Installing and Configuring VS Code <setup_vscode.ipynb>`_",- What is Data Science?
 "Thurs, Sep 1",- Command Line Basics,"- **SETUP 3:** `Setup Augmented Command Line <setup_augmented_commandline.ipynb>`_
 - `Command Line Basics <command_line_part1.ipynb>`_
 - `Read and sign syllabus <https://github.com/nickeubank/practicaldatascience/raw/master/syllabus/Syllabus_PracticalDataScience.pdf>`_
