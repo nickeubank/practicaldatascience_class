@@ -2,28 +2,29 @@
  "cells": [
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "# The Command Line on Windows / Installing Bash"
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "In our next reading on [Command Line Basics](command_line_part1.ipynb), we'll learn that there are actually several programs available that allow users to interact with their operating system via text commands instead of using their mouse to click on icons (feel free to follow the link and read ahead if you'd like). \n",
     "\n",
     "In this course, we'll focus on learning `bash` because it's so ubiquitous in the data science space. Why? Mostly because it is the default command line tool for Linux operating systems, and while you may not know it, *most* of the computers you interact with on a daily basis run Linux. Your personal computer may be a Mac (which also uses `bash` by default) or a Windows computer, but the computers running websites, managing your email, running those ticket kiosk you see at the airport, etc. are almost all running on Linux. So when you start doing cloud computing, you'll *probably* be working with a Linux virtual machine. So if you're going to learn a command line tool as a data scientist, `bash` is the natural choice.\n",
     "\n",
     "**But**: `bash` is not the default on Windows (Windows uses `PowerShell` and `CMD` by default), so on this page, I'll show you how to set up a system that lets you work with `bash` on your Windows computer. "
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "## Install Cmder\n",
     "\n",
-    "To get a good `bash` interface in Windows, begin by [downloading Cmder from their main site](https://cmder.net/). \n",
+    "To get a good `bash` interface in Windows, begin by [downloading Cmder from their main site](https://cmder.app/). \n",
     "\n",
     "**Make sure to select the *Full Install* (or you won't get Bash)!** \n",
     "\n",
@@ -37,18 +38,18 @@
     "With that in mind, we want to set `Cmder` to default to pure `bash` mode by clicking on Settings (the three horizontal bars on the bottom right), then changing the \"startup task\" to `{bash::bash as Admin}` (see pic below).\n",
     "\n",
     "![selectbash](images/cmder_default_to_bash.png)"
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "## Create Configuration File"
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "When you open a `sh`, `bash`, or `zsh` session, that session begins by running all the code in a special file the helps configure the session. Among the things done in these files, they often define \"environment variables\" -- variables that are visible to any program run from your command line session, with information about things like where to find various programs, like Python. \n",
     "\n",
@@ -60,8 +61,7 @@
     "- **run the command `touch .bash_profile`**: This will create a file called `.bash_profile` we can use later. \n",
     "\n",
     "And we're done!"
-   ],
-   "metadata": {}
+   ]
   }
  ],
  "metadata": {

@@ -10,7 +10,7 @@ It reads source material from the `source` folder (mostly jupyter notebooks, wit
 - Clone repository
 - Install all relevant sphinx packages for converting notebooks to HTML:
     `conda install -c conda-forge sphinx nbsphinx recommonmark`
-    `pip install sphinx_markdown_tables`
+    `pip install sphinx_markdown_tables sphinx-material`
 - cd to the root directory of repository.
 - Run `sphinx-build source docs/html`
 
