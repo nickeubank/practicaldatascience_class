@@ -8,7 +8,7 @@ Office Hours and Links
 
 `Raza <https://duke.zoom.us/j/6225640608>`_ : Tuesday 12:00 pm - 1:00 pm; Thursday 4:00 - 5:00 pm.
 
-`Marlyne <https://duke.zoom.us/j/97853597222>`_ : Monday 10:00 am - 11:00 am; Wednesday 10:00 - 11:00 am.
+`Marlyne <https://duke.zoom.us/j/98939159500>`_ : Monday 10:00 am - 11:00 am; Wednesday 10:00 - 11:00 am.
 
 
 Class Time
