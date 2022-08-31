@@ -2,7 +2,7 @@ Hello!
 ======
 
 
-*The course site for Duke MIDS Fall 2021 Practical Data Science (IDS 720) Course*
+*The course site for Duke MIDS Fall 2022 Practical Data Science (IDS 720) Course*
 
 **If you are not a Duke Masters in Data Science student, please see** `this page <not_a_mids_student.ipynb>`_ **about how best to use this site!**
 

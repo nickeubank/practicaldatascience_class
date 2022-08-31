@@ -1,22 +1,20 @@
 Class Schedule
 ==============
 
-`Class Zoom Link <https://duke.zoom.us/j/97068501770>`_
-
 Office Hours and Links
 --------------------------
 
-`Nick <https://duke.zoom.us/my/nickeubank>`_ : Monday 12:30 - 1:30pm
+`Nick <https://duke.zoom.us/my/nickeubank>`_ : Monday 12:45 pm - 1:45 pm
 
-`Yi <https://duke.zoom.us/j/91642983704>`_ : Monday 11 am – 12 am; Tuesday 4 pm – 5 pm
+`Raza <https://duke.zoom.us/j/6225640608>`_ : Tuesday 12:00 pm - 1:00 pm; Thursday 4:00 - 5:00 pm.
 
-`Zoe <https://duke.zoom.us/j/7716922957>`_ : Wednesday 11 am – 12 am; Thursday 5 pm – 6 pm
+`Marlyne <https://duke.zoom.us/j/97853597222>`_ : Monday 10:00 am - 11:00 am; Wednesday 10:00 - 11:00 am.
 
 
 Class Time
 ----------
 
-Class will be Tuesdays and Thursdays from 1:45pm-3pm (EDT). **YOU MUST ATTEND THESE SYNCHRONOUS SESSIONS.**
+Class will be Tuesdays and Thursdays from 1:45pm-3pm (EDT).
 
 .. csv-table::
    :file: class_schedule.csv
