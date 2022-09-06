@@ -18,8 +18,8 @@
 "Thurs, Sep 8","- Python Debugger
 - R / Python Differences
 - Packages","- `What are Tracebacks? <https://www.youtube.com/watch?v=JD8BrXXNtjA>`_
-- `Debugging Tools <debugger_principles.ipynb>`_
-- `Python Debugger in VS Code <debugger_in_vscode.ipynb>`_
+- `Debugging Tools <debugging_principles.ipynb>`_
+- `Python Debugger in VS Code <debugging_in_vscode.ipynb>`_
 - `variables v objects <vars_v_objects.ipynb>`_
 - `Python v. R <https://www.practicaldatascience.org/html/python_v_r.html>`_",
 "Tues, Sep 13",- Numpy Basics,"- `Why numpy? <10_why_numpy.ipynb>`_
