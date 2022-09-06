@@ -54,7 +54,7 @@
     "\n",
     "10.  Finally, run the code up to and including the line `my_chart`. You will (hopefully) see a scatter plot! In addition, if you move your mouse over the points in the plot, you should see an interactive \"tooltip\" that gives you the name of each country. COOL!\n",
     "\n",
-    "Note that if you just see three dots like this:\n",
+    "Note that if you just see three dots like this but no image:\n",
     "\n",
     "![my_chart_bug](../images/my_chart_bug.png)\n",
     "\n",
