@@ -13,7 +13,8 @@
 - Jupyter
 - Packages","- `Advanced Command Line <command_line_part2.ipynb>`_
 - **SETUP 4:** `Jupyter in VS Code <jupyter.ipynb>`_
-- `Python packages <managing_python_packages.ipynb>`_","- `Ex 1 <exercises/Exercise_CommandLine_2_Advanced.ipynb>`_
+- `Python packages <managing_python_packages.ipynb>`_
+- **OPTIONAL SETUP:** `R Notebooks <jupyter_r_notebooks.ipynb>`_","- `Ex 1 <exercises/Exercise_CommandLine_2_Advanced.ipynb>`_
 - `Ex 2 <exercises/Exercise_jupytervscode.ipynb>`_"
 "Thurs, Sep 8","- Python Debugger
 - R / Python Differences
