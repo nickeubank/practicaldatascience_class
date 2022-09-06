@@ -6,6 +6,8 @@ This respository uses the `sphinx` document builder together with `nbconvert` to
 
 It reads source material from the `source` folder (mostly jupyter notebooks, with a few `.rst` restructured text files (like the home page in `index.rst`), and when you run sphinx uses those to build an HTML site in `docs/html`, which is then hosted by github pages. 
 
+Hello world!
+
 ## To Build
 
 - Clone repository
