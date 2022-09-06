@@ -1,0 +1,454 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Modifying Subsets of Vectors\n",
+    "\n",
+    "The subsetting logic from the previous reading isn't just for extracting subsets of vectors to analyze -- it's also useful for modifying vectors. The idea is that instead of keeping elements that meet a logical condition or occur at a specific index, we can change them! \n",
+    "\n",
+    "For example, let's consider the vector with the salaries of everyone in my company. Suppose we wanted to give a raise to one of our workers -- the person earning $80,000 -- how would we correct that mistake without re-creating the full vector? \n",
+    "\n",
+    "The answer is that we can fix it using indexing, or a logical statement."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([105000,  50000,  55000,  80000])"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import numpy as np\n",
+    "\n",
+    "# Create a vector with salaries of employees\n",
+    "salaries = np.array([105_000, 50_000, 55_000, 80_000])\n",
+    "salaries\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "b7089dd5",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([105000,  50000,  55000,  90000])"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "salaries[salaries == 80_000] = 90_000  # using a logical statement\n",
+    "salaries\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "c431fc04",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([105000,  50000,  55000,  90000])"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "salaries[3] = 90_000  # using indexing\n",
+    "salaries\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "1c8811bb",
+   "metadata": {},
+   "source": [
+    "Note that we can also make modifications to subsets of rows by using subsets on BOTH sides of the assignment operator. \n",
+    "\n",
+    "For example, we wanted to give a raise to everyone enter company who made less than $75,000. \n",
+    "\n",
+    "If we were getting a raise to everyone, we could just to:\n",
+    "\n",
+    "```python\n",
+    "salaries = salaries + 10_000\n",
+    "```\n",
+    "\n",
+    "But then we'd be giving a raise to some of the folks who make more than 75,000 dollars. So we have to (a) pull out the salaries that are less than 75,000 dollars, (b) increment them up by 10,000 dollars, and (c) re-insert them, replacing the old salaries:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "fb835c6c",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([50000, 55000])"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "salaries = np.array([105_000, 50_000, 55_000, 80_000])\n",
+    "\n",
+    "# Get lower salaries\n",
+    "lower_salaries = salaries[salaries < 75_000]\n",
+    "lower_salaries\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "ab3789d3",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([60000, 65000])"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Increase them all by ten thousand\n",
+    "new_salaries = lower_salaries + 10_000\n",
+    "new_salaries\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "8b81a224",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([105000,  60000,  65000,  80000])"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Re-insert\n",
+    "salaries[salaries < 75_000] = new_salaries\n",
+    "salaries\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7b284ec8",
+   "metadata": {},
+   "source": [
+    "Note that this last operation worked because the vector on the left side of the assignment operator had a length of two, and the new vector on the right-hand side was also of length two, so numpy could match the entries being subset on the left to entries on the right one-to-one.\n",
+    "\n",
+    "But while we *can* do this is all these separate steps, we can also collapse this:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "9abba1be",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Re-create her original salary vector\n",
+    "salaries = np.array([105_000, 50_000, 55_000, 80_000])\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "f63de605",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([105000,  60000,  65000,  80000])"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "salaries[salaries < 75_000] = salaries[salaries < 75_000] + 10_000\n",
+    "salaries\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "cd9435a3",
+   "metadata": {},
+   "source": [
+    "Again, note this only worked because we were careful to ensure that the vector on the right of the assignment operator \"fit\" into the space being subset on the left! This is a trick we use a lot in data science, so make sure you're comfortable with it before proceeding."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f819d442",
+   "metadata": {},
+   "source": [
+    "## Modifying Vectors and Data Types"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d7b66a0d",
+   "metadata": {},
+   "source": [
+    "You may not have noticed, but up till now we've only being doing \"like-for-like\" substitutions. For example, when we changed an entry in `age`, we were always replacing one `int` with another.\n",
+    "\n",
+    "This is important, because as we discussed in our last reading, vectors are *homogeneously typed*, meaning that unlike lists, you can't put different types of data in an array.\n",
+    "\n",
+    "Now when we're *creating* a vector, numpy will use type promotion to pick a type that accommodates everything you're putting into an array. For example, if I pass both bools and integers to `np.array()`, it will just type promote everything to be integers:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "bb3fd18c",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([1, 0, 7])"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "np.array([True, False, 7])\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7137445b",
+   "metadata": {},
+   "source": [
+    "But once a vector has been created, numpy stops being so considerate: if you try and cram data of a different type into a vector of a given type, it will try to *coerce* the data into the established type of the array. \n",
+    "\n",
+    "For example, if we try and cram 7 into an array that's already of type `bool`, numpy will *coerce* 7 into type bool (e.g. run `Boolean(7)`), which will turn `7` into `True` *even though this is causing information to be lost*:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "0b596a71",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([ True, False])"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "bool_vector = np.array([True, False])\n",
+    "bool_vector\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "73c3357d",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([ True,  True])"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "bool_vector[1] = 7\n",
+    "bool_vector\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "481ab511",
+   "metadata": {},
+   "source": [
+    "Similarly, if you try and put a floating point number into an integer vector, that float will be type coerced into an integer, which is accomplished by just truncating any information after the decimal:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "4d0c32ca",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([1, 2, 3])"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "int_vector = np.array([1, 2, 3])\n",
+    "int_vector\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "2df72f63",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([42,  2,  3])"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "int_vector[0] = 42.989723798729874\n",
+    "int_vector\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "245c2e9f",
+   "metadata": {},
+   "source": [
+    "This is why, as we mentioned in the last reading, you might not always want to let numpy pick your datatypes for you. Suppose in the example above, for example, you know you might later need to put a floating point number into `int_vector` -- you could instead tell numpy to make it a floating point number vector *at creation*:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "199166d1",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([42.9897238,  2.       ,  3.       ])"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "no_longer_an_int_vector = np.array([1, 2, 3], dtype=\"float\")\n",
+    "no_longer_an_int_vector[0] = 42.989723798729874\n",
+    "no_longer_an_int_vector\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0e56b8ec",
+   "metadata": {},
+   "source": [
+    "I know this can be a little confusing, so here's a recap:\n",
+    "\n",
+    "- When *creating* a vector, numpy will do everything it can to ensure that you don't lose any information by type *promoting* your data to the lowest type that *preserves all the information in your data*. \n",
+    "- Once a vector has been created, numpy's hands are tied, so it will use type *coercion* to force the data you're trying to put into your existing vector into the established type, *even if that causes information loss.*"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Exercises\n",
+    "\n",
+    "1. Create the following vector of salaries: `50_000, 105_250, 55_000, 89_000`. What is the total payroll (sum of all salaries for the company)?\n",
+    "2. Now suppose our evil CEO has decided to give herself a raise. Take your salary vector and modify it so that the CEO -- the person making 105,000 dollars -- gets a raise of 15%.\n",
+    "3. 115% of 105,250 dollars is 121,037.50 dollars. Is that the value in your array? If not, can you tell why not?\n",
+    "4. Recreate your vector, do *something* with the `dtype` argument so that when you give the CEO a raise of 15%, she ends up with a salary of 121,037.50 dollars.\n",
+    "5. Now suppose this has so annoyed the lowest paid employee (the woman earning 50,000 dollars) that *she* demands a raise as well. Increase *her* salary by *20%*.\n",
+    "6. This has so irritated the other two employees you must now give them 10% raises. Increase their salaries by 10%.\n",
+    "7. Now calculate the total payroll for the company. In the end, what did the CEO's ~16,000 raise end up costing the company?"
+   ]
+  }
+ ],
+ "metadata": {
+  "interpreter": {
+   "hash": "3e0a5228cb9726a24d36227c69ed0d3aac98cecda769d1c9adb080711d57f90d"
+  },
+  "kernelspec": {
+   "display_name": "Python 3.9.7 ('base')",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.7"
+  },
+  "orig_nbformat": 4
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

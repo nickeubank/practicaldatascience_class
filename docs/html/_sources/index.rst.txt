@@ -72,7 +72,6 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
    Plotting, Basics <plotting_altair_part1>
    Plotting, Advanced <plotting_altair_part2>
    Pandas 3: Views <views_and_copies_in_pandas>
-   Cleaning: Editing Values <cleaning_editingvalues>
    Parquet Format <parquet>
 
 .. toctree:: 
