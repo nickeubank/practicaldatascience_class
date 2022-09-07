@@ -1,10 +1,6 @@
 """Debugger exercise."""
 
 
-from contextlib import nullcontext
-from venv import create
-
-
 def split_string(string):
     """Given a string, split it into a list of 'words'."""
     start_of_word = 0
@@ -36,7 +32,7 @@ def create_collective_count(word_counts1, word_counts2):
     return collective_count
 
 
-def word_counter(string1: str, string2: str) -> str:
+def word_counter(string1, string2):
     """Find the word that occurs the most across the two strings."""
     string1_words = split_string(string1)
     string2_words = split_string(string2)
@@ -44,19 +40,65 @@ def word_counter(string1: str, string2: str) -> str:
     word_counts2 = count_words(string2_words)
     collective_count = create_collective_count(word_counts1, word_counts2)
     curr_max = 0
+    curr_word = None
     for i in collective_count:
         if collective_count[i] > curr_max:
             curr_max = collective_count[i]
             curr_word = i
+    if curr_word is None:
+        return "No matching words"
     return curr_word
 
 
 if __name__ == "__main__":
-    # Test Case 1, No Overlapping Words
+
+    # Test Case 0
+    print("Test Case 1:")
+    print("The result should be 'of'")
+
+    string1 = (
+        "Far out in the uncharted backwaters of the "
+        "unfashionable end of the western spiral arm of "
+        "the Galaxy lies a small unregarded yellow sun."
+    )
+    string2 = (
+        "Orbiting this at a distance of roughly ninety-two million "
+        "miles is an utterly insignificant little blue green "
+        "planet whose ape-descended life forms are so amazingly "
+        "primitive that they still think digital watches are a pretty neat idea."
+    )
+
+    print("Comparing:")
+    print(f"Sentence 1: {string1}")
+    print(f"Sentence 2: {string2}")
+
+    test_word = word_counter(string1, string2)
+    print(f"Result: {test_word}")
+
+    # Test Case 1
+    print("Test Case 1:")
+    print("The result should be 'No matching words'")
+
     string1 = "I love Practical Data Science."
     string2 = "Who is Nick Eubank?"
+
+    print("Comparing:")
+    print(f"Sentence 1: {string1}")
+    print(f"Sentence 2: {string2}")
+
     test_word = word_counter(string1, string2)
-    # Test Case 2, 'code'
+    print(f"Result: {test_word}")
+
+    # Test Case 2
+    print("Test Case 2:")
+    print("The result should 'code'")
+
     string1 = "This is a test of my code."
     string2 = "I hope there's not bugs in this code."
+
+    print("Comparing:")
+    print(f"Sentence 1: {string1}")
+    print(f"Sentence 2: {string2}")
+
     test_word = word_counter(string1, string2)
+    print(f"Result: {test_word}")
