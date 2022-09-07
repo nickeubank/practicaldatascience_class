@@ -40,20 +40,17 @@ def word_counter(string1, string2):
     word_counts2 = count_words(string2_words)
     collective_count = create_collective_count(word_counts1, word_counts2)
     curr_max = 0
-    curr_word = None
     for i in collective_count:
         if collective_count[i] > curr_max:
             curr_max = collective_count[i]
             curr_word = i
-    if curr_word is None:
-        return "No matching words"
     return curr_word
 
 
 if __name__ == "__main__":
 
     # Test Case 0
-    print("Test Case 1:")
+    print("Test Case 0:")
     print("The result should be 'of'")
 
     string1 = (
