@@ -27,16 +27,17 @@
 "Tues, Sep 13",- Numpy Basics,"- `Why numpy? <10_why_numpy.ipynb>`_
 - `Numpy Vectors <20_vectors.ipynb>`_
 - `Math with Vectors <21_math_with_vectors.ipynb>`_
+- `Type Promotion <23_type_promotion_in_vectors.ipynb>`_
 - `Subsetting Vectors <30_subsetting_vectors.ipynb>`_
 - `Modifying Subsets of Vectors <35_modifying_subsets_of_vectors.ipynb>`_
 - `Numbers in Computer <ints_and_floats.ipynb>`_
-- `OPTIONAL: How numpy works <https://www.nature.com/articles/s41586-020-2649-2>`_",- `Link <exercises/Exercise_numpy.ipynb>`_
+- `OPTIONAL: How numpy works <https://www.nature.com/articles/s41586-020-2649-2>`_",
 "Thurs, Sep 15",- Numpy Arrays,"- `Views and Copies <10_views_and_copies.ipynb>`_
 - `Matrices <20_matrices.ipynb>`_
 - `Reshaping Matrices <22_reshaping_matrices.ipynb>`_
 - `Images as Matrices <25_images_as_matrices.ipynb>`_
 - `Subsetting Matrices <30_subsetting_matrices.ipynb>`_
-- `ND-Arrays <40_nd_arrays.ipynb>`_",
+- `ND-Arrays <40_nd_arrays.ipynb>`_",- `Link <exercises/Exercise_numpy.ipynb>`_
 "Tues, Sep 20",- Pandas: Series,- `Pandas 1: Series <pandas_series.ipynb>`_,- `Link <exercises/Exercise_series.ipynb>`_
 "Thurs, Sep 22",- Pandas: DataFrames,- `Pandas 2: DataFrames <pandas_dataframes.ipynb>`_,- `Link <exercises/Exercise_dataframe.ipynb>`_
 "Tues, Sep 27",- Pandas: Indices & Missing,"- WM pp 136-142
