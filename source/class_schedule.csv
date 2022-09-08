@@ -22,8 +22,8 @@
 - `Debugging Tools <debugging_principles.ipynb>`_
 - `Python Debugger in VS Code <debugging_in_vscode.ipynb>`_
 - `variables v objects <vars_v_objects.ipynb>`_
-- `Python v. R <https://www.practicaldatascience.org/html/python_v_r.html>`_","- `Ex 1 <exercises/Exercise_variables_v_objects.ipynb>`_
-- `Ex 2 <exercises/Exercise_debugger.ipynb>`_"
+- `Python v. R <https://www.practicaldatascience.org/html/python_v_r.html>`_","- `Ex 1 <exercises/Exercise_debugger.ipynb>`_
+- `Ex 2 <exercises/Exercise_variables_v_objects.ipynb>`_"
 "Tues, Sep 13",- Numpy Basics,"- `Why numpy? <10_why_numpy.ipynb>`_
 - `Numpy Vectors <20_vectors.ipynb>`_
 - `Math with Vectors <21_math_with_vectors.ipynb>`_
