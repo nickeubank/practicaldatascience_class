@@ -42,7 +42,8 @@
 "Tues, Sep 20",- Pandas: Series,"- `Broadcasting in numpy <41_broadcasting.ipynb>`_
 - `Why Pandas? <00_intro_to_pandas.ipynb>`_
 - `Pandas Series <10_pandas_series.ipynb>`_
-- `Manipulating Pandas Series <15_manipulating_series.ipynb>`_",- `Link <exercises/Exercise_series.ipynb>`_
+- `Manipulating Pandas Series <15_manipulating_series.ipynb>`_
+- `Vectorizing <11_vectorization.ipynb>`_",- `Link <exercises/Exercise_series.ipynb>`_
 "Thurs, Sep 22",- Pandas: DataFrames,- `Pandas 2: DataFrames <pandas_dataframes.ipynb>`_,- `Link <exercises/Exercise_dataframe.ipynb>`_
 "Tues, Sep 27",- Pandas: Indices & Missing,"- WM pp 136-142
 - JVP pp 115-139
