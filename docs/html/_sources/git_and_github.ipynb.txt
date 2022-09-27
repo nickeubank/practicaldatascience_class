@@ -2,6 +2,7 @@
  "cells": [
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "# Git and Github\n",
     "\n",
@@ -25,11 +26,11 @@
     "5. **Allows you to make your project open source so others can contribute to your project:** The time may come when you want to write a software package and share it with the world. If you know git, you can also share that code in a way that makes it easy for other people to contribute code and improve that package. Open source isn't just for big things like Python programming language -- it's also used for lots of little projects, like packages for [simulating electoral boundaries to study gerrymandering](https://github.com/mggg/GerryChain), or tools to make it easy to [access campaign finance data](https://github.com/fecgov/openFEC) (sorry, I'm a political scientist, so I'm doing poli sci examples, but you get the idea). And you'll be amazed how many people contribute to these kinds of projects. Indeed, even these tutorials have a [github repositoriy where people can submit improvements!](https://github.com/nickeubank/programming4ds)\n",
     "\n",
     "OK, now the bad news: there's a reason I put so much energy into discussing the value of git before getting into how it works: learning git kinda sucks. I mean, it's not painful like [performing an appendectomy on yourself without anesthesia](https://en.wikipedia.org/wiki/Leonid_Rogozov), and it's not hard like quantum mechanics or geometric topology; it's definitely something anyone can learn. But there's no pretending that git is user friendly, and you're sure to have a couple of moments when you'll find yourself thinking (rightly) \"why on Earth did they do it like that?\". So before you dive in, it's good to have the expectation that there's a initial uphill slog to learning git before it becomes really useful. But I promise: it pays off *big time*. "
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "### Git versus Github\n",
     "\n",
@@ -39,37 +40,27 @@
     "- `github` is a service that hosts a copy of your project in the cloud so you and your co-authors can easily share project changes. In addition, `github` also has a great interface for reviewing changes to a project in a user friendly manner, and it has an \"issue tracker\" system for hosting conversations about things that need to be done in a project. \n",
     "\n",
     "And when it comes to what is user-friendly and what is not, `git` is the kinda awful thing to learn, and `github` is magical. "
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "## Learning Git\n",
     "\n",
-    "Because it's such a central tool in software development, there are *lots* of tutorials online for learning git, and it would be silly for me to try and write my own. However, I think most do a so-so job of offering users a general sense of what working with git is like. With that in mind, below is a simple overview of working with git, after which is a link to what I think is probably the best git and github tutorials I've found. Once you've completed the tutorials, please come back here to learn a little bit more about data-science-specific git issues (like how to put datasets into a git repository) in the last section below. \n",
+    "Below are two videos created by my colleague (and fellow MIDS instructor) Kyle Bradbury on git and github!\n",
     "\n",
-    "\n",
-    "### Git Overview\n",
-    "\n",
-    "**[Watch this video up to 47 minutes](https://www.youtube.com/watch?v=eulnSXkhE7I)**\n",
-    "\n",
-    "### Other Git Resources\n",
-    "\n",
-    "MIDS students have been exposed to git before, and so should know the basics. If you're entirely new to git, then I would recommend one of the following: \n",
-    "\n",
-    "- do Parts 1 and 2 of the DataCamp [Intro to Git for Data Science](https://www.datacamp.com/courses/introduction-to-git-for-data-science) course, \n",
-    "- Check out [this handbook page](https://guides.github.com/introduction/git-handbook/), and consider following the four links under the \"Explore more Git commands\" of the [Github Handbook tutorial](https://guides.github.com/introduction/git-handbook/#basic-git) you read above, or\n",
-    "- reading the full [Git Basics](https://git-scm.com/book/en/v1/Git-Basics) tutorial chapter. \n",
+    "- [Git: What it is and how it works](https://youtu.be/fBCwfoBr2ng)\n",
+    "- [Step-by-Step Git Guide](https://youtu.be/nH7qJHx-h5s)\n",
     "\n",
     "## git-lfs\n",
     "\n",
     "On thing that's unique to using git for data science is that we often want to put datasets into our git repositories. Unfortunately, `git` by itself can't really handle datasets efficiently. To solve this problem, we use `git-lfs` (git Large File System). You can learn all about it [here in this 2 minute video](https://www.youtube.com/watch?v=uLR1RNqJ1Mw)! \n"
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "## Getting Help\n",
     "\n",
@@ -79,11 +70,11 @@
     "- [Undoing mistakes](https://git-scm.com/book/en/v1/Git-Basics-Undoing-Things)\n",
     "- [Dealing with Branches](https://git-scm.com/book/en/v1/Git-Branching-Basic-Branching-and-Merging)\n",
     "- Merge conflicts: [here](https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts) and [here](https://git-scm.com/book/en/v1/Git-Branching-Basic-Branching-and-Merging#Basic-Merge-Conflicts)\n"
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "## Exercises\n",
     "\n",
@@ -94,8 +85,7 @@
     "Non-Duke students: unfortunately these are meant to be done in small groups, so if you're using this on your own it may be a little more difficult than the other exercises on this site... Though I suppose you can \"play all the parts\" if you have more than 1 github account and computer?!\n",
     "\n",
     "[Git Exercises](exercises/Exercise_git.ipynb)"
-   ],
-   "metadata": {}
+   ]
   }
  ],
  "metadata": {

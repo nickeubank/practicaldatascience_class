@@ -47,15 +47,13 @@
 "Thurs, Sep 22",- Pandas: DataFrames,"- `Pandas 2: DataFrames <30_pandas_dataframes.ipynb>`_
 - `Managing Settings in VS Code <https://youtu.be/Knc6S4gUHzk>`_
 - `Writing Good Notebooks <writing_good_jupyter_notebooks.ipynb>`_",- `Link <exercises/Exercise_dataframe.ipynb>`_
-"Tues, Sep 27",- Pandas: Indices & Missing,"- WM pp 136-142
-- JVP pp 115-139
+"Tues, Sep 27",- Pandas: Indices & Missing,"- WM pp 136-142 (Indices)
+- JVP pp 115-139 (Missing Data)
 - `Views and Copies in Numpy <views_and_copies_numpy_review.ipynb>`_
-- `Views and Copies in Pandas <views_and_copies_in_pandas.ipynb>`_
-- `VS Code Livesharing (first half) <https://www.youtube.com/watch?v=2CTi9THB0b4>`_","- `Link 1 <exercises/Exercise_indices.ipynb>`_
+- `Views and Copies in Pandas <views_and_copies_in_pandas.ipynb>`_","- `Link 1 <exercises/Exercise_indices.ipynb>`_
 - `Link 2 <exercises/Exercise_missing.ipynb>`_"
 "Thurs, Sep 29",- Collaborating using Github,"- `Git and Github <git_and_github.ipynb>`_
-- `Visualize Git Branches <https://learngitbranching.js.org/>`_
-- `Homework Guidelines <homework_guidelines.ipynb>`_",- `Link <exercises/Exercise_git.ipynb>`_
+- `Visualize Git Branches <https://learngitbranching.js.org/>`_",- `Link <exercises/Exercise_git.ipynb>`_
 "Tues, Oct 4",- Git and Github 2,,- `Link <exercises/Exercise_git_2.ipynb>`_
 "Thurs, Oct 6","- Pandas: Cleaning
 - Tracebacks","- `Identifying Problems <cleaning_identifying.ipynb>`_
