@@ -47,8 +47,8 @@
 "Thurs, Sep 22",- Pandas: DataFrames,"- `Pandas 2: DataFrames <30_pandas_dataframes.ipynb>`_
 - `Managing Settings in VS Code <https://youtu.be/Knc6S4gUHzk>`_
 - `Writing Good Notebooks <writing_good_jupyter_notebooks.ipynb>`_",- `Link <exercises/Exercise_dataframe.ipynb>`_
-"Tues, Sep 27",- Pandas: Indices & Missing,"- WM pp 136-142 (Indices)
-- JVP pp 115-139 (Missing Data)
+"Tues, Sep 27",- Pandas: Indices & Missing,"- WM pp 136-142 (Indices, Section 5.2 up to MultiIndexes)
+- JVP pp 119-127 (""Handling Missing Data"" in Chpt 3)
 - `Views and Copies in Numpy <views_and_copies_numpy_review.ipynb>`_
 - `Views and Copies in Pandas <views_and_copies_in_pandas.ipynb>`_","- `Link 1 <exercises/Exercise_indices.ipynb>`_
 - `Link 2 <exercises/Exercise_missing.ipynb>`_"
