@@ -75,7 +75,7 @@
    "source": [
     "### Exercise 2\n",
     "\n",
-    "Let's begin by calculating the median US incomes from this data (recall that income is stored in the `inctot` variable). Store the result `\"EX2_AVG_INCOME\"`."
+    "Let's begin by calculating the mean US incomes from this data (recall that income is stored in the `inctot` variable). Store the result `\"EX2_AVG_INCOME\"`."
    ]
   },
   {
@@ -147,7 +147,9 @@
    "source": [
     "### Exercise 8\n",
     "\n",
-    "Now let's estimate the racial income gap in the United States. What is the average salary for employed Black Americans, and what is the average salary for employed White Americans? In percentage terms, how much more does the average White American make than the average Black American?\n",
+    "Now let's estimate the racial income gap in the United States. What is the average salary for employed Black Americans, and what is the average salary for employed White Americans? Store the results as `\"EX8_AVG_INCOME_WHITE\"` and `\"EX8_AVG_INCOME_BLACK\"`.\n",
+    "\n",
+    "In percentage terms (between 0 and 100), how much more does the average White American make than the average Black American? Store the result as `\"EX8_RACIAL_DIFFERENCE\"`. (Be careful to use the right reference group! Percentage differences aren't symmetric.)\n",
     "\n",
     "**Note:** these values are not quite accurate estimates. As we'll discuss in later lessons, to get completely accurate estimates from the ACS we have to take into account how people were selected to be interviewed. But you get pretty good estimates in most cases even without weights -- your estimate of the racial wage gap without weights is within 5\\% of the corrected value. \n",
     "\n",
