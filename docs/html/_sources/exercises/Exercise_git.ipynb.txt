@@ -2,17 +2,18 @@
  "cells": [
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "# Git and Github, Part 1\n",
     "\n",
     "In these exercises, we'll be practicing creating and contributing to projects using the \"Github Flow\" workflow you can [find summarized here](https://guides.github.com/introduction/flow/). Note this is not the only workflow out there -- different companies or groups will often develop their own modification of this basic strategy -- but most are pretty similar to this approach. \n",
     "\n",
     "In these exercises, for the first time we'll want to use the computers of BOTH people working in each pair, so label one computer as Computer A, and one as Computer B. "
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "## Part 0: Change your default editor!\n",
     "\n",
@@ -22,18 +23,18 @@
     "\n",
     "`git config --global core.editor \"COMMANDTOLAUNCHYOUREDITOR\"`\n",
     "\n",
-    "If you have VS Code installed *and the command line tool setup* (i.e. you set up VS Code so that if you type `code` in the command line, VS Code opens, [as discussed here](../setting_up_your_computer.ipynb)), then I would do:\n",
+    "If you have VS Code installed *and the command line tool setup* (i.e. you set up VS Code so that if you type `code` in the command line, VS Code opens, [as discussed here](../setup_vscode.ipynb)), then I would do:\n",
     "\n",
     "`git config --global core.editor \"code\"`\n",
     "\n",
     "If not, then the best option is probably to use `nano`, which is an in-terminal editor we've discussed [before](../command_line_part2.ipynb) that's much easier to use than vim, and which you should already have if you're using a bash console:\n",
     "\n",
     "`git config --global core.editor \"nano\"`"
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "## Part 1: Making a New Repo!\n",
     "\n",
@@ -87,11 +88,11 @@
     "- 'Country Name'\n",
     "\n",
     "and plot mortality against GDP per capita. "
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "**(7)** Once you're done, add and commit the new analysis file (from in your command line session). Then push these files to github. \n",
     "\n",
@@ -106,11 +107,11 @@
     "![new_pr_button](../images/new_pr_button.png)\n",
     "\n",
     "**(9)** This should take you to a Pull Request screen where you can title your PR and add comments. In the comments, ask the person who has Computer B to review your PR (you can use the `@` and their user name to address them. So type `@otheruser would you please review this?`. Then click \"Submit Pull Request\". "
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "## Part 3: Reviewing a Pull Request\n",
     "\n",
@@ -132,11 +133,11 @@
     "**(14)** Now look at the folder using File Explorer or Finder again -- see how the analysis file has appeared? Open it in Jupyter Lab on Computer B and see if you can get it to run. \n",
     "\n",
     "**(15)** Now go back to github and the PR, and suggest one change for the person who wrote the original code to make. "
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "## Part 4: Revising a Pull Request\n",
     "\n",
@@ -145,24 +146,23 @@
     "**(16)** On Computer A, make the changes suggested by the Computer B reviewer. Add, commit, and push those changes. \n",
     "\n",
     "**(17)** On Computer B, look to see that those changes are present, then click \"Merge this PR\"! Now if you look at the master branch of your repository, you should see that the analysis file now appears on `master`. "
-   ],
-   "metadata": {}
+   ]
   },
   {
    "cell_type": "markdown",
+   "metadata": {},
    "source": [
     "## Congratulations! \n",
     "\n",
     "You've completed your first full git / github cycle! \n",
     "\n",
     "Now move on to [Part 2](Exercise_git_2.ipynb) for some more exercises. "
-   ],
-   "metadata": {}
+   ]
   }
  ],
  "metadata": {
   "kernelspec": {
-   "display_name": "Python 3",
+   "display_name": "Python 3.10.6 ('base')",
    "language": "python",
    "name": "python3"
   },
@@ -176,7 +176,12 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.7.8"
+   "version": "3.10.6"
+  },
+  "vscode": {
+   "interpreter": {
+    "hash": "718fed28bf9f8c7851519acf2fb923cd655120b36de3b67253eeb0428bd33d2d"
+   }
   }
  },
  "nbformat": 4,
