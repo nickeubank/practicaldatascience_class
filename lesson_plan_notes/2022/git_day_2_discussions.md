@@ -1,0 +1,5 @@
+- VS Code git integration:
+  - Use it to look at file changes, maybe revert
+  - don't get TOO dependent on it
+- What _is_ a git repo? .git. 
+- nested repos

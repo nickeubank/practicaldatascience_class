@@ -54,7 +54,8 @@
 - `Link 2 <exercises/Exercise_missing.ipynb>`_"
 "Thurs, Sep 29",- Collaborating using Github,"- `Git and Github <git_and_github.ipynb>`_
 - `Visualize Git Branches <https://learngitbranching.js.org/>`_",- `Link <exercises/Exercise_git.ipynb>`_
-"Tues, Oct 4",- Git and Github 2,,- `Link <exercises/Exercise_git_2.ipynb>`_
+"Tues, Oct 4",- Git and Github 2,"- Oopsie Resource: `Oh 💩, Git! <https://ohshitgit.com/>`_
+- `The secret of git <https://xkcd.com/1597/>`_",- `Link <exercises/Exercise_git_2.ipynb>`_
 "Thurs, Oct 6","- Pandas: Cleaning
 - Tracebacks","- `Identifying Problems <cleaning_identifying.ipynb>`_
 - `Editing Values Globally <cleaning_editing_globally.ipynb>`_
