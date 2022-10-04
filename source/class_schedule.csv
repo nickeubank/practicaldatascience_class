@@ -57,11 +57,11 @@
 "Tues, Oct 4",- Git and Github 2,"- Oopsie Resource: `Oh 💩, Git! <https://ohshitgit.com/>`_
 - `The secret of git <https://xkcd.com/1597/>`_",- `Link <exercises/Exercise_git_2.ipynb>`_
 "Thurs, Oct 6","- Pandas: Cleaning
-- Tracebacks","- `Identifying Problems <cleaning_identifying.ipynb>`_
-- `Editing Values Globally <cleaning_editing_globally.ipynb>`_
-- `Editing Locations <cleaning_editing_specific_locations.ipynb>`_
-- `Cleaning Data Types <cleaning_datatypes.ipynb>`_
-- `Missing Data <cleaning_missing_data.ipynb>`_
+- Tracebacks","- `Identifying Problems <20_cleaning_identifying.ipynb>`_
+- `Editing Values Globally <30_cleaning_editing_globally.ipynb>`_
+- `Editing Locations <32_cleaning_editing_specific_locations.ipynb>`_
+- `Cleaning Data Types <33_cleaning_datatypes.ipynb>`_
+- `Missing Data <35_cleaning_missing_data.ipynb>`_
 - `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_",- `Link <exercises/Exercise_cleaning.ipynb>`_
 "Tues, Oct 11
 **FALL BREAK**",,,
