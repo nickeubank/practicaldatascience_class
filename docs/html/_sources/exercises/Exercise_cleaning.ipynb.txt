@@ -56,7 +56,7 @@
             "source": [
                 "### Exercise 2\n",
                 "\n",
-                "For our exercises today, we'll focus on `age`, `gender`, `educ` (education), and `inctot` (total income). Subset your data to those variables, and quickly look at a sample of 10 rows."
+                "For our exercises today, we'll focus on `age`, `sex`, `educ` (education), and `inctot` (total income). Subset your data to those variables, and quickly look at a sample of 10 rows."
             ]
         },
         {
