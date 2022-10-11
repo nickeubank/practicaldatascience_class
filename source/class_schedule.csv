@@ -68,7 +68,8 @@
 "Thurs, Oct 13","- Grammer of Graphics
 - Intro to Plotting with Altair","- `Principles of Data Visualization <https://www.youtube.com/watch?v=vTingdk_pVM>`_
 - `Intro to Altair <plotting_altair_part1.ipynb>`_
-- `Altair in Context <plotting_altair_in_context.ipynb>`_",- `Link <exercises/Exercise_plotting_part1.ipynb>`_
+- `Altair in Context <plotting_altair_in_context.ipynb>`_
+- `Plotting with Pandas <plotting_with_pandas.ipynb>`_",- `Link <exercises/Exercise_plotting_part1.ipynb>`_
 "Tues, Oct 18",- Advanced Plotting,- `Advanced Altair <plotting_altair_part2.ipynb>`_,"- `Link <exercises/Exercise_plotting_part2.ipynb>`_
 - `Link <exercises/Exercise_plotting_part3.ipynb>`_"
 "Thurs, Oct 20","- Pandas: Merging
