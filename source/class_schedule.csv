@@ -38,9 +38,9 @@
 - `Images as Matrices <25_images_as_matrices.ipynb>`_
 - `Subsetting Matrices <30_subsetting_matrices.ipynb>`_
 - `ND-Arrays <40_nd_arrays.ipynb>`_
+- `Broadcasting in numpy <41_broadcasting.ipynb>`_
 - `Wanna leave some feedback? <https://forms.gle/s5PknVTvqzPJtCu49>`_",- `Link <exercises/Exercise_numpy.ipynb>`_
-"Tues, Sep 20",- Pandas: Series,"- `Broadcasting in numpy <41_broadcasting.ipynb>`_
-- `Why Pandas? <00_intro_to_pandas.ipynb>`_
+"Tues, Sep 20",- Pandas: Series,"- `Why Pandas? <00_intro_to_pandas.ipynb>`_
 - `Pandas Series <10_pandas_series.ipynb>`_
 - `Manipulating Pandas Series <15_manipulating_series.ipynb>`_
 - `Vectorizing <11_vectorization.ipynb>`_",- `Link <exercises/Exercise_series.ipynb>`_
@@ -65,21 +65,22 @@
 - `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_",- `Link <exercises/Exercise_cleaning.ipynb>`_
 "Tues, Oct 11
 **FALL BREAK**",,,
-"Thurs, Oct 13","- Grammer of Graphics
+"Thurs, Oct 13",,,
+"Tues, Oct 18","- Grammer of Graphics
 - Intro to Plotting with Altair","- `Principles of Data Visualization <https://www.youtube.com/watch?v=vTingdk_pVM>`_
 - `Intro to Altair <plotting_altair_part1.ipynb>`_
 - `Altair in Context <plotting_altair_in_context.ipynb>`_
 - `Plotting with Pandas <plotting_with_pandas.ipynb>`_",- `Link <exercises/Exercise_plotting_part1.ipynb>`_
-"Tues, Oct 18",- Advanced Plotting,- `Advanced Altair <plotting_altair_part2.ipynb>`_,"- `Link <exercises/Exercise_plotting_part2.ipynb>`_
+"Thurs, Oct 20",- Advanced Plotting,- `Advanced Altair <plotting_altair_part2.ipynb>`_,"- `Link <exercises/Exercise_plotting_part2.ipynb>`_
 - `Link <exercises/Exercise_plotting_part3.ipynb>`_"
-"Thurs, Oct 20","- Pandas: Merging
+"Tues, Oct 25","- Pandas: Merging
 - Pandas: Loading and saving data","- JVP pp 149 - 157
 - WM Chapter 6",- `Link <exercises/Exercise_merging.ipynb>`_
-"Tues, Oct 25","- Big Data: What is it, how do I work with it?","- `What is Big Data? <what_is_big_data.ipynb>`_
+"Thurs, Oct 27","- Big Data: What is it, how do I work with it?","- `What is Big Data? <what_is_big_data.ipynb>`_
 - `Strategies for Big Data <big_data_strategies.ipynb>`_
 - Download the dataset linked at the top of the linked exercise before class.
 - `Parquet Format <parquet.ipynb>`_",- `Link <exercises/Exercise_bigdata.ipynb>`_
-"Thurs, Oct 27","- Defensive Programming
+"Tues, Nov 1","- Defensive Programming
 - Workflow
 - Backwards Design
 - Getting Help Online","- `Defensive Programming <defensive_programming.ipynb>`_
@@ -87,39 +88,33 @@
 - `Workflow Management <workflow.ipynb>`_
 - `Backwards Design <backwards_design.ipynb>`_
 - `Getting Help <getting_help.ipynb>`_",**Discuss mid-semester project in class**
-"Tues, Nov 1",- Groupby / Split-Apply-Combine,"- WM pp Chpt 10, 10.1, 10.2, 10.3",- `Link <exercises/Exercise_groupby.ipynb>`_
-"Thurs, Nov 3","- Pandas: Reshaping
+"Thurs, Nov 3",- Groupby / Split-Apply-Combine,"- WM pp Chpt 10, 10.1, 10.2, 10.3",- `Link <exercises/Exercise_groupby.ipynb>`_
+"Tues, Nov 8","- Pandas: Reshaping
 - Pandas: Categoricals","- WM 8.3
 - `Pandas reshaping (with pics!) <https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html>`_
 - `What is goal of reshaping? <https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwifqfmGn6_sAhWfgnIEHQo2AwAQFjACegQIAxAC&url=https%3A%2F%2Fvita.had.co.nz%2Fpapers%2Ftidy-data.pdf&usg=AOvVaw3HDG0hKNeQpAOVcdczJizw>`_
 - Categoricals: WM 12.1
 - **Project Strategy Plan Due**",- `Link <exercises/Exercise_reshaping.ipynb>`_
-"Tues, Nov 8",- Speed and Performance in Python,"- `Understanding Performance <performance_understanding.ipynb>`_
+"Thurs, Nov 10",- Speed and Performance in Python,"- `Understanding Performance <performance_understanding.ipynb>`_
 - `Improving Performance <performance_solutions.ipynb>`_
 - `Code Reviews <pr_review.ipynb>`_",[finish groupby and reshaping exercises]
-"Thurs, Nov 10",- Statistics with statsmodels,"- WM Chapter 13, 13.1, 13.2, 13.3
+"Tues, Nov 15",- Statistics with statsmodels,"- WM Chapter 13, 13.1, 13.2, 13.3
 - `Skim ""Linear Models"" <https://www.statsmodels.org/stable/regression.html>`_
 - `Skim ""Discrete Dep Var Models"" <https://www.statsmodels.org/stable/discretemod.html>`_
 - `Regression Diagnostics <https://www.statsmodels.org/stable/examples/notebooks/generated/regression_diagnostics.html>`_
 - `Regression Plots <https://www.statsmodels.org/stable/examples/notebooks/generated/regression_plots.html>`_
 - `Patsy: Differences from R <https://patsy.readthedocs.io/en/latest/R-comparison.html>`_",- `Link <exercises/Exercise_statsmodels.ipynb>`_
-"Tues, Nov 15",- Machine Learning with sckikit-learn,- JVP pp 331 - 359,- `Link <exercises/Exercise_scikit_learn.ipynb>`_
-"Thurs, Nov 17","- Defining Your Own Estimators
+"Thurs, Nov 17",- Machine Learning with sckikit-learn,- JVP pp 331 - 359,- `Link <exercises/Exercise_scikit_learn.ipynb>`_
+"Tues, Nov 22","- Defining Your Own Estimators
 - Regex","- Review linear regression as matrix manipulations. `Here's a nice review. <https://www.stat.purdue.edu/~boli/stat512/lectures/topic3.pdf>`_
 - `Review how to define classes <https://realpython.com/python3-object-oriented-programming/>`_
 - `Regular Expressions Tutorial <https://scotch.io/tutorials/an-introduction-to-regex-in-python>`_
 - **Opioid Project Rough Draft Due**",- `Link <exercises/Exercise_codeyourownlinearregression.ipynb>`_
-"Tues, Nov 22","- Parallelism 
+"Thurs, Nov 24","- Parallelism 
 - Distributed Computing","- `Parallel Computing <parallelism.ipynb>`_
 - `Distributed Computing with dask <distributed_computing.ipynb>`_
 (Note reading includes a 45 minute video to watch)","- `Link 1 <exercises/Exercise_dask.ipynb>`_
 - `Link 2 <exercises/Exercise_dask_realdata.ipynb>`_"
-"Thurs, Nov 24",- Spatial Data (GIS),"- `What is GIS? <gis_what_is_gis.ipynb>`_
-- `Installing Geopandas <gis_setup_geopandas.ipynb>`_
-- `Geopandas <gis_geopandas.ipynb>`_
-- `Merging Spatial Data <gis_spatial_joins.ipynb>`_
-- `Geospatial Data Formats  and Sources <gis_data.ipynb>`_
-- **OPIOID PROJECT DUE NOV 21st at 11:59pm (Extensions available upon request to assigned date for PDS final)**",- `Link <exercises/Exercise_gis_siting.ipynb>`_
 "Tues, Nov 29",THANKSGIVING,,
 "Wed, Dec 1","- Spatial Data (GIS)
 - LAST CLASS","- `Projections and Coordinate Reference Systems <gis_projections.ipynb>`_
