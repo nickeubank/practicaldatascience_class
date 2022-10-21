@@ -83,12 +83,13 @@
 "Tues, Nov 1","- Defensive Programming
 - Workflow
 - Backwards Design
-- Getting Help Online","- `Defensive Programming <defensive_programming.ipynb>`_
-- `Iceberg Principle <iceberg_principle.ipynb>`_
-- `Workflow Management <workflow.ipynb>`_
+- Getting Help Online","- `Workflow Management <workflow.ipynb>`_
 - `Backwards Design <backwards_design.ipynb>`_
 - `Getting Help <getting_help.ipynb>`_",**Discuss mid-semester project in class**
-"Thurs, Nov 3",- Groupby / Split-Apply-Combine,"- WM pp Chpt 10, 10.1, 10.2, 10.3",- `Link <exercises/Exercise_groupby.ipynb>`_
+"Thurs, Nov 3","- Defensive Programming
+- Groupby / Split-Apply-Combine","- `Defensive Programming <defensive_programming.ipynb>`_
+- `Iceberg Principle <iceberg_principle.ipynb>`_
+- WM pp Chpt 10, 10.1, 10.2, 10.3",- `Link <exercises/Exercise_groupby.ipynb>`_
 "Tues, Nov 8","- Pandas: Reshaping
 - Pandas: Categoricals","- WM 8.3
 - `Pandas reshaping (with pics!) <https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html>`_
