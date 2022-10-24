@@ -163,7 +163,7 @@
     "\n",
     "**If absolutely everything else has failed** it's time to turn to distributed computing!\n",
     "\n",
-    "Distributed computing (using lots of individual computers working in concern in a \"cluster\") is the practice of taking your task and your data, breaking it into smaller pieces, sending those pieces to different computers, running the \"smaller pieces\" on those different computers, then bringing back the results and recombining them into a single output. \n",
+    "Distributed computing (using lots of individual computers working in concert in a \"cluster\") is the practice of taking your task and your data, breaking it into smaller pieces, sending those pieces to different computers, running the \"smaller pieces\" on those different computers, then bringing back the results and recombining them into a single output. \n",
     "\n",
     "Distributed computing is amazing, and makes possible many things that would never be possible otherwise. But it is not without two very important substantial costs:\n",
     "\n",
