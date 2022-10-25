@@ -38,7 +38,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "**(2)** Use your data exploration skills to get a feel for this data. If you need to, you can find the [original codebook here](https://data-openjustice.doj.ca.gov/sites/default/files/dataset/2019-07/Arrests%20Context_062119.pdf) (This data is similar, but has been collapsed to one observation per county.)"
+    "**(2)** Use your data exploration skills to get a feel for this data. If you need to, you can find a version of the [original codebook here (for slightly newer data release)](https://data-openjustice.doj.ca.gov/sites/default/files/dataset/2022-08/Arrests%20Context_081122.pdf) (This data is similar, but has been collapsed to one observation per county.)"
    ]
   },
   {
