@@ -59,7 +59,7 @@
 "Thurs, Oct 6","- Pandas: Cleaning
 - Tracebacks","- `Identifying Problems <20_cleaning_identifying.ipynb>`_
 - `Editing Values Globally <30_cleaning_editing_globally.ipynb>`_
-- `Editing Locations <32_cleaning_editing_specific_locations.ipynb>`_
+- `Editing Specific Entries <32_cleaning_editing_specific_locations.ipynb>`_
 - `Cleaning Data Types <33_cleaning_datatypes.ipynb>`_
 - `Missing Data <35_cleaning_missing_data.ipynb>`_
 - `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_",- `Link <exercises/Exercise_cleaning.ipynb>`_
@@ -117,8 +117,9 @@
 (Note reading includes a 45 minute video to watch)","- `Link 1 <exercises/Exercise_dask.ipynb>`_
 - `Link 2 <exercises/Exercise_dask_realdata.ipynb>`_"
 "Tues, Nov 29",THANKSGIVING,,
-"Wed, Dec 1","- Spatial Data (GIS)
+"Thurs, Dec 1","- Spatial Data (GIS)
 - LAST CLASS","- `Projections and Coordinate Reference Systems <gis_projections.ipynb>`_
 - `Managing Projections in Geopandas <gis_crs_geopandas.ipynb>`_
 - `Mapping with Python <gis_mapping.ipynb>`_
 **EXERCISE OPTIONAL**",- `Link <exercises/Exercise_gis_points.ipynb>`_
+"Fri, Dec 9th",,**Final Project Report and Presentation Due**,
