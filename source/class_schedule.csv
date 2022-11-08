@@ -111,12 +111,12 @@
 - `Review how to define classes <https://realpython.com/python3-object-oriented-programming/>`_
 - `Regular Expressions Tutorial <https://scotch.io/tutorials/an-introduction-to-regex-in-python>`_
 - **Opioid Project Rough Draft Due**",- `Link <exercises/Exercise_codeyourownlinearregression.ipynb>`_
-"Thurs, Nov 24","- Parallelism 
+"Thurs, Nov 24",THANKSGIVING,,
+"Tues, Nov 29","- Parallelism 
 - Distributed Computing","- `Parallel Computing <parallelism.ipynb>`_
 - `Distributed Computing with dask <distributed_computing.ipynb>`_
 (Note reading includes a 45 minute video to watch)","- `Link 1 <exercises/Exercise_dask.ipynb>`_
 - `Link 2 <exercises/Exercise_dask_realdata.ipynb>`_"
-"Tues, Nov 29",THANKSGIVING,,
 "Thurs, Dec 1","- Spatial Data (GIS)
 - LAST CLASS","- `Projections and Coordinate Reference Systems <gis_projections.ipynb>`_
 - `Managing Projections in Geopandas <gis_crs_geopandas.ipynb>`_
