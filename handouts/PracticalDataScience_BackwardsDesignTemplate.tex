@@ -65,7 +65,7 @@
 \maketitle
 
 \section{Topic:}
-\emph{What problem are you (or your stakeholder) trying to addres?}
+\emph{What problem are you (or your stakeholder) trying to address?}
 \vspace*{2cm}\\
 
 \section{Project Question}
@@ -77,7 +77,7 @@
 \vspace*{2cm}\\
 
 \section{Model Results}
-\emph{One of the hardest parts of developing a good data science project is developing a question that is actually answerable. Perhaps the best way to figure out if your question is answerable is to see if you can imagine what an answer to your question would look like. Below, draw the graph, regression table, etc. that you would consider to be an answer to your question. Then draw it again, so you have a model result for if your hypothesized answer is true, and a model result for if your hypothesized answer is false. (If the answer to your question is continuous, not discrete (like: what is the level of inequality in the United States), draw it for high values (high inequality) and low values (low inequality)).}
+\emph{One of the hardest parts of developing a good data science project is developing a question that is actually answerable. Perhaps the best way to figure out if your question is answerable is to see if you can imagine what an answer to your question would look like. Below, draw the graph, regression table, etc. that you would consider to be an answer to your question. Then draw it again, so you have a model result for if your hypothesized answer is true, and a model result for if your hypothesized answer is false. (If the answer to your question is continuous, not discrete (e.g. ``what is the level of inequality in the United States?''), draw it for high values (high inequality) and low values (low inequality)).}
 
 \begin{minipage}{0.5\textwidth}
 \centering
@@ -90,17 +90,26 @@
 \vspace*{5cm}\\
 \section{Final Variables Required}
 
-\emph{Now that you've specified what an answer to your question looks like, what data do you need to generate that answer.}
+\emph{Now that you've specified what an answer to your question looks like, what data do you need to generate that answer?}
 
-\emph{For each variable, define both the variable you need \textbf{and} the population for which you need the variables to be defined.}
+\emph{You don't have to know the exact variable and dataset (``I need \texttt{ANNPOP2008} from the NHGIS 2019 census 1\% sample release''), but you should be specific enough that all properties that are critical to your analysis are fully specified (e.g., I need individual-level annual income data for a nationally representative sample of all working US citizens).}
 
-\emph{You don't have to be too specific (``I need variable 7 from the NHGIS 2019 census 1\% sample release'') -- just define it in the most general terms that are still specific enough to meet your needs (e.g. I need income data for a nationally representative sample of US citizens). }
+\emph{Basically, this should be a list of all the variables (not in terms of specific variable names, but the substantive content of each variable) you want in your final dataset \textbf{and} an explanation of the population represented in that data (i.e., what is represented by each row of your data, and what is the group of entities included in the data).}
+
+
 \pagebreak
 \section{Data Sources}
 
-\emph{Finally, given the variables you need for your analysis, what actual data sources do you think will have the data you need?}
+\emph{Given the variables you need for your analysis, what actual data sources do you think will have the data you need?}
 
-\emph{In specifying the datasets you need, if you list more than one \textbf{also} indicate how you think you can relate these datasets (i.e. if you're gonna merge them, what variables do you think those datasets will provide that will allow you merge them? There's no use saying ``I'll merge this political survey with medical records of who has received bad care'' if the political survey doesn't provide identifying information you can use to link survey respondents to medical records, even if you have both the survey and medical records!)}
-\vspace*{2cm}\\
+\emph{In specifying the datasets you need, if you list more than one \textbf{also} indicate how you think you can relate these datasets (i.e. if you're gonna merge datasets, what variables do you think those datasets will provide that will allow you merge them? There's no use saying ``I'll merge this political survey with medical records of who has received bad care'' if the political survey doesn't provide identifying information you can use to link survey respondents to medical records, even if you have both the survey and medical records!)}
+
+\emph{If you are familiar with \href{https://www.visual-paradigm.com/guide/data-modeling/what-is-entity-relationship-diagram/}{\underline{Entity Relational Diagrams}} for databases, something similar is a great way of diagramming how you expect datasets you plan to use will relate to one another.}
+\vspace*{8cm}\\
+
+\section{Division of Labor}
+
+\emph{Now that you have identified what needs to be done, how do you plan to divide those tasks among team members?}
+
 
 \end{document}
