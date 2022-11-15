@@ -131,9 +131,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "**(6)** Add an interaction of smoking with `white` to the model from question 5 to allow you to estimate racial differences in the effect of smoking by race.\n",
-    "\n",
-    "Now, using [post-regression test syntax](https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.OLSResults.t_test.html) (not by running a new regression on a subpopulation), recover the coefficient and t-statistic for whether smoking reduces birth weight for white mothers.  Store the t-statistic of your test in `ex6_compare_white_black_tstat`.\n",
+    "**(6)** Now, using [post-regression test syntax](https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.OLSResults.t_test.html) (not by running a new regression on a subpopulation), recover the coefficient and t-statistic for *whether smoking reduces birth weight for white mothers.*  Store the t-statistic of your test in `ex6_compare_white_black_tstat`.\n",
     "\n",
     "**Hint:** Read to the BOTTOM of the post-regression test syntax documentation for how to specify hypotheses with strings.\n",
     "\n",
