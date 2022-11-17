@@ -8,7 +8,7 @@
     "\n",
     "## Gradescope Autograding\n",
     "\n",
-    "Please follow [all standard guidance](autograder_guidelines.ipynb) for submitting this assignment to the Gradescope autograder, including storing your solutions in a dictionary called `results` and ensuring your notebook runs from the start to completion without any errors.\n",
+    "Please follow [all standard guidance](../autograder_guidelines.ipynb) for submitting this assignment to the Gradescope autograder, including storing your solutions in a dictionary called `results` and ensuring your notebook runs from the start to completion without any errors.\n",
     "\n",
     "For this assignment, please name your file `exercise_sklearn.`ipynb` before uploading.\n",
     "\n",
@@ -18,7 +18,7 @@
     "assert set(results.keys()) == {\n",
     "    \"ex3_num_columns\",\n",
     "    \"ex6_model_smoking\",\n",
-    "    \"ex7_fifth_prediction\",\n",
+    "    \"ex7_first_prediction\",\n",
     "    \"ex8_score\",\n",
     "    \"ex9_SVR_score\",\n",
     "    \"ex10_SVR_linear_score\",\n",
@@ -185,8 +185,10 @@
     "\n",
     "```python \n",
     "from sklearn.linear_model import LinearRegression\n",
-    "my_model = LinearRegression()\n",
-    "```"
+    "my_model = LinearRegression(fit_intercept=False)\n",
+    "```\n",
+    "\n",
+    "The `fit_intercept=False` tells `scikit-learn` you don't want it to fit an intercept for your model *behind the scenes*. We use `False` because `patsy` included an intercept in our design matrix (a column of 1s), and we want to see the coefficient on that column in our coefficients."
    ]
   },
   {
@@ -306,20 +308,25 @@
     "\n",
     "Now that we have a baseline estimate for the performance of `LinearRegression` for this set of features and outputs, let's try a different model and see how it compares! \n",
     "\n",
-    "**(9)** Now repeat your analysis using a Support Vector Regression (`from sklearn.svm import SVR`).  Store the score of this fit model result in `ex9_SVR_score`. \n",
+    "**(9)** Now repeat your analysis using a Support Vector Regression (`from sklearn.svm import SVR`). \n",
     "\n",
     "How does the model perform? Is it better or worse than LinearRegression?  \n",
     "\n",
+    "\n",
     "**Note:** You'll probably get a `DataConversionWarning: A column-vector y was passed when a 1d array was expected`. This is [related to this common gotcha](https://www.practicaldatascience.org/html/41_broadcasting.html#A-Common-Gotcha:-Narrow-Matrices-v.-1-Dimensional-Vectors). Make sure you understand the problem / are able to resolve the warning. \n",
     "\n",
-    "Why didn't you get this with `LinearRegression`? That I can't say! They must each be implemented slightly differently beneath the hood."
+    "Why didn't you get this with `LinearRegression`? That I can't say! They must each be implemented slightly differently beneath the hood.\n",
+    "\n",
+    "Store the score of this fit model result in `\"ex9_SVR_score\"`.\n"
    ]
   },
   {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "**(10)** One choice parameter for SVRs is the kernel it uses for weighting (again, this isn't a class on machine learning, so don't worry too much about what this means—just know that it's a parameter of the model). Check the SVR documentation to figure out how to set the kernel to `linear` and see how it performs now.\n"
+    "**(10)** One choice parameter for SVRs is the kernel it uses for weighting (again, this isn't a class on machine learning, so don't worry too much about what this means—just know that it's a parameter of the model). Check the SVR documentation to figure out how to set the kernel to `linear` and see how it performs now.\n",
+    "\n",
+    "Store the score of the SVR with linear kernel as `\"ex10_SVR_linear_score\"`."
    ]
   },
   {
