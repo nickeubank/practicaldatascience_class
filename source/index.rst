@@ -39,7 +39,7 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
    :hidden:
 
    Class Schedule <class_schedule>
-   Topic List <topic_list>
+   Autograder Guidelines <autograder_guidelines>
 
 .. toctree:: 
    :maxdepth: 2
