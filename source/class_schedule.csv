@@ -105,7 +105,7 @@
 - `Regression Diagnostics <https://www.statsmodels.org/stable/examples/notebooks/generated/regression_diagnostics.html>`_
 - `Regression Plots <https://www.statsmodels.org/stable/examples/notebooks/generated/regression_plots.html>`_
 - `Patsy: Differences from R <https://patsy.readthedocs.io/en/latest/R-comparison.html>`_",- `Link <exercises/Exercise_statsmodels.ipynb>`_
-"Thurs, Nov 17",- Machine Learning with sckikit-learn,"- JVP Chapter 5 up to ""Hyperparameters and Model Validation"" Section (pp 331 - 359)",- `Link <exercises/Exercise_scikit_learn.ipynb>`_
+"Thurs, Nov 17",- Machine Learning with sckikit-learn,"- JVP Chapter 5 up to ""Hyperparameters and Model Validation"" Section (pp 331 - 359)",- `Link <exercises/Exercise_sklearn.ipynb>`_
 "Tues, Nov 22","- Defining Your Own Estimators
 - Regex","- Review linear regression as matrix manipulations. `Here's a nice review. <https://www.stat.purdue.edu/~boli/stat512/lectures/topic3.pdf>`_
 - `Review how to define classes <https://realpython.com/python3-object-oriented-programming/>`_
