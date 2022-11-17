@@ -317,7 +317,7 @@
     "\n",
     "Why didn't you get this with `LinearRegression`? That I can't say! They must each be implemented slightly differently beneath the hood.\n",
     "\n",
-    "Store the score of this fit model result in `\"ex9_SVR_score\"`.\n"
+    "**ROUND** your value of the score of this fit model result to *2* decimal places and store as `\"ex9_SVR_score\"`. (SVR is not deterministic, and it doesn't seem to respect our random seeds, so values beyond this may differ a little across computers.)"
    ]
   },
   {
@@ -326,7 +326,7 @@
    "source": [
     "**(10)** One choice parameter for SVRs is the kernel it uses for weighting (again, this isn't a class on machine learning, so don't worry too much about what this means—just know that it's a parameter of the model). Check the SVR documentation to figure out how to set the kernel to `linear` and see how it performs now.\n",
     "\n",
-    "Store the score of the SVR with linear kernel as `\"ex10_SVR_linear_score\"`."
+    "Store the score of the SVR with linear kernel as `\"ex10_SVR_linear_score\"`. **ROUND** your value of the score of the SVR with linear kernel to *2* decimal places and store as `\"ex10_SVR_linear_score\"` "
    ]
   },
   {
