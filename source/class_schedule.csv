@@ -116,6 +116,8 @@
 "Thurs, Dec 1","- Parallelism 
 - Distributed Computing","- `Parallel Computing <parallelism.ipynb>`_
 - `Distributed Computing with dask <distributed_computing.ipynb>`_
-(Note reading includes a 45 minute video to watch)","- `Link 1 <exercises/Exercise_dask.ipynb>`_
-- `Link 2 <exercises/Exercise_dask_realdata.ipynb>`_"
+(Note reading includes a 45 minute video to watch)
+**Optional:**
+- `Setting Up Cloud Cluster <distributed_starting_dask_cluster.ipynb>`_","- `Link 1 <exercises/Exercise_dask_realdata.ipynb>`_
+- `Link 2 <exercises/Exercise_dask.ipynb>`_"
 "Fri, Dec 9th",,**Final Project Report and Presentation Due**,
