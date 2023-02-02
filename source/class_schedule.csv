@@ -1,108 +1,123 @@
-﻿Date,Topic,Do Before Class,In Class Part 1
-"Thrs, Jan 12",Course Overview,,"- `Welcome! Slides Part 1 <https://github.com/nickeubank/unifyingdatascience/blob/master/lecture_slides/10_FirstClass/Eubank_UDS_FirstClass_Part1_handout.pdf>`_
-- `Welcome! Slides Part 2 <https://github.com/nickeubank/unifyingdatascience/blob/master/lecture_slides/10_FirstClass/Eubank_UDS_FirstClass_Part2_handout.pdf>`_"
-"Tues, Jan 17",Solving Problems by Answering Questions,"- `Read, sign, submit syllabus on gradescope. <https://github.com/nickeubank/unifyingdatascience/raw/master/syllabus/Syllabus_UnifyingDataScience.pdf>`_
-- `Reading Reflections Directions <reading_reflections.ipynb>`_
-- `Solving Problems <https://ds4humans.com/10_introduction/10_our_approach.html>`_",- `Classes of Questions <exercises/exercise_taxonomy_of_questions.ipynb>`_
-"Thrs, Jan 19",Stakeholder Management,"- `Solving the Right Problem <https://ds4humans.com/30_questions/00_solving_the_right_problem.html>`_
-- `Why It's Important To Get Your Question Right (30 min video) <https://www.youtube.com/watch?v=kYMfE9u-lMo>`_",- `Stakeholder Management <exercises/exercise_generating_questions.ipynb>`_
-"Tues, Jan 24",Exploratory Questions,"- `Descriptive versus Proscriptive Questions <https://ds4humans.com/30_questions/05_descriptive_v_proscriptive.html>`_
-- `Exploratory Questions <https://ds4humans.com/30_questions/10_exploratory_questions.html>`_",
-"Thrs, Jan 26",Passive Prediction,"- `Exploratory Questions (Corrected) <https://ds4humans.com/30_questions/10_exploratory_questions.html>`_
-- `Passive Prediction <https://ds4humans.com/30_questions/20_passive_prediction_questions.html>`_",`Link <exercises/exercise_descriptive.ipynb>`_
-"Tues, Jan 31",Experiments,"- Read Angrist and Piscke (MM), Pages xi - 30
-- `Potential Outcomes <https://github.com/nickeubank/unifyingdatascience/blob/master/lecture_slides/20_PotentialOutcomes/Fresh_Potential_Outcomes.pdf>`_",
-"Thrs, Feb 2",AB: Overview,"- Experiments and Potential Outcomes
-- Linear Probability Models: Kennedy, pp. 18-21, Notes for 2.8, and pp. 241-244, Notes Optional
-- Review linear regression in Python (`WM Chapter <https://www.amazon.com/Python-Data-Analysis-Wrangling-IPython-ebook/dp/B075X4LT6K>`_ 13, 13.1, 13.2, 13.3)
-- `Limitations of Average Treatment Effects <limitations_of_ATE.ipynb>`_",- `Link <exercises/exercise_resume.ipynb>`_
-"Tues, Feb 7",AB: Overview,"What is AB Testing? KTX Chpts 1, 2, 5
-[DO I WANT DISCUSSION OF PRACTICAL V STATISTICAL HERE?]",- `Exercise <exercises/exercise_abtesting.ipynb>`_
-"Thrs, Feb 9",AB: Internal Validity,"- `Internal versus External Validity <internal_v_external_validity.ipynb>`_
-- `Evaluating Studies <evaluating_real_studies.ipynb>`_",- `Evaluating Studies <exercises/exercise_evaluating_studies.ipynb>`_
-"Tues, Feb 14",AB: Internal Validity,"SUTVA: KTX Chpt 3, from ""Threats to Internal Validity"" to end.
-Different Randomizations: KTX Chpt 14",
-"Thrs, Feb 16",AB: External Validity,"- Don’t stop early
-- Power Calculations
--`Endogenous Stopping Tools <https://netflixtechblog.com/improving-experimentation-efficiency-at-netflix-with-meta-analysis-and-optimal-stopping-d8ec290ae5be>`_",
-"Tues, Feb 21",AB: Interpretation,"- Seasonality Effects
-- Primacy Effects / Long Term Decay
-- Representativeness",
-"Thrs, Feb 23",AB: Review,"- P-Values and Decision Theory
-- Laundering Confidence Paper",
-"Tues, Feb 28",Regressions,Review Exercise,Experiments recap
-"Thrs, Mar 2",Regressions,- `Causal Inference In Industry Beyond AB Testing <causal_inference_beyond_ab_testing.ipynb>`_,- `Link <exercises/exercise_regressions_incomeineq.ipynb>`_
-"Tues, Mar 7",Matching,"- `Interpreting Indicator Vars <interpreting_indicator_vars.ipynb>`_
-- `Fixed Effects v. Hierarchical Models <fixed_effects_v_hierarchical.ipynb>`_
-- `Fixed Effects and Causal Inference <fixed_effects_and_causal_inference.ipynb>`_
-- `Implementing Fixed Effects <fixed_effects.ipynb>`_
-- `Moving to a World Beyond p less than 0.05 <https://www.tandfonline.com/doi/full/10.1080/00031305.2019.1583913>`_
-
-
-Optional: 
-
-- Kennedy (GtE), Chpt 18.","- `Indicators <exercises/exercise_indicators.ipynb>`_
-- `Fixed Effects <exercises/exercise_panel.ipynb>`_"
-"Thrs, Mar 9",Diff-in-Diff,"- `The Why of Matching <matching_why.ipynb>`_
-- `The How of Matching Summary <matching_how.ipynb>`_
-- `Methods for Matching <https://youtu.be/tvMyjDi4dyg?t=910>`_
-
-*Watch the video above from about 15 minutes in (where link starts) till at least 45 minutes in, keep going if you want to learn about propensity score matching problems.*",- `Exercise <exercises/exercise_matching.ipynb>`_
-"Tues, Mar 14",**NO CLASS**,,
-"Thrs, Mar 16",**NO CLASS**,,
-"Tues, Mar 21",**MIDTERM**,,
-"Thrs, Mar 23",Teams,"- Angrist and Piscke (MM), Chapter 5 (pp 178-208) 
-- `Diff-in-Diffs at Netflix <https://netflixtechblog.com/key-challenges-with-quasi-experiments-at-netflix-89b4f234b852>`_
-
-Optional but encouraged:
-(dont need to follow everything, 
-but here's a real diff-in-diff)
-
-- `Enfranchisement and Incarceration <https://www.cambridge.org/core/journals/american-political-science-review/article/enfranchisement-and-incarceration-after-the-1965-voting-rights-act/C68FA7BB8CA313BDD8D9A39BA666A21D>`_",- `Link <exercises/exercise_diffindiff.ipynb>`_
-"Tues, Mar 28",Backwards Design,"- `What makes good teams? <https://www.youtube.com/watch?v=LhoLuui9gX8>`_
-- Project Aristotle Reading
-- Do teamwork prep sent on Sakai.",
-"Thrs, Mar 30",Prediction: ML Bias,- `Backwards Design <backwards_design.ipynb>`_,"- `Backwards In Class <https://github.com/nickeubank/unifyingdatascience/blob/master/project/20_BackwardsDesign/UDS_BackwardsDesign_InClass.pdf>`_
-- `Backwards Assignment <https://github.com/nickeubank/unifyingdatascience/blob/master/project/20_BackwardsDesign/UDS_BackwardsDesign_Assignment.pdf>`_
-- `Data Sources <final_project_resources.ipynb>`_"
-"Tues, Apr 4",Prediction: Are interpretable models enough?,"- `Computers v. Crime <https://www.pbs.org/video/computers-v-crime-um7cco/>`_
-(Hang in there past the obligatory ""what is an algorithm""—it's sophisticated later)  
-
-**Examples of AI Bias:**
-- `Making Biased Algorithms <https://youtube.com/watch?v=Ok5sKLXqynQ>`_
-- `ProPublica: Machine Bias <https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing>`_
-- `The Problem with the Wrong Optimization Function <https://www.wsj.com/articles/facebook-knows-it-encourages-division-top-executives-nixed-solutions-11590507499>`_
-- `The Problem with Controlling for Race <https://www.nejm.org/doi/10.1056/NEJMms2004740>`_
-- `Racial Bias in Medical Algorithm <https://www.washingtonpost.com/health/2019/10/24/racial-bias-medical-algorithm-favors-white-patients-over-sicker-black-patients/>`_
-- `Amazon scraps secret AI recruiting tool due to bias <https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G>`_
-- `Algorithm Blocks Kidney Transplants to Black Patients <https://www.wired.com/story/how-algorithm-blocked-kidney-transplants-black-patients/>`_
-- `Algorithms and Student Exams <https://www.theguardian.com/education/2021/feb/18/the-student-and-the-algorithm-how-the-exam-results-fiasco-threatened-one-pupils-future>`_
-- `Algorithms in Hiring <https://www.youtube.com/watch?v=6nGM37ThEsU>`_
-- `Not all AI bias is unintentional... <https://www.washingtonpost.com/nation/2020/01/28/opioid-kickback-software/>`_
-- `Again, not all unintentional... <https://www.vice.com/en_us/article/epgmbw/this-company-is-using-racially-biased-algorithms-to-select-jurors>`_
-
+﻿"Date, Rm",Topic,Do Before Class,In-Class Exercise
+"Tues, Aug 30","- Class Introduction
+- Welcome to VS Code","- **SETUP 1:** `Installing Python and miniconda <setup_python.ipynb>`_
+- **SETUP 2:** `Installing and Configuring VS Code <setup_vscode.ipynb>`_",
+"Thurs, Sep 1",- Command Line Basics,"- **SETUP 3:** `Setup Augmented Command Line <setup_augmented_commandline.ipynb>`_
+- `Command Line Basics <command_line_part1.ipynb>`_
+- `Read and sign syllabus <https://github.com/nickeubank/practicaldatascience/raw/master/syllabus/Syllabus_PracticalDataScience.pdf>`_
+- `Register with IPUMS <https://uma.pop.umn.edu/usa/user/new>`_
+- `Register for DataCamp <https://www.datacamp.com/home>`_
+",- `Ex <exercises/Exercise_CommandLine_1_Basics.ipynb>`_
+"Fri, Sep 2",**SOFTWARE INSTALL DAY**,A day of trouble shooting install issues,
+"Tues, Sep 6","- Advanced Command Line
+- Jupyter
+- Packages","- `Advanced Command Line <command_line_part2.ipynb>`_
+- **SETUP 4:** `Jupyter in VS Code <jupyter.ipynb>`_
+- `Python packages <managing_python_packages.ipynb>`_
+- **OPTIONAL SETUP:** `R Notebooks <jupyter_r_notebooks.ipynb>`_","- `Ex 1 <exercises/Exercise_CommandLine_2_Advanced.ipynb>`_
+- `Ex 2 <exercises/Exercise_jupytervscode.ipynb>`_"
+"Thurs, Sep 8","- Python Debugger
+- R / Python Differences
+- Packages","- `What are Tracebacks? <https://www.youtube.com/watch?v=JD8BrXXNtjA>`_
+- `Debugging Tools <debugging_principles.ipynb>`_
+- `Python Debugger in VS Code <debugging_in_vscode.ipynb>`_
+- `variables v objects <vars_v_objects.ipynb>`_
+- `Python v. R <https://www.practicaldatascience.org/html/python_v_r.html>`_","- `Ex 1 <exercises/Exercise_debugger.ipynb>`_
+- `Ex 2 <exercises/Exercise_variables_v_objects.ipynb>`_"
+"Tues, Sep 13",- Numpy Basics,"- `Why numpy? <10_why_numpy.ipynb>`_
+- `Numpy Vectors <20_intro_to_vectors.ipynb>`_
+- `Math with Vectors <21_math_with_vectors.ipynb>`_
+- `Type Promotion <23_type_promotion_in_vectors.ipynb>`_
+- `Subsetting Vectors <30_subsetting_vectors.ipynb>`_
+- `Modifying Subsets of Vectors <35_modifying_subsets_of_vectors.ipynb>`_
+- `Numbers in Computer <ints_and_floats.ipynb>`_
+- `Wanna leave feedback? <https://forms.gle/KUcCX2vjE3Jqb4EN9>`_",- `Ex 1 <https://github.com/nickeubank/practicaldatascience/raw/master/source/exercises/numpy_vectors.ipynb.zip>`_
+"Thurs, Sep 15",- Numpy Arrays,"- `Views and Copies <10_views_and_copies.ipynb>`_
+- `Matrices <20_matrices.ipynb>`_
+- `Reshaping Matrices <22_reshaping_matrices.ipynb>`_
+- `Images as Matrices <25_images_as_matrices.ipynb>`_
+- `Subsetting Matrices <30_subsetting_matrices.ipynb>`_
+- `ND-Arrays <40_nd_arrays.ipynb>`_
+- `Broadcasting in numpy <41_broadcasting.ipynb>`_
+- `Wanna leave some feedback? <https://forms.gle/s5PknVTvqzPJtCu49>`_",- `Link <exercises/Exercise_numpy.ipynb>`_
+"Tues, Sep 20",- Pandas: Series,"- `Why Pandas? <00_intro_to_pandas.ipynb>`_
+- `Pandas Series <10_pandas_series.ipynb>`_
+- `Manipulating Pandas Series <15_manipulating_series.ipynb>`_
+- `Vectorizing <11_vectorization.ipynb>`_",- `Link <exercises/Exercise_series.ipynb>`_
+"Thurs, Sep 22",- Pandas: DataFrames,"- `Pandas 2: DataFrames <30_pandas_dataframes.ipynb>`_
+- `Managing Settings in VS Code <https://youtu.be/Knc6S4gUHzk>`_
+- `Writing Good Notebooks <writing_good_jupyter_notebooks.ipynb>`_",- `Link <exercises/Exercise_dataframe.ipynb>`_
+"Tues, Sep 27",- Pandas: Indices & Missing,"- WM pp 136-142 (Indices, Section 5.2 up to MultiIndexes)
+- JVP pp 119-127 (""Handling Missing Data"" in Chpt 3)
+- `Views and Copies in Numpy <views_and_copies_numpy_review.ipynb>`_
+- `Views and Copies in Pandas <views_and_copies_in_pandas.ipynb>`_","- `Link 1 <exercises/Exercise_indices.ipynb>`_
+- `Link 2 <exercises/Exercise_missing.ipynb>`_"
+"Thurs, Sep 29",- Collaborating using Github,"- `Git and Github <git_and_github.ipynb>`_
+- `Visualize Git Branches <https://learngitbranching.js.org/>`_",- `Link <exercises/Exercise_git.ipynb>`_
+"Tues, Oct 4",- Git and Github 2,"- Oopsie Resource: `Oh 💩, Git! <https://ohshitgit.com/>`_
+- `The secret of git <https://xkcd.com/1597/>`_",- `Link <exercises/Exercise_git_2.ipynb>`_
+"Thurs, Oct 6","- Pandas: Cleaning
+- Tracebacks","- `Identifying Problems <20_cleaning_identifying.ipynb>`_
+- `Editing Values Globally <30_cleaning_editing_globally.ipynb>`_
+- `Editing Specific Entries <32_cleaning_editing_specific_locations.ipynb>`_
+- `Cleaning Data Types <33_cleaning_datatypes.ipynb>`_
+- `Missing Data <35_cleaning_missing_data.ipynb>`_
+- `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_",- `Link <exercises/Exercise_cleaning.ipynb>`_
+"Tues, Oct 11
+**FALL BREAK**",,,
+"Thurs, Oct 13",,,
+"Tues, Oct 18","- Grammer of Graphics
+- Intro to Plotting with Altair","- `Principles of Data Visualization <https://www.youtube.com/watch?v=vTingdk_pVM>`_
+- `Intro to Altair <plotting_altair_part1.ipynb>`_
+- `Altair in Context <plotting_altair_in_context.ipynb>`_
+- `Plotting with Pandas <plotting_with_pandas.ipynb>`_",- `Link <exercises/Exercise_plotting_part1.ipynb>`_
+"Thurs, Oct 20",- Advanced Plotting,- `Advanced Altair <plotting_altair_part2.ipynb>`_,"- `Link <exercises/Exercise_plotting_part2.ipynb>`_
+- `Link <exercises/Exercise_plotting_part3.ipynb>`_"
+"Tues, Oct 25","- Pandas: Merging
+- Pandas: Loading and saving data","- JVP pp 149 - 157
+- WM Chapter 6",- `Link <exercises/Exercise_merging.ipynb>`_
+"Thurs, Oct 27","- Big Data: What is it, how do I work with it?","- `What is Big Data? <what_is_big_data.ipynb>`_
+- `Strategies for Big Data <big_data_strategies.ipynb>`_
+- Download the dataset linked at the top of the linked exercise before class.
+- `Parquet Format <parquet.ipynb>`_",- `Link <exercises/Exercise_bigdata.ipynb>`_
+"Tues, Nov 1","- Defensive Programming
+- Workflow
+- Backwards Design
+- Getting Help Online","- `Workflow Management <workflow.ipynb>`_
+- `Backwards Design <backwards_design.ipynb>`_
+- `Getting Help <getting_help.ipynb>`_",**Discuss mid-semester project in class**
+"Thurs, Nov 3","- Defensive Programming
+- Groupby / Split-Apply-Combine","- `Defensive Programming <defensive_programming.ipynb>`_
+- `Iceberg Principle <iceberg_principle.ipynb>`_
+- WM pp Chpt 10, 10.1, 10.2, 10.3",- `Link <exercises/Exercise_groupby.ipynb>`_
+"Tues, Nov 8","- Pandas: Reshaping
+- Pandas: Categoricals","- WM 8.3
+- `Pandas reshaping (with pics!) <https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html>`_
+- `What is goal of reshaping? <https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwifqfmGn6_sAhWfgnIEHQo2AwAQFjACegQIAxAC&url=https%3A%2F%2Fvita.had.co.nz%2Fpapers%2Ftidy-data.pdf&usg=AOvVaw3HDG0hKNeQpAOVcdczJizw>`_
+- Categoricals: WM 12.1
+- **Project Strategy Plan Due**",- `Link <exercises/Exercise_reshaping.ipynb>`_
+"Thurs, Nov 10",- Speed and Performance in Python,"- `Understanding Performance <performance_understanding.ipynb>`_
+- `Improving Performance <performance_solutions.ipynb>`_
+- `Code Reviews <pr_review.ipynb>`_",[finish groupby and reshaping exercises]
+"Tues, Nov 15",- Statistics with statsmodels,"- WM, 3rd Edition, Chapter 12, 12.1, 12.2, 12.3 (Patsy and statsmodels, not scikit-learn)
+- `Skim ""Linear Models"" <https://www.statsmodels.org/stable/regression.html>`_
+- `Skim ""Discrete Dep Var Models"" <https://www.statsmodels.org/stable/discretemod.html>`_
+- `Regression Diagnostics <https://www.statsmodels.org/stable/examples/notebooks/generated/regression_diagnostics.html>`_
+- `Regression Plots <https://www.statsmodels.org/stable/examples/notebooks/generated/regression_plots.html>`_
+- `Patsy: Differences from R <https://patsy.readthedocs.io/en/latest/R-comparison.html>`_",- `Link <exercises/Exercise_statsmodels.ipynb>`_
+"Thurs, Nov 17",- Machine Learning with sckikit-learn,"- JVP Chapter 5 up to ""Hyperparameters and Model Validation"" Section (pp 331 - 359)",- `Link <exercises/Exercise_sklearn.ipynb>`_
+"Tues, Nov 22",No Class,,
+"Thurs, Nov 24",THANKSGIVING,,
+"Tues, Nov 29","- Defining Your Own Estimators
+- Regex","- Review linear regression as matrix manipulations. `Here's a nice review. <https://www.stat.purdue.edu/~boli/stat512/lectures/topic3.pdf>`_
+- `Review how to define classes <https://realpython.com/python3-object-oriented-programming/>`_
+- `Broadcasting in numpy <41_broadcasting.ipynb>`_
+- **Opioid Project Rough Draft Due**",- `Link <exercises/Exercise_codeyourownlinearregression.ipynb>`_
+"Thurs, Dec 1","- Parallelism 
+- Distributed Computing","- `Parallel Computing <parallelism.ipynb>`_
+- `Distributed Computing with dask <distributed_computing.ipynb>`_
+(Note reading includes a 45 minute video to watch)
 **Optional:**
-- `ProPublica Analysis of COMPAS <https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm>`_
-- `Diversity in AI is not your problem, it's hers <https://medium.com/@robert.munro/bias-in-ai-3ea569f79d6a>`_
-**GITHUB REPO FIRST REVIEW**",
-"Thrs, Apr 6",Prediction: ML versus Casual Inference,"- `Recommendations for Ethical ML <ethical_ml_recommendations.ipynb>`_
-- `What IS fair? <https://www.vox.com/future-perfect/22916602/ai-bias-fairness-tradeoffs-artificial-intelligence>`_
-- `Black box models require trusting data too <https://www.nytimes.com/2017/06/13/opinion/how-computers-are-harming-criminal-justice.html>`_
-- `In Defence of Simplicity (Up to 30min) <https://www.youtube.com/watch?v=68ABAU_V8qI>`_
-- `Stop Using Black Boxes <https://arxiv.org/abs/1811.10154>`_
-- `Flavors of Training Data Bias <https://arxiv.org/pdf/1901.10002.pdf>`_
-
-**Optional:**
-
-- `Openning the Black Box <https://pratt.duke.edu/about/news/podcast/opening-black-box>`_
-- `Accuracy of Interpretable Models <https://hdsr.mitpress.mit.edu/pub/f9kuryi8/release/6>`_
-- `Combining explicit models and black boxes in Scientific ML <https://notamonadtutorial.com/scientific-machine-learning-with-julia-the-sciml-ecosystem-b22802951c8a>`_
-
-(Don't expect to follow everything in that... just a heads up it exists!) ",
-"Tues, Apr 11",,"- `Contraining Artificial Stupidity <https://www.youtube.com/watch?v=Z8MEFI7ZJlA>`_
-- Adversarial Users:
-    - `Fooling OpenAI <https://www.theverge.com/2021/3/8/22319173/openai-machine-vision-adversarial-typographic-attacka-clip-multimodal-neuron>`_
-    - `Robograders <https://www.vice.com/en_us/article/pa7dj9/flawed-algorithms-are-grading-millions-of-students-essays>`_",
-"Thrs, Apr 13",Practice Presentations,"- Modelling of Presentations and Feedback
-- **PROJECT ROUGH DRAFTS DUE**",- `Writing to Stakeholders <writing_to_stakeholders.ipynb>`_
-"Tues, Apr 18",Practice Presentations,,
+- `Setting Up Cloud Cluster <distributed_starting_dask_cluster.ipynb>`_","- `Link 1 <exercises/Exercise_dask_realdata.ipynb>`_
+- `Link 2 <exercises/Exercise_dask.ipynb>`_"
+"Fri, Dec 9th",,**Final Project Report and Presentation Due**,
