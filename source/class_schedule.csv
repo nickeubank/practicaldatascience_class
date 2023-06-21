@@ -1,9 +1,10 @@
 ﻿"Date, Rm",Topic,Do Before Class,In-Class Exercise
 "Tues, Aug 30","- Class Introduction
-- Welcome to VS Code","- **SETUP 1:** `Installing Python and miniconda <setup_python.ipynb>`_
-- **SETUP 2:** `Installing and Configuring VS Code <setup_vscode.ipynb>`_",
-"Thurs, Sep 1",- Command Line Basics,"- **SETUP 3:** `Setup Augmented Command Line <setup_augmented_commandline.ipynb>`_
-- `Command Line Basics <command_line_part1.ipynb>`_
+- Welcome to VS Code","- **SETUP 1:** `Installing Python and miniconda <00_setup_env/setup_python.ipynb>`_
+- **SETUP 2:** `Installing and Configuring VS Code <00_setup_env/setup_vscode.ipynb>`_
+- `chatGPT and You <llms.ipynb>`_",
+"Thurs, Sep 1",- Command Line Basics,"- **SETUP 3:** `Setup Augmented Command Line <00_setup_env/setup_augmented_commandline.ipynb>`_
+- `Command Line Basics <10_commandline/commandline_part1.ipynb>`_
 - `Read and sign syllabus <https://github.com/nickeubank/practicaldatascience/raw/master/syllabus/Syllabus_PracticalDataScience.pdf>`_
 - `Register with IPUMS <https://uma.pop.umn.edu/usa/user/new>`_
 - `Register for DataCamp <https://www.datacamp.com/home>`_
@@ -11,46 +12,62 @@
 "Fri, Sep 2",**SOFTWARE INSTALL DAY**,A day of trouble shooting install issues,
 "Tues, Sep 6","- Advanced Command Line
 - Jupyter
-- Packages","- `Advanced Command Line <command_line_part2.ipynb>`_
-- **SETUP 4:** `Jupyter in VS Code <jupyter.ipynb>`_
-- `Python packages <managing_python_packages.ipynb>`_
-- **OPTIONAL SETUP:** `R Notebooks <jupyter_r_notebooks.ipynb>`_","- `Ex 1 <exercises/Exercise_CommandLine_2_Advanced.ipynb>`_
+- Packages","- `Advanced Command Line <10_commandline/commandline_part2.ipynb>`_
+- **SETUP 4:** `Jupyter in VS Code <00_setup_env/jupyter_in_vscode.ipynb>`_
+- `Python packages <00_setup_env/managing_python_packages.ipynb>`_
+- **OPTIONAL SETUP:** `R Notebooks <00_setup_env/jupyter_r_notebooks.ipynb>`_","- `Ex 1 <exercises/Exercise_CommandLine_2_Advanced.ipynb>`_
 - `Ex 2 <exercises/Exercise_jupytervscode.ipynb>`_"
 "Thurs, Sep 8","- Python Debugger
 - R / Python Differences
 - Packages","- `What are Tracebacks? <https://www.youtube.com/watch?v=JD8BrXXNtjA>`_
-- `Debugging Tools <debugging_principles.ipynb>`_
-- `Python Debugger in VS Code <debugging_in_vscode.ipynb>`_
-- `variables v objects <vars_v_objects.ipynb>`_
-- `Python v. R <https://www.practicaldatascience.org/html/python_v_r.html>`_","- `Ex 1 <exercises/Exercise_debugger.ipynb>`_
+- `Debugging Tools <20_programming_skills/10_debugging_principles.ipynb>`_
+- `Python Debugger in VS Code <20_programming_skills/20_debugging_in_vscode.ipynb>`_
+- `variables v objects <misc/vars_v_objects.ipynb>`_
+- `Python v. R <misc/python_v_r.ipynb>`_","- `Ex 1 <exercises/Exercise_debugger.ipynb>`_
 - `Ex 2 <exercises/Exercise_variables_v_objects.ipynb>`_"
-"Tues, Sep 13",- Numpy Basics,"- `Why numpy? <10_why_numpy.ipynb>`_
-- `Numpy Vectors <20_intro_to_vectors.ipynb>`_
-- `Math with Vectors <21_math_with_vectors.ipynb>`_
-- `Type Promotion <23_type_promotion_in_vectors.ipynb>`_
-- `Subsetting Vectors <30_subsetting_vectors.ipynb>`_
-- `Modifying Subsets of Vectors <35_modifying_subsets_of_vectors.ipynb>`_
-- `Numbers in Computer <ints_and_floats.ipynb>`_
-- `Wanna leave feedback? <https://forms.gle/KUcCX2vjE3Jqb4EN9>`_",- `Ex 1 <https://github.com/nickeubank/practicaldatascience/raw/master/source/exercises/numpy_vectors.ipynb.zip>`_
-"Thurs, Sep 15",- Numpy Arrays,"- `Views and Copies <10_views_and_copies.ipynb>`_
-- `Matrices <20_matrices.ipynb>`_
-- `Reshaping Matrices <22_reshaping_matrices.ipynb>`_
-- `Images as Matrices <25_images_as_matrices.ipynb>`_
-- `Subsetting Matrices <30_subsetting_matrices.ipynb>`_
-- `ND-Arrays <40_nd_arrays.ipynb>`_
-- `Broadcasting in numpy <41_broadcasting.ipynb>`_
-- `Wanna leave some feedback? <https://forms.gle/s5PknVTvqzPJtCu49>`_",- `Link <exercises/Exercise_numpy.ipynb>`_
-"Tues, Sep 20",- Pandas: Series,"- `Why Pandas? <00_intro_to_pandas.ipynb>`_
-- `Pandas Series <10_pandas_series.ipynb>`_
-- `Manipulating Pandas Series <15_manipulating_series.ipynb>`_
-- `Vectorizing <11_vectorization.ipynb>`_",- `Link <exercises/Exercise_series.ipynb>`_
-"Thurs, Sep 22",- Pandas: DataFrames,"- `Pandas 2: DataFrames <30_pandas_dataframes.ipynb>`_
+"Tues, Sep 13",- Numpy Basics,"- `Why numpy? <30_numpy/10_vectors/10_why_numpy.ipynb>`_
+- `Numpy Vectors <30_numpy/10_vectors/20_intro_to_vectors.ipynb>`_
+- `Math with Vectors <30_numpy/10_vectors/21_math_with_vectors.ipynb>`_
+- `Type Promotion <30_numpy/10_vectors/23_type_promotion_in_vectors.ipynb>`_
+- `Vector Recap <30_numpy/10_vectors/24_vector_recap.ipynb>`_
+- `Subsetting Vectors <30_numpy/10_vectors/30_subsetting_vectors.ipynb>`_
+- `Modifying Subsets of Vectors <30_numpy/10_vectors/35_modifying_subsets_of_vectors.ipynb>`_
+- `Vector Subsetting Recap <30_numpy/10_vectors/37_vector_subsets_recap.ipynb>`_
+- `Numbers in Computer <20_programming_skills/ints_and_floats.ipynb>`_",- `Ex 1 <https://github.com/nickeubank/practicaldatascience/raw/master/source/exercises/numpy_vectors.ipynb.zip>`_
+"Thurs, Sep 15",- Numpy Arrays,"**More Numpy Concepts:**
+
+- `Views and Copies <30_numpy/15_advanced_numpy_concepts/10_views_and_copies.ipynb>`_
+- `When Do I Get a View <30_numpy/15_advanced_numpy_concepts/11_when_do_I_get_a_view.ipynb>`_
+- `Views and Copies Recap <30_numpy/15_advanced_numpy_concepts/12_views_and_copies_recap.ipynb>`_
+- `Objects and Variables <30_numpy/15_advanced_numpy_concepts/13_objects_and_variables.ipynb>`_
+
+**Matrices:**
+
+- `Welcome to Matrices <30_numpy/20_matrices/00_welcome_to_matrices.ipynb>`_
+- `Matrices <30_numpy/20_matrices/20_matrices.ipynb>`_
+- `Reshaping Matrices <30_numpy/20_matrices/22_reshaping_matrices.ipynb>`_
+- `Images as Matrices <30_numpy/20_matrices/25_images_as_matrices.ipynb>`_
+- `Subsetting Matrices <30_numpy/20_matrices/30_subsetting_matrices.ipynb>`_
+- `Matrices Recap <30_numpy/20_matrices/33_matrix_recaps.ipynb>
+
+**ND Arrays:**
+
+- `ND-Arrays <30_numpy/20_matrices/40_nd_arrays.ipynb>`_
+- `Broadcasting in numpy <30_numpy/20_matrices/41_broadcasting.ipynb>`_
+- `ND Array Recap <30_numpy/20_matrices/42_nd_array_review.ipynb>`_",- `Link <exercises/Exercise_numpy.ipynb>`_
+"Tues, Sep 20",- Pandas: Series,"- `Why Pandas? <40_pandas_basics/00_intro_to_pandas.ipynb>`_
+- `Pandas Series <40_pandas_basics/10_pandas_series.ipynb>`_
+- `Manipulating Pandas Series <40_pandas_basics/15_manipulating_series.ipynb>`_
+- `Vectorization <30_numpy/40_advanced_numpy/11_vectorization.ipynb>`_",- `Link <exercises/Exercise_series.ipynb>`_
+"Thurs, Sep 22",- Pandas: DataFrames,"- `Pandas DataFrames <40_pandas_basics/30_pandas_dataframes.ipynb>`_
+- `Pandas DataFrame Gotchas <40_pandas_basics/35_pandas_dataframe_gotchas.ipynb>`_
 - `Managing Settings in VS Code <https://youtu.be/Knc6S4gUHzk>`_
-- `Writing Good Notebooks <writing_good_jupyter_notebooks.ipynb>`_",- `Link <exercises/Exercise_dataframe.ipynb>`_
+- `Writing Good Notebooks <20_programming_skills/writing_good_jupyter_notebooks.ipynb>`_",- `Link <exercises/Exercise_dataframe.ipynb>`_
 "Tues, Sep 27",- Pandas: Indices & Missing,"- WM pp 136-142 (Indices, Section 5.2 up to MultiIndexes)
 - JVP pp 119-127 (""Handling Missing Data"" in Chpt 3)
-- `Views and Copies in Numpy <views_and_copies_numpy_review.ipynb>`_
-- `Views and Copies in Pandas <views_and_copies_in_pandas.ipynb>`_","- `Link 1 <exercises/Exercise_indices.ipynb>`_
+- `Numpy Views and Copies Review <40_pandas_basics/10_views_and_copies_numpy_review.ipynb>`_
+- `Views and Copies in Pandas <40_pandas_basics/50_views_and_copies_in_pandas.ipynb>`_
+- `Views and Copies in Pandas W/O CoW <40_pandas_basics/50_views_and_copies_in_pandas_wo_CoW.ipynb>`_","- `Link 1 <exercises/Exercise_indices.ipynb>`_
 - `Link 2 <exercises/Exercise_missing.ipynb>`_"
 "Thurs, Sep 29",- Collaborating using Github,"- `Git and Github <git_and_github.ipynb>`_
 - `Visualize Git Branches <https://learngitbranching.js.org/>`_",- `Link <exercises/Exercise_git.ipynb>`_

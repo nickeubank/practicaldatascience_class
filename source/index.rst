@@ -46,43 +46,60 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
    :hidden:
    :caption: Environment Setup
 
-   Setup Python and miniconda <setup_python>
-   Setup VS Code <setup_vscode>
-   Setup Command Line <setup_augmented_commandline>
-   Setup Jupyter <jupyter>
+   Setup Python and miniconda <00_setup_env/setup_python>
+   Setup VS Code <00_setup_env/setup_vscode>
+   Setup Command Line <00_setup_env/setup_augmented_commandline>
+   Setup Jupyter <00_setup_env/jupyter_in_vscode>
 
 .. toctree:: 
    :maxdepth: 2
    :hidden:
-   :caption: Basic Tools
+   :caption: Command Line
 
-   Command Line, Basics <command_line_part1>
-   Command Line, Advanced <command_line_part2>
+   Command Line, Basics <10_commandline/command_line_part1>
+   Command Line, Advanced <10_commandline/command_line_part2>
 
 .. toctree:: 
    :maxdepth: 2
    :hidden:
-   :caption: Python & Pandas
+   :caption: Programming Concepts
    
-   Python / R Differences <python_v_r>
-   Python: Vars v Objects <vars_v_objects>
-   Numbers in Computers <ints_and_floats>
-   Pandas 1: Series <pandas_series>
-   Pandas 2: DataFrames <pandas_dataframes>
-   Plotting, Basics <plotting_altair_part1>
-   Plotting, Advanced <plotting_altair_part2>
-   Pandas 3: Views <views_and_copies_in_pandas>
-   Parquet Format <parquet>
+   Python / R Differences <20_programming_concepts/python_v_r>
+   Python: Vars v Objects <20_programming_concepts/vars_v_objects>
+   Numbers in Computers <20_programming_concepts/ints_and_floats>
+   Debugging <20_programming_concepts/10_debugging_principles>
+   Good Notebooks <20_programming_concepts/writing_good_jupyter_notebooks>
+   Defensive Programming <20_programming_concepts/defensive_programming>
+   Workflow Management <20_programming_concepts/workflow>
+   Backwards Design <20_programming_concepts/backwards_design>
+   Getting Help Online <20_programming_concepts/getting_help>
 
+.. toctree:: 
+   :maxdepth: 2
+   :hidden:
+   :caption: numpy
+
+   Why numpy <30_numpy/10_vectors/10_why_numpy>
+   Vectors <30_numpy/10_vectors/20_intro_to_vectors>
+   Views and Copies <30_numpy/15_advanced_numpy_concepts/10_views_and_copies>
+   Matrices <30_numpy/20_matrices/20_matrices>
+   ND Arrays <30_numpy/30_ndarrays/40_nd_arrays>
+
+.. toctree:: 
+   :maxdepth: 2
+   :hidden:
+   :caption: pandas
+
+   Welcome to Pandas <40_pandas_basics/00_intro_to_pandas>
+   Pandas Series <40_pandas_basics/10_pandas_series>
+   Pandas DataFrames <40_pandas_basics/30_pandas_dataframes>
+   Views and Copies in Pandas <40_views_and_copies_in_pandas>
+  
 .. toctree:: 
    :maxdepth: 2
    :hidden:
    :caption: DS Concepts
 
-   Defensive Programming <defensive_programming>
-   Workflow Management <workflow>
-   Backwards Design <backwards_design>
-   Getting Help Online <getting_help>
    What is Big Data? <what_is_big_data>
    Working with Big Data <big_data_strategies>
    Understanding Performance <performance_understanding>
@@ -112,12 +129,13 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
    Managing Projections in Geopandas <gis_crs_geopandas>
    Mapping with Geopandas <gis_mapping>
 
-
 .. toctree::
    :maxdepth: 2
    :hidden: 
    :caption: Other
    
-   Buying a Data Science Computer <buying_datascience_computer.ipynb>
+   Buying a Data Science Computer <buying_datascience_computer>
+   chatGPT and You <llms>
+   Considering a PhD? <PhD_Advice>
    Not a MIDS Student? <not_a_mids_student>
    Cheat Sheets <cheatsheets>
