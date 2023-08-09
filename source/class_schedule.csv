@@ -20,8 +20,8 @@
 "Thurs, Sep 8","- Python Debugger
 - R / Python Differences
 - Packages","- `What are Tracebacks? <https://www.youtube.com/watch?v=JD8BrXXNtjA>`_
-- `Debugging Tools <20_programming_skills/10_debugging_principles.ipynb>`_
-- `Python Debugger in VS Code <20_programming_skills/20_debugging_in_vscode.ipynb>`_
+- `Debugging Tools <20_programming_concepts/10_debugging_principles.ipynb>`_
+- `Python Debugger in VS Code <20_programming_concepts/20_debugging_in_vscode.ipynb>`_
 - `variables v objects <misc/vars_v_objects.ipynb>`_
 - `Python v. R <misc/python_v_r.ipynb>`_","- `Ex 1 <exercises/Exercise_debugger.ipynb>`_
 - `Ex 2 <exercises/Exercise_variables_v_objects.ipynb>`_"
@@ -100,12 +100,12 @@
 "Tues, Nov 1","- Defensive Programming
 - Workflow
 - Backwards Design
-- Getting Help Online","- `Workflow Management <workflow.ipynb>`_
-- `Backwards Design <backwards_design.ipynb>`_
-- `Getting Help <getting_help.ipynb>`_",**Discuss mid-semester project in class**
+- Getting Help Online","- `Workflow Management <20_programming_concepts/workflow.ipynb>`_
+- `Backwards Design <20_programming_concepts/backwards_design.ipynb>`_
+- `Getting Help <20_programming_concepts/getting_help.ipynb>`_",**Discuss mid-semester project in class**
 "Thurs, Nov 3","- Defensive Programming
-- Groupby / Split-Apply-Combine","- `Defensive Programming <defensive_programming.ipynb>`_
-- `Iceberg Principle <iceberg_principle.ipynb>`_
+- Groupby / Split-Apply-Combine","- `Defensive Programming <20_programming_concepts/defensive_programming.ipynb>`_
+- `Iceberg Principle <20_programming_concepts/iceberg_principle.ipynb>`_
 - WM pp Chpt 10, 10.1, 10.2, 10.3",- `Link <exercises/Exercise_groupby.ipynb>`_
 "Tues, Nov 8","- Pandas: Reshaping
 - Pandas: Categoricals","- WM 8.3
