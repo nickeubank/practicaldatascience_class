@@ -1,10 +1,10 @@
 ﻿"Date, Rm",Topic,Do Before Class,In-Class Exercise
 "Tues, Aug 30","- Class Introduction
-- Welcome to VS Code","- **SETUP 1:** `Installing Python and miniconda <00_setup_env/setup_python.ipynb>`_
-- **SETUP 2:** `Installing and Configuring VS Code <00_setup_env/setup_vscode.ipynb>`_
-- `chatGPT and You <llms.ipynb>`_",
-"Thurs, Sep 1",- Command Line Basics,"- **SETUP 3:** `Setup Augmented Command Line <00_setup_env/setup_augmented_commandline.ipynb>`_
-- `Command Line Basics <10_commandline/commandline_part1.ipynb>`_
+- Welcome to VS Code","- **SETUP 1:** `Installing Python and miniconda <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/00_setup_env/setup_python.html>`_
+- **SETUP 2:** `Installing and Configuring VS Code <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/00_setup_env/setup_vscode.html>`_
+- `chatGPT and You <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/99_advice/llms.html>`_",
+"Thurs, Sep 1",- Command Line Basics,"- **SETUP 3:** `Setup Augmented Command Line <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/00_setup_env/setup_augmented_commandline.html>`_
+- `Command Line Basics <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/10_commandline/commandline_part1.html>`_
 - `Read and sign syllabus <https://github.com/nickeubank/practicaldatascience/raw/master/syllabus/Syllabus_PracticalDataScience.pdf>`_
 - `Register with IPUMS <https://uma.pop.umn.edu/usa/user/new>`_
 - `Register for DataCamp <https://www.datacamp.com/home>`_
@@ -12,18 +12,18 @@
 "Fri, Sep 2",**SOFTWARE INSTALL DAY**,A day of trouble shooting install issues,
 "Tues, Sep 6","- Advanced Command Line
 - Jupyter
-- Packages","- `Advanced Command Line <10_commandline/commandline_part2.ipynb>`_
-- **SETUP 4:** `Jupyter in VS Code <00_setup_env/jupyter_in_vscode.ipynb>`_
-- `Python packages <00_setup_env/managing_python_packages.ipynb>`_
-- **OPTIONAL SETUP:** `R Notebooks <00_setup_env/jupyter_r_notebooks.ipynb>`_","- `Ex 1 <exercises/Exercise_CommandLine_2_Advanced.ipynb>`_
+- Packages","- `Advanced Command Line <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/10_commandline/commandline_part2.html>`_
+- **SETUP 4:** `Jupyter in VS Code <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/00_setup_env/jupyter_in_vscode.html>`_
+- `Python packages <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_4/30_managing_python_packages.html>`_
+- **OPTIONAL SETUP:** `R Jupyter Notebooks <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/00_setup_env/jupyter_r_notebooks.html>`_","- `Ex 1 <exercises/Exercise_CommandLine_2_Advanced.ipynb>`_
 - `Ex 2 <exercises/Exercise_jupytervscode.ipynb>`_"
 "Thurs, Sep 8","- Python Debugger
 - R / Python Differences
 - Packages","- `What are Tracebacks? <https://www.youtube.com/watch?v=JD8BrXXNtjA>`_
-- `Debugging Tools <20_programming_concepts/10_debugging_principles.ipynb>`_
-- `Python Debugger in VS Code <20_programming_concepts/20_debugging_in_vscode.ipynb>`_
-- `variables v objects <misc/vars_v_objects.ipynb>`_
-- `Python v. R <misc/python_v_r.ipynb>`_","- `Ex 1 <exercises/Exercise_debugger.ipynb>`_
+- `Debugging Tools <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/20_programming_concepts/10_debugging_principles.html>`_
+- `Python Debugger in VS Code <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/20_programming_concepts/20_debugging_in_vscode.html>`_
+- `variables v objects <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/20_programming_concepts/vars_v_objects.html>`_
+- `Python v. R <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/20_programming_concepts/python_v_r.html>`_","- `Ex 1 <exercises/Exercise_debugger.ipynb>`_
 - `Ex 2 <exercises/Exercise_variables_v_objects.ipynb>`_"
 "Tues, Sep 13",- Numpy Basics,"- `Why numpy? <30_numpy/10_vectors/10_why_numpy.ipynb>`_
 - `Numpy Vectors <30_numpy/10_vectors/20_intro_to_vectors.ipynb>`_
