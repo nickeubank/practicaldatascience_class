@@ -1,7 +1,7 @@
 Hello!
 ======
 
-**Wondering where tutorials that used to be here have gone? `They've moved here! <https://nickeubank.github.io/practicaldatascience_book/intro.html>`_**
+**Wondering where tutorials that used to be here have gone? `They've moved here! <https://nickeubank.github.io/practicaldatascience_book/intro.html>`_ **
 
 
 *The course site for Duke MIDS Fall 2023 Practical Data Science (IDS 720) Course*
@@ -42,5 +42,4 @@ Please let me know! All source files (and underlying jupyter notebooks) for this
 
    Class Schedule <class_schedule>
    Autograder Guidelines <autograder_guidelines>
-   Syllabus <https://github.com/nickeubank/practicaldatascience/blob/master/syllabus/Syllabus_PracticalDataScience.pdf>_
    Not a MIDS Student? <not_a_mids_student>

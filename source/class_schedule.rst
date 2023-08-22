@@ -6,9 +6,9 @@ Office Hours and Links
 
 `Nick <https://duke.zoom.us/my/nickeubank>`_ : Monday 12:45 pm - 1:45 pm
 
-`Raza <https://duke.zoom.us/j/6225640608>`_ : Tuesday 12:00 pm - 1:00 pm; Thursday 4:00 - 5:00 pm.
+Pomelo
 
-`Marlyne <https://duke.zoom.us/j/98939159500>`_ : Monday 10:00 am - 11:00 am; Wednesday 10:00 - 11:00 am.
+Suzy
 
 
 Class Time
