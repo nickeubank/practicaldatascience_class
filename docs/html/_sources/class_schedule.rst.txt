@@ -14,7 +14,7 @@ Suzy
 Class Time
 ----------
 
-Class will be Tuesdays and Thursdays from 1:45pm-3pm (EDT).
+Class will be Tuesdays and Thursdays from 1:25pm-2:40pm (EDT).
 
 .. csv-table::
    :file: class_schedule.csv

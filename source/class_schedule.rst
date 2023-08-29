@@ -14,14 +14,9 @@ Suzy
 Class Time
 ----------
 
-Class will be Tuesdays and Thursdays from 1:45pm-3pm (EDT).
+Class will be Tuesdays and Thursdays from 1:25pm-2:40pm (EDT).
 
 .. csv-table::
    :file: class_schedule.csv
    :widths: 14, 28, 32, 5
    :header-rows: 1
-
-Reminders:
-
-- **JVP**: `Python Data Science Handbook: Essential Tools for Working with Data <https://www.amazon.com/Python-Data-Science-Handbook-Essential-dp-1491912057/dp/1491912057>`_ by Jake VanderPlas.
-- **WM**: `Python for Data Analysis: Data Wrangling with pandas, NumPy, and Jupyter, Third Edition <https://www.amazon.com/Python-Data-Analysis-Wrangling-Jupyter/dp/109810403X>`_ by Wes McKinney.
