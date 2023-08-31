@@ -8,7 +8,7 @@ Office Hours and Links
 
 Pomelo
 
-Suzy
+`Suzy <https://duke.zoom.us/j/7110197485>`_: Wednesday, 12 pm - 1pm
 
 
 Class Time
