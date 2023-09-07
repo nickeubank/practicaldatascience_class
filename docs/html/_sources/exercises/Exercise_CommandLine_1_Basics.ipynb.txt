@@ -145,7 +145,11 @@
     "\n",
     "Be aware that lots of file endings can be used for plaintext files. For example, `.csv` files are also plaintext. Indeed, it is because they have such a simple format that `.csv`s are the most used format for sharing tabular data. `.md`, `.txt`, `.tsv`, and other file suffixes are also usually plaintext. \n",
     "\n",
-    "But just because a file is not plaintext doesn't mean we don't want to know what it is! So let's use the `open` command (on a mac) or the `start` command (if you're using a bash shell on windows). `open FILENAME` / `start FILENAME` just asks your computer to do whatever it would do if you double-clicked on FILENAME. So if you type `open CE-20170824.pdf` / `start CE-20170824.pdf`, your computer will open the PDF in your default PDF reader. "
+    "But just because a file is not plaintext doesn't mean we don't want to know what it is! \n",
+    "\n",
+    "Use the `open` command (on a mac) or the `start` command (if you're using a bash shell on windows). `open FILENAME` / `start FILENAME` just asks your computer to do whatever it would do if you double-clicked on FILENAME. So if you type `open CE-20170824.pdf` / `start CE-20170824.pdf`, your computer will open the PDF in your default PDF reader. \n",
+    "\n",
+    "Similarly, if you type `open .` or `start .`, your file explorer will open with the current directory open!"
    ]
   },
   {
