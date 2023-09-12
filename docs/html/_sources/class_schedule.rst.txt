@@ -4,7 +4,7 @@ Class Schedule
 Office Hours and Links
 --------------------------
 
-`Nick <https://duke.zoom.us/my/nickeubank>`_ : Monday 12:45 pm - 1:45 pm
+`Nick <https://duke.zoom.us/my/nickeubank>`_ : Thursday 10 am - 11 am
 
 `Pomelo <https://duke.zoom.us/j/6897746818>`_ Friday, 9 am - 10 pm
 
