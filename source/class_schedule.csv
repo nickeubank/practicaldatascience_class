@@ -38,7 +38,7 @@
 - `Vector Recap <30_numpy/10_vectors/24_vector_recap.ipynb>`_
 - `Subsetting Vectors <30_numpy/10_vectors/30_subsetting_vectors.ipynb>`_
 - `Modifying Subsets of Vectors <30_numpy/10_vectors/35_modifying_subsets_of_vectors.ipynb>`_
-- `Vector Subsetting Recap <30_numpy/10_vectors/37_vector_subsets_recap.ipynb>`_",- `Ex 1 <https://github.com/nickeubank/practicaldatascience/raw/master/source/exercises/numpy_vectors.ipynb.zip>`_
+- `Vector Subsetting Recap <30_numpy/10_vectors/37_vector_subsets_recap.ipynb>`_",- `Ex 1 <exercises/Exercise_numpy_vectors.ipynb>`_
 "Tues, Sep 19",- Numpy Arrays,"**More Numpy Concepts:**
 
 - `Views and Copies <30_numpy/15_advanced_numpy_concepts/10_views_and_copies.ipynb>`_
