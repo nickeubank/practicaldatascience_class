@@ -83,7 +83,7 @@
                 "plt.hist(your_array)\n",
                 "```\n",
                 "\n",
-                "Use this `plt.hist()` method to plot your income data. Does it look like a normal distribution? Uniform? Does this make you think that in common equality is relatively high or low in the United States?\n",
+                "Use this `plt.hist()` method to plot your income data. Does it look like a normal distribution? Uniform? Does this make you think that income inequality is relatively high or low in the United States?\n",
                 "\n",
                 "**Note:** The x-axis' will range will be determined by the data, with the x-axis being made long enough to include ALL data (but no longer). As a result, there *are* observations across the x-axis, even if there are too few for the bar to be visible.\n",
                 "\n",
