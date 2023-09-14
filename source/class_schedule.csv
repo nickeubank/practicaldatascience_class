@@ -41,33 +41,25 @@
 - `Vector Subsetting Recap <30_numpy/10_vectors/37_vector_subsets_recap.ipynb>`_",- `Ex 1 <exercises/Exercise_numpy_vectors.ipynb>`_
 "Tues, Sep 19",- Numpy Arrays,"**More Numpy Concepts:**
 
-- `Views and Copies <30_numpy/15_advanced_numpy_concepts/10_views_and_copies.ipynb>`_
-- `When Do I Get a View <30_numpy/15_advanced_numpy_concepts/11_when_do_I_get_a_view.ipynb>`_
+- `Views and Copies <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_3/10_views_and_copies.html>`_
+- `When Do I Get a View <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_3/11_when_do_I_get_a_view.html>`_
+- `Variables, Objects, and Numpy <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_3/13_objects_and_variables.html>`_
+- `Views and Copies Recap <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_3/12_views_and_copies_recap.html>`_
 - `Numbers in Computer <20_programming_skills/ints_and_floats.ipynb>`_
 
 
 **Matrices:**
 
-- `Welcome to Matrices <30_numpy/20_matrices/00_welcome_to_matrices.ipynb>`_
-- `Matrices <30_numpy/20_matrices/20_matrices.ipynb>`_
-- `Reshaping Matrices <30_numpy/20_matrices/22_reshaping_matrices.ipynb>`_
-- `Images as Matrices <30_numpy/20_matrices/25_images_as_matrices.ipynb>`_
-- `Subsetting Matrices <30_numpy/20_matrices/30_subsetting_matrices.ipynb>`_
-- `Matrices Recap <30_numpy/20_matrices/33_matrix_recaps.ipynb>
+- `Matrices — From Welcome through Review of Matrices <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_3/00_welcome_to_week_3.html>`_ (*see navigation bar on left*)
 
 **ND Arrays:**
 
-- `ND-Arrays <30_numpy/20_matrices/40_nd_arrays.ipynb>`_
-- `Broadcasting in numpy <30_numpy/20_matrices/41_broadcasting.ipynb>`_
-- `ND Array Recap <30_numpy/20_matrices/42_nd_array_review.ipynb>`_",- `Link <exercises/Exercise_numpy.ipynb>`_
-"Thurs, Sep 21",- Pandas: Series,"- `Why Pandas? <40_pandas_basics/00_intro_to_pandas.ipynb>`_
-- `Pandas Series <40_pandas_basics/10_pandas_series.ipynb>`_
-- `Manipulating Pandas Series <40_pandas_basics/15_manipulating_series.ipynb>`_
-- `Vectorization <30_numpy/40_advanced_numpy/11_vectorization.ipynb>`_",- `Link <exercises/Exercise_series.ipynb>`_
-"Tues, Sep 26",- Pandas: DataFrames,"- `Pandas DataFrames <40_pandas_basics/30_pandas_dataframes.ipynb>`_
-- `Pandas DataFrame Gotchas <40_pandas_basics/35_pandas_dataframe_gotchas.ipynb>`_
-- `Managing Settings in VS Code <https://youtu.be/Knc6S4gUHzk>`_
-- `Writing Good Notebooks <20_programming_skills/writing_good_jupyter_notebooks.ipynb>`_",- `Link <exercises/Exercise_dataframe.ipynb>`_
+- `Arrays — From Welcome through Color Images as Arrays <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_3/40_nd_arrays.html>`_ (*see navigation bar on left*)",- `Link <exercises/Exercise_numpy.ipynb>`_
+"Thurs, Sep 21",- Pandas: Series,"- `Speed / Ease of Use Tradeoff <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_4/10_speed_and_ease_of_use.html>`_
+- `Vectorization <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_4/11_vectorization.html>`_
+- `Pandas: From Working with Tabular Data through Subsetting and Indexing with Single Square Brackets <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_2/00_intro_to_pandas.html>`_",- `Link <exercises/Exercise_series.ipynb>`_
+"Tues, Sep 26",- Pandas: DataFrames,"- `Pandas DataFrames <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_2/30_pandas_dataframes.html>`_
+- `Pandas DataFrame Gotchas <40_https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_2/35_pandas_dataframe_gotchas.html>`_",- `Link <exercises/Exercise_dataframe.ipynb>`_
 "Thurs, Sep 28",- Pandas: Indices & Missing,"- WM pp 136-142 (Indices, Section 5.2 up to MultiIndexes)
 - JVP pp 119-127 (""Handling Missing Data"" in Chpt 3)
 - `Numpy Views and Copies Review <40_pandas_basics/10_views_and_copies_numpy_review.ipynb>`_
