@@ -31,21 +31,14 @@
 - `variables v objects <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/20_programming_concepts/vars_v_objects.html>`_
 - `Python v. R <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/20_programming_concepts/python_v_r.html>`_","- `Ex 1 <exercises/Exercise_debugger.ipynb>`_
 - `Ex 2 <exercises/Exercise_variables_v_objects.ipynb>`_"
-"Thurs, Sep 14",- Numpy Basics,"- `Why numpy? <30_numpy/10_vectors/10_why_numpy.ipynb>`_
-- `Numpy Vectors <30_numpy/10_vectors/20_intro_to_vectors.ipynb>`_
-- `Math with Vectors <30_numpy/10_vectors/21_math_with_vectors.ipynb>`_
-- `Type Promotion <30_numpy/10_vectors/23_type_promotion_in_vectors.ipynb>`_
-- `Vector Recap <30_numpy/10_vectors/24_vector_recap.ipynb>`_
-- `Subsetting Vectors <30_numpy/10_vectors/30_subsetting_vectors.ipynb>`_
-- `Modifying Subsets of Vectors <30_numpy/10_vectors/35_modifying_subsets_of_vectors.ipynb>`_
-- `Vector Subsetting Recap <30_numpy/10_vectors/37_vector_subsets_recap.ipynb>`_",- `Ex 1 <exercises/Exercise_numpy_vectors.ipynb>`_
+"Thurs, Sep 14",- Numpy Basics,"- `Why numpy?  through Vector Subsetting Recap, SKIP Speed/Ease of Use Tradeoff and Vectorization <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_2/10_why_numpy.html>`_",- `Ex 1 <exercises/Exercise_numpy_vectors.ipynb>`_
 "Tues, Sep 19",- Numpy Arrays,"**More Numpy Concepts:**
 
 - `Views and Copies <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_3/10_views_and_copies.html>`_
 - `When Do I Get a View <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_3/11_when_do_I_get_a_view.html>`_
 - `Variables, Objects, and Numpy <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_3/13_objects_and_variables.html>`_
 - `Views and Copies Recap <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_3/12_views_and_copies_recap.html>`_
-- `Numbers in Computer <20_programming_skills/ints_and_floats.ipynb>`_
+- `Numbers in Computer <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/20_programming_concepts/ints_and_floats.html>`_
 
 
 **Matrices:**
