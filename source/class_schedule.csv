@@ -54,10 +54,8 @@
 "Tues, Sep 26",- Pandas: DataFrames,"- `Pandas DataFrames <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_2/30_pandas_dataframes.html>`_
 - `Pandas DataFrame Gotchas <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_2/35_pandas_dataframe_gotchas.html>`_",
 "Thurs, Sep 28",- Pandas: Indices & Missing,"- WM pp 136-142 (Indices, Section 5.2 up to MultiIndexes)
-- JVP pp 119-127 (""Handling Missing Data"" in Chpt 3)
-- `Numpy Views and Copies Review <40_pandas_basics/10_views_and_copies_numpy_review.ipynb>`_
-- `Views and Copies in Pandas <40_pandas_basics/50_views_and_copies_in_pandas.ipynb>`_
-- `Views and Copies in Pandas W/O CoW <40_pandas_basics/50_views_and_copies_in_pandas_wo_CoW.ipynb>`_",
+- `Handling Missing Data <https://jakevdp.github.io/PythonDataScienceHandbook/03.04-missing-values.html>`_
+- `Views and Copies in Pandas through the View/Copy Headache without CoW <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_3/10_views_and_copies_numpy_review.html>`_",
 "Tues, Oct 3","- Pandas: Cleaning
 - Tracebacks","- `Identifying Problems <20_cleaning_identifying.ipynb>`_
 - `Editing Values Globally <30_cleaning_editing_globally.ipynb>`_
