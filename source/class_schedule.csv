@@ -52,61 +52,60 @@
 - `Vectorization <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_4/11_vectorization.html>`_
 - `Pandas: From Working with Tabular Data through Subsetting and Indexing with Single Square Brackets <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_2/00_intro_to_pandas.html>`_",- `Link <exercises/Exercise_series.ipynb>`_
 "Tues, Sep 26",- Pandas: DataFrames,"- `Pandas DataFrames <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_2/30_pandas_dataframes.html>`_
-- `Pandas DataFrame Gotchas <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_2/35_pandas_dataframe_gotchas.html>`_",- `Link <exercises/Exercise_dataframe.ipynb>`_
+- `Pandas DataFrame Gotchas <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_2/35_pandas_dataframe_gotchas.html>`_",
 "Thurs, Sep 28",- Pandas: Indices & Missing,"- WM pp 136-142 (Indices, Section 5.2 up to MultiIndexes)
 - JVP pp 119-127 (""Handling Missing Data"" in Chpt 3)
 - `Numpy Views and Copies Review <40_pandas_basics/10_views_and_copies_numpy_review.ipynb>`_
 - `Views and Copies in Pandas <40_pandas_basics/50_views_and_copies_in_pandas.ipynb>`_
-- `Views and Copies in Pandas W/O CoW <40_pandas_basics/50_views_and_copies_in_pandas_wo_CoW.ipynb>`_","- `Link 1 <exercises/Exercise_indices.ipynb>`_
-- `Link 2 <exercises/Exercise_missing.ipynb>`_"
+- `Views and Copies in Pandas W/O CoW <40_pandas_basics/50_views_and_copies_in_pandas_wo_CoW.ipynb>`_",
 "Tues, Oct 3","- Pandas: Cleaning
 - Tracebacks","- `Identifying Problems <20_cleaning_identifying.ipynb>`_
 - `Editing Values Globally <30_cleaning_editing_globally.ipynb>`_
 - `Editing Specific Entries <32_cleaning_editing_specific_locations.ipynb>`_
 - `Cleaning Data Types <33_cleaning_datatypes.ipynb>`_
 - `Missing Data <35_cleaning_missing_data.ipynb>`_
-- `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_",- `Link <exercises/Exercise_cleaning.ipynb>`_
+- `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_",
 "Thurs, Oct 5","- Grammer of Graphics
 - Intro to Plotting with Altair","- `Principles of Data Visualization <https://www.youtube.com/watch?v=vTingdk_pVM>`_
 - `Intro to Altair <plotting_altair_part1.ipynb>`_
 - `Altair in Context <plotting_altair_in_context.ipynb>`_
-- `Plotting with Pandas <plotting_with_pandas.ipynb>`_",- `Link <exercises/Exercise_plotting_part1.ipynb>`_
-"Tues, Oct 10",- Advanced Plotting,,- `Link <exercises/Exercise_plotting_part2.ipynb>`_
+- `Plotting with Pandas <plotting_with_pandas.ipynb>`_",
+"Tues, Oct 10",- Advanced Plotting,,
 "Thurs, Oct 12",**FALL BREAK**,,
 "Tues, Oct 17",**FALL BREAK**,,
 "Thurs, Oct 19","- Pandas: Merging
 - Pandas: Loading and saving data","- JVP pp 149 - 157
-- WM Chapter 6",- `Link <exercises/Exercise_merging.ipynb>`_
+- WM Chapter 6",
 "Tues, Oct 24","- Big Data: What is it, how do I work with it?","- `What is Big Data? <what_is_big_data.ipynb>`_
 - `Strategies for Big Data <big_data_strategies.ipynb>`_
 - Download the dataset linked at the top of the linked exercise before class.
-- `Parquet Format <parquet.ipynb>`_",- `Link <exercises/Exercise_bigdata.ipynb>`_
+- `Parquet Format <parquet.ipynb>`_",
 "Thurs, Oct 26","- Defensive Programming
 - Workflow
 - Backwards Design
 - Getting Help Online","- `Workflow Management <20_programming_concepts/workflow.ipynb>`_
 - `Backwards Design <20_programming_concepts/backwards_design.ipynb>`_
-- `Getting Help <20_programming_concepts/getting_help.ipynb>`_",**Discuss mid-semester project in class**
+- `Getting Help <20_programming_concepts/getting_help.ipynb>`_",
 "Tues, Oct 31","- Defensive Programming
 - Groupby / Split-Apply-Combine","- `Defensive Programming <20_programming_concepts/defensive_programming.ipynb>`_
 - `Iceberg Principle <20_programming_concepts/iceberg_principle.ipynb>`_
-- WM pp Chpt 10, 10.1, 10.2, 10.3",- `Link <exercises/Exercise_groupby.ipynb>`_
+- WM pp Chpt 10, 10.1, 10.2, 10.3",
 "Thurs, Nov 2","- Pandas: Reshaping
 - Pandas: Categoricals","- WM 8.3
 - `Pandas reshaping (with pics!) <https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html>`_
 - `What is goal of reshaping? <https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwifqfmGn6_sAhWfgnIEHQo2AwAQFjACegQIAxAC&url=https%3A%2F%2Fvita.had.co.nz%2Fpapers%2Ftidy-data.pdf&usg=AOvVaw3HDG0hKNeQpAOVcdczJizw>`_
 - Categoricals: WM 12.1
-- **Project Strategy Plan Due**",- `Link <exercises/Exercise_reshaping.ipynb>`_
+- **Project Strategy Plan Due**",
 "Tues, Nov 7",- Speed and Performance in Python,"- `Understanding Performance <performance_understanding.ipynb>`_
 - `Improving Performance <performance_solutions.ipynb>`_
-- `Code Reviews <pr_review.ipynb>`_",[finish groupby and reshaping exercises]
+- `Code Reviews <pr_review.ipynb>`_",
 "Thurs, Nov 9",- Statistics with statsmodels,"- WM, 3rd Edition, Chapter 12, 12.1, 12.2, 12.3 (Patsy and statsmodels, not scikit-learn)
 - `Skim ""Linear Models"" <https://www.statsmodels.org/stable/regression.html>`_
 - `Skim ""Discrete Dep Var Models"" <https://www.statsmodels.org/stable/discretemod.html>`_
 - `Regression Diagnostics <https://www.statsmodels.org/stable/examples/notebooks/generated/regression_diagnostics.html>`_
 - `Regression Plots <https://www.statsmodels.org/stable/examples/notebooks/generated/regression_plots.html>`_
-- `Patsy: Differences from R <https://patsy.readthedocs.io/en/latest/R-comparison.html>`_",- `Link <exercises/Exercise_statsmodels.ipynb>`_
-"Tues, Nov 14",- Machine Learning with sckikit-learn,"- JVP Chapter 5 up to ""Hyperparameters and Model Validation"" Section (pp 331 - 359)",- `Link <exercises/Exercise_sklearn.ipynb>`_
+- `Patsy: Differences from R <https://patsy.readthedocs.io/en/latest/R-comparison.html>`_",
+"Tues, Nov 14",- Machine Learning with sckikit-learn,"- JVP Chapter 5 up to ""Hyperparameters and Model Validation"" Section (pp 331 - 359)",
 "Thurs, Nov 16",,,
 "Tues, Nov 21",No Class,,
 "Thurs, Nov 23",THANKSGIVING,,
@@ -114,12 +113,11 @@
 - Regex","- Review linear regression as matrix manipulations. `Here's a nice review. <https://www.stat.purdue.edu/~boli/stat512/lectures/topic3.pdf>`_
 - `Review how to define classes <https://realpython.com/python3-object-oriented-programming/>`_
 - `Broadcasting in numpy <41_broadcasting.ipynb>`_
-- **Opioid Project Rough Draft Due**",- `Link <exercises/Exercise_codeyourownlinearregression.ipynb>`_
+- **Opioid Project Rough Draft Due**",
 "Thurs, Nov 30","- Parallelism 
 - Distributed Computing","- `Parallel Computing <parallelism.ipynb>`_
 - `Distributed Computing with dask <distributed_computing.ipynb>`_
 (Note reading includes a 45 minute video to watch)
 **Optional:**
-- `Setting Up Cloud Cluster <distributed_starting_dask_cluster.ipynb>`_","- `Link 1 <exercises/Exercise_dask_realdata.ipynb>`_
-- `Link 2 <exercises/Exercise_dask.ipynb>`_"
+- `Setting Up Cloud Cluster <distributed_starting_dask_cluster.ipynb>`_",
 "Fri, Dec 8",,**Final Project Report and Presentation Due**,
