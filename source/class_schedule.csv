@@ -53,7 +53,7 @@
 - `Pandas: From Working with Tabular Data through Subsetting and Indexing with Single Square Brackets <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_2/00_intro_to_pandas.html>`_",- `Link <exercises/Exercise_series.ipynb>`_
 "Tues, Sep 26",- Pandas: DataFrames,"- `Pandas DataFrames <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_2/30_pandas_dataframes.html>`_
 - `Pandas DataFrame Gotchas <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_2/35_pandas_dataframe_gotchas.html>`_
-- `PyArrow Backend <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_2/50_pandas_pyarrow.html>`_",
+- `PyArrow Backend <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_2/50_pandas_pyarrow.html>`_",- `Link <exercises/Exercise_dataframes.ipynb>`_
 "Thurs, Sep 28",- Pandas: Indices & Missing,"- WM pp 136-142 (Indices, Section 5.2 up to MultiIndexes)
 - `Handling Missing Data <https://jakevdp.github.io/PythonDataScienceHandbook/03.04-missing-values.html>`_
 - `Views and Copies in Pandas through the View/Copy Headache without CoW <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_3/10_views_and_copies_numpy_review.html>`_
