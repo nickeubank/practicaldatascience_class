@@ -7,18 +7,11 @@
                 "# Cleaning Data Exercises\n",
                 "\n",
                 "In this exercise, we'll be returning to the American Community Survey data we used previously to measuring racial income inequality in the United States. In today's exercise, we'll be using it to measure the returns to education and how those returns vary by race and gender.\n",
-                "\n",
                 "## Gradescope Autograding\n",
                 "\n",
-                "This assignment will be autograded using the same autograder we used for the Missing Values exercise. As was the case last time, the only requirements for submitting this assignment are:\n",
+                "Please follow [all standard guidance](https://www.practicaldatascience.org/html/autograder_guidelines.html) for submitting this assignment to the Gradescope autograder, including storing your solutions in a dictionary called `results` and ensuring your notebook runs from the start to completion without any errors.\n",
                 "\n",
-                "- you may only import pandas, numpy, and matplotlib.\n",
-                "- you import data **from a URL** (since the autograder in the cloud won't see your file system)\n",
-                "- you name your notebook file `exercise_cleaning.ipynb`\n",
-                "- you store your solutions in a dictionary called `results` with answers assigned to the keys provided in the prompts below.\n",
-                "- your notebook runs from the start to completion without any errors. That means that for questions that (deliberately) invite you to write code that *causes* errors, before submitting comment out the code that generates the error to ensure it won't interrupt notebook execution.\n",
-                "\n",
-                "Your notebook will be executed by the autograder and the value of identified dictionary entries will then be checked against solution values. However, be aware TAs will _also_ review your notebooks for answers to other questions and to ensure your notebook is well written and formatted.\n",
+                "For this assignment, please name your file `exercise_missing.ipynb` before uploading.\n",
                 "\n",
                 "You can check that you have answers for all questions in your `results` dictionary with this code:\n",
                 "\n",
@@ -35,9 +28,10 @@
                 "}\n",
                 "```\n",
                 "\n",
+                "\n",
                 "### Submission Limits\n",
                 "\n",
-                "Please remember that you are **only allowed three submissions to the autograder.** Your last submission (if you submit 3 or fewer times), or your third submission (if you submit more than 3 times) will determine your grade. "
+                "Please remember that you are **only allowed three submissions to the autograder.** Your last submission (if you submit 3 or fewer times), or your third submission (if you submit more than 3 times) will determine your grade Submissions that error out will **not** count against this total."
             ]
         },
         {
@@ -60,11 +54,13 @@
                 "import pandas as pd\n",
                 "import numpy as np\n",
                 "\n",
+                "pd.set_option(\"mode.copy_on_write\", True)\n",
+                "\n",
                 "# Download the data\n",
                 "acs = pd.read_stata(\n",
                 "    \"https://github.com/nickeubank/MIDS_Data/blob/master\"\n",
                 "    \"/US_AmericanCommunitySurvey/US_ACS_2017_10pct_sample.dta?raw=True\"\n",
-                ")\n"
+                ")"
             ]
         },
         {
@@ -82,7 +78,7 @@
             "metadata": {},
             "outputs": [],
             "source": [
-                "acs = acs[[\"age\", \"sex\", \"educ\", \"inctot\"]].copy()\n"
+                "acs = acs[[\"age\", \"sex\", \"educ\", \"inctot\"]].copy()"
             ]
         },
         {
@@ -119,91 +115,91 @@
                             "  </thead>\n",
                             "  <tbody>\n",
                             "    <tr>\n",
-                            "      <th>200613</th>\n",
-                            "      <td>23</td>\n",
-                            "      <td>female</td>\n",
-                            "      <td>grade 5, 6, 7, or 8</td>\n",
-                            "      <td>16000</td>\n",
+                            "      <th>176523</th>\n",
+                            "      <td>21</td>\n",
+                            "      <td>male</td>\n",
+                            "      <td>1 year of college</td>\n",
+                            "      <td>20000</td>\n",
                             "    </tr>\n",
                             "    <tr>\n",
-                            "      <th>271044</th>\n",
+                            "      <th>244025</th>\n",
+                            "      <td>56</td>\n",
+                            "      <td>female</td>\n",
+                            "      <td>5+ years of college</td>\n",
+                            "      <td>80200</td>\n",
+                            "    </tr>\n",
+                            "    <tr>\n",
+                            "      <th>232415</th>\n",
+                            "      <td>81</td>\n",
+                            "      <td>female</td>\n",
+                            "      <td>1 year of college</td>\n",
+                            "      <td>10</td>\n",
+                            "    </tr>\n",
+                            "    <tr>\n",
+                            "      <th>141827</th>\n",
                             "      <td>59</td>\n",
                             "      <td>male</td>\n",
-                            "      <td>grade 12</td>\n",
-                            "      <td>79000</td>\n",
+                            "      <td>5+ years of college</td>\n",
+                            "      <td>33300</td>\n",
                             "    </tr>\n",
                             "    <tr>\n",
-                            "      <th>146543</th>\n",
-                            "      <td>33</td>\n",
-                            "      <td>male</td>\n",
+                            "      <th>105772</th>\n",
+                            "      <td>18</td>\n",
+                            "      <td>female</td>\n",
                             "      <td>grade 9</td>\n",
-                            "      <td>24900</td>\n",
+                            "      <td>21200</td>\n",
                             "    </tr>\n",
                             "    <tr>\n",
-                            "      <th>57771</th>\n",
-                            "      <td>24</td>\n",
+                            "      <th>287508</th>\n",
+                            "      <td>8</td>\n",
                             "      <td>female</td>\n",
-                            "      <td>2 years of college</td>\n",
-                            "      <td>12500</td>\n",
+                            "      <td>nursery school to grade 4</td>\n",
+                            "      <td>9999999</td>\n",
                             "    </tr>\n",
                             "    <tr>\n",
-                            "      <th>209706</th>\n",
-                            "      <td>55</td>\n",
-                            "      <td>female</td>\n",
-                            "      <td>grade 12</td>\n",
-                            "      <td>15950</td>\n",
-                            "    </tr>\n",
-                            "    <tr>\n",
-                            "      <th>277650</th>\n",
-                            "      <td>61</td>\n",
+                            "      <th>50309</th>\n",
+                            "      <td>26</td>\n",
                             "      <td>female</td>\n",
                             "      <td>grade 12</td>\n",
-                            "      <td>1000</td>\n",
+                            "      <td>24000</td>\n",
                             "    </tr>\n",
                             "    <tr>\n",
-                            "      <th>90005</th>\n",
-                            "      <td>59</td>\n",
+                            "      <th>190694</th>\n",
+                            "      <td>16</td>\n",
                             "      <td>male</td>\n",
-                            "      <td>grade 12</td>\n",
-                            "      <td>5300</td>\n",
+                            "      <td>grade 10</td>\n",
+                            "      <td>0</td>\n",
                             "    </tr>\n",
                             "    <tr>\n",
-                            "      <th>297992</th>\n",
-                            "      <td>46</td>\n",
+                            "      <th>217426</th>\n",
+                            "      <td>84</td>\n",
                             "      <td>female</td>\n",
-                            "      <td>grade 12</td>\n",
-                            "      <td>35000</td>\n",
+                            "      <td>grade 11</td>\n",
+                            "      <td>8400</td>\n",
                             "    </tr>\n",
                             "    <tr>\n",
-                            "      <th>245298</th>\n",
-                            "      <td>25</td>\n",
-                            "      <td>female</td>\n",
-                            "      <td>grade 12</td>\n",
-                            "      <td>1800</td>\n",
-                            "    </tr>\n",
-                            "    <tr>\n",
-                            "      <th>315707</th>\n",
-                            "      <td>57</td>\n",
+                            "      <th>248968</th>\n",
+                            "      <td>51</td>\n",
                             "      <td>male</td>\n",
-                            "      <td>4 years of college</td>\n",
-                            "      <td>95000</td>\n",
+                            "      <td>1 year of college</td>\n",
+                            "      <td>65000</td>\n",
                             "    </tr>\n",
                             "  </tbody>\n",
                             "</table>\n",
                             "</div>"
                         ],
                         "text/plain": [
-                            "       age     sex                 educ  inctot\n",
-                            "200613  23  female  grade 5, 6, 7, or 8   16000\n",
-                            "271044  59    male             grade 12   79000\n",
-                            "146543  33    male              grade 9   24900\n",
-                            "57771   24  female   2 years of college   12500\n",
-                            "209706  55  female             grade 12   15950\n",
-                            "277650  61  female             grade 12    1000\n",
-                            "90005   59    male             grade 12    5300\n",
-                            "297992  46  female             grade 12   35000\n",
-                            "245298  25  female             grade 12    1800\n",
-                            "315707  57    male   4 years of college   95000"
+                            "       age     sex                       educ   inctot\n",
+                            "176523  21    male          1 year of college    20000\n",
+                            "244025  56  female        5+ years of college    80200\n",
+                            "232415  81  female          1 year of college       10\n",
+                            "141827  59    male        5+ years of college    33300\n",
+                            "105772  18  female                    grade 9    21200\n",
+                            "287508   8  female  nursery school to grade 4  9999999\n",
+                            "50309   26  female                   grade 12    24000\n",
+                            "190694  16    male                   grade 10        0\n",
+                            "217426  84  female                   grade 11     8400\n",
+                            "248968  51    male          1 year of college    65000"
                         ]
                     },
                     "execution_count": 3,
@@ -212,7 +208,7 @@
                 }
             ],
             "source": [
-                "acs.sample(10)\n"
+                "acs.sample(10)"
             ]
         },
         {
@@ -230,7 +226,7 @@
             "metadata": {},
             "outputs": [],
             "source": [
-                "acs[\"inctot\"] = acs[\"inctot\"].replace(9999999, np.nan)\n"
+                "acs[\"inctot\"] = acs[\"inctot\"].replace(9999999, np.nan)"
             ]
         },
         {
@@ -254,7 +250,7 @@
             "source": [
                 "# Code I'd run, but which I'm commenting out so this notebook runs:\n",
                 "\n",
-                "# acs[\"age\"].mean()\n"
+                "# acs[\"age\"].mean()"
             ]
         },
         {
@@ -299,7 +295,7 @@
                 "\n",
                 "# us `str.isnumeric`\n",
                 "problems = acs.loc[~acs[\"age\"].str.isnumeric(), \"age\"].unique()\n",
-                "problems\n"
+                "problems"
             ]
         },
         {
@@ -313,7 +309,7 @@
                 "# I could run this code, but I'm commenting it out so this notebook isn't awful to look at:\n",
                 "\n",
                 "# for i in acs.age.value_counts().index:\n",
-                "#     print(i)\n"
+                "#     print(i)"
             ]
         },
         {
@@ -334,7 +330,7 @@
                 "results[\"ex5_age_old\"] = problems[1]\n",
                 "print(\n",
                 "    f\"The problematic values are '{results['ex5_age_young']}' and '{results['ex5_age_old']}'\"\n",
-                ")\n"
+                ")"
             ]
         },
         {
@@ -359,7 +355,7 @@
             "outputs": [],
             "source": [
                 "acs[\"age\"] = acs[\"age\"].str.replace(\"less than 1 year old\", \"0\", regex=True)\n",
-                "acs[\"age\"] = acs[\"age\"].str.replace(\"90 \\(90\\+ in 1980 and 1990\\)\", \"90\", regex=True)\n"
+                "acs[\"age\"] = acs[\"age\"].str.replace(\"90 \\(90\\+ in 1980 and 1990\\)\", \"90\", regex=True)"
             ]
         },
         {
@@ -380,7 +376,7 @@
             ],
             "source": [
                 "# Check that worked\n",
-                "acs.loc[~acs[\"age\"].str.isnumeric(), \"age\"].unique()\n"
+                "acs.loc[~acs[\"age\"].str.isnumeric(), \"age\"].unique()"
             ]
         },
         {
@@ -389,7 +385,7 @@
             "metadata": {},
             "outputs": [],
             "source": [
-                "assert acs[\"age\"].str.isnumeric().all()\n"
+                "assert acs[\"age\"].str.isnumeric().all()"
             ]
         },
         {
@@ -417,7 +413,7 @@
             "source": [
                 "acs[\"age\"] = acs[\"age\"].astype(\"int\")\n",
                 "results[\"ex7_avg_age\"] = acs[\"age\"].mean()\n",
-                "print(f\"The average age is {results['ex7_avg_age']:.2f}\")\n"
+                "print(f\"The average age is {results['ex7_avg_age']:.2f}\")"
             ]
         },
         {
@@ -447,7 +443,7 @@
             "source": [
                 "acs = acs[acs[\"age\"] >= 18].copy()\n",
                 "results[\"ex8_avg_age\"] = acs[\"age\"].mean()\n",
-                "print(f\"The average age of those above 18 is {results['ex8_avg_age']:.2f}\")\n"
+                "print(f\"The average age of those above 18 is {results['ex8_avg_age']:.2f}\")"
             ]
         },
         {
@@ -467,6 +463,7 @@
                 {
                     "data": {
                         "text/plain": [
+                            "educ\n",
                             "grade 12                     92576\n",
                             "4 years of college           47212\n",
                             "1 year of college            38746\n",
@@ -478,7 +475,7 @@
                             "n/a or no schooling           3644\n",
                             "grade 9                       3145\n",
                             "nursery school to grade 4     1288\n",
-                            "Name: educ, dtype: int64"
+                            "Name: count, dtype: int64"
                         ]
                     },
                     "execution_count": 14,
@@ -487,7 +484,7 @@
                 }
             ],
             "source": [
-                "acs[\"educ\"].value_counts(dropna=False)\n"
+                "acs[\"educ\"].value_counts(dropna=False)"
             ]
         },
         {
@@ -498,9 +495,10 @@
                 {
                     "data": {
                         "text/plain": [
+                            "college_degree\n",
                             "False    176021\n",
                             "True      77013\n",
-                            "Name: college_degree, dtype: int64"
+                            "Name: count, dtype: int64"
                         ]
                     },
                     "execution_count": 15,
@@ -513,7 +511,7 @@
                 "acs[\"college_degree\"] = (acs[\"educ\"] == \"4 years of college\") | (\n",
                 "    acs[\"educ\"] == \"5+ years of college\"\n",
                 ")\n",
-                "acs[\"college_degree\"].value_counts(dropna=False)\n"
+                "acs[\"college_degree\"].value_counts(dropna=False)"
             ]
         },
         {
@@ -524,9 +522,10 @@
                 {
                     "data": {
                         "text/plain": [
+                            "college_degree\n",
                             "False    176021\n",
                             "True      77013\n",
-                            "Name: college_degree, dtype: int64"
+                            "Name: count, dtype: int64"
                         ]
                     },
                     "execution_count": 16,
@@ -537,7 +536,7 @@
             "source": [
                 "# Or you could do with `.isin`\n",
                 "acs[\"college_degree\"] = acs[\"educ\"].isin([\"4 years of college\", \"5+ years of college\"])\n",
-                "acs[\"college_degree\"].value_counts(dropna=False)\n"
+                "acs[\"college_degree\"].value_counts(dropna=False)"
             ]
         },
         {
@@ -548,6 +547,7 @@
                 {
                     "data": {
                         "text/plain": [
+                            "educ\n",
                             "4 years of college           47212\n",
                             "5+ years of college          29801\n",
                             "n/a or no schooling              0\n",
@@ -559,7 +559,7 @@
                             "grade 12                         0\n",
                             "1 year of college                0\n",
                             "2 years of college               0\n",
-                            "Name: educ, dtype: int64"
+                            "Name: count, dtype: int64"
                         ]
                     },
                     "execution_count": 17,
@@ -666,7 +666,7 @@
                 }
             ],
             "source": [
-                "pd.crosstab(acs[\"college_degree\"], acs[\"sex\"])\n"
+                "pd.crosstab(acs[\"college_degree\"], acs[\"sex\"])"
             ]
         },
         {
@@ -744,7 +744,7 @@
             ],
             "source": [
                 "tab = pd.crosstab(acs[\"college_degree\"], acs[\"sex\"], normalize=\"columns\")\n",
-                "tab\n"
+                "tab"
             ]
         },
         {
@@ -844,7 +844,7 @@
             "source": [
                 "older = acs[40 <= acs[\"age\"]]\n",
                 "older_table = pd.crosstab(older[\"college_degree\"], older[\"sex\"], normalize=\"columns\")\n",
-                "older_table\n"
+                "older_table"
             ]
         },
         {
@@ -985,7 +985,7 @@
             "metadata": {},
             "outputs": [],
             "source": [
-                "results[\"ex12_comparing\"] = \"the absolute difference has increased\"\n"
+                "results[\"ex12_comparing\"] = \"the absolute difference has increased\""
             ]
         },
         {
@@ -1022,14 +1022,14 @@
             ],
             "source": [
                 "print(\n",
-                "    f\"Among older Americans, {older_table.loc[True, 'male']:.1%} of \"\n",
-                "    f\"men have college degrees; among younger men, this number has \"\n",
+                "    f\"Among older Americans, {older_table.loc[True, 'male']:.1%} of \\n\"\n",
+                "    f\"men have college degrees; among younger men, this number has \\n\"\n",
                 "    f\"fallen to {younger_table.loc[True, 'male']:.1%}.\"\n",
                 ")\n",
                 "\n",
                 "print(\n",
-                "    f\"By contrast, among older Americans {older_table.loc[True, 'female']:.1%} of \"\n",
-                "    f\"women have college degrees; among younger women, this number has \"\n",
+                "    f\"By contrast, among older Americans {older_table.loc[True, 'female']:.1%} of \\n\"\n",
+                "    f\"women have college degrees; among younger women, this number has \\n\"\n",
                 "    f\"risen to {younger_table.loc[True, 'female']:.1%}.\"\n",
                 ")"
             ]
@@ -1062,22 +1062,6 @@
                 "    \"ex12_comparing\",\n",
                 "}"
             ]
-        },
-        {
-            "cell_type": "code",
-            "execution_count": 30,
-            "metadata": {},
-            "outputs": [],
-            "source": [
-                "import json\n",
-                "\n",
-                "for k in results.keys():\n",
-                "    if not isinstance(results[k], str):\n",
-                "        results[k] = float(results[k])\n",
-                "\n",
-                "with open(\"autograder/solutions.json\", \"w\") as outfile:\n",
-                "    json.dump(results, outfile)\n"
-            ]
         }
     ],
     "metadata": {
@@ -1096,7 +1080,7 @@
             "name": "python",
             "nbconvert_exporter": "python",
             "pygments_lexer": "ipython3",
-            "version": "3.10.6"
+            "version": "3.11.4"
         },
         "vscode": {
             "interpreter": {
