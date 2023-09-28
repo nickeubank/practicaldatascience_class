@@ -59,12 +59,10 @@
 - `Views and Copies in Pandas through the View/Copy Headache without CoW <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_3/10_views_and_copies_numpy_review.html>`_
 - `If you didn't read Tuesday: PyArrow Backend <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_2/50_pandas_pyarrow.html>`_","- `Link 1 <exercises/Exercise_indices.ipynb>`_
 - `Link 2 <exercises/Exercise_missing.ipynb>`_"
-"Tues, Oct 3",- Pandas: Cleaning,"- `Identifying Problems <20_cleaning_identifying.ipynb>`_
-- `Editing Values Globally <30_cleaning_editing_globally.ipynb>`_
-- `Editing Specific Entries <32_cleaning_editing_specific_locations.ipynb>`_
-- `Cleaning Data Types <33_cleaning_datatypes.ipynb>`_
-- `Missing Data <35_cleaning_missing_data.ipynb>`_
-- `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_",
+"Tues, Oct 3","- Pandas: Cleaning
+- Tracebacks","- `Reading and Writing Data (plaintext AND binary) <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_3/00_plaintext_files.html>`_
+- `Data Cleaning (through the missing data subsection on left side bar) <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_3/20_cleaning_identifying.html>`_
+- `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_""- `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_",
 "Thurs, Oct 5","- Grammer of Graphics
 - Intro to Plotting with Altair","- `Principles of Data Visualization <https://www.youtube.com/watch?v=vTingdk_pVM>`_
 - `Intro to Altair <plotting_altair_part1.ipynb>`_
