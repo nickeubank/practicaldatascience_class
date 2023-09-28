@@ -10,7 +10,7 @@
     "\n",
     "To keep track of how many prizes everyone gets, we build a DataFrame with all the party attendees, their arrival order, and a column for keeping track of how much they've received in prizes. \n",
     "\n",
-    "The we can also build a Series with the prize amounts we plan to give people. \n",
+    "We can also build a Series with the prize amounts we plan to give people. \n",
     "\n",
     "### Exercise 1\n",
     "\n",
@@ -18,9 +18,14 @@
     "\n",
     "```python\n",
     "import pandas as pd\n",
-    "attendees = pd.DataFrame({'names': [\"Jill\", \"Kumar\", \"Zaira\"], \n",
-    "                          'prizes': [0, 0, 0],\n",
-    "                          'arrival_order': [2, 1, 3]})\n",
+    "\n",
+    "attendees = pd.DataFrame(\n",
+    "    {\n",
+    "        \"names\": [\"Jill\", \"Kumar\", \"Zaira\"],\n",
+    "        \"prizes\": [0, 0, 0],\n",
+    "        \"arrival_order\": [2, 1, 3],\n",
+    "    }\n",
+    ")\n",
     "arrival_prizes = pd.Series([20, 10, 0])\n",
     "```"
    ]
@@ -42,8 +47,8 @@
     "\n",
     "Now let's \"give\" everyone their arrival prizes by adding arrival prizes to people's prize column: \n",
     "\n",
-    "```\n",
-    "attendees['prizes'] = attendees['prizes'] + arrival_prizes\n",
+    "```python\n",
+    "attendees[\"prizes\"] = attendees[\"prizes\"] + arrival_prizes\n",
     "```"
    ]
   },
@@ -62,7 +67,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## Exercise 5\n",
+    "### Exercise 5\n",
     "\n",
     "If you ever *want* to get alignment on row numbers, the easiest way to achieve that is to reset the indices on both objects you want to merge. When one re-sets indices without specifying a column to become the new index, the new index will just be row-numbers. \n",
     "\n",
@@ -80,7 +85,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## Exercise 6\n",
+    "### Exercise 6\n",
     "\n",
     "OK, so besides doing automatic alignment, is there a reason to use indices?\n",
     "\n",
@@ -90,13 +95,19 @@
     "import numpy.random as npr\n",
     "import string\n",
     "import random\n",
+    "\n",
     "npr.seed(42)\n",
     "random.seed(42)\n",
     "\n",
-    "size=1000000 # 1,000,000\n",
-    "people = pd.DataFrame({'social_security_numbers': npr.randint(low=10000000, high=99999999, size=size),\n",
-    "                       'names': [''.join(random.choices(string.ascii_uppercase, k=10))\n",
-    "                                 for i in range(size)]})\n",
+    "size = 1000000  # 1,000,000\n",
+    "people = pd.DataFrame(\n",
+    "    {\n",
+    "        \"social_security_numbers\": npr.randint(low=10000000, high=99999999, size=size),\n",
+    "        \"names\": [\n",
+    "            \"\".join(random.choices(string.ascii_uppercase, k=10)) for i in range(size)\n",
+    "        ],\n",
+    "    }\n",
+    ")\n",
     "```"
    ]
   },
@@ -104,7 +115,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## Exercise 7\n",
+    "### Exercise 7\n",
     "\n",
     "Now subset your data to get the social security number associated with the name of \"TPKSMSLREI\". (Yes, there are ways to get real random names, but they take a while to run because they query websites that generate fake names, so we're just doing this!)."
    ]
@@ -113,7 +124,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## Exercise 8\n",
+    "### Exercise 8\n",
     "\n",
     "Now time your operation using the `%timeit` ipython magic function. "
    ]
@@ -122,7 +133,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## Exercise 9\n",
+    "### Exercise 9\n",
     "\n",
     "Now make `names` your index for this data. Then try subsetting using `loc[]` to get all the observations with the name of \"TPKSMSLREI\" and time the operation. "
    ]
@@ -134,17 +145,6 @@
     "## Take-away\n",
     "\n",
     "So in short: indices can be nice in that they do automatic alignment, provided you're expecting it. Moreover, if you want to pull random rows out of your dataset, it is often much faster than a regular query!"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## Absolutely positively need the solutions?\n",
-    "\n",
-    "*Don't use this link until you've really, really spent time struggling with your code!* Doing so only results in you cheating yourself. \n",
-    "\n",
-    "[Link](../solutions_warning.ipynb)"
    ]
   }
  ],
@@ -164,7 +164,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.7.3"
+   "version": "3.11.4"
   }
  },
  "nbformat": 4,
