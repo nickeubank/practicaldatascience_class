@@ -6,7 +6,7 @@ Office Hours and Links
 
 `Nick <https://duke.zoom.us/my/nickeubank>`_ : Thursday 10 am - 11 am
 
-`Pomelo <https://duke.zoom.us/j/6897746818>`_ Friday, 9 am - 10 pm
+`Pomelo <https://duke.zoom.us/j/6897746818>`_ Tuesday, 5pm - 6pm
 
 `Suzy <https://duke.zoom.us/j/7110197485>`_: Wednesday, 12 pm - 1pm
 
