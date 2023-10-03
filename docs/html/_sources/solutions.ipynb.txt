@@ -13,7 +13,7 @@
    "source": [
     "- [Numpy Vector Solutions](exercises/Solutions_numpy_vectors.ipynb)\n",
     "- [Pandas Series](exercises/Solutions_series.ipynb)\n",
-    "- [Pandas DataFrames](exercises/Solutions_dataframe.ipynb)\n"
+    "- [Pandas DataFrames](exercises/Solutions_dataframes.ipynb)\n"
    ]
   }
  ],
