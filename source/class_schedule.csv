@@ -63,12 +63,11 @@
 - Tracebacks","- `Reading and Writing Data (plaintext AND binary) <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_3/00_plaintext_files.html>`_
 - `Data Cleaning (through the missing data subsection on left side bar) <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_3/20_cleaning_identifying.html>`_
 - `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_",- `Link <exercises/Exercise_cleaning.ipynb>`_
-"Thurs, Oct 5","- Grammer of Graphics
-- Intro to Plotting with Altair","- `Principles of Data Visualization <https://www.youtube.com/watch?v=vTingdk_pVM>`_
+"Thurs, Oct 5", ,"- `Data Manipulations, Concatenating and Merging (NOT grouping or querying subsections on left navigation) <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_4/00_intro_to_querying_data.html>`_",- `Link <exercises/Exercise_merging.ipynb>`_
+"Tues, Oct 10",- Advanced Plotting,"- `Principles of Data Visualization <https://www.youtube.com/watch?v=vTingdk_pVM>`_
 - `Intro to Altair <plotting_altair_part1.ipynb>`_
 - `Altair in Context <plotting_altair_in_context.ipynb>`_
 - `Plotting with Pandas <plotting_with_pandas.ipynb>`_",
-"Tues, Oct 10",- Advanced Plotting,,
 "Thurs, Oct 12",**FALL BREAK**,,
 "Tues, Oct 17",**FALL BREAK**,,
 "Thurs, Oct 19","- Pandas: Merging
