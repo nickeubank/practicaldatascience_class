@@ -64,12 +64,12 @@
 - `Data Cleaning (through the missing data subsection on left side bar) <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_3/20_cleaning_identifying.html>`_
 - `Python Strings (string section only!) <https://realpython.com/python-data-types/#strings>`_",- `Link <exercises/Exercise_cleaning.ipynb>`_
 "Thurs, Oct 5",- Merging,"- `Data Manipulations, Concatenating and Merging (NOT grouping or querying subsections on left navigation) <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_3/week_4/00_intro_to_querying_data.html>`_",- `Link <exercises/Exercise_merging.ipynb>`_
-"Tues, Oct 10",- Plotting,- `Plotting in Python through seaborn and Grammer of Graphics <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_5/week_2/10_plotting_in_python.html>`_,
+"Tues, Oct 10",- Plotting,- `Plotting in Python through seaborn and Grammer of Graphics <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_5/week_2/10_plotting_in_python.html>`_,- `Link <exercises/Exercise_plotting_part1.ipynb>`_
 "Thurs, Oct 12",**FALL BREAK**,,
 "Tues, Oct 17",**FALL BREAK**,,
-"Thurs, Oct 19","- Pandas: Merging
-- Pandas: Loading and saving data","- JVP pp 149 - 157
-- WM Chapter 6",
+"Thurs, Oct 19",- Plotting,"- `Matplotlib <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_5/week_5/45_plotting_with_matplotlib.html>`_
+- `Making Pretty Plots <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_5/week_5/46_making_plots_pretty.html>`_
+- `Convert seaborn.objects to matplotlib axes <https://seaborn.pydata.org/generated/seaborn.objects.Plot.on.html>`_",
 "Tues, Oct 24","- Big Data: What is it, how do I work with it?","- `What is Big Data? <what_is_big_data.ipynb>`_
 - `Strategies for Big Data <big_data_strategies.ipynb>`_
 - Download the dataset linked at the top of the linked exercise before class.
