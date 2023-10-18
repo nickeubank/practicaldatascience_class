@@ -7,11 +7,19 @@
                 "# Cleaning Data Exercises\n",
                 "\n",
                 "In this exercise, we'll be returning to the American Community Survey data we used previously to measuring racial income inequality in the United States. In today's exercise, we'll be using it to measure the returns to education and how those returns vary by race and gender.\n",
+                "\n"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": [
+                "\n",
                 "## Gradescope Autograding\n",
                 "\n",
                 "Please follow [all standard guidance](https://www.practicaldatascience.org/html/autograder_guidelines.html) for submitting this assignment to the Gradescope autograder, including storing your solutions in a dictionary called `results` and ensuring your notebook runs from the start to completion without any errors.\n",
                 "\n",
-                "For this assignment, please name your file `exercise_missing.ipynb` before uploading.\n",
+                "For this assignment, please name your file `exercise_cleaning.ipynb` before uploading.\n",
                 "\n",
                 "You can check that you have answers for all questions in your `results` dictionary with this code:\n",
                 "\n",
@@ -992,7 +1000,7 @@
             "cell_type": "markdown",
             "metadata": {},
             "source": [
-                "## Exercise 13\n",
+                "### Exercise 13\n",
                 "\n",
                 "In words, what is causing the change noted in Exercise 12 (i.e., looking at the tables above, tell me a story about Men and Women's College attainment)."
             ]
@@ -1061,6 +1069,70 @@
                 "    \"ex11_share_female_w_degrees\",\n",
                 "    \"ex12_comparing\",\n",
                 "}"
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "sorted(list(results.keys()))"
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "metadata": {},
+            "outputs": [
+                {
+                    "data": {
+                        "text/plain": [
+                            "8"
+                        ]
+                    },
+                    "metadata": {},
+                    "output_type": "display_data"
+                }
+            ],
+            "source": [
+                "len(results.keys())"
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "import json\n",
+                "\n",
+                "for k in results.keys():\n",
+                "    if not isinstance(results[k], str):\n",
+                "        results[k] = float(results[k])\n",
+                "\n",
+                "with open(\"autograder/solutions.json\", \"w\") as outfile:\n",
+                "    json.dump(results, outfile)"
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": 30,
+            "metadata": {},
+            "outputs": [
+                {
+                    "data": {
+                        "text/plain": [
+                            "8"
+                        ]
+                    },
+                    "execution_count": 30,
+                    "metadata": {},
+                    "output_type": "execute_result"
+                }
+            ],
+            "source": [
+                "len(results.keys())"
             ]
         }
     ],

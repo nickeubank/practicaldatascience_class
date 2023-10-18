@@ -37,19 +37,22 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
+   "execution_count": 2,
    "metadata": {},
    "outputs": [],
    "source": [
     "import pandas as pd\n",
     "import numpy as np\n",
+    "\n",
     "# Download the data\n",
-    "acs = pd.read_stata(\"https://github.com/nickeubank/MIDS_Data/raw/master/US_AmericanCommunitySurvey/US_ACS_2017_10pct_sample.dta\")"
+    "acs = pd.read_stata(\n",
+    "    \"https://github.com/nickeubank/MIDS_Data/raw/master/US_AmericanCommunitySurvey/US_ACS_2017_10pct_sample.dta\"\n",
+    ")"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
+   "execution_count": 3,
    "metadata": {},
    "outputs": [
     {
@@ -164,7 +167,8 @@
     }
    ],
    "source": [
-    "for c in acs.columns: print(c)"
+    "for c in acs.columns:\n",
+    "    print(c)"
    ]
   },
   {
@@ -177,23 +181,6 @@
    ]
   },
   {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": []
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "acs.loc[['year'] > 2008, \"region\"]\n",
-    "\n"
-   ]
-  },
-  {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
@@ -202,7 +189,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
+   "execution_count": 5,
    "metadata": {},
    "outputs": [
     {
@@ -211,15 +198,15 @@
        "319004"
       ]
      },
-     "execution_count": 2,
+     "execution_count": 5,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "len(acs) \n",
-    "# US population is a little over 300 million, \n",
-    "# so 300,000 observations is about right. "
+    "len(acs)\n",
+    "# US population is a little over 300 million,\n",
+    "# so 300,000 observations is about right."
    ]
   },
   {
@@ -231,7 +218,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 3,
+   "execution_count": 6,
    "metadata": {},
    "outputs": [
     {
@@ -240,7 +227,7 @@
        "104"
       ]
      },
-     "execution_count": 3,
+     "execution_count": 6,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -262,7 +249,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
+   "execution_count": 7,
    "metadata": {},
    "outputs": [
     {
@@ -276,7 +263,7 @@
        "      dtype='object', length=104)"
       ]
      },
-     "execution_count": 4,
+     "execution_count": 7,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -300,7 +287,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
+   "execution_count": 8,
    "metadata": {},
    "outputs": [
     {
@@ -415,7 +402,8 @@
     }
    ],
    "source": [
-    "for c in acs.columns: print(c)"
+    "for c in acs.columns:\n",
+    "    print(c)"
    ]
   },
   {
@@ -436,11 +424,11 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
+   "execution_count": 9,
    "metadata": {},
    "outputs": [],
    "source": [
-    "acs = acs[['age', 'empstat', 'inctot', 'educ']]"
+    "acs = acs[[\"age\", \"empstat\", \"inctot\", \"educ\"]]"
    ]
   },
   {
@@ -450,261 +438,6 @@
     "**7)** Now that we have a more manageable number of variables, it's often very useful to look at a handful of rows of your data. The easiest way to do this is probably the `.head()` method (which will show you the first five rows), or the `tail()` method, which will show you the last five rows. \n",
     "\n",
     "But to get a good sense of your data, it's often better to use the `sample()` command, which returns a random set of rows. As the first and last rows are sometimes not representative, a random set of rows can be very helpful. Try looking at a random sample of 20 rows (note: you don't have to run `.sample()` ten times to get ten rows. Look at the `.sample` help file if you're stuck. "
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 7,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>age</th>\n",
-       "      <th>empstat</th>\n",
-       "      <th>inctot</th>\n",
-       "      <th>educ</th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>153547</th>\n",
-       "      <td>31</td>\n",
-       "      <td>employed</td>\n",
-       "      <td>19300</td>\n",
-       "      <td>1 year of college</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>167428</th>\n",
-       "      <td>62</td>\n",
-       "      <td>employed</td>\n",
-       "      <td>42600</td>\n",
-       "      <td>2 years of college</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>204786</th>\n",
-       "      <td>29</td>\n",
-       "      <td>employed</td>\n",
-       "      <td>700</td>\n",
-       "      <td>4 years of college</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>146514</th>\n",
-       "      <td>28</td>\n",
-       "      <td>employed</td>\n",
-       "      <td>10000</td>\n",
-       "      <td>1 year of college</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>108727</th>\n",
-       "      <td>38</td>\n",
-       "      <td>employed</td>\n",
-       "      <td>29800</td>\n",
-       "      <td>1 year of college</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>520</th>\n",
-       "      <td>65</td>\n",
-       "      <td>employed</td>\n",
-       "      <td>150200</td>\n",
-       "      <td>4 years of college</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2030</th>\n",
-       "      <td>64</td>\n",
-       "      <td>employed</td>\n",
-       "      <td>108000</td>\n",
-       "      <td>5+ years of college</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>295346</th>\n",
-       "      <td>52</td>\n",
-       "      <td>not in labor force</td>\n",
-       "      <td>12700</td>\n",
-       "      <td>grade 12</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>78699</th>\n",
-       "      <td>55</td>\n",
-       "      <td>employed</td>\n",
-       "      <td>17100</td>\n",
-       "      <td>1 year of college</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>21335</th>\n",
-       "      <td>63</td>\n",
-       "      <td>not in labor force</td>\n",
-       "      <td>9900</td>\n",
-       "      <td>grade 12</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>187871</th>\n",
-       "      <td>4</td>\n",
-       "      <td>n/a</td>\n",
-       "      <td>9999999</td>\n",
-       "      <td>n/a or no schooling</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>270117</th>\n",
-       "      <td>54</td>\n",
-       "      <td>employed</td>\n",
-       "      <td>18000</td>\n",
-       "      <td>1 year of college</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>49805</th>\n",
-       "      <td>55</td>\n",
-       "      <td>not in labor force</td>\n",
-       "      <td>10100</td>\n",
-       "      <td>grade 9</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>59154</th>\n",
-       "      <td>37</td>\n",
-       "      <td>employed</td>\n",
-       "      <td>8000</td>\n",
-       "      <td>5+ years of college</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>294172</th>\n",
-       "      <td>82</td>\n",
-       "      <td>not in labor force</td>\n",
-       "      <td>12000</td>\n",
-       "      <td>grade 12</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>199152</th>\n",
-       "      <td>37</td>\n",
-       "      <td>employed</td>\n",
-       "      <td>100000</td>\n",
-       "      <td>5+ years of college</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>230024</th>\n",
-       "      <td>3</td>\n",
-       "      <td>n/a</td>\n",
-       "      <td>9999999</td>\n",
-       "      <td>n/a or no schooling</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>284634</th>\n",
-       "      <td>8</td>\n",
-       "      <td>n/a</td>\n",
-       "      <td>9999999</td>\n",
-       "      <td>nursery school to grade 4</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>52496</th>\n",
-       "      <td>33</td>\n",
-       "      <td>unemployed</td>\n",
-       "      <td>3000</td>\n",
-       "      <td>grade 12</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>269954</th>\n",
-       "      <td>75</td>\n",
-       "      <td>not in labor force</td>\n",
-       "      <td>17600</td>\n",
-       "      <td>grade 5, 6, 7, or 8</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "       age             empstat   inctot                       educ\n",
-       "153547  31            employed    19300          1 year of college\n",
-       "167428  62            employed    42600         2 years of college\n",
-       "204786  29            employed      700         4 years of college\n",
-       "146514  28            employed    10000          1 year of college\n",
-       "108727  38            employed    29800          1 year of college\n",
-       "520     65            employed   150200         4 years of college\n",
-       "2030    64            employed   108000        5+ years of college\n",
-       "295346  52  not in labor force    12700                   grade 12\n",
-       "78699   55            employed    17100          1 year of college\n",
-       "21335   63  not in labor force     9900                   grade 12\n",
-       "187871   4                 n/a  9999999        n/a or no schooling\n",
-       "270117  54            employed    18000          1 year of college\n",
-       "49805   55  not in labor force    10100                    grade 9\n",
-       "59154   37            employed     8000        5+ years of college\n",
-       "294172  82  not in labor force    12000                   grade 12\n",
-       "199152  37            employed   100000        5+ years of college\n",
-       "230024   3                 n/a  9999999        n/a or no schooling\n",
-       "284634   8                 n/a  9999999  nursery school to grade 4\n",
-       "52496   33          unemployed     3000                   grade 12\n",
-       "269954  75  not in labor force    17600        grade 5, 6, 7, or 8"
-      ]
-     },
-     "execution_count": 7,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "acs.sample(20)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "**8)** Do you see any immediate problems? Write them down with your partner. "
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 8,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# Uh, yup! People have incomes of 9 million?! And those people tend to be children?"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "**9)** One problem is that many people seem to have incomes of $9,999,999. Moreover, people with those incomes seem to be very young children. \n",
-    "\n",
-    "What you are seeing is one method (a relatively old one) for representing missing data. In this case, the value 9999999 is used to denote observations for which there is no data (Or more specifically, in this case observations where the person is too young to work, so their income value is missing). \n",
-    "\n",
-    "So let's begin by dropping anyone who has `inctot` equal to 9999999. "
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 9,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "acs = acs.loc[acs['inctot'] != 9999999]"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "**10)** OK, the other potential problem is that our data includes lots of people who are unemployed and people who are not in the labor force (this means they not only don't have a job, but also aren't looking for a job). For this analysis, we want to focus on the wages of people who are currently employed. So subset the dataset for the people for whom `empstat` is equal to \"employed\". \n",
-    "\n",
-    "Note that our decision to only look at people who are employed impacts how we should interpret the relationship we estimate between education and income. Because we are only looking at employed people, we will be estimating the relationship between education and income *for people who are employed*. That means that if education affects the *likelihood* someone is employed, we won't capture that in this analysis. (Economists all this the \"intensive margin\", while looking at whether people get jobs in the first place is called the \"extensive margin\".)"
    ]
   },
   {
@@ -741,73 +474,143 @@
        "  </thead>\n",
        "  <tbody>\n",
        "    <tr>\n",
-       "      <th>58592</th>\n",
-       "      <td>40</td>\n",
+       "      <th>28731</th>\n",
+       "      <td>58</td>\n",
        "      <td>employed</td>\n",
-       "      <td>87000</td>\n",
+       "      <td>496000</td>\n",
+       "      <td>1 year of college</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9374</th>\n",
+       "      <td>23</td>\n",
+       "      <td>not in labor force</td>\n",
+       "      <td>8000</td>\n",
        "      <td>grade 12</td>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th>82867</th>\n",
-       "      <td>50</td>\n",
+       "      <th>281592</th>\n",
+       "      <td>48</td>\n",
+       "      <td>not in labor force</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1 year of college</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>203632</th>\n",
+       "      <td>59</td>\n",
        "      <td>employed</td>\n",
-       "      <td>65000</td>\n",
+       "      <td>80000</td>\n",
        "      <td>grade 12</td>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th>28050</th>\n",
-       "      <td>40</td>\n",
+       "      <th>274886</th>\n",
+       "      <td>57</td>\n",
        "      <td>employed</td>\n",
-       "      <td>140000</td>\n",
-       "      <td>5+ years of college</td>\n",
+       "      <td>31000</td>\n",
+       "      <td>4 years of college</td>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th>7898</th>\n",
-       "      <td>38</td>\n",
+       "      <th>69134</th>\n",
+       "      <td>5</td>\n",
+       "      <td>n/a</td>\n",
+       "      <td>9999999</td>\n",
+       "      <td>nursery school to grade 4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>79185</th>\n",
+       "      <td>20</td>\n",
+       "      <td>not in labor force</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1 year of college</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>316706</th>\n",
+       "      <td>20</td>\n",
        "      <td>employed</td>\n",
-       "      <td>65000</td>\n",
+       "      <td>420</td>\n",
+       "      <td>grade 12</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>168867</th>\n",
+       "      <td>21</td>\n",
+       "      <td>employed</td>\n",
+       "      <td>35400</td>\n",
+       "      <td>grade 12</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>111922</th>\n",
+       "      <td>55</td>\n",
+       "      <td>employed</td>\n",
+       "      <td>45000</td>\n",
+       "      <td>grade 12</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>64717</th>\n",
+       "      <td>52</td>\n",
+       "      <td>employed</td>\n",
+       "      <td>78000</td>\n",
+       "      <td>grade 12</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>53347</th>\n",
+       "      <td>47</td>\n",
+       "      <td>not in labor force</td>\n",
+       "      <td>0</td>\n",
+       "      <td>grade 12</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>90957</th>\n",
+       "      <td>47</td>\n",
+       "      <td>employed</td>\n",
+       "      <td>19200</td>\n",
+       "      <td>4 years of college</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>184883</th>\n",
+       "      <td>68</td>\n",
+       "      <td>employed</td>\n",
+       "      <td>53100</td>\n",
+       "      <td>4 years of college</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>82317</th>\n",
+       "      <td>7</td>\n",
+       "      <td>n/a</td>\n",
+       "      <td>9999999</td>\n",
+       "      <td>nursery school to grade 4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>279801</th>\n",
+       "      <td>28</td>\n",
+       "      <td>employed</td>\n",
+       "      <td>25500</td>\n",
+       "      <td>grade 11</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>177329</th>\n",
+       "      <td>74</td>\n",
+       "      <td>not in labor force</td>\n",
+       "      <td>10200</td>\n",
        "      <td>2 years of college</td>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th>310941</th>\n",
+       "      <th>268925</th>\n",
+       "      <td>7</td>\n",
+       "      <td>n/a</td>\n",
+       "      <td>9999999</td>\n",
+       "      <td>nursery school to grade 4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>246335</th>\n",
        "      <td>23</td>\n",
        "      <td>employed</td>\n",
-       "      <td>12000</td>\n",
+       "      <td>20000</td>\n",
        "      <td>2 years of college</td>\n",
        "    </tr>\n",
        "    <tr>\n",
-       "      <th>252840</th>\n",
-       "      <td>40</td>\n",
-       "      <td>employed</td>\n",
-       "      <td>72000</td>\n",
-       "      <td>4 years of college</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>21168</th>\n",
-       "      <td>41</td>\n",
-       "      <td>employed</td>\n",
-       "      <td>77000</td>\n",
-       "      <td>4 years of college</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>167088</th>\n",
-       "      <td>62</td>\n",
-       "      <td>employed</td>\n",
-       "      <td>55000</td>\n",
-       "      <td>5+ years of college</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>220316</th>\n",
-       "      <td>43</td>\n",
-       "      <td>employed</td>\n",
-       "      <td>52000</td>\n",
-       "      <td>4 years of college</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>270231</th>\n",
-       "      <td>63</td>\n",
-       "      <td>employed</td>\n",
-       "      <td>69000</td>\n",
+       "      <th>262680</th>\n",
+       "      <td>77</td>\n",
+       "      <td>not in labor force</td>\n",
+       "      <td>7000</td>\n",
        "      <td>grade 12</td>\n",
        "    </tr>\n",
        "  </tbody>\n",
@@ -815,17 +618,27 @@
        "</div>"
       ],
       "text/plain": [
-       "       age   empstat  inctot                 educ\n",
-       "58592   40  employed   87000             grade 12\n",
-       "82867   50  employed   65000             grade 12\n",
-       "28050   40  employed  140000  5+ years of college\n",
-       "7898    38  employed   65000   2 years of college\n",
-       "310941  23  employed   12000   2 years of college\n",
-       "252840  40  employed   72000   4 years of college\n",
-       "21168   41  employed   77000   4 years of college\n",
-       "167088  62  employed   55000  5+ years of college\n",
-       "220316  43  employed   52000   4 years of college\n",
-       "270231  63  employed   69000             grade 12"
+       "       age             empstat   inctot                       educ\n",
+       "28731   58            employed   496000          1 year of college\n",
+       "9374    23  not in labor force     8000                   grade 12\n",
+       "281592  48  not in labor force        0          1 year of college\n",
+       "203632  59            employed    80000                   grade 12\n",
+       "274886  57            employed    31000         4 years of college\n",
+       "69134    5                 n/a  9999999  nursery school to grade 4\n",
+       "79185   20  not in labor force        0          1 year of college\n",
+       "316706  20            employed      420                   grade 12\n",
+       "168867  21            employed    35400                   grade 12\n",
+       "111922  55            employed    45000                   grade 12\n",
+       "64717   52            employed    78000                   grade 12\n",
+       "53347   47  not in labor force        0                   grade 12\n",
+       "90957   47            employed    19200         4 years of college\n",
+       "184883  68            employed    53100         4 years of college\n",
+       "82317    7                 n/a  9999999  nursery school to grade 4\n",
+       "279801  28            employed    25500                   grade 11\n",
+       "177329  74  not in labor force    10200         2 years of college\n",
+       "268925   7                 n/a  9999999  nursery school to grade 4\n",
+       "246335  23            employed    20000         2 years of college\n",
+       "262680  77  not in labor force     7000                   grade 12"
       ]
      },
      "execution_count": 10,
@@ -834,8 +647,215 @@
     }
    ],
    "source": [
-    "acs = acs.loc[acs.empstat == \"employed\", ]\n",
+    "acs.sample(20)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**8)** Do you see any immediate problems? Write them down with your partner. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Uh, yup! People have incomes of 9 million?! And those people tend to be children?"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**9)** One problem is that many people seem to have incomes of $9,999,999. Moreover, people with those incomes seem to be very young children. \n",
+    "\n",
+    "What you are seeing is one method (a relatively old one) for representing missing data. In this case, the value 9999999 is used to denote observations for which there is no data (Or more specifically, in this case observations where the person is too young to work, so their income value is missing). \n",
+    "\n",
+    "So let's begin by dropping anyone who has `inctot` equal to 9999999. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "265103"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "acs = acs.loc[acs[\"inctot\"] != 9999999]\n",
+    "len(acs)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**10)** OK, the other potential problem is that our data includes lots of people who are unemployed and people who are not in the labor force (this means they not only don't have a job, but also aren't looking for a job). For this analysis, we want to focus on the wages of people who are currently employed. So subset the dataset for the people for whom `empstat` is equal to \"employed\". \n",
+    "\n",
+    "Note that our decision to only look at people who are employed impacts how we should interpret the relationship we estimate between education and income. Because we are only looking at employed people, we will be estimating the relationship between education and income *for people who are employed*. That means that if education affects the *likelihood* someone is employed, we won't capture that in this analysis. (Economists all this the \"intensive margin\", while looking at whether people get jobs in the first place is called the \"extensive margin\".)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>age</th>\n",
+       "      <th>empstat</th>\n",
+       "      <th>inctot</th>\n",
+       "      <th>educ</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>177073</th>\n",
+       "      <td>52</td>\n",
+       "      <td>employed</td>\n",
+       "      <td>2600</td>\n",
+       "      <td>grade 12</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>10420</th>\n",
+       "      <td>52</td>\n",
+       "      <td>employed</td>\n",
+       "      <td>100000</td>\n",
+       "      <td>2 years of college</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>91831</th>\n",
+       "      <td>19</td>\n",
+       "      <td>employed</td>\n",
+       "      <td>2200</td>\n",
+       "      <td>1 year of college</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>23848</th>\n",
+       "      <td>60</td>\n",
+       "      <td>employed</td>\n",
+       "      <td>17000</td>\n",
+       "      <td>grade 12</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>272316</th>\n",
+       "      <td>31</td>\n",
+       "      <td>employed</td>\n",
+       "      <td>34000</td>\n",
+       "      <td>2 years of college</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>143300</th>\n",
+       "      <td>54</td>\n",
+       "      <td>employed</td>\n",
+       "      <td>20000</td>\n",
+       "      <td>1 year of college</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>24243</th>\n",
+       "      <td>25</td>\n",
+       "      <td>employed</td>\n",
+       "      <td>25000</td>\n",
+       "      <td>4 years of college</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>150402</th>\n",
+       "      <td>29</td>\n",
+       "      <td>employed</td>\n",
+       "      <td>33500</td>\n",
+       "      <td>grade 12</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>93872</th>\n",
+       "      <td>53</td>\n",
+       "      <td>employed</td>\n",
+       "      <td>63000</td>\n",
+       "      <td>4 years of college</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>148478</th>\n",
+       "      <td>27</td>\n",
+       "      <td>employed</td>\n",
+       "      <td>30000</td>\n",
+       "      <td>grade 12</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "       age   empstat  inctot                educ\n",
+       "177073  52  employed    2600            grade 12\n",
+       "10420   52  employed  100000  2 years of college\n",
+       "91831   19  employed    2200   1 year of college\n",
+       "23848   60  employed   17000            grade 12\n",
+       "272316  31  employed   34000  2 years of college\n",
+       "143300  54  employed   20000   1 year of college\n",
+       "24243   25  employed   25000  4 years of college\n",
+       "150402  29  employed   33500            grade 12\n",
+       "93872   53  employed   63000  4 years of college\n",
+       "148478  27  employed   30000            grade 12"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "acs = acs.loc[acs.empstat == \"employed\",]\n",
     "acs.sample(10)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "148758"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "len(acs)"
    ]
   },
   {
@@ -851,7 +871,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
+   "execution_count": null,
    "metadata": {},
    "outputs": [
     {
@@ -877,7 +897,7 @@
     }
    ],
    "source": [
-    "acs['educ'].value_counts()"
+    "acs[\"educ\"].value_counts()"
    ]
   },
   {
@@ -889,7 +909,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 12,
+   "execution_count": null,
    "metadata": {},
    "outputs": [
     {
@@ -904,7 +924,7 @@
     }
    ],
    "source": [
-    "acs.loc[acs['educ']=='grade 12', 'inctot'].mean()"
+    "acs.loc[acs[\"educ\"] == \"grade 12\", \"inctot\"].mean()"
    ]
   },
   {
@@ -916,7 +936,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 13,
+   "execution_count": null,
    "metadata": {},
    "outputs": [
     {
@@ -931,16 +951,16 @@
     }
    ],
    "source": [
-    "acs.loc[acs['educ']=='4 years of college', 'inctot'].mean()"
+    "acs.loc[acs[\"educ\"] == \"4 years of college\", \"inctot\"].mean()"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 14,
+   "execution_count": null,
    "metadata": {},
    "outputs": [],
    "source": [
-    "# That's a LOT better than the average high school income. "
+    "# That's a LOT better than the average high school income."
    ]
   },
   {
@@ -952,7 +972,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 15,
+   "execution_count": null,
    "metadata": {},
    "outputs": [
     {
@@ -968,13 +988,15 @@
    ],
    "source": [
     "# Hasn't finished:\n",
-    "acs.loc[ (acs['educ'] == 'n/a or no schooling') | \n",
-    "         (acs['educ'] == 'nursery school to grade 4') |\n",
-    "         (acs['educ'] == 'grade 5, 6, 7, or 8') |\n",
-    "         (acs['educ'] == 'grade 9') |\n",
-    "         (acs['educ'] == 'grade 10') |\n",
-    "         (acs['educ'] == 'grade 11'), \n",
-    "        'inctot'].mean()"
+    "acs.loc[\n",
+    "    (acs[\"educ\"] == \"n/a or no schooling\")\n",
+    "    | (acs[\"educ\"] == \"nursery school to grade 4\")\n",
+    "    | (acs[\"educ\"] == \"grade 5, 6, 7, or 8\")\n",
+    "    | (acs[\"educ\"] == \"grade 9\")\n",
+    "    | (acs[\"educ\"] == \"grade 10\")\n",
+    "    | (acs[\"educ\"] == \"grade 11\"),\n",
+    "    \"inctot\",\n",
+    "].mean()"
    ]
   },
   {
@@ -986,12 +1008,12 @@
     "acs.loc[\n",
     "    acs[\"educ\"] == \"n/a or no schooling\" | acs[\"educ\"] == \"nursery school to grade 4\",\n",
     "    \"inctot\",\n",
-    "]\n"
+    "]"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 16,
+   "execution_count": null,
    "metadata": {},
    "outputs": [
     {
@@ -1008,18 +1030,21 @@
    "source": [
     "# Or the other way around:\n",
     "\n",
-    "acs.loc[ ~((acs['educ'] == 'grade 12') |\n",
-    "           (acs['educ'] == '1 year of college') |\n",
-    "           (acs['educ'] == '2 years of college') |\n",
-    "           (acs['educ'] == '4 years of college') |\n",
-    "           (acs['educ'] == '5+ years of college')\n",
-    "          ),\n",
-    "        'inctot'].mean()"
+    "acs.loc[\n",
+    "    ~(\n",
+    "        (acs[\"educ\"] == \"grade 12\")\n",
+    "        | (acs[\"educ\"] == \"1 year of college\")\n",
+    "        | (acs[\"educ\"] == \"2 years of college\")\n",
+    "        | (acs[\"educ\"] == \"4 years of college\")\n",
+    "        | (acs[\"educ\"] == \"5+ years of college\")\n",
+    "    ),\n",
+    "    \"inctot\",\n",
+    "].mean()"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 17,
+   "execution_count": null,
    "metadata": {},
    "outputs": [
     {
@@ -1035,19 +1060,21 @@
    ],
    "source": [
     "# Or if you want to use a little trick:\n",
-    "less_than_college = ['n/a or no schooling', \n",
-    "                     'nursery school to grade 4',\n",
-    "                     'grade 5, 6, 7, or 8',\n",
-    "                     'grade 9',\n",
-    "                     'grade 10',\n",
-    "                     'grade 11']\n",
+    "less_than_college = [\n",
+    "    \"n/a or no schooling\",\n",
+    "    \"nursery school to grade 4\",\n",
+    "    \"grade 5, 6, 7, or 8\",\n",
+    "    \"grade 9\",\n",
+    "    \"grade 10\",\n",
+    "    \"grade 11\",\n",
+    "]\n",
     "\n",
-    "acs.loc[acs['educ'].isin(less_than_college), 'inctot'].mean()"
+    "acs.loc[acs[\"educ\"].isin(less_than_college), \"inctot\"].mean()"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 18,
+   "execution_count": null,
    "metadata": {},
    "outputs": [
     {
@@ -1062,7 +1089,7 @@
     }
    ],
    "source": [
-    "# High school diploma is also worth a lot -- they earn almost 50% more than \n",
+    "# High school diploma is also worth a lot -- they earn almost 50% more than\n",
     "# those without a high school degree\n",
     "\n",
     "(38957.76 - 26226.45) / 26226.45"
@@ -1084,7 +1111,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 19,
+   "execution_count": null,
    "metadata": {},
    "outputs": [
     {
@@ -1100,9 +1127,9 @@
     }
    ],
    "source": [
-    "for level in ['grade 9', 'grade 10', 'grade 11', 'grade 12', '4 years of college']:\n",
-    "    avg_income = acs.loc[acs['educ'] == level, 'inctot'].mean()\n",
-    "    print('those who have finished {} earn {:,.2f}'.format(level, avg_income))"
+    "for level in [\"grade 9\", \"grade 10\", \"grade 11\", \"grade 12\", \"4 years of college\"]:\n",
+    "    avg_income = acs.loc[acs[\"educ\"] == level, \"inctot\"].mean()\n",
+    "    print(\"those who have finished {} earn {:,.2f}\".format(level, avg_income))"
    ]
   },
   {
@@ -1114,11 +1141,11 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 20,
+   "execution_count": null,
    "metadata": {},
    "outputs": [],
    "source": [
-    "# I mean... the answer is below. "
+    "# I mean... the answer is below."
    ]
   },
   {
@@ -1186,7 +1213,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.9.7"
+   "version": "3.11.4"
   }
  },
  "nbformat": 4,
