@@ -79,7 +79,8 @@
 - Backwards Design
 - Getting Help Online","- `Workflow Management <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/20_programming_concepts/workflow.html>`_
 - `Backwards Design <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/20_programming_concepts/backwards_design.html>`_
-- `Getting Help <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/20_programming_concepts/getting_help.html>`_",
+- `Getting Help <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/20_programming_concepts/getting_help.html>`_
+- `Opioid Project <https://github.com/nickeubank/practicaldatascience/blob/master/opioid_project/PDS_ProjectSummary.pdf>`_",
 "Tues, Oct 31","- Defensive Programming
 - Groupby / Split-Apply-Combine","- `Defensive Programming <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/20_programming_concepts/defensive_programming.html>`_
 - `Iceberg Principle <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/20_programming_concepts/iceberg_principle.html>`_
@@ -88,11 +89,11 @@
 - Pandas: Categoricals","- WM 8.3
 - `Pandas reshaping (with pics!) <https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html>`_
 - `What is goal of reshaping? <https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwifqfmGn6_sAhWfgnIEHQo2AwAQFjACegQIAxAC&url=https%3A%2F%2Fvita.had.co.nz%2Fpapers%2Ftidy-data.pdf&usg=AOvVaw3HDG0hKNeQpAOVcdczJizw>`_
-- Categoricals: WM 12.1
-- **Project Strategy Plan Due**",
+- Categoricals: WM 12.1",
 "Tues, Nov 7",- Speed and Performance in Python,"- `Understanding Performance <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/30_big_data/40_performance_understanding.html>`_
 - `Improving Performance <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/30_big_data/50_performance_solutions.html>`_
-- `Code Reviews <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/20_programming_concepts/pr_review.html>`_",
+- `Code Reviews <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/20_programming_concepts/pr_review.html>`_
+- **Project Strategy Plan Due**",
 "Thurs, Nov 9",- Statistics with statsmodels,"- WM, 3rd Edition, Chapter 12, 12.1, 12.2, 12.3 (Patsy and statsmodels, not scikit-learn)
 - `Skim ""Linear Models"" <https://www.statsmodels.org/stable/regression.html>`_
 - `Skim ""Discrete Dep Var Models"" <https://www.statsmodels.org/stable/discretemod.html>`_
