@@ -123,11 +123,11 @@ Two sources of data you will definitely need for this analysis are information o
 
 \subsubsection*{Opioid Prescriptions}
 
-A core component of this project will be a recently released dataset of all prescription opioid drug shipments in the United States from 2006 to 2014. This was only recently released (in 2020) by the \emph{Washington Post}, which obtained the data through a Freedom of Information Act (FOIA) request to the US Drug Enforcement Agency.
+A core component of this project will be a recently released dataset of all prescription opioid drug shipments in the United States from 2006 to 2019. This was only recently released (in 2020) by the \emph{Washington Post}, which obtained the data through a Freedom of Information Act (FOIA) request to the US Drug Enforcement Agency.
 
 \begin{itemize}
   \item \href{https://www.washingtonpost.com/graphics/2019/investigations/dea-pain-pill-database/}{Read about data here.}
-  \item \href{https://www.washingtonpost.com/national/2019/07/18/how-download-use-dea-pain-pills-database/?arc404=true}{Download here.}
+  \item \href{https://www.washingtonpost.com/national/2019/07/18/how-download-use-dea-pain-pills-database/?arc404=true}{Download here. Please use the \emph{Click here to download the national data from The Washington Post} link in the fourth bullet point under ``How to download this data'' to get the most updated data.}
   \item \href{https://github.com/wpinvestigative/arcos-api/blob/master/data/data_dictionary.csv}{More about variables in the data here.}
 \end{itemize}
 
@@ -137,7 +137,7 @@ The best national source of data on drug overdoses is the US Vital Statistics re
 
 Several notes about this data:
 \begin{itemize}
-  \item I've made a couple of small changes to this data, but they are very small. Basically, this is the raw data (in the format originally provided) by the US Vital Statistics system. So beware of formatting and cleanliness issues.
+  \item I've made a couple of small changes to this data, but they are very small. This is the raw data (in the format originally provided) by the US Vital Statistics system. So beware of formatting and cleanliness issues.
   \item For privacy, the US Vital Statistics Agency censors some data. If the number of people in a given category (i.e. one county / year / cause of death category) is less than 10, that data does \emph{not} appear in the data. Similarly, zero counts are also not reported. So if a county has only 2 deaths in a given year, that county just doesn't appear in the data for a given year. And if a county has 20 deaths unrelated to drugs or alcohol, but 7 deaths due to overdose, the former statistic will appear in the data, but not the latter.
   \begin{itemize}
     \item It is for this reason that we will use \emph{annual} data on mortality -- by summing deaths over full years, fewer counties end up near below this 10-death threshold, so the data is more complete.
@@ -249,7 +249,7 @@ For this project, you must:
     \item Your analysis,
     \item Your interpretation of that analysis.
   \end{itemize}
-  \item In the report for a policy maker (someone who is NOT trained in statistics), include:
+  \item In the report for a policymaker (someone who is NOT trained in statistics), include:
   \begin{itemize}
     \item The motivation for the project,
     \item Overview of the data being used,
@@ -263,7 +263,7 @@ In writing your report, remember that much of the focus of this project is on \e
 
 \subsection*{Due Dates}
 \begin{itemize}
-  \item An outline of your project strategy is due on November 8th.
+  \item An outline of your project strategy is due on November 7th.
   \begin{itemize}
     \item In writing this strategy, use a ``backwards design'' organizational scheme: Start by establishing what you want to achieve (i.e. the plots I've already specified). Then ask: What dataset do I need to make these plots? Or more specifically:
     \begin{itemize}
