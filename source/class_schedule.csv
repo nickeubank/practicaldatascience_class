@@ -73,7 +73,7 @@
 "Tues, Oct 24","- Big Data: What is it, how do I work with it?","- `What is Big Data? <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/30_big_data/10_big_data_what_is_it.html>`_
 - `Strategies for Big Data <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/30_big_data/20_big_data_strategies.html>`_
 - Download the dataset linked at the top of the linked exercise before class.
-- `Parquet Format <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/30_big_data/30_parquet.html>`_",- Ex <exercises/Exercise_bigdata.ipynb>`_
+- `Parquet Format <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/30_big_data/30_parquet.html>`_",- `Ex <exercises/Exercise_bigdata.ipynb>`_
 "Thurs, Oct 26","- Defensive Programming
 - Workflow
 - Backwards Design
