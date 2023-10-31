@@ -89,10 +89,11 @@
 "Thurs, Nov 2","- Pandas: Reshaping
 - Pandas: Categoricals","- WM 8.3
 - `Pandas reshaping (with pics!) <https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html>`_
-- `What is goal of reshaping? <https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwifqfmGn6_sAhWfgnIEHQo2AwAQFjACegQIAxAC&url=https%3A%2F%2Fvita.had.co.nz%2Fpapers%2Ftidy-data.pdf&usg=AOvVaw3HDG0hKNeQpAOVcdczJizw>`_
+- `What is goal of reshaping? <http://vita.had.co.nz/papers/tidy-data.html>`_
 - Categoricals: WM 12.1",
-"Tues, Nov 7",- Speed and Performance in Python,"- `Understanding Performance <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/30_big_data/40_performance_understanding.html>`_
+"Tues, Nov 7",- Speed and Performance in Python,"- `Understanding Performance <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_4/10_speed_and_ease_of_use.html>`_
 - `Improving Performance <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/30_big_data/50_performance_solutions.html>`_
+- `Object dtypes <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/object_vectors.html>`_
 - `Code Reviews <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/20_programming_concepts/pr_review.html>`_
 - **Project Strategy Plan Due**",
 "Thurs, Nov 9",- Statistics with statsmodels,"- WM, 3rd Edition, Chapter 12, 12.1, 12.2, 12.3 (Patsy and statsmodels, not scikit-learn)
