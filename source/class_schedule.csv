@@ -90,7 +90,7 @@
 - Pandas: Categoricals","- WM 8.3
 - `Pandas reshaping (with pics!) <https://pandas.pydata.org/pandas-docs/stable/user_guide/reshaping.html>`_
 - `What is goal of reshaping? <http://vita.had.co.nz/papers/tidy-data.html>`_
-- Categoricals: WM 12.1",
+- Categoricals: WM 12.1",- `Link <exercises/Exercise_reshaping.ipynb>`_
 "Tues, Nov 7",- Speed and Performance in Python,"- `Understanding Performance <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_4/10_speed_and_ease_of_use.html>`_
 - `Improving Performance <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/30_big_data/50_performance_solutions.html>`_
 - `Object dtypes <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/object_vectors.html>`_
