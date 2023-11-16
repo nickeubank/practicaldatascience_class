@@ -106,7 +106,7 @@
 "Thurs, Nov 16","- Defining Your Own Estimators
 - Regex","- Review linear regression as matrix manipulations. `Here's a nice review. <https://www.stat.purdue.edu/~boli/stat512/lectures/topic3.pdf>`_
 - `Review how to define classes <https://realpython.com/python3-object-oriented-programming/>`_
-- `Broadcasting Gotchyas <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_3/41_broadcasting.html#a-common-gotcha-narrow-matrices-v-1-dimensional-vectors>`_",
+- `Broadcasting Gotchyas <https://nickeubank.github.io/practicaldatascience_book/notebooks/class_2/week_3/41_broadcasting.html#a-common-gotcha-narrow-matrices-v-1-dimensional-vectors>`_",- `Link <execises/Exercise_codeyourownlinearregression.ipynb>`_
 "Tues, Nov 21",No Class,,
 "Thurs, Nov 23",THANKSGIVING,,
 "Tues, Nov 28","- Parallelism 
