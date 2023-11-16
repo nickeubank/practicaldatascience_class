@@ -110,10 +110,10 @@
 "Tues, Nov 21",No Class,,
 "Thurs, Nov 23",THANKSGIVING,,
 "Tues, Nov 28","- Parallelism 
-- Distributed Computing","- `Parallel Computing <parallelism.ipynb>`_
-- `Distributed Computing with dask <distributed_computing.ipynb>`_
+- Distributed Computing","- `conda Environments <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/20_programming_concepts/conda_environments.html>`_
+- `Parallel Computing <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/30_big_data/60_parallelism.html>`_
+- `Distributed Computing with dask <https://nickeubank.github.io/practicaldatascience_book/notebooks/PDS_not_yet_in_coursera/30_big_data/70_dask.html>`_
 (Note reading includes a 45 minute video to watch)
-**Optional:**
 - **Opioid Project Rough Draft Due**",
 "Thurs, Nov 30",,,
 Wed Dec 13,,**Final Project Report and Presentation Due**,
